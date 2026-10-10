@@ -1,23 +1,25 @@
 # Morning Agent
 
 Morning Agent sends one short Hebrew briefing to Telegram every morning at 07:00 Israel time:
-today's weather in Modi'in, the AI news from the last 24 hours that matter, and one interview
-concept explained. Every run also writes an auditable record (items, decisions, tokens, cost,
+today's weather in Modi'in, today's Google Calendar events, the AI news from the last 24 hours
+that matter, and one interview concept explained with an answer to think about. Every run also writes an auditable record (items, decisions, tokens, cost,
 latency, errors) to `runs/YYYY-MM-DD.json`.
 
 The project is spec-driven: product docs live in `agent-os/product/`, coding standards in
 `agent-os/standards/`, and each feature starts as a spec in `agent-os/specs/` (v1:
-`agent-os/specs/2026-10-10-brief-v1/spec.md`).
+`agent-os/specs/2026-10-10-brief-v1/spec.md`, v2 calendar:
+`agent-os/specs/2026-10-10-brief-v2-calendar/spec.md`).
 
 ## Architecture
 
 ```
-npm run brief [--dry-run] [--date YYYY-MM-DD]
+npm run brief [--dry-run] [--date YYYY-MM-DD] [--calendar <path>]
 └── src/cli.ts                    args, config + env loading, exit code
     └── src/run/wiring.ts         real clients, or fakes for --dry-run
         └── src/run/run-brief.ts  orchestration, cost, redaction, record
             ├── collect (in parallel, each failure degrades one section)
             │   ├── sources/weather.ts   Open-Meteo -> mapWeather() -> WeatherDay (Hebrew WMO label)
+            │   ├── sources/calendar-file.ts  input/calendar-<date>.json -> CalendarEvent[] (sorted)
             │   ├── sources/feeds.ts     RSS + Atom -> parseFeed() -> withinWindow(24h) -> dedupe()
             │   └── sources/concepts.ts  concepts/queue.md -> next unused concept
             ├── decide (<= 40 newest items, one cheap call each)
@@ -45,6 +47,7 @@ npm install
 npm test                                      # Vitest, no network
 npm run brief -- --dry-run                    # fake decisions, template writer, prints to the console
 npm run brief -- --dry-run --date 2026-10-11  # pretend "today" is another day
+npm run brief -- --dry-run --date 2026-10-11 --calendar test/fixtures/calendar-sample.json
 npm run brief                                 # real run: Haiku + Sonnet + Telegram
 ```
 
@@ -55,14 +58,46 @@ the concept queue.
 
 A real run needs these environment variables (see `.env.example`; never commit a `.env`):
 
-| Variable              | Purpose                                      |
-| --------------------- | -------------------------------------------- |
-| `TELEGRAM_BOT_TOKEN`  | bot token from @BotFather                    |
-| `TELEGRAM_CHAT_ID`    | the recipient's chat id                      |
+| Variable                    | Purpose                                                                                          |
+| --------------------------- | ------------------------------------------------------------------------------------------------ |
+| `TELEGRAM_BOT_TOKEN`        | bot token from @BotFather                                                                        |
+| `TELEGRAM_CHAT_ID`          | the recipient's chat id                                                                          |
 | `MORNING_ANTHROPIC_API_KEY` | decision model and writer (`ANTHROPIC_API_KEY` also accepted; cloud sessions withhold that name) |
-| `ICLOUD_APP_PASSWORD` | reserved for the iCloud calendar (roadmap 3) |
+| `ICLOUD_APP_PASSWORD`       | reserved for the iCloud calendar (roadmap 3)                                                     |
 
 Other checks: `npm run typecheck`, `npm run lint`, `npm run format`.
+
+## Calendar hand-off
+
+Google Calendar is read by the cloud routine, not by this code: the routine is a Claude Code
+session with the claude.ai Google Calendar connector attached, and before `npm run brief` it
+writes today's events to `input/calendar-YYYY-MM-DD.json` (gitignored). The script only reads
+that file (`src/sources/calendar-file.ts`), so there is no OAuth code and no Google secret.
+`--calendar <path>` reads another file instead, e.g. the fixture for an offline preview.
+
+```json
+{
+  "date": "2026-10-11",
+  "timezone": "Asia/Jerusalem",
+  "source": "google",
+  "events": [
+    {
+      "title": "פגישה עם נוי",
+      "start": "2026-10-11T10:00:00+03:00",
+      "end": "2026-10-11T10:30:00+03:00",
+      "allDay": false,
+      "location": "Zoom"
+    }
+  ]
+}
+```
+
+`events` may be empty and unknown fields are ignored. The `date` must match the run date. The
+`היום ביומן` section lists all-day events first (`כל היום: כותרת`), then timed events by start as
+`HH:MM–HH:MM כותרת (מיקום)` in Asia/Jerusalem; no events gives `אין אירועים היום`. A missing or
+invalid file still sends the brief with `היומן לא היה זמין`, and the record lists a `calendar`
+source error with reason `missing` or `invalid`. The record keeps only `title`, `start`, `end`
+and `allDay` per event: never attendees, descriptions, locations or links.
 
 ## Adding a feed
 
@@ -93,13 +128,17 @@ The run takes the first `- [ ]` line and, after the brief is delivered, rewrites
 The brief runs as a Claude Code cloud routine named "Morning brief": cron `0 4 * * *` UTC (07:00
 Israel summer time; change to `0 5 * * *` after DST ends on 2026-10-25), repo
 `ozeriyarin/morning-agent`, model `claude-sonnet-5-5`, allowed tools Bash, Read, Write, Edit,
-Glob, Grep. The secrets are environment variables of the routine's cloud environment.
+Glob, Grep, plus the Google Calendar connector. The secrets are environment variables of the
+routine's cloud environment.
 
 Routine prompt:
 
 ```text
 Install dependencies with `npm ci`. Run `npm test`; if it fails, stop and report the failing
-tests without sending a brief. Run `npm run brief`. Then commit `runs/<date>.json` and
+tests without sending a brief. Using the Google Calendar connector, list the events for today
+(Asia/Jerusalem) on the primary calendar; write them to `input/calendar-<today>.json` exactly in
+the hand-off schema (title, start, end, allDay, location; nothing else). If the connector fails,
+do not create the file and continue. Run `npm run brief`. Then commit `runs/<date>.json` and
 `concepts/queue.md` with the message `brief: <date>` (date as YYYY-MM-DD, Asia/Jerusalem) and
 push. Finally report the Telegram delivery status and the total cost from the run record.
 ```

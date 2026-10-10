@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { SECTIONS, type Brief, type CallUsage, type Section } from '../types.js';
+import { SECTIONS, type CallUsage, type Section, type WrittenBrief } from '../types.js';
 
 export type { Writer, WriterInput, WriterResult } from '../types.js';
 
@@ -13,12 +13,12 @@ export const BriefSchema = z.object({
     mention: z.array(z.object({ title: text, url: z.url() })),
     quietDay: z.boolean(),
   }),
-  concept: z.object({ name: text, explanation: text, question: text }),
+  concept: z.object({ name: text, explanation: text, question: text, answer: text }),
   footer: z.string(),
 });
 
 export type BriefValidation =
-  { ok: true; brief: Brief } | { ok: false; missing: Section[]; error: string };
+  { ok: true; brief: WrittenBrief } | { ok: false; missing: Section[]; error: string };
 
 export function validateBrief(raw: unknown): BriefValidation {
   const parsed = BriefSchema.safeParse(raw);

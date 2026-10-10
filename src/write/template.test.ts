@@ -32,6 +32,17 @@ const input: WriterInput = {
   mustRead: [item(1, 'Claude <Code> & MCP')],
   mention: [item(2)],
   concept: 'agent loop',
+  calendar: [
+    { title: 'יום הולדת', start: '2026-10-10', end: '2026-10-11', allDay: true, time: null },
+    {
+      title: 'ראיון <טכני>',
+      start: '2026-10-10T14:00:00+03:00',
+      end: '2026-10-10T15:00:00+03:00',
+      allDay: false,
+      location: 'Zoom',
+      time: '14:00–15:00',
+    },
+  ],
 };
 
 describe('templateBrief + formatBrief', () => {
@@ -45,6 +56,7 @@ describe('templateBrief + formatBrief', () => {
     const order = [
       '<b>בוקר טוב, יום שבת 10.10</b>',
       '<b>מזג אוויר במודיעין</b>',
+      '<b>היום ביומן</b>',
       '<b>AI היום</b>',
       '<b>מושג היום</b>',
       'נוצר ב-07:00',
@@ -61,6 +73,24 @@ describe('templateBrief + formatBrief', () => {
     expect(html).toContain('<a href="https://example.com/1?a=1&amp;b=2">');
     expect(html).not.toContain('<Code>');
     expect(escapeHtml('a<b>&"c"')).toBe('a&lt;b&gt;&amp;&quot;c&quot;');
+  });
+
+  it('renders all-day events, then timed events with location, escaped', () => {
+    expect(formatBrief(templateBrief(input))).toContain(
+      '<b>היום ביומן</b>\nכל היום: יום הולדת\n14:00–15:00 ראיון &lt;טכני&gt; (Zoom)',
+    );
+  });
+
+  it('says the calendar was unavailable when it is null', () => {
+    expect(formatBrief(templateBrief({ ...input, calendar: null }))).toContain(
+      '<b>היום ביומן</b>\nהיומן לא היה זמין',
+    );
+  });
+
+  it('v2 criterion 7: "`formatBrief` renders `שאלה למחשבה:` followed by `תשובה:` on the next line, both bold labels."', () => {
+    expect(formatBrief(templateBrief(input))).toContain(
+      '<b>שאלה למחשבה:</b> מתי לא היית משתמש/ת ב-agent loop, ולמה?\n<b>תשובה:</b> ראו את ההסבר למעלה.',
+    );
   });
 
   it('says it was a quiet day when nothing was kept', () => {
@@ -80,7 +110,7 @@ describe('templateBrief + formatBrief', () => {
     expect(html).not.toContain('מעונן, 19');
   });
 
-  it('trims mention items, then extra must-reads, to stay under the length target', () => {
+  it('trims mention items, then extra must-reads, never the calendar or the concept', () => {
     const many = Array.from({ length: 40 }, (_, i) =>
       item(i, `A fairly long article title number ${i}`),
     );
@@ -89,5 +119,7 @@ describe('templateBrief + formatBrief', () => {
     );
     expect(visibleLength(html)).toBeLessThanOrEqual(MAX_BRIEF_CHARS);
     expect(html).toContain('A fairly long article title number 0');
+    expect(html).toContain('14:00–15:00 ראיון');
+    expect(html).toContain('<b>תשובה:</b>');
   });
 });

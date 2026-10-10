@@ -1,6 +1,6 @@
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
 import { callUsage, type MessagesClient } from '../cost.js';
-import type { Item, Writer, WriterInput, WriterResult } from '../types.js';
+import type { CalendarEvent, Item, Writer, WriterInput, WriterResult } from '../types.js';
 import { BriefSchema, WriterError } from './writer.js';
 
 export const SONNET_MODEL = 'claude-sonnet-5-5';
@@ -17,12 +17,14 @@ Output: JSON matching the schema. Write every field in Hebrew except product nam
 - news.mustRead: every must_read item, in the given order: title as published, why = one Hebrew sentence on why it matters to an AI developer, url copied exactly from the input.
 - news.mention: every mention item as { title, url } with the url copied exactly.
 - news.quietDay: true only when both lists are empty.
-- concept: name as given; explanation in 3-5 short lines separated by newlines, concrete and interview-ready; question = one interview-style question to think about. If concept is null, write a one-line note that the queue is empty.
+- concept: name as given; explanation in 3-5 short lines separated by newlines, concrete and interview-ready; question = one interview-style question to think about; answer = 2-4 short lines that answer that question concretely, in Hebrew. If concept is null, write a one-line note that the queue is empty and still fill question and answer.
+- calendar (input only): today's events, all-day ones first, or null when the calendar was unavailable. The program renders the "היום ביומן" section itself, so never list events in any field; weather.advice may mention an event when the weather matters for it.
 - footer: empty string; the program fills it.
 
-Rules: never invent links or items; no emojis; dates as D.M, times as HH:MM; keep the whole brief under 1,200 characters, so the why lines stay short.`;
+Rules: never invent links or items; no emojis; dates as D.M, times as HH:MM; keep the whole brief under 1,500 characters, so the why lines stay short.`;
 
 const toNews = (item: Item) => ({ title: item.title, url: item.link, summary: item.summary });
+const toEvent = (e: CalendarEvent) => ({ title: e.title, time: e.time ?? 'כל היום' });
 
 export class SonnetWriter implements Writer {
   readonly mode = 'ai';
@@ -45,6 +47,7 @@ export class SonnetWriter implements Writer {
             must_read: input.mustRead.map(toNews),
             mention: input.mention.map(toNews),
             concept: input.concept,
+            calendar: input.calendar?.map(toEvent) ?? null,
           }),
         },
       ],

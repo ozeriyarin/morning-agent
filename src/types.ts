@@ -1,7 +1,7 @@
 export const DECISIONS = ['must_read', 'mention', 'skip'] as const;
 export type Decision = (typeof DECISIONS)[number];
 
-export const SECTIONS = ['weather', 'news', 'concept'] as const;
+export const SECTIONS = ['weather', 'calendar', 'news', 'concept'] as const;
 export type Section = (typeof SECTIONS)[number];
 
 export interface Item {
@@ -20,6 +20,15 @@ export interface WeatherDay {
   precipitationProbability: number;
   code: number;
   label: string;
+}
+
+export interface CalendarEvent {
+  title: string;
+  start: string;
+  end: string;
+  allDay: boolean;
+  location?: string;
+  time: string | null;
 }
 
 export interface FetchContext {
@@ -56,7 +65,7 @@ export interface DecisionModel {
   decide(item: Item): Promise<DecisionResult>;
 }
 
-export interface Brief {
+export interface WrittenBrief {
   greeting: string;
   weather: { summary: string; advice: string };
   news: {
@@ -64,8 +73,12 @@ export interface Brief {
     mention: { title: string; url: string }[];
     quietDay: boolean;
   };
-  concept: { name: string; explanation: string; question: string };
+  concept: { name: string; explanation: string; question: string; answer: string };
   footer: string;
+}
+
+export interface Brief extends WrittenBrief {
+  calendar: CalendarEvent[] | null;
 }
 
 export interface WriterInput {
@@ -74,6 +87,7 @@ export interface WriterInput {
   mustRead: Item[];
   mention: Item[];
   concept: string | null;
+  calendar: CalendarEvent[] | null;
 }
 
 export interface WriterResult {
@@ -98,6 +112,7 @@ export interface Sender {
 export interface RunError {
   stage: 'source' | 'decision' | 'writer' | 'delivery' | 'concepts';
   source?: string;
+  reason?: SourceFailure;
   message: string;
 }
 
@@ -107,6 +122,7 @@ export interface RunRecord {
   dryRun: boolean;
   fetchedCount: number;
   items: Pick<Item, 'title' | 'link' | 'published' | 'sources'>[];
+  calendar: Pick<CalendarEvent, 'title' | 'start' | 'end' | 'allDay'>[] | null;
   skippedUnseen: number;
   decisions: { title: string; link: string; decision: Decision; error?: string }[];
   calls: CallRecord[];
@@ -119,10 +135,13 @@ export interface RunRecord {
   errors: RunError[];
 }
 
+export type SourceFailure = 'missing' | 'invalid';
+
 export class SourceError extends Error {
   constructor(
     readonly source: string,
     message: string,
+    readonly reason?: SourceFailure,
   ) {
     super(message);
     this.name = 'SourceError';

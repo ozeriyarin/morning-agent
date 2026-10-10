@@ -1,5 +1,6 @@
 import type {
   Brief,
+  CalendarEvent,
   Item,
   Section,
   WeatherDay,
@@ -10,16 +11,18 @@ import type {
 
 const TITLES: Record<Section, string> = {
   weather: 'מזג אוויר במודיעין',
+  calendar: 'היום ביומן',
   news: 'AI היום',
   concept: 'מושג היום',
 };
 
-export const MAX_BRIEF_CHARS = 1200;
+export const MAX_BRIEF_CHARS = 1500;
 
 export const QUEUE_EMPTY_CONCEPT: Brief['concept'] = {
   name: 'תור המושגים ריק',
   explanation: 'כל המושגים בתור נלמדו. הוסיפו מושגים חדשים ל-concepts/queue.md.',
   question: 'איזה מושג הכי חסר לך לקראת הראיון הבא?',
+  answer: 'בחרו את המושג שהכי קשה לכם להסביר בקול, והוסיפו אותו ראשון לתור.',
 };
 
 export function escapeHtml(value: string): string {
@@ -65,9 +68,11 @@ export function templateBrief(input: WriterInput): Brief {
           name: input.concept,
           explanation: `במצב תבנית אין הסבר כתוב. נסו להסביר לעצמכם את "${input.concept}" בשלוש שורות: מה זה, למה צריך, ומה המחיר.`,
           question: `מתי לא היית משתמש/ת ב-${input.concept}, ולמה?`,
+          answer: 'ראו את ההסבר למעלה.',
         }
       : QUEUE_EMPTY_CONCEPT,
     footer: '',
+    calendar: input.calendar,
   };
 }
 
@@ -89,6 +94,16 @@ function newsLines(news: Brief['news']): string[] {
   return lines;
 }
 
+function calendarLines(events: CalendarEvent[] | null): string[] {
+  if (events === null) return ['היומן לא היה זמין'];
+  if (events.length === 0) return ['אין אירועים היום'];
+  return events.map((e) => {
+    if (e.time === null) return `כל היום: ${escapeHtml(e.title)}`;
+    const where = e.location ? ` (${escapeHtml(e.location)})` : '';
+    return `${e.time} ${escapeHtml(e.title)}${where}`;
+  });
+}
+
 function render(brief: Brief, missing: Section[]): string {
   const section = (key: Section, body: string[]) => [
     `<b>${TITLES[key]}</b>`,
@@ -100,12 +115,16 @@ function render(brief: Brief, missing: Section[]): string {
     '',
     ...section('weather', [escapeHtml(brief.weather.summary), escapeHtml(brief.weather.advice)]),
     '',
+    `<b>${TITLES.calendar}</b>`,
+    ...calendarLines(brief.calendar),
+    '',
     ...section('news', newsLines(brief.news)),
     '',
     ...section('concept', [
       `<i>${escapeHtml(c.name)}</i>`,
       escapeHtml(c.explanation),
-      `שאלה למחשבה: ${escapeHtml(c.question)}`,
+      `<b>שאלה למחשבה:</b> ${escapeHtml(c.question)}`,
+      `<b>תשובה:</b> ${escapeHtml(c.answer)}`,
     ]),
     '',
     escapeHtml(brief.footer),
@@ -116,7 +135,7 @@ export function visibleLength(html: string): number {
   return html.replace(/<[^>]*>/g, '').replace(/&(amp|lt|gt|quot);/g, '_').length;
 }
 
-// Telegram HTML; drops mentions, then extra must-reads, until the visible text fits.
+// Telegram HTML; drops mentions, then extra must-reads (never calendar or concept), until it fits.
 export function formatBrief(brief: Brief, missing: Section[] = []): string {
   const news = {
     ...brief.news,

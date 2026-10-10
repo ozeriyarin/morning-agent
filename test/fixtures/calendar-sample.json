@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-11",
+  "timezone": "Asia/Jerusalem",
+  "source": "google",
+  "events": [
+    {
+      "title": "ראיון טכני",
+      "start": "2026-10-11T14:00:00+03:00",
+      "end": "2026-10-11T15:00:00+03:00",
+      "allDay": false,
+      "location": "Zoom"
+    },
+    {
+      "title": "יום הולדת לנוי",
+      "start": "2026-10-11",
+      "end": "2026-10-12",
+      "allDay": true
+    },
+    {
+      "title": "סנכרון צוות",
+      "start": "2026-10-11T06:30:00Z",
+      "end": "2026-10-11T07:00:00Z",
+      "allDay": false,
+      "location": "משרד",
+      "attendees": [{ "email": "noy.private@example.com", "responseStatus": "accepted" }],
+      "description": "קוד כניסה לבניין 4821",
+      "htmlLink": "https://calendar.google.com/event?eid=secret-event-id"
+    }
+  ]
+}

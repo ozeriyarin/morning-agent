@@ -6,6 +6,7 @@ describe('parseCli', () => {
     [[], { dryRun: false, date: undefined }],
     [['--dry-run'], { dryRun: true, date: undefined }],
     [['--dry-run', '--date', '2026-10-11'], { dryRun: true, date: '2026-10-11' }],
+    [['--dry-run', '--calendar', 'cal.json'], { dryRun: true, calendar: 'cal.json' }],
   ])('parses %j', (argv, expected) => {
     expect(parseCli(argv)).toEqual(expected);
   });

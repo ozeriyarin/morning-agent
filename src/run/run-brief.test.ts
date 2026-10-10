@@ -5,20 +5,39 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { briefConfigSchema, loadJson, pricesSchema, type Prices } from '../config.js';
 import { FakeDecisionModel } from '../decide/fake.js';
 import { TelegramSender } from '../deliver/telegram.js';
+import { CalendarFileSource } from '../sources/calendar-file.js';
 import { FileConceptStore } from '../sources/concepts.js';
 import { parseFeed } from '../sources/feeds.js';
-import type { CallUsage, Item, RunRecord, Sender, Source, WeatherDay, Writer } from '../types.js';
-import { templateBrief, TemplateWriter } from '../write/template.js';
+import type {
+  CalendarEvent,
+  CallUsage,
+  Item,
+  RunRecord,
+  Sender,
+  Source,
+  WeatherDay,
+  Writer,
+} from '../types.js';
+import { MAX_BRIEF_CHARS, templateBrief, TemplateWriter } from '../write/template.js';
 import { MAX_DECISIONS, runBrief, type RunDeps } from './run-brief.js';
 import { buildDeps } from './wiring.js';
 
 const DATE = '2026-10-10';
+const CALENDAR_DATE = '2026-10-11';
+const CALENDAR_SAMPLE = 'test/fixtures/calendar-sample.json';
+const SAMPLE_SECTION = [
+  '<b>היום ביומן</b>',
+  'כל היום: יום הולדת לנוי',
+  '09:30–10:00 סנכרון צוות (משרד)',
+  '14:00–15:00 ראיון טכני (Zoom)',
+].join('\n');
 const TOKEN = '7012345678:AAH-secret_token-value';
 const CHAT_ID = '987654321';
 const API_KEY = 'sk-ant-api03-very-secret-key';
 const SECTION_TITLES = [
   'בוקר טוב, יום שבת 10.10',
   'מזג אוויר במודיעין',
+  'היום ביומן',
   'AI היום',
   'מושג היום',
   'נוצר ב-',
@@ -73,6 +92,7 @@ let sender: CapturingSender;
 async function deps(over: Partial<RunDeps> = {}): Promise<RunDeps> {
   return {
     weather: source('weather', weatherDay),
+    calendar: source<CalendarEvent[]>('calendar', []),
     feeds: [source('Simon Willison', atomItems), source('OpenAI News', rssItems)],
     concepts: new FileConceptStore(join(root, 'concepts', 'queue.md')),
     decisionModel: new FakeDecisionModel(),
@@ -93,7 +113,8 @@ async function deps(over: Partial<RunDeps> = {}): Promise<RunDeps> {
 beforeEach(async () => {
   root = await mkdtemp(join(tmpdir(), 'brief-'));
   await mkdir(join(root, 'concepts'));
-  await writeFile(join(root, 'concepts', 'queue.md'), await readFile('concepts/queue.md', 'utf8'));
+  const queue = await readFile('concepts/queue.md', 'utf8');
+  await writeFile(join(root, 'concepts', 'queue.md'), queue.replace(/- \[x\] \S+ /g, '- [ ] '));
   records = [];
   sender = new CapturingSender();
 });
@@ -137,6 +158,11 @@ describe('runBrief', () => {
       'hnrss.org': await fixture('hnrss-rss.xml'),
       'openai.com': await fixture('openai-rss.xml'),
     };
+    await mkdir(join(root, 'input'));
+    await writeFile(
+      join(root, 'input', `calendar-${DATE}.json`),
+      JSON.stringify({ date: DATE, timezone: 'Asia/Jerusalem', source: 'google', events: [] }),
+    );
     const online: typeof fetch = async (url) =>
       new Response(bodies[new URL(String(url)).host] ?? '');
     const wired = buildDeps({
@@ -153,7 +179,8 @@ describe('runBrief', () => {
     expect(record.missingSections).toEqual([]);
     expect(html).toContain('מעונן, 19°-31°, סיכוי לגשם 3%.');
     expect(html).toContain('href="https://openai.com/index/asana-browser-agent"');
-    expect(record.briefChars).toBeLessThanOrEqual(1200);
+    expect(html).toContain('<b>היום ביומן</b>\nאין אירועים היום');
+    expect(record.briefChars).toBeLessThanOrEqual(MAX_BRIEF_CHARS);
   });
 
   it('criterion 5: "Writer output is validated against the schema; a missing section fails validation and the run falls back to a template brief with a `חסר: <section>` line instead of sending nothing."', async () => {
@@ -328,5 +355,107 @@ describe('runBrief', () => {
     };
     const { html } = await runBrief(await deps({ writer }), { date: DATE, dryRun: false });
     expect(html).not.toContain('evil.example');
+  });
+});
+
+describe('runBrief calendar', () => {
+  const calendarRun = async (calendar: Source<CalendarEvent[]>) =>
+    runBrief(await deps({ calendar }), { date: CALENDAR_DATE, dryRun: false });
+  const unavailable = (reason: string) => ({
+    stage: 'source',
+    source: 'calendar',
+    reason,
+    message: expect.any(String),
+  });
+
+  it('v2 criterion 1: "Given a valid hand-off file with three events (one all-day), the brief\'s calendar section lists the all-day event first, then the two timed events in start order with `HH:MM–HH:MM` in Asia/Jerusalem."', async () => {
+    const { html, record } = await calendarRun(
+      new CalendarFileSource(root, 'Asia/Jerusalem', CALENDAR_SAMPLE),
+    );
+    expect(html).toContain(`<b>מזג אוויר במודיעין</b>`);
+    expect(html.indexOf('<b>היום ביומן</b>')).toBeGreaterThan(html.indexOf('מזג אוויר'));
+    expect(html).toContain(SAMPLE_SECTION);
+    expect(record.errors).toEqual([]);
+  });
+
+  it('v2 criterion 2: "Given a hand-off file with `events: []`, the section says `אין אירועים היום`."', async () => {
+    await mkdir(join(root, 'input'));
+    await writeFile(
+      join(root, 'input', `calendar-${CALENDAR_DATE}.json`),
+      JSON.stringify({
+        date: CALENDAR_DATE,
+        timezone: 'Asia/Jerusalem',
+        source: 'google',
+        events: [],
+      }),
+    );
+    const { html } = await calendarRun(new CalendarFileSource(root, 'Asia/Jerusalem'));
+    expect(html).toContain('<b>היום ביומן</b>\nאין אירועים היום');
+  });
+
+  it('v2 criterion 3: "Given no hand-off file, the brief still sends and the section says `היומן לא היה זמין`; the record lists a `calendar` source error with reason `missing`."', async () => {
+    const { record } = await calendarRun(new CalendarFileSource(root, 'Asia/Jerusalem'));
+    expect(sender.sent).toHaveLength(1);
+    expect(sender.sent[0]).toContain('<b>היום ביומן</b>\nהיומן לא היה זמין');
+    expect(record.errors).toEqual([unavailable('missing')]);
+    expect(record).toMatchObject({ calendar: null, missingSections: ['calendar'] });
+  });
+
+  it.each([
+    ['bad JSON', '{"date": "2026-10-11", "events": ['],
+    ['wrong shape', JSON.stringify({ date: CALENDAR_DATE, events: [{ title: 'x' }] })],
+  ])(
+    'v2 criterion 4: "Given an invalid hand-off file (bad JSON or wrong shape), same as 3 with reason `invalid`." (%s)',
+    async (_, content) => {
+      const path = join(root, 'calendar.json');
+      await writeFile(path, content);
+      const { record } = await calendarRun(new CalendarFileSource(root, 'Asia/Jerusalem', path));
+      expect(sender.sent).toHaveLength(1);
+      expect(sender.sent[0]).toContain('<b>היום ביומן</b>\nהיומן לא היה זמין');
+      expect(record.errors).toEqual([unavailable('invalid')]);
+    },
+  );
+
+  it('v2 criterion 5: "The record stores for each event only `title`, `start`, `end`, `allDay`; attendee emails or descriptions present in the file never reach the record (redaction test)."', async () => {
+    const { record } = await calendarRun(
+      new CalendarFileSource(root, 'Asia/Jerusalem', CALENDAR_SAMPLE),
+    );
+    expect(record.calendar).toEqual([
+      { title: 'יום הולדת לנוי', start: '2026-10-11', end: '2026-10-12', allDay: true },
+      {
+        title: 'סנכרון צוות',
+        start: '2026-10-11T06:30:00Z',
+        end: '2026-10-11T07:00:00Z',
+        allDay: false,
+      },
+      {
+        title: 'ראיון טכני',
+        start: '2026-10-11T14:00:00+03:00',
+        end: '2026-10-11T15:00:00+03:00',
+        allDay: false,
+      },
+    ]);
+    const json = JSON.stringify(record);
+    for (const leak of ['noy.private@example.com', 'קוד כניסה', 'secret-event-id', 'Zoom', 'משרד'])
+      expect(json).not.toContain(leak);
+  });
+
+  it('v2 criterion 8: "`--dry-run` reads `test/fixtures/calendar-sample.json` when `--calendar <path>` is passed, so the calendar section can be previewed offline."', async () => {
+    const printed: string[] = [];
+    const offline: typeof fetch = async () => {
+      throw new TypeError('fetch failed: offline');
+    };
+    const wired = buildDeps({
+      env: { dryRun: true },
+      config,
+      prices,
+      root,
+      fetchFn: offline,
+      calendarPath: CALENDAR_SAMPLE,
+      print: (t) => printed.push(t),
+    });
+    const { record } = await runBrief(wired, { date: CALENDAR_DATE, dryRun: true });
+    expect(printed[0]).toContain(SAMPLE_SECTION);
+    expect(record.errors.some((e) => e.source === 'calendar')).toBe(false);
   });
 });

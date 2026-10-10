@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { fakeClient } from '../testing/fake-client.js';
 import type { WriterInput } from '../types.js';
 import { SONNET_MODEL, SonnetWriter, WRITER_SYSTEM } from './sonnet.js';
-import { templateBrief } from './template.js';
+import { formatBrief, templateBrief } from './template.js';
 import { validateBrief, WriterError } from './writer.js';
 
 const input: WriterInput = {
@@ -11,6 +11,7 @@ const input: WriterInput = {
   mustRead: [],
   mention: [],
   concept: 'RAG',
+  calendar: null,
 };
 
 describe('SonnetWriter', () => {
@@ -58,6 +59,35 @@ describe('validateBrief', () => {
     );
     const result = validateBrief(brief);
     expect(result).toMatchObject({ ok: false, missing: [section] });
+  });
+
+  it('v2 criterion 6: "The writer schema requires `concept.answer`; a writer output without it fails validation and the template fallback includes `תשובה:`."', async () => {
+    const client = fakeClient([{ type: 'text', text: '{}' }]);
+    await new SonnetWriter(client).write(input);
+    const schema = client.requests[0]?.output_config?.format?.schema as {
+      properties: { concept: { required: string[] } };
+    };
+    expect(schema.properties.concept.required).toContain('answer');
+    const brief = templateBrief(input);
+    const { answer: _dropped, ...concept } = brief.concept;
+    expect(validateBrief({ ...brief, concept })).toMatchObject({ ok: false, missing: ['concept'] });
+    expect(formatBrief(brief)).toContain('<b>תשובה:</b> ראו את ההסבר למעלה.');
+  });
+
+  it('sends calendar titles and times, never locations', async () => {
+    const client = fakeClient([{ type: 'text', text: '{}' }]);
+    const event = {
+      title: 'ראיון',
+      start: '2026-10-10T14:00:00+03:00',
+      end: '2026-10-10T15:00:00+03:00',
+      allDay: false,
+      location: 'Zoom',
+      time: '14:00–15:00',
+    };
+    await new SonnetWriter(client).write({ ...input, calendar: [event] });
+    const sent = JSON.stringify(client.requests[0]?.messages);
+    expect(sent).toContain('14:00–15:00');
+    expect(sent).not.toContain('Zoom');
   });
 
   it('rejects a news url that is not a url', () => {

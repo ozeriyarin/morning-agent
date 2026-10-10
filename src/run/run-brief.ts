@@ -4,7 +4,9 @@ import { clockTime, dayMonth, hebrewWeekday, zonedTime } from '../dates.js';
 import { dedupe, sortNewestFirst, withinWindow } from '../sources/feeds.js';
 import type { ConceptStore } from '../sources/concepts.js';
 import {
+  SourceError,
   type Brief,
+  type CalendarEvent,
   type CallRecord,
   type CallUsage,
   type DecisionModel,
@@ -18,6 +20,7 @@ import {
   type WeatherDay,
   type Writer,
   type WriterInput,
+  type WrittenBrief,
 } from '../types.js';
 import {
   formatBrief,
@@ -33,6 +36,7 @@ const DECISION_CONCURRENCY = 5;
 
 export interface RunDeps {
   weather: Source<WeatherDay>;
+  calendar: Source<CalendarEvent[]>;
   feeds: Source<Item[]>[];
   concepts: ConceptStore;
   decisionModel: DecisionModel;
@@ -76,7 +80,12 @@ async function writeBrief(
   writer: Writer,
   input: WriterInput,
   errors: RunError[],
-): Promise<{ brief: Brief; mode: RunRecord['writer']; omitted: Section[]; call?: CallUsage }> {
+): Promise<{
+  brief: WrittenBrief;
+  mode: RunRecord['writer'];
+  omitted: Section[];
+  call?: CallUsage;
+}> {
   try {
     const { brief, call } = await writer.write(input);
     const checked = validateBrief(brief);
@@ -104,8 +113,12 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
   const reference = zonedTime(opts.date, deps.localTime, deps.timeZone);
   const ctx = { date: opts.date, reference };
 
-  const [[weatherResult, conceptResult], feedResults] = await Promise.all([
-    Promise.allSettled([deps.weather.fetch(ctx), deps.concepts.next()] as const),
+  const [[weatherResult, conceptResult, calendarResult], feedResults] = await Promise.all([
+    Promise.allSettled([
+      deps.weather.fetch(ctx),
+      deps.concepts.next(),
+      deps.calendar.fetch(ctx),
+    ] as const),
     Promise.allSettled(deps.feeds.map((feed) => feed.fetch(ctx))),
   ]);
 
@@ -117,6 +130,19 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       stage: 'source',
       source: deps.weather.name,
       message: message(weatherResult.reason),
+    });
+  }
+
+  let calendar: CalendarEvent[] | null = null;
+  if (calendarResult.status === 'fulfilled') calendar = calendarResult.value;
+  else {
+    missing.add('calendar');
+    const reason = calendarResult.reason;
+    errors.push({
+      stage: 'source',
+      source: deps.calendar.name,
+      ...(reason instanceof SourceError && reason.reason && { reason: reason.reason }),
+      message: message(reason),
     });
   }
 
@@ -161,6 +187,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
     mustRead: pick('must_read'),
     mention: pick('mention'),
     concept,
+    calendar,
   };
   const written = await writeBrief(deps.writer, input, errors);
   for (const section of written.omitted) missing.add(section);
@@ -171,6 +198,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
   const now = deps.now();
   const brief: Brief = {
     ...written.brief,
+    calendar,
     greeting: input.greeting,
     news: keepKnownLinks(written.brief.news, toDecide),
     concept:
@@ -209,6 +237,8 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
         published,
         sources,
       })),
+      calendar:
+        calendar?.map(({ title, start, end, allDay }) => ({ title, start, end, allDay })) ?? null,
       skippedUnseen: items.length - toDecide.length,
       decisions,
       calls,

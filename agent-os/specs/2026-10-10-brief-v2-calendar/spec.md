@@ -15,7 +15,7 @@ Hand-off file schema (`input/calendar-YYYY-MM-DD.json`):
 { "date": "2026-10-11", "timezone": "Asia/Jerusalem", "source": "google",
   "events": [ { "title": "פגישה עם נוי", "start": "2026-10-11T10:00:00+03:00", "end": "2026-10-11T10:30:00+03:00", "allDay": false, "location": "Zoom" } ] }
 ```
-`events` may be empty. Unknown fields are ignored. The script validates with zod; an invalid file counts as a failed source (brief shows `חסר: יומן`, record lists the error).
+`events` may be empty. Unknown fields are ignored. The script validates with zod; an invalid file counts as a failed source (brief shows `היומן לא היה זמין`, record lists the error with reason `invalid`).
 
 ## Brief changes
 
