@@ -61,7 +61,7 @@ export function costMessage(totals: ReportSummary['totals'], days: number): stri
 // Names the failing service so a blocked host shows up on the phone instead of a generic error.
 async function step<T>(service: string, work: () => Promise<T>): Promise<T> {
   try {
-    return await work();
+    return await work().catch(() => work());
   } catch (error: unknown) {
     const cause = error instanceof Error && error.cause instanceof Error ? ` (${error.cause.message})` : '';
     throw new Error(`שירות ${service} לא זמין כרגע${cause}`, { cause: error });

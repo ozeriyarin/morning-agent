@@ -50,7 +50,7 @@ function isDecider(value: string): value is Decider {
 // Sandboxes route egress through HTTPS_PROXY; Node's fetch ignores it unless told so.
 export function useEnvProxy(): void {
   if (process.env.HTTPS_PROXY || process.env.HTTP_PROXY)
-    setGlobalDispatcher(new EnvHttpProxyAgent());
+    setGlobalDispatcher(new EnvHttpProxyAgent({ connect: { timeout: 30_000 }, headersTimeout: 60_000 }));
 }
 
 async function main(): Promise<number> {
