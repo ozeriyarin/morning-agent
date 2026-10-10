@@ -17,6 +17,7 @@ import { TelegramSender } from '../deliver/telegram.js';
 import { CalendarFileSource } from '../sources/calendar-file.js';
 import { ICloudCalendarSource } from '../sources/icloud-calendar.js';
 import { FileConceptStore } from '../sources/concepts.js';
+import { FileInterviewStore } from '../sources/interview.js';
 import { parseFeed } from '../sources/feeds.js';
 import type {
   CalendarEvent,
@@ -50,8 +51,11 @@ const SECTION_TITLES = [
   'היום ביומן',
   'AI היום',
   'מושג היום',
+  'שאלת ראיון',
   'נוצר ב-',
 ];
+const PROBLEMS = () => join(root, 'interview', 'problems.md');
+const TIPS = () => join(root, 'interview', 'tips.md');
 
 const fixture = (name: string) => readFile(join('test/fixtures', name), 'utf8');
 const prices: Prices = await loadJson('config/prices.json', pricesSchema);
@@ -105,6 +109,7 @@ async function deps(over: Partial<RunDeps> = {}): Promise<RunDeps> {
     calendar: source<CalendarEvent[]>('calendar', []),
     feeds: [source('Simon Willison', atomItems), source('OpenAI News', rssItems)],
     concepts: new FileConceptStore(join(root, 'concepts', 'queue.md')),
+    interview: new FileInterviewStore(PROBLEMS(), TIPS()),
     decisionModel: new FakeDecisionModel(),
     writer: new TemplateWriter(),
     sender,
@@ -126,6 +131,9 @@ beforeEach(async () => {
   await mkdir(join(root, 'concepts'));
   const queue = await readFile('concepts/queue.md', 'utf8');
   await writeFile(join(root, 'concepts', 'queue.md'), queue.replace(/- \[x\] \S+ /g, '- [ ] '));
+  await mkdir(join(root, 'interview'));
+  await writeFile(PROBLEMS(), await readFile('interview/problems.md', 'utf8'));
+  await writeFile(TIPS(), await readFile('interview/tips.md', 'utf8'));
   records = [];
   sender = new CapturingSender();
 });
@@ -296,6 +304,73 @@ describe('runBrief', () => {
     const empty = await runBrief(await deps(), { date: DATE, dryRun: false });
     expect(empty.record.concept).toEqual({ name: null, queueEmpty: true, marked: false });
     expect(empty.html).toContain('תור המושגים ריק');
+  });
+
+  it('v7 criterion 1: "The first unused problem and tip are selected; on a delivered run both are marked with the date; a dry run marks nothing."', async () => {
+    const dry = await runBrief(await deps(), { date: DATE, dryRun: true });
+    expect(dry.record.interview).toEqual({ slug: 'two-sum', tipIndex: 0, marked: false });
+    expect(await readFile(PROBLEMS(), 'utf8')).not.toContain(`- [x] ${DATE}`);
+    expect(await readFile(TIPS(), 'utf8')).not.toContain(`- [x] ${DATE}`);
+
+    const real = await runBrief(await deps(), { date: DATE, dryRun: false });
+    expect(real.record.interview).toEqual({ slug: 'two-sum', tipIndex: 0, marked: true });
+    expect(real.html).toContain('href="https://leetcode.com/problems/two-sum/">Two Sum</a>');
+    expect(await readFile(PROBLEMS(), 'utf8')).toContain(`- [x] ${DATE} two-sum | Two Sum |`);
+    expect(await readFile(TIPS(), 'utf8')).toContain(`- [x] ${DATE} בראיון התנהגותי`);
+    const next = await runBrief(await deps(), { date: '2026-10-11', dryRun: false });
+    expect(next.record.interview).toMatchObject({ slug: 'valid-palindrome', tipIndex: 1 });
+  });
+
+  it('a failed delivery marks neither interview queue', async () => {
+    const failing: Sender = {
+      name: 'capture',
+      send: async () => Promise.reject(new Error('down')),
+    };
+    const { record } = await runBrief(await deps({ sender: failing }), {
+      date: DATE,
+      dryRun: false,
+    });
+    expect(record.interview.marked).toBe(false);
+    expect(await readFile(PROBLEMS(), 'utf8')).not.toContain(`- [x] ${DATE}`);
+  });
+
+  it('v7 criterion 2: "When the problem queue is empty the section says `תור השאלות ריק` and the tip still renders; when the tip queue is exhausted it restarts from the first tip." (end to end)', async () => {
+    await writeFile(PROBLEMS(), '- [x] 2026-10-01 two-sum | Two Sum | easy | hash map | u\n');
+    await writeFile(TIPS(), '- [x] 2026-10-01 טיפ ראשון\n- [x] 2026-10-02 טיפ שני\n');
+    const { html, record } = await runBrief(await deps(), { date: DATE, dryRun: false });
+    expect(html).toContain('<b>שאלת ראיון</b>\nתור השאלות ריק\n<b>טיפ:</b> טיפ ראשון');
+    expect(record.interview).toEqual({ slug: null, tipIndex: 0, marked: true });
+    expect(await readFile(TIPS(), 'utf8')).toBe(`- [x] ${DATE} טיפ ראשון\n- [ ] טיפ שני\n`);
+  });
+
+  it('an unreadable interview queue marks the section missing and still sends', async () => {
+    const { html, record } = await runBrief(
+      await deps({ interview: new FileInterviewStore(join(root, 'nope.md'), TIPS()) }),
+      { date: DATE, dryRun: false },
+    );
+    expect(html).toContain('<b>שאלת ראיון</b>\nחסר: שאלת ראיון');
+    expect(record.missingSections).toContain('interview');
+    expect(record.errors).toContainEqual(expect.objectContaining({ stage: 'interview' }));
+    expect(record.interview).toEqual({ slug: null, tipIndex: null, marked: false });
+    expect(sender.sent).toHaveLength(1);
+  });
+
+  it('v7 criterion 6: "The record stores `interview.slug` and `tipIndex`; no problem text beyond title/slug is stored."', async () => {
+    const writer: Writer = {
+      mode: 'ai',
+      write: async (input) => ({
+        brief: {
+          ...templateBrief(input),
+          interview: { approach: 'מפת ערכים', complexity: 'O(n) זמן', trap: 'אותו איבר פעמיים' },
+        },
+      }),
+    };
+    const { html, record } = await runBrief(await deps({ writer }), { date: DATE, dryRun: false });
+    expect(html).toContain('<b>גישה:</b> מפת ערכים\n<b>סיבוכיות:</b> O(n) זמן');
+    expect(record.interview).toEqual({ slug: 'two-sum', tipIndex: 0, marked: true });
+    const stored = JSON.stringify(record);
+    for (const text of ['Two Sum', 'leetcode.com', 'hash map', 'מפת ערכים', 'בראיון התנהגותי'])
+      expect(stored).not.toContain(text);
   });
 
   it('criterion 9: "Cost: the record total equals the sum of per-call costs computed from the price table in `config/prices.json`."', async () => {

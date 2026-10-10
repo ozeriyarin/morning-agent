@@ -1,6 +1,13 @@
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
 import { callUsage, type MessagesClient } from '../cost.js';
-import type { CalendarEvent, Item, Writer, WriterInput, WriterResult } from '../types.js';
+import type {
+  CalendarEvent,
+  InterviewProblem,
+  Item,
+  Writer,
+  WriterInput,
+  WriterResult,
+} from '../types.js';
 import { BriefSchema, WriterError } from './writer.js';
 
 export const SONNET_MODEL = 'claude-sonnet-5-5';
@@ -18,13 +25,16 @@ Output: JSON matching the schema. Write every field in Hebrew except product nam
 - news.mention: every mention item as { title, url } with the url copied exactly.
 - news.quietDay: true only when both lists are empty.
 - concept: name as given; explanation in 3-5 short lines separated by newlines, concrete and interview-ready; question = one interview-style question to think about; answer = 2-4 short lines that answer that question concretely, in Hebrew. If concept is null, write a one-line note that the queue is empty and still fill question and answer.
+- interview: problem is today's practice problem { title, difficulty, pattern, url } (null when the queue is empty) and tip is shown by the program as is. approach = 1-3 short lines: the pattern, the key idea and the steps; complexity = one line with time and space in big-O; trap = one line with the common mistake or edge case. Hebrew, no code blocks and never a full solution. If problem is null, write one short line in each field suggesting a pattern to review.
 - calendar (input only): today's events, all-day ones first, or null when the calendar was unavailable. The program renders the "היום ביומן" section itself, so never list events in any field; weather.advice may mention an event when the weather matters for it.
 - footer: empty string; the program fills it.
 
-Rules: never invent links or items; no emojis; dates as D.M, times as HH:MM; keep the whole brief under 1,500 characters, so the why lines stay short.`;
+Rules: never invent links or items; no emojis; dates as D.M, times as HH:MM; keep the whole brief under 1,800 characters, so the why lines stay short.`;
 
 const toNews = (item: Item) => ({ title: item.title, url: item.link, summary: item.summary });
 const toEvent = (e: CalendarEvent) => ({ title: e.title, time: e.time ?? 'כל היום' });
+const toProblem = (p: InterviewProblem | null) =>
+  p && { title: p.title, difficulty: p.difficulty, pattern: p.pattern, url: p.url };
 
 export class SonnetWriter implements Writer {
   readonly mode = 'ai';
@@ -48,6 +58,10 @@ export class SonnetWriter implements Writer {
             mention: input.mention.map(toNews),
             concept: input.concept,
             calendar: input.calendar?.map(toEvent) ?? null,
+            interview: {
+              problem: toProblem(input.interview.problem),
+              tip: input.interview.tip?.text ?? null,
+            },
           }),
         },
       ],

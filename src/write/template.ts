@@ -15,9 +15,11 @@ export const TITLES: Record<Section, string> = {
   calendar: 'היום ביומן',
   news: 'AI היום',
   concept: 'מושג היום',
+  interview: 'שאלת ראיון',
 };
 
-export const MAX_BRIEF_CHARS = 1500;
+export const MAX_BRIEF_CHARS = 1800;
+const SEE_LINK = 'ראו את הקישור';
 
 export const QUEUE_EMPTY_CONCEPT: Brief['concept'] = {
   name: 'תור המושגים ריק',
@@ -65,8 +67,11 @@ export function templateBrief(input: WriterInput): Brief {
           answer: 'ראו את ההסבר למעלה.',
         }
       : QUEUE_EMPTY_CONCEPT,
+    interview: { approach: SEE_LINK, complexity: SEE_LINK, trap: SEE_LINK },
     footer: '',
     calendar: input.calendar,
+    interviewPick: input.interview,
+    interviewExplained: false,
   };
 }
 
@@ -98,6 +103,26 @@ function calendarLines(events: CalendarEvent[] | null): string[] {
   });
 }
 
+// Only an AI-written explanation is shown; the template and the fallback point to the link.
+function interviewLines(brief: Brief): string[] {
+  const { problem, tip } = brief.interviewPick;
+  const { approach, complexity, trap } = brief.interview;
+  const explanation = brief.interviewExplained
+    ? [
+        `<b>גישה:</b> ${escapeHtml(approach)}`,
+        `<b>סיבוכיות:</b> ${escapeHtml(complexity)}`,
+        `<b>מלכודת:</b> ${escapeHtml(trap)}`,
+      ]
+    : [`הסבר: ${SEE_LINK}`];
+  const lines = problem
+    ? [
+        `${link(problem.url, problem.title)} · ${escapeHtml(problem.difficulty)} · ${escapeHtml(problem.pattern)}`,
+        ...explanation,
+      ]
+    : ['תור השאלות ריק'];
+  return tip ? [...lines, `<b>טיפ:</b> ${escapeHtml(tip.text)}`] : lines;
+}
+
 function weeklyLine(w: WeeklySummary): string {
   return `השבוע: ${w.days} ימים, עלות ~$${w.costUsd.toFixed(3)}, ${w.items} פריטים נבדקו, ${w.errors} שגיאות`;
 }
@@ -126,6 +151,8 @@ function render(brief: Brief, missing: Section[]): string {
       `<b>תשובה:</b> ${escapeHtml(c.answer)}`,
     ]),
     '',
+    ...section('interview', interviewLines(brief)),
+    '',
     escapeHtml(brief.footer),
     ...(brief.weekly ? [weeklyLine(brief.weekly)] : []),
   ].join('\n');
@@ -135,7 +162,7 @@ export function visibleLength(html: string): number {
   return html.replace(/<[^>]*>/g, '').replace(/&(amp|lt|gt|quot);/g, '_').length;
 }
 
-// Telegram HTML; drops mentions, then extra must-reads (never calendar or concept), until it fits.
+// Telegram HTML; drops mentions, then extra must-reads, never calendar/concept/interview, to fit.
 export function formatBrief(brief: Brief, missing: Section[] = []): string {
   const news = {
     ...brief.news,

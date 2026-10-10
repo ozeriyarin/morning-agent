@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { Item, WriterInput } from '../types.js';
+import type { Brief, Item, WriterInput } from '../types.js';
 import {
   escapeHtml,
   formatBrief,
@@ -51,7 +51,23 @@ const input: WriterInput = {
       source: 'icloud',
     },
   ],
+  interview: {
+    problem: {
+      slug: 'two-sum',
+      title: 'Two <Sum>',
+      difficulty: 'easy',
+      pattern: 'hash map',
+      url: 'https://leetcode.com/problems/two-sum/?a=1&b=2',
+    },
+    tip: { index: 0, text: 'ענו ב-STAR & תנו מספר' },
+  },
 };
+
+const explained = (brief: Brief): Brief => ({
+  ...brief,
+  interview: { approach: 'מפה <ערך, אינדקס>', complexity: 'O(n) זמן', trap: 'אותו איבר פעמיים' },
+  interviewExplained: true,
+});
 
 describe('templateBrief + formatBrief', () => {
   it('produces a schema-valid brief', () => {
@@ -67,6 +83,7 @@ describe('templateBrief + formatBrief', () => {
       '<b>היום ביומן</b>',
       '<b>AI היום</b>',
       '<b>מושג היום</b>',
+      '<b>שאלת ראיון</b>',
       'נוצר ב-07:00',
     ];
     const positions = order.map((s) => html.indexOf(s));
@@ -116,6 +133,47 @@ describe('templateBrief + formatBrief', () => {
     const html = formatBrief(templateBrief(input), ['weather']);
     expect(html).toContain('<b>מזג אוויר במודיעין</b>\nחסר: מזג אוויר במודיעין');
     expect(html).not.toContain('מעונן, 19');
+  });
+
+  it('v7 criterion 4: "`formatBrief` renders the section after the concept with the link, difficulty, pattern, three explanation lines and `טיפ:`; HTML-escaped."', () => {
+    const html = formatBrief({ ...explained(templateBrief(input)), footer: 'נוצר ב-07:00' });
+    const section = [
+      '<b>שאלת ראיון</b>',
+      '<a href="https://leetcode.com/problems/two-sum/?a=1&amp;b=2">Two &lt;Sum&gt;</a> · easy · hash map',
+      '<b>גישה:</b> מפה &lt;ערך, אינדקס&gt;',
+      '<b>סיבוכיות:</b> O(n) זמן',
+      '<b>מלכודת:</b> אותו איבר פעמיים',
+      '<b>טיפ:</b> ענו ב-STAR &amp; תנו מספר',
+    ].join('\n');
+    expect(html).toContain(section);
+    expect(html.indexOf('<b>תשובה:</b>')).toBeLessThan(html.indexOf(section));
+    expect(html.indexOf(section)).toBeLessThan(html.indexOf('נוצר ב-07:00'));
+  });
+
+  it('v7 criterion 2: "When the problem queue is empty the section says `תור השאלות ריק` and the tip still renders; when the tip queue is exhausted it restarts from the first tip." (rendering)', () => {
+    const empty = templateBrief({ ...input, interview: { ...input.interview, problem: null } });
+    expect(formatBrief(empty)).toContain(
+      '<b>שאלת ראיון</b>\nתור השאלות ריק\n<b>טיפ:</b> ענו ב-STAR &amp; תנו מספר',
+    );
+  });
+
+  it('renders חסר for the interview section when its queues failed', () => {
+    const html = formatBrief(templateBrief(input), ['interview']);
+    expect(html).toContain('<b>שאלת ראיון</b>\nחסר: שאלת ראיון');
+    expect(html).not.toContain('טיפ:');
+  });
+
+  it('v7 criterion 5: "The brief length target is 1,800 and trimming never removes the interview section."', () => {
+    expect(MAX_BRIEF_CHARS).toBe(1800);
+    const many = Array.from({ length: 40 }, (_, i) =>
+      item(i, `A fairly long article title number ${i}`),
+    );
+    const brief = explained(
+      templateBrief({ ...input, mustRead: many.slice(0, 20), mention: many.slice(20) }),
+    );
+    const html = formatBrief(brief);
+    expect(visibleLength(html)).toBeLessThanOrEqual(MAX_BRIEF_CHARS);
+    expect(html).toContain('<b>מלכודת:</b> אותו איבר פעמיים\n<b>טיפ:</b>');
   });
 
   it('trims mention items, then extra must-reads, never the calendar or the concept', () => {

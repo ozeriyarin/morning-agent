@@ -2,7 +2,8 @@ export const DECISIONS = ['must_read', 'mention', 'skip'] as const;
 export type Decision = (typeof DECISIONS)[number];
 
 export const SECTIONS = ['weather', 'calendar', 'news', 'concept'] as const;
-export type Section = (typeof SECTIONS)[number];
+// `interview` is missing only when its queues fail; a bad writer explanation falls back instead.
+export type Section = (typeof SECTIONS)[number] | 'interview';
 
 export interface Item {
   id: string;
@@ -57,6 +58,19 @@ export interface CallRecord {
 // A provider that reports its own cost sets costUsd; otherwise it is priced from config/prices.json.
 export type CallUsage = Omit<CallRecord, 'costUsd'> & { costUsd?: number };
 
+export interface InterviewProblem {
+  slug: string;
+  title: string;
+  difficulty: string;
+  pattern: string;
+  url: string;
+}
+
+export interface InterviewPick {
+  problem: InterviewProblem | null;
+  tip: { index: number; text: string } | null;
+}
+
 export interface DecisionResult {
   decision: Decision;
   error?: string;
@@ -79,6 +93,7 @@ export interface WrittenBrief {
     quietDay: boolean;
   };
   concept: { name: string; explanation: string; question: string; answer: string };
+  interview: { approach: string; complexity: string; trap: string };
   footer: string;
 }
 
@@ -93,6 +108,8 @@ export interface Brief extends WrittenBrief {
   calendar: CalendarEvent[] | null;
   icloudUnavailable?: boolean;
   weekly?: WeeklySummary;
+  interviewPick: InterviewPick;
+  interviewExplained: boolean;
 }
 
 export interface WriterInput {
@@ -102,6 +119,7 @@ export interface WriterInput {
   mention: Item[];
   concept: string | null;
   calendar: CalendarEvent[] | null;
+  interview: InterviewPick;
 }
 
 export interface WriterResult {
@@ -124,7 +142,7 @@ export interface Sender {
 }
 
 export interface RunError {
-  stage: 'source' | 'decision' | 'writer' | 'delivery' | 'concepts';
+  stage: 'source' | 'decision' | 'writer' | 'delivery' | 'concepts' | 'interview';
   source?: string;
   reason?: SourceFailure;
   message: string;
@@ -153,6 +171,7 @@ export interface RunRecord {
   writer: 'ai' | 'template' | 'fallback';
   missingSections: Section[];
   concept: { name: string | null; queueEmpty: boolean; marked: boolean };
+  interview: { slug: string | null; tipIndex: number | null; marked: boolean };
   delivery: { sender: string; status: 'sent' | 'printed' | 'failed' };
   briefChars: number;
   errors: RunError[];

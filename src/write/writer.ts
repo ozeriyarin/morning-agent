@@ -14,6 +14,7 @@ export const BriefSchema = z.object({
     quietDay: z.boolean(),
   }),
   concept: z.object({ name: text, explanation: text, question: text, answer: text }),
+  interview: z.object({ approach: text, complexity: text, trap: text }),
   footer: z.string(),
 });
 

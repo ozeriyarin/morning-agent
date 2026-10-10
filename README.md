@@ -2,7 +2,8 @@
 
 Morning Agent sends one short Hebrew briefing to Telegram every morning at 07:00 Israel time:
 today's weather in Modi'in, today's Google and iCloud Calendar events, the AI news from the last 24 hours
-that matter, and one interview concept explained with an answer to think about. Every run also writes an auditable record (items, decisions, tokens, cost,
+that matter, one interview concept explained with an answer to think about, and one LeetCode
+problem with the approach to it plus an interview tip. Every run also writes an auditable record (items, decisions, tokens, cost,
 latency, errors) to `runs/YYYY-MM-DD.json`.
 
 The project is spec-driven: product docs live in `agent-os/product/`, coding standards in
@@ -12,7 +13,8 @@ The project is spec-driven: product docs live in `agent-os/product/`, coding sta
 `agent-os/specs/2026-10-10-brief-v3-icloud/spec.md`, v4 Jev:
 `agent-os/specs/2026-10-10-brief-v4-jev/spec.md`, v5 cost view:
 `agent-os/specs/2026-10-10-brief-v5-cost-view/spec.md`, v6 inbox:
-`agent-os/specs/2026-10-10-brief-v6-inbox/spec.md`).
+`agent-os/specs/2026-10-10-brief-v6-inbox/spec.md`, v7 interview:
+`agent-os/specs/2026-10-10-brief-v7-interview/spec.md`).
 
 ## Architecture
 
@@ -28,7 +30,8 @@ npm run brief [--dry-run] [--date YYYY-MM-DD] [--calendar <path>] [--icloud <pat
             │   ├── sources/icloud-calendar.ts  CalDAV PROPFIND + REPORT (expand) -> parseICalendar()
             │   ├── sources/calendar-merge.ts   mergeCalendars(google, icloud): dedupe, all-day first
             │   ├── sources/feeds.ts     RSS + Atom -> parseFeed() -> withinWindow(24h) -> dedupe()
-            │   └── sources/concepts.ts  concepts/queue.md -> next unused concept
+            │   ├── sources/concepts.ts  concepts/queue.md -> next unused concept
+            │   └── sources/interview.ts interview/problems.md + tips.md -> next problem and tip
             ├── decide (<= 40 newest items, one cheap call each)
             │   ├── decide/select.ts     --decider, else config decisionModel, else haiku
             │   ├── decide/haiku.ts      claude-haiku-4-5, closed-choice tool: must_read | mention | skip
@@ -59,6 +62,7 @@ src/records.ts       run-record schema + loadRecords() + latestRecord(), shared 
 config/brief.json    location, feeds, recipient, language, local send time, decisionModel
 config/prices.json   $ per 1M input / output / cache-read / cache-write tokens, per model
 concepts/queue.md    the learning queue
+interview/           the interview problem and tip queues
 ```
 
 ## Running it
@@ -299,6 +303,41 @@ Add a line to `concepts/queue.md`:
 The run takes the first `- [ ]` line and, after the brief is delivered, rewrites it as
 `- [x] 2026-10-11 vector databases`. When every line is used, the brief says the queue is empty.
 
+## Interview question of the day
+
+Every brief ends with `שאלת ראיון`, after the concept and before the footer: one LeetCode problem
+from `interview/problems.md` and one tip from `interview/tips.md`.
+
+```markdown
+- [ ] two-sum | Two Sum | easy | hash map | https://leetcode.com/problems/two-sum/
+- [ ] בראיון התנהגותי ענו במבנה STAR: מצב, משימה, פעולה, תוצאה, ותנו לתוצאה מספר.
+```
+
+The run takes the first `- [ ]` line of each file and, only after a real run delivered the brief,
+marks both as `- [x] YYYY-MM-DD …`; a dry run marks nothing. The 30 seeded problems (easy and
+medium) cycle through twelve patterns (hash map, two pointers, stack, binary search, sliding
+window, trees, BFS/DFS, dynamic programming, intervals, heaps, graphs, tries), so any 7 days in a
+row mix 7 patterns. The writer gets the problem's title, difficulty, pattern and link plus the tip
+and returns `interview: { approach, complexity, trap }` in Hebrew, without code; the tip itself is
+printed as is. The section renders as:
+
+```text
+שאלת ראיון
+Two Sum · easy · hash map        (the title links to the problem)
+גישה: …
+סיבוכיות: …
+מלכודת: …
+טיפ: …
+```
+
+With the template writer (dry run) or when the writer output fails validation, the three lines
+become `הסבר: ראו את הקישור`. When every problem is used the section says `תור השאלות ריק` and the
+tip still shows; when every tip is used the tips start again from the first one. If a queue file
+cannot be read the section says `חסר: שאלת ראיון`. The brief targets 1,800 visible characters and
+trimming only drops news, never the calendar, the concept or this section. The record keeps
+`interview: { slug, tipIndex, marked }` (`tipIndex` counts from 0), never the problem text, the
+tip or the explanation. Add a problem or a tip by appending a `- [ ]` line in the same format.
+
 ## The routine
 
 The brief runs as a Claude Code cloud routine named "Morning brief": cron `0 4 * * *` UTC (07:00
@@ -317,7 +356,8 @@ tests without sending a brief. Using the Google Calendar connector, list the eve
 the hand-off schema (title, start, end, allDay, location; nothing else). If the connector fails,
 do not create the file and continue. Run `npm run brief`. On Sundays (Asia/Jerusalem), then run
 `npm run report` (the last 7 days) and replace the table under "Latest table" in `README.md` with
-the Markdown it prints. Then commit `runs/<date>.json` and `concepts/queue.md` (on Sundays also
+the Markdown it prints. Then commit `runs/<date>.json`, `concepts/queue.md`, `interview/problems.md` and
+`interview/tips.md` (on Sundays also
 `reports/report-<from>-<to>.json` and `README.md`) with the message `brief: <date>` (date as
 YYYY-MM-DD, Asia/Jerusalem) and push. Finally report the Telegram delivery status and the total
 cost from the run record.

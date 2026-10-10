@@ -12,6 +12,16 @@ const input: WriterInput = {
   mention: [],
   concept: 'RAG',
   calendar: null,
+  interview: {
+    problem: {
+      slug: 'two-sum',
+      title: 'Two Sum',
+      difficulty: 'easy',
+      pattern: 'hash map',
+      url: 'https://leetcode.com/problems/two-sum/',
+    },
+    tip: { index: 3, text: 'פתחו בעוזר שרץ בפרודקשן' },
+  },
 };
 
 describe('SonnetWriter', () => {
@@ -72,6 +82,48 @@ describe('validateBrief', () => {
     const { answer: _dropped, ...concept } = brief.concept;
     expect(validateBrief({ ...brief, concept })).toMatchObject({ ok: false, missing: ['concept'] });
     expect(formatBrief(brief)).toContain('<b>תשובה:</b> ראו את ההסבר למעלה.');
+  });
+
+  it('v7 criterion 3: "The writer schema requires `interview.approach`, `complexity` and `trap`; a writer output without them fails validation and the template fallback renders title, link, pattern and tip."', async () => {
+    const client = fakeClient([{ type: 'text', text: '{}' }]);
+    await new SonnetWriter(client).write(input);
+    const schema = client.requests[0]?.output_config?.format?.schema as {
+      required: string[];
+      properties: { interview: { required: string[] } };
+    };
+    expect(schema.required).toContain('interview');
+    expect(schema.properties.interview.required).toEqual(['approach', 'complexity', 'trap']);
+    const brief = templateBrief(input);
+    for (const field of ['approach', 'complexity', 'trap'] as const) {
+      const { [field]: _dropped, ...interview } = brief.interview;
+      expect(validateBrief({ ...brief, interview }).ok).toBe(false);
+    }
+    expect(formatBrief(brief)).toContain(
+      [
+        '<b>שאלת ראיון</b>',
+        '<a href="https://leetcode.com/problems/two-sum/">Two Sum</a> · easy · hash map',
+        'הסבר: ראו את הקישור',
+        '<b>טיפ:</b> פתחו בעוזר שרץ בפרודקשן',
+      ].join('\n'),
+    );
+  });
+
+  it('sends the problem and the tip to the writer, never the slug or the tip index', async () => {
+    const client = fakeClient([{ type: 'text', text: '{}' }]);
+    await new SonnetWriter(client).write(input);
+    const sent = JSON.parse(String(client.requests[0]?.messages[0]?.content)) as {
+      interview: unknown;
+    };
+    expect(sent.interview).toEqual({
+      problem: {
+        title: 'Two Sum',
+        difficulty: 'easy',
+        pattern: 'hash map',
+        url: 'https://leetcode.com/problems/two-sum/',
+      },
+      tip: 'פתחו בעוזר שרץ בפרודקשן',
+    });
+    expect(WRITER_SYSTEM).toContain('never a full solution');
   });
 
   it('sends calendar titles and times, never locations', async () => {

@@ -6,6 +6,7 @@ import { summarise } from '../report/report.js';
 import { mergeCalendars } from '../sources/calendar-merge.js';
 import { dedupe, sortNewestFirst, withinWindow } from '../sources/feeds.js';
 import type { ConceptStore } from '../sources/concepts.js';
+import type { InterviewStore } from '../sources/interview.js';
 import {
   SourceError,
   type Brief,
@@ -14,6 +15,7 @@ import {
   type CallUsage,
   type DecisionModel,
   type DecisionResult,
+  type InterviewPick,
   type Item,
   type RunError,
   type RunRecord,
@@ -45,6 +47,7 @@ export interface RunDeps {
   icloud?: Source<CalendarEvent[]> | null;
   feeds: Source<Item[]>[];
   concepts: ConceptStore;
+  interview: InterviewStore;
   decisionModel: DecisionModel;
   warnings?: string[];
   writer: Writer;
@@ -141,16 +144,19 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
   const reference = zonedTime(opts.date, deps.localTime, deps.timeZone);
   const ctx = { date: opts.date, reference };
 
-  const [[weatherResult, conceptResult, calendarResult, icloudResult], feedResults] =
-    await Promise.all([
-      Promise.allSettled([
-        deps.weather.fetch(ctx),
-        deps.concepts.next(),
-        deps.calendar.fetch(ctx),
-        deps.icloud ? deps.icloud.fetch(ctx) : [],
-      ] as const),
-      Promise.allSettled(deps.feeds.map((feed) => feed.fetch(ctx))),
-    ]);
+  const [
+    [weatherResult, conceptResult, calendarResult, icloudResult, interviewResult],
+    feedResults,
+  ] = await Promise.all([
+    Promise.allSettled([
+      deps.weather.fetch(ctx),
+      deps.concepts.next(),
+      deps.calendar.fetch(ctx),
+      deps.icloud ? deps.icloud.fetch(ctx) : [],
+      deps.interview.next(),
+    ] as const),
+    Promise.allSettled(deps.feeds.map((feed) => feed.fetch(ctx))),
+  ]);
 
   let weather: WeatherDay | null = null;
   if (weatherResult.status === 'fulfilled') weather = weatherResult.value;
@@ -197,6 +203,13 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
     errors.push({ stage: 'concepts', message: message(conceptResult.reason) });
   }
 
+  let interview: InterviewPick = { problem: null, tip: null };
+  if (interviewResult.status === 'fulfilled') interview = interviewResult.value;
+  else {
+    missing.add('interview');
+    errors.push({ stage: 'interview', message: message(interviewResult.reason) });
+  }
+
   const fetched: Item[] = [];
   feedResults.forEach((result, i) => {
     if (result.status === 'fulfilled') fetched.push(...result.value);
@@ -235,6 +248,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
     mention: pick('mention'),
     concept,
     calendar,
+    interview,
   };
   const written = await writeBrief(deps.writer, input, errors);
   for (const section of written.omitted) missing.add(section);
@@ -254,6 +268,8 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       concept === null && !missing.has('concept') ? QUEUE_EMPTY_CONCEPT : written.brief.concept,
     footer: `נוצר ב-${clockTime(now, deps.timeZone)} · ${items.length} פריטים נבדקו · עלות ~$${total.toFixed(3)}`,
     weekly,
+    interviewPick: interview,
+    interviewExplained: written.mode === 'ai',
   };
   const missingSections = [...missing];
   const html = formatBrief(brief, missingSections);
@@ -272,6 +288,16 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       marked = true;
     } catch (error) {
       errors.push({ stage: 'concepts', message: message(error) });
+    }
+  }
+
+  let interviewMarked = false;
+  if ((interview.problem || interview.tip) && !opts.dryRun && delivery === 'sent') {
+    try {
+      await deps.interview.markUsed(interview, opts.date);
+      interviewMarked = true;
+    } catch (error) {
+      errors.push({ stage: 'interview', message: message(error) });
     }
   }
 
@@ -304,6 +330,11 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       writer: written.mode,
       missingSections,
       concept: { name: concept, queueEmpty: concept === null && !missing.has('concept'), marked },
+      interview: {
+        slug: interview.problem?.slug ?? null,
+        tipIndex: interview.tip?.index ?? null,
+        marked: interviewMarked,
+      },
       delivery: { sender: deps.sender.name, status: delivery },
       briefChars: visibleLength(html),
       errors,

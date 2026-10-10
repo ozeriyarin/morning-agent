@@ -8,6 +8,7 @@ import { ConsoleSender } from '../deliver/console.js';
 import { TelegramSender } from '../deliver/telegram.js';
 import { CalendarFileSource } from '../sources/calendar-file.js';
 import { FileConceptStore } from '../sources/concepts.js';
+import { FileInterviewStore } from '../sources/interview.js';
 import {
   ICloudCalendarSource,
   ICloudFileSource,
@@ -65,6 +66,10 @@ export function buildDeps(options: WiringOptions): RunDeps {
         : null,
     feeds: config.feeds.map((feed) => new FeedSource(feed.name, feed.url, fetchFn)),
     concepts: new FileConceptStore(join(root, 'concepts', 'queue.md')),
+    interview: new FileInterviewStore(
+      join(root, 'interview', 'problems.md'),
+      join(root, 'interview', 'tips.md'),
+    ),
     decisionModel: decision.model,
     warnings: decision.warnings,
     writer: client ? new SonnetWriter(client) : new TemplateWriter(),

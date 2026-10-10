@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { Sender } from '../types.js';
-import { COMMAND_FAILED, runInbox, summaryLine, THANKS, type InboxDeps } from './inbox.js';
+import { runInbox, summaryLine, THANKS, type InboxDeps } from './inbox.js';
 import type { InboxMessage, TelegramUpdate, UpdatesSource } from './telegram-updates.js';
 
 const CHAT = '987654321';
