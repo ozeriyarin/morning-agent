@@ -1,0 +1,5 @@
+root:
+  typescript-style: "Node 20 ESM strict TypeScript, module layout, interfaces per external system, error policy, naming"
+  secrets-and-config: "Secrets only via validated process.env, committed non-secret config, redaction in run records"
+  ai-calls: "Two models (cheap decisions, one writer call), closed-choice decisions, cached system prompt, per-call cost records, budgets"
+  testing: "Vitest, pure transforms table-tested, clients via fakes, acceptance criteria mapped to tests, npm test before commit and before each run"
