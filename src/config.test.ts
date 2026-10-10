@@ -20,8 +20,15 @@ describe('loadEnv', () => {
 
   it('treats an empty value as missing', () => {
     expect(() => loadEnv({ ...full, ANTHROPIC_API_KEY: '' }, false)).toThrow(
-      'ANTHROPIC_API_KEY is required',
+      'MORNING_ANTHROPIC_API_KEY or ANTHROPIC_API_KEY is required',
     );
+  });
+
+  it('accepts MORNING_ANTHROPIC_API_KEY in place of ANTHROPIC_API_KEY', () => {
+    const { ANTHROPIC_API_KEY: _dropped, ...rest } = full;
+    expect(loadEnv({ ...rest, MORNING_ANTHROPIC_API_KEY: 'sk-ant-m' }, false)).toMatchObject({
+      ANTHROPIC_API_KEY: 'sk-ant-m',
+    });
   });
 
   it('never echoes a secret value in the error', () => {

@@ -7,7 +7,7 @@ const secret = (name: string) =>
 const liveEnvSchema = z.object({
   TELEGRAM_BOT_TOKEN: secret('TELEGRAM_BOT_TOKEN'),
   TELEGRAM_CHAT_ID: secret('TELEGRAM_CHAT_ID'),
-  ANTHROPIC_API_KEY: secret('ANTHROPIC_API_KEY'),
+  ANTHROPIC_API_KEY: secret('MORNING_ANTHROPIC_API_KEY or ANTHROPIC_API_KEY'),
   ICLOUD_APP_PASSWORD: z.string().optional(),
 });
 
@@ -21,7 +21,11 @@ export class ConfigError extends Error {
 // Throws naming every missing variable and never echoes values; dry runs need no secrets.
 export function loadEnv(source: Record<string, string | undefined>, dryRun: boolean): Env {
   if (dryRun) return { dryRun: true };
-  const parsed = liveEnvSchema.safeParse(source);
+  // Cloud sessions withhold ANTHROPIC_API_KEY from the shell, so a project-specific name comes first.
+  const parsed = liveEnvSchema.safeParse({
+    ...source,
+    ANTHROPIC_API_KEY: source.MORNING_ANTHROPIC_API_KEY || source.ANTHROPIC_API_KEY,
+  });
   if (!parsed.success) {
     throw new ConfigError(parsed.error.issues.map((issue) => issue.message).join('; '));
   }

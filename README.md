@@ -59,7 +59,7 @@ A real run needs these environment variables (see `.env.example`; never commit a
 | --------------------- | -------------------------------------------- |
 | `TELEGRAM_BOT_TOKEN`  | bot token from @BotFather                    |
 | `TELEGRAM_CHAT_ID`    | the recipient's chat id                      |
-| `ANTHROPIC_API_KEY`   | decision model and writer                    |
+| `MORNING_ANTHROPIC_API_KEY` | decision model and writer (`ANTHROPIC_API_KEY` also accepted; cloud sessions withhold that name) |
 | `ICLOUD_APP_PASSWORD` | reserved for the iCloud calendar (roadmap 3) |
 
 Other checks: `npm run typecheck`, `npm run lint`, `npm run format`.
