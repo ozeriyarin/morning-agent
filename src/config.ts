@@ -21,15 +21,19 @@ export class ConfigError extends Error {
 // Throws naming every missing variable and never echoes values; dry runs need no secrets.
 export function loadEnv(source: Record<string, string | undefined>, dryRun: boolean): Env {
   if (dryRun) return { dryRun: true };
-  // Cloud sessions withhold ANTHROPIC_API_KEY from the shell, so a project-specific name comes first.
   const parsed = liveEnvSchema.safeParse({
     ...source,
-    ANTHROPIC_API_KEY: source.MORNING_ANTHROPIC_API_KEY || source.ANTHROPIC_API_KEY,
+    ANTHROPIC_API_KEY: loadAnthropicKey(source),
   });
   if (!parsed.success) {
     throw new ConfigError(parsed.error.issues.map((issue) => issue.message).join('; '));
   }
   return parsed.data;
+}
+
+// Cloud sessions withhold ANTHROPIC_API_KEY from the shell, so a project-specific name comes first.
+export function loadAnthropicKey(source: Record<string, string | undefined>): string | undefined {
+  return source.MORNING_ANTHROPIC_API_KEY || source.ANTHROPIC_API_KEY || undefined;
 }
 
 // Both are optional; iCloud is enabled only when both are set, in live and dry runs alike.
@@ -39,6 +43,11 @@ export function loadICloudCredentials(
   const username = source.ICLOUD_USERNAME?.trim();
   const password = source.ICLOUD_APP_PASSWORD?.trim();
   return username && password ? { username, password } : null;
+}
+
+// Optional: without it a configured or requested Jev falls back to Haiku.
+export function loadOpenRouterKey(source: Record<string, string | undefined>): string | null {
+  return source.OPENROUTER_API_KEY?.trim() || null;
 }
 
 export const briefConfigSchema = z.object({
@@ -52,6 +61,7 @@ export const briefConfigSchema = z.object({
   }),
   schedule: z.object({ localTime: z.string().regex(/^\d{2}:\d{2}$/) }),
   feeds: z.array(z.object({ name: z.string().min(1), url: z.url() })).min(1),
+  decisionModel: z.enum(['haiku', 'jev']).default('haiku'),
 });
 
 export type BriefConfig = z.infer<typeof briefConfigSchema>;

@@ -1,6 +1,7 @@
 const PATTERNS: [RegExp, string][] = [
   [/bot\d+:[\w-]+/g, 'bot[REDACTED]'],
   [/sk-ant-[\w-]+/g, '[REDACTED]'],
+  [/sk-or-[\w-]+/g, '[REDACTED]'],
   [/(chat_id=)[^&\s"]+/g, '$1[REDACTED]'],
   [/(\/\/)[^/\s@]+@/g, '$1[REDACTED]@'],
   [/(Basic )[\w+/=]+/g, '$1[REDACTED]'],

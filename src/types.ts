@@ -51,14 +51,18 @@ export interface CallRecord {
   cacheWriteTokens: number;
   latencyMs: number;
   costUsd: number;
+  provider?: 'openrouter';
 }
 
-export type CallUsage = Omit<CallRecord, 'costUsd'>;
+// A provider that reports its own cost sets costUsd; otherwise it is priced from config/prices.json.
+export type CallUsage = Omit<CallRecord, 'costUsd'> & { costUsd?: number };
 
 export interface DecisionResult {
   decision: Decision;
   error?: string;
   call?: CallUsage;
+  confidence?: number;
+  probabilities?: Record<string, number>;
 }
 
 export interface DecisionModel {
@@ -127,7 +131,15 @@ export interface RunRecord {
   calendar: Pick<CalendarEvent, 'title' | 'start' | 'end' | 'allDay' | 'source'>[] | null;
   icloud: 'ok' | 'disabled' | 'failed';
   skippedUnseen: number;
-  decisions: { title: string; link: string; decision: Decision; error?: string }[];
+  decisions: {
+    title: string;
+    link: string;
+    decision: Decision;
+    model?: string;
+    confidence?: number;
+    probabilities?: Record<string, number>;
+    error?: string;
+  }[];
   calls: CallRecord[];
   totalCostUsd: number;
   writer: 'ai' | 'template' | 'fallback';
@@ -136,6 +148,7 @@ export interface RunRecord {
   delivery: { sender: string; status: 'sent' | 'printed' | 'failed' };
   briefChars: number;
   errors: RunError[];
+  warnings?: string[];
 }
 
 export type SourceFailure = 'missing' | 'invalid' | 'icloud';

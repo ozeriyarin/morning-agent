@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-02",
+  "generatedAt": "2026-10-02T04:00:05.000Z",
+  "dryRun": false,
+  "fetchedCount": 40,
+  "items": [
+    {
+      "title": "Anthropic Ships Claude Code Hooks!",
+      "link": "https://example.org/b/hooks-repost",
+      "published": "2026-10-01T09:00:00.000Z",
+      "sources": [
+        "Other Feed"
+      ]
+    },
+    {
+      "title": "A benchmark of local models",
+      "link": "https://example.com/b/bench",
+      "published": "2026-10-02T01:00:00.000Z",
+      "sources": [
+        "Example Feed"
+      ]
+    },
+    {
+      "title": "Weekend gardening notes",
+      "link": "https://example.com/b/garden",
+      "published": "2026-10-01T22:00:00.000Z",
+      "sources": [
+        "Example News"
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "title": "Anthropic Ships Claude Code Hooks!",
+      "link": "https://example.org/b/hooks-repost",
+      "decision": "must_read"
+    },
+    {
+      "title": "A benchmark of local models",
+      "link": "https://example.com/b/bench",
+      "decision": "mention"
+    },
+    {
+      "title": "Weekend gardening notes",
+      "link": "https://example.com/b/garden",
+      "decision": "mention"
+    }
+  ],
+  "calls": [],
+  "totalCostUsd": 0,
+  "errors": []
+}

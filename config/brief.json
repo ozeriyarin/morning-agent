@@ -8,6 +8,7 @@
     "timezone": "Asia/Jerusalem"
   },
   "schedule": { "localTime": "07:00" },
+  "decisionModel": "haiku",
   "feeds": [
     { "name": "Simon Willison", "url": "https://simonwillison.net/atom/everything/" },
     {

@@ -1,0 +1,232 @@
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { z } from 'zod';
+import type { Prices } from '../config.js';
+import { priceCall } from '../cost.js';
+import { decideAll } from '../run/run-brief.js';
+import { normalizeTitle } from '../sources/feeds.js';
+import { DECISIONS, type Decision, type DecisionModel, type Item } from '../types.js';
+
+const recordSchema = z.object({
+  date: z.string(),
+  items: z.array(
+    z.object({
+      title: z.string(),
+      link: z.string(),
+      published: z.string().default(''),
+      summary: z.string().default(''),
+      sources: z.array(z.string()).default([]),
+    }),
+  ),
+  decisions: z.array(z.object({ title: z.string(), decision: z.enum(DECISIONS) })).default([]),
+});
+
+export type StoredRun = z.infer<typeof recordSchema>;
+
+export interface ReplayItem {
+  date: string;
+  item: Item;
+  original: Decision | null;
+}
+
+export interface ModelChoice {
+  decision: Decision;
+  costUsd: number;
+  latencyMs: number | null;
+  confidence?: number;
+  error?: string;
+}
+
+export interface ModelStats {
+  model: string;
+  decisions: number;
+  counts: Record<Decision, number>;
+  errors: number;
+  costUsd: number;
+  meanLatencyMs: number;
+}
+
+export interface AgreementCell {
+  agree: number;
+  total: number;
+}
+
+export interface ReplayReport {
+  from: string;
+  to: string;
+  dryRun: boolean;
+  runs: string[];
+  storedItems: number;
+  items: {
+    date: string;
+    title: string;
+    original: Decision | null;
+    choices: Record<string, ModelChoice>;
+  }[];
+  models: Record<string, ModelStats>;
+  agreement: { labels: string[]; cells: AgreementCell[][] };
+  disagreements: { title: string; choices: Record<string, Decision | null> }[];
+}
+
+export function datesBetween(from: string, to: string): string[] {
+  const dates: string[] = [];
+  const end = Date.parse(`${to}T00:00:00Z`);
+  for (let t = Date.parse(`${from}T00:00:00Z`); t <= end; t += 86_400_000)
+    dates.push(new Date(t).toISOString().slice(0, 10));
+  return dates;
+}
+
+// Reads runs/<date>.json for each day in range; days without a live record are skipped.
+export async function loadRuns(dir: string, from: string, to: string): Promise<StoredRun[]> {
+  const runs: StoredRun[] = [];
+  for (const date of datesBetween(from, to)) {
+    const text = await readFile(join(dir, `${date}.json`), 'utf8').catch(() => null);
+    if (text !== null) runs.push(recordSchema.parse(JSON.parse(text)));
+  }
+  return runs;
+}
+
+// The first day an item appeared wins, together with the decision made that day.
+export function collectItems(runs: StoredRun[]): ReplayItem[] {
+  const byTitle = new Map<string, ReplayItem>();
+  for (const run of runs) {
+    const decided = new Map(run.decisions.map((d) => [normalizeTitle(d.title), d.decision]));
+    for (const { title, link, published, summary, sources } of run.items) {
+      const key = normalizeTitle(title);
+      if (byTitle.has(key)) continue;
+      const item = { id: link, title, link, published, summary, sources };
+      byTitle.set(key, { date: run.date, item, original: decided.get(key) ?? null });
+    }
+  }
+  return [...byTitle.values()];
+}
+
+const sum = (values: number[]) => values.reduce((a, b) => a + b, 0);
+
+function stats(model: string, choices: ModelChoice[]): ModelStats {
+  const latencies = choices.flatMap((c) => (c.latencyMs === null ? [] : [c.latencyMs]));
+  const counts = Object.fromEntries(
+    DECISIONS.map((d) => [d, choices.filter((c) => c.decision === d).length]),
+  ) as Record<Decision, number>;
+  return {
+    model,
+    decisions: choices.length,
+    counts,
+    errors: choices.filter((c) => c.error).length,
+    costUsd: sum(choices.map((c) => c.costUsd)),
+    meanLatencyMs: latencies.length ? sum(latencies) / latencies.length : 0,
+  };
+}
+
+export interface ReplayInput {
+  from: string;
+  to: string;
+  dryRun: boolean;
+  runs: StoredRun[];
+  models: Record<string, DecisionModel>;
+  prices: Prices;
+}
+
+// Each deduped item is decided once per model; `original` is the decision stored in the record.
+export async function replay(input: ReplayInput): Promise<ReplayReport> {
+  const replayItems = collectItems(input.runs);
+  const items = replayItems.map((r) => r.item);
+  const models = Object.entries(input.models);
+  const perModel = await Promise.all(
+    models.map(async ([, model]) =>
+      (await decideAll(model, items)).map((r): ModelChoice => ({
+        decision: r.decision,
+        costUsd: r.call ? priceCall(r.call, input.prices).costUsd : 0,
+        latencyMs: r.call ? r.call.latencyMs : null,
+        ...(r.confidence !== undefined && { confidence: r.confidence }),
+        ...(r.error && { error: r.error }),
+      })),
+    ),
+  );
+  const names = models.map(([name]) => name);
+  const rows = replayItems.map((r, i) => ({
+    date: r.date,
+    title: r.item.title,
+    original: r.original,
+    choices: Object.fromEntries(names.map((name, m) => [name, perModel[m]?.[i] as ModelChoice])),
+  }));
+  const labels = ['original', ...names];
+  const pick = (row: (typeof rows)[number], label: string) =>
+    label === 'original' ? row.original : (row.choices[label]?.decision ?? null);
+  const cells = labels.map((a) =>
+    labels.map((b): AgreementCell => {
+      const compared = rows.filter((row) => pick(row, a) !== null && pick(row, b) !== null);
+      const agree = compared.filter((row) => pick(row, a) === pick(row, b)).length;
+      return { agree, total: compared.length };
+    }),
+  );
+  // With one model the comparison is against the stored decision instead.
+  const contenders = names.length > 1 ? names : labels;
+  const disagreements = rows
+    .filter((row) => new Set(contenders.map((l) => pick(row, l))).size > 1)
+    .map((row) => ({
+      title: row.title,
+      choices: Object.fromEntries(labels.map((l) => [l, pick(row, l)])),
+    }));
+  return {
+    from: input.from,
+    to: input.to,
+    dryRun: input.dryRun,
+    runs: input.runs.map((r) => r.date),
+    storedItems: sum(input.runs.map((r) => r.items.length)),
+    items: rows,
+    models: Object.fromEntries(
+      models.map(([name, model], m) => [name, stats(model.model, perModel[m] ?? [])]),
+    ),
+    agreement: { labels, cells },
+    disagreements,
+  };
+}
+
+const table = (head: string[], body: string[][]) =>
+  [head, head.map(() => '---'), ...body].map((r) => `| ${r.join(' | ')} |`).join('\n');
+
+const share = ({ agree, total }: AgreementCell) =>
+  total ? `${agree}/${total} (${Math.round((agree / total) * 100)}%)` : '-';
+
+export function renderMarkdown(report: ReplayReport): string {
+  const { labels, cells } = report.agreement;
+  const head = ['Model', 'Decisions', ...DECISIONS, 'Errors', 'Cost (USD)', 'Mean latency (ms)'];
+  return [
+    `## Replay ${report.from} to ${report.to}${report.dryRun ? ' (dry run, fake models)' : ''}`,
+    '',
+    `Runs: ${report.runs.join(', ') || 'none'} · ${report.items.length} unique items of ${report.storedItems} stored`,
+    '',
+    table(
+      head,
+      Object.entries(report.models).map(([name, s]) => [
+        `${name} (${s.model})`,
+        String(s.decisions),
+        ...DECISIONS.map((d) => String(s.counts[d])),
+        String(s.errors),
+        s.costUsd.toFixed(6),
+        s.meanLatencyMs.toFixed(0),
+      ]),
+    ),
+    '',
+    '### Agreement',
+    '',
+    table(
+      ['', ...labels],
+      labels.map((label, i) => [label, ...(cells[i] ?? []).map(share)]),
+    ),
+    '',
+    '### Disagreements',
+    '',
+    report.disagreements.length
+      ? table(
+          ['Title', ...labels],
+          report.disagreements.map((d) => [
+            d.title.replace(/\|/g, '\\|'),
+            ...labels.map((l) => d.choices[l] ?? '-'),
+          ]),
+        )
+      : 'None.',
+    '',
+  ].join('\n');
+}

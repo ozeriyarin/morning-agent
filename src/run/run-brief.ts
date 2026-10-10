@@ -42,6 +42,7 @@ export interface RunDeps {
   feeds: Source<Item[]>[];
   concepts: ConceptStore;
   decisionModel: DecisionModel;
+  warnings?: string[];
   writer: Writer;
   sender: Sender;
   prices: Prices;
@@ -64,7 +65,7 @@ export interface RunOutcome {
 
 const message = (error: unknown) => (error instanceof Error ? error.message : String(error));
 
-async function decideAll(model: DecisionModel, items: Item[]): Promise<DecisionResult[]> {
+export async function decideAll(model: DecisionModel, items: Item[]): Promise<DecisionResult[]> {
   const results: DecisionResult[] = [];
   for (let i = 0; i < items.length; i += DECISION_CONCURRENCY) {
     const batch = items.slice(i, i + DECISION_CONCURRENCY).map((item) =>
@@ -194,6 +195,9 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       title: item.title,
       link: item.link,
       decision: r.decision,
+      model: r.call?.model ?? deps.decisionModel.model,
+      ...(r.confidence !== undefined && { confidence: r.confidence }),
+      ...(r.probabilities && { probabilities: r.probabilities }),
       ...(r.error && { error: r.error }),
     };
   });
@@ -275,6 +279,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       delivery: { sender: deps.sender.name, status: delivery },
       briefChars: visibleLength(html),
       errors,
+      ...(deps.warnings?.length && { warnings: deps.warnings }),
     },
     deps.secrets,
   );

@@ -7,9 +7,11 @@ import {
   loadEnv,
   loadICloudCredentials,
   loadJson,
+  loadOpenRouterKey,
   pricesSchema,
 } from './config.js';
 import { isIsoDate, todayIn } from './dates.js';
+import { DECIDERS, type Decider } from './decide/select.js';
 import { runBrief } from './run/run-brief.js';
 import { buildDeps, recordPath } from './run/wiring.js';
 
@@ -18,6 +20,7 @@ export function parseCli(argv: string[]): {
   date?: string;
   calendar?: string;
   icloud?: string;
+  decider?: Decider;
 } {
   const { values } = parseArgs({
     args: argv,
@@ -26,18 +29,26 @@ export function parseCli(argv: string[]): {
       date: { type: 'string' },
       calendar: { type: 'string' },
       icloud: { type: 'string' },
+      decider: { type: 'string' },
     },
     strict: true,
   });
   if (values.date !== undefined && !isIsoDate(values.date)) {
     throw new Error(`--date must be YYYY-MM-DD, got "${values.date}"`);
   }
-  const { date, calendar, icloud } = values;
-  return { dryRun: values['dry-run'], date, calendar, icloud };
+  const { date, calendar, icloud, decider } = values;
+  if (decider !== undefined && !isDecider(decider)) {
+    throw new Error(`--decider must be one of ${DECIDERS.join(', ')}, got "${decider}"`);
+  }
+  return { dryRun: values['dry-run'], date, calendar, icloud, decider };
+}
+
+function isDecider(value: string): value is Decider {
+  return (DECIDERS as readonly string[]).includes(value);
 }
 
 // Sandboxes route egress through HTTPS_PROXY; Node's fetch ignores it unless told so.
-function useEnvProxy(): void {
+export function useEnvProxy(): void {
   if (process.env.HTTPS_PROXY || process.env.HTTP_PROXY)
     setGlobalDispatcher(new EnvHttpProxyAgent());
 }
@@ -60,6 +71,8 @@ async function main(): Promise<number> {
     calendarPath,
     icloud: loadICloudCredentials(process.env),
     icloudPath: args.icloud && resolve(args.icloud),
+    decider: args.decider,
+    openRouterKey: loadOpenRouterKey(process.env),
   });
   const { record } = await runBrief(deps, { date, dryRun: args.dryRun });
   console.error(

@@ -10,6 +10,9 @@ import {
   type Prices,
 } from '../config.js';
 import { FakeDecisionModel } from '../decide/fake.js';
+import { HaikuDecisionModel } from '../decide/haiku.js';
+import { JEV_MODEL, JevDecisionModel } from '../decide/jev.js';
+import { JEV_NO_KEY_WARNING } from '../decide/select.js';
 import { TelegramSender } from '../deliver/telegram.js';
 import { CalendarFileSource } from '../sources/calendar-file.js';
 import { ICloudCalendarSource } from '../sources/icloud-calendar.js';
@@ -584,5 +587,90 @@ describe('runBrief iCloud', () => {
     expect(record.calendar?.map((e) => e.source)).toEqual(['icloud', 'icloud', 'icloud']);
     expect(record.errors).toContainEqual(expect.objectContaining({ reason: 'missing' }));
     expect(record.missingSections).not.toContain('calendar');
+  });
+});
+
+describe('runBrief with Jev decisions', () => {
+  const OPENROUTER_KEY = 'sk-or-v1-synthetic-test-key';
+  const live = {
+    TELEGRAM_BOT_TOKEN: TOKEN,
+    TELEGRAM_CHAT_ID: CHAT_ID,
+    ANTHROPIC_API_KEY: API_KEY,
+  };
+  const liveWired = (over: Partial<Parameters<typeof buildDeps>[0]>) =>
+    buildDeps({ env: live, config, prices, root, fetchFn: fetch, ...over });
+  const jevVia = (fetchFn: typeof fetch) =>
+    new JevDecisionModel(OPENROUTER_KEY, fetchFn, { retryDelayMs: 0 });
+
+  it('v4 criterion 4: "A 429 or 5xx is retried once; a second failure or a timeout records an error and the item is `skip` (the brief still sends)." (end to end)', async () => {
+    const unavailable: typeof fetch = async () => new Response('', { status: 503 });
+    const { record } = await runBrief(await deps({ decisionModel: jevVia(unavailable) }), {
+      date: DATE,
+      dryRun: false,
+    });
+    expect(sender.sent).toHaveLength(1);
+    expect(record.decisions.length).toBeGreaterThan(0);
+    for (const d of record.decisions) {
+      expect(d).toMatchObject({ decision: 'skip', model: JEV_MODEL, error: expect.any(String) });
+    }
+    expect(record.errors.filter((e) => e.stage === 'decision')).toHaveLength(
+      record.decisions.length,
+    );
+    expect(record.calls.filter((c) => c.role === 'decision')).toEqual([]);
+  });
+
+  it('records Jev confidence, probabilities, provider and reported cost', async () => {
+    const reply = await readFile('test/fixtures/openrouter-decision.json', 'utf8');
+    const ok: typeof fetch = async () => new Response(reply, { status: 200 });
+    const { record } = await runBrief(await deps({ decisionModel: jevVia(ok) }), {
+      date: DATE,
+      dryRun: false,
+    });
+    expect(record.decisions[0]).toMatchObject({
+      decision: 'mention',
+      model: JEV_MODEL,
+      confidence: 0.82,
+      probabilities: { mention: 0.82 },
+    });
+    const call = record.calls.find((c) => c.role === 'decision');
+    expect(call).toMatchObject({ provider: 'openrouter', costUsd: 0.0000824 });
+  });
+
+  it('v4 criterion 5: "Selection: `--decider jev` without `OPENROUTER_API_KEY` falls back to Haiku and records the warning; with the key it uses Jev; `config.decisionModel` is honoured when no flag is given; default is Haiku." (wiring and record)', async () => {
+    const noKey = liveWired({ decider: 'jev' });
+    expect(noKey.decisionModel).toBeInstanceOf(HaikuDecisionModel);
+    const { record } = await runBrief(await deps({ warnings: noKey.warnings }), {
+      date: DATE,
+      dryRun: false,
+    });
+    expect(record.warnings).toEqual([JEV_NO_KEY_WARNING]);
+    expect(
+      liveWired({ decider: 'jev', openRouterKey: OPENROUTER_KEY }).decisionModel,
+    ).toBeInstanceOf(JevDecisionModel);
+    const configured = { ...config, decisionModel: 'jev' as const };
+    expect(
+      liveWired({ config: configured, openRouterKey: OPENROUTER_KEY }).decisionModel,
+    ).toBeInstanceOf(JevDecisionModel);
+    expect(liveWired({ openRouterKey: OPENROUTER_KEY }).decisionModel).toBeInstanceOf(
+      HaikuDecisionModel,
+    );
+    expect(config.decisionModel).toBe('haiku');
+  });
+
+  it('v4 criterion 6: "The record never contains the OpenRouter key (redaction test with the key inside an error message)."', async () => {
+    const leaky: typeof fetch = async (url, init) => {
+      const auth = (init?.headers as Record<string, string>).Authorization;
+      throw new Error(`request to ${String(url)} with ${auth} failed for key ${OPENROUTER_KEY}`);
+    };
+    const { secrets } = liveWired({ openRouterKey: OPENROUTER_KEY });
+    expect(secrets).toContain(OPENROUTER_KEY);
+    const { record } = await runBrief(await deps({ decisionModel: jevVia(leaky), secrets }), {
+      date: DATE,
+      dryRun: false,
+    });
+    const json = JSON.stringify(record);
+    expect(json).toContain('openrouter.ai');
+    expect(json).not.toContain(OPENROUTER_KEY);
+    expect(json).not.toContain('sk-or-');
   });
 });

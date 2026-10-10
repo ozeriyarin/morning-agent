@@ -2,8 +2,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { BriefConfig, Env, Prices } from '../config.js';
-import { FakeDecisionModel } from '../decide/fake.js';
-import { HaikuDecisionModel } from '../decide/haiku.js';
+import { selectDecisionModel, type Decider } from '../decide/select.js';
 import { ConsoleSender } from '../deliver/console.js';
 import { TelegramSender } from '../deliver/telegram.js';
 import { CalendarFileSource } from '../sources/calendar-file.js';
@@ -28,6 +27,8 @@ export interface WiringOptions {
   calendarPath?: string;
   icloud?: ICloudCredentials | null;
   icloudPath?: string;
+  decider?: Decider;
+  openRouterKey?: string | null;
   print?: (text: string) => void;
 }
 
@@ -35,14 +36,24 @@ export function recordPath(root: string, date: string, dryRun: boolean): string 
   return join(root, 'runs', `${date}${dryRun ? '.dry-run' : ''}.json`);
 }
 
+export function anthropicClient(apiKey: string): Anthropic {
+  return new Anthropic({ apiKey, timeout: 60_000, maxRetries: 1 });
+}
+
 // Dry runs swap only the AI and Telegram clients; weather and feeds are still fetched.
 export function buildDeps(options: WiringOptions): RunDeps {
   const { env, config, prices, root, fetchFn, calendarPath, icloud, icloudPath, print } = options;
+  const openRouterKey = options.openRouterKey ?? null;
   const timeZone = config.location.timezone;
   const live = 'dryRun' in env ? null : env;
-  const client = live
-    ? new Anthropic({ apiKey: live.ANTHROPIC_API_KEY, timeout: 60_000, maxRetries: 1 })
-    : null;
+  const client = live ? anthropicClient(live.ANTHROPIC_API_KEY) : null;
+  const decision = selectDecisionModel({
+    flag: options.decider,
+    configured: config.decisionModel,
+    client,
+    openRouterKey,
+    fetchFn,
+  });
   return {
     weather: new OpenMeteoSource(config.location, fetchFn),
     calendar: new CalendarFileSource(root, timeZone, calendarPath),
@@ -53,7 +64,8 @@ export function buildDeps(options: WiringOptions): RunDeps {
         : null,
     feeds: config.feeds.map((feed) => new FeedSource(feed.name, feed.url, fetchFn)),
     concepts: new FileConceptStore(join(root, 'concepts', 'queue.md')),
-    decisionModel: client ? new HaikuDecisionModel(client) : new FakeDecisionModel(),
+    decisionModel: decision.model,
+    warnings: decision.warnings,
     writer: client ? new SonnetWriter(client) : new TemplateWriter(),
     sender: live
       ? new TelegramSender(live.TELEGRAM_BOT_TOKEN, live.TELEGRAM_CHAT_ID, fetchFn)
@@ -62,6 +74,7 @@ export function buildDeps(options: WiringOptions): RunDeps {
     secrets: [
       ...(live ? [live.TELEGRAM_BOT_TOKEN, live.TELEGRAM_CHAT_ID, live.ANTHROPIC_API_KEY] : []),
       ...(icloud ? [icloud.username, icloud.password] : []),
+      ...(openRouterKey ? [openRouterKey] : []),
     ],
     timeZone,
     localTime: config.schedule.localTime,

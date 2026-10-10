@@ -26,6 +26,7 @@ export function callUsage(
 }
 
 export function priceCall(call: CallUsage, prices: Prices): CallRecord {
+  if (call.costUsd !== undefined) return { ...call, costUsd: call.costUsd };
   const p = prices.models[call.model];
   if (!p) throw new Error(`no price for model ${call.model} in config/prices.json`);
   const micro =

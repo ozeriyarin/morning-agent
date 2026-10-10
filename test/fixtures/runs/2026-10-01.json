@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-01",
+  "generatedAt": "2026-10-01T04:00:05.000Z",
+  "dryRun": false,
+  "fetchedCount": 40,
+  "items": [
+    {
+      "title": "Anthropic ships Claude Code hooks",
+      "link": "https://example.com/a/hooks",
+      "published": "2026-10-01T02:00:00.000Z",
+      "sources": [
+        "Example Feed"
+      ]
+    },
+    {
+      "title": "Startup raises $20M for LLM evals",
+      "link": "https://example.com/a/raise",
+      "published": "2026-09-30T20:00:00.000Z",
+      "sources": [
+        "Example Feed"
+      ]
+    },
+    {
+      "title": "Ten tips for a tidy desk",
+      "link": "https://example.com/a/desk",
+      "published": "2026-09-30T18:00:00.000Z",
+      "sources": [
+        "Example News"
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "title": "Anthropic ships Claude Code hooks",
+      "link": "https://example.com/a/hooks",
+      "decision": "must_read"
+    },
+    {
+      "title": "Startup raises $20M for LLM evals",
+      "link": "https://example.com/a/raise",
+      "decision": "skip"
+    },
+    {
+      "title": "Ten tips for a tidy desk",
+      "link": "https://example.com/a/desk",
+      "decision": "skip"
+    }
+  ],
+  "calls": [],
+  "totalCostUsd": 0,
+  "errors": []
+}

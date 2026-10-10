@@ -1,0 +1,22 @@
+{
+  "id": "dec-synthetic-0001",
+  "model": "typesafe/jev-1.13",
+  "provider": "TypeSafe",
+  "answers": {
+    "decision": {
+      "type": "choice",
+      "choice": "mention",
+      "confidence": 0.82,
+      "probabilities": {
+        "must_read": 0.11,
+        "mention": 0.82,
+        "skip": 0.07
+      }
+    }
+  },
+  "usage": {
+    "input_tokens": 412,
+    "output_tokens": 0,
+    "cost": 8.24e-05
+  }
+}

@@ -1,5 +1,6 @@
 node_modules/
 runs/
+reports/
 test/fixtures/
 package-lock.json
 agent-os/

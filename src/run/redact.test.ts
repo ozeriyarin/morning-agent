@@ -8,6 +8,7 @@ describe('redaction', () => {
       'https://api.telegram.org/bot[REDACTED]/sendMessage',
     ],
     ['x-api-key: sk-ant-api03-abc_DEF-1', 'x-api-key: [REDACTED]'],
+    ['Authorization: Bearer sk-or-v1-abc_DEF-1', 'Authorization: Bearer [REDACTED]'],
     ['?chat_id=555&text=hi', '?chat_id=[REDACTED]&text=hi'],
     ['explicit s3cret value', 'explicit [REDACTED] value'],
     ['nothing to hide', 'nothing to hide'],
