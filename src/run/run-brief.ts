@@ -33,6 +33,7 @@ import { validateBrief, WriterError } from '../write/writer.js';
 import { redact } from './redact.js';
 
 export const MAX_DECISIONS = 40;
+export const RECORD_SUMMARY_CHARS = 400;
 const DECISION_CONCURRENCY = 5;
 
 export interface RunDeps {
@@ -254,10 +255,11 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       generatedAt: now.toISOString(),
       dryRun: opts.dryRun,
       fetchedCount: fetched.length,
-      items: items.map(({ title, link, published, sources }) => ({
+      items: items.map(({ title, link, published, summary, sources }) => ({
         title,
         link,
         published,
+        summary: summary.slice(0, RECORD_SUMMARY_CHARS),
         sources,
       })),
       calendar:

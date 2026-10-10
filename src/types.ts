@@ -127,7 +127,7 @@ export interface RunRecord {
   generatedAt: string;
   dryRun: boolean;
   fetchedCount: number;
-  items: Pick<Item, 'title' | 'link' | 'published' | 'sources'>[];
+  items: Pick<Item, 'title' | 'link' | 'published' | 'summary' | 'sources'>[];
   calendar: Pick<CalendarEvent, 'title' | 'start' | 'end' | 'allDay' | 'source'>[] | null;
   icloud: 'ok' | 'disabled' | 'failed';
   skippedUnseen: number;

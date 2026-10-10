@@ -1,3 +1,6 @@
+import { mkdtemp, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { loadJson, pricesSchema } from '../config.js';
 import { HAIKU_MODEL } from '../decide/haiku.js';
@@ -62,6 +65,27 @@ describe('replay', () => {
       original: 'must_read',
       item: { title: 'Anthropic ships Claude Code hooks', summary: '' },
     });
+  });
+
+  it('passes the recorded summary through to the replayed decision model', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'replay-'));
+    const item = { title: 'Claude ships', link: 'https://x/1', summary: 'What the model saw.' };
+    await writeFile(
+      join(dir, '2026-10-05.json'),
+      JSON.stringify({ date: '2026-10-05', items: [item] }),
+    );
+    const seen: string[] = [];
+    const model = new ScriptedModel('m', (i) => (seen.push(i.summary), 'skip'), 0, 1);
+    const runs = await loadRuns(dir, '2026-10-05', '2026-10-05');
+    await replay({
+      from: '2026-10-05',
+      to: '2026-10-05',
+      dryRun: true,
+      runs,
+      models: { m: model },
+      prices,
+    });
+    expect(seen).toEqual(['What the model saw.']);
   });
 
   it('v4 criterion 7: "Replay over two fixture run records with overlapping items dedupes by title, decides each item once per model, and produces the agreement matrix, per-model cost and latency, and the disagreement list; the Markdown table renders the same numbers."', async () => {

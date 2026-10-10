@@ -29,7 +29,7 @@ import type {
   Writer,
 } from '../types.js';
 import { MAX_BRIEF_CHARS, templateBrief, TemplateWriter } from '../write/template.js';
-import { MAX_DECISIONS, runBrief, type RunDeps } from './run-brief.js';
+import { MAX_DECISIONS, RECORD_SUMMARY_CHARS, runBrief, type RunDeps } from './run-brief.js';
 import { buildDeps } from './wiring.js';
 
 const DATE = '2026-10-10';
@@ -352,6 +352,38 @@ describe('runBrief', () => {
     expect(record.decisions).toHaveLength(MAX_DECISIONS);
     expect(record.decisions[0]?.title).toBe('Story 0');
     expect(record.skippedUnseen).toBe(5);
+  });
+
+  it('records each item with the summary the decision model saw, trimmed and redacted', async () => {
+    const summary = `Leaked ${API_KEY} ${'x'.repeat(500)}`;
+    const item: Item = {
+      id: 'https://x/1',
+      title: 'Story',
+      link: 'https://x/1',
+      published: '2026-10-10T03:00:00.000Z',
+      summary,
+      sources: ['x'],
+    };
+    const seen: string[] = [];
+    const decisionModel = new FakeDecisionModel((i) => {
+      seen.push(i.summary);
+      return { decision: 'skip' };
+    });
+    const { record } = await runBrief(await deps({ feeds: [source('x', [item])], decisionModel }), {
+      date: DATE,
+      dryRun: false,
+    });
+    const expected = summary.slice(0, RECORD_SUMMARY_CHARS).replace(API_KEY, '[REDACTED]');
+    expect(seen).toEqual([summary]);
+    expect(record.items).toEqual([
+      {
+        title: 'Story',
+        link: item.link,
+        published: item.published,
+        summary: expected,
+        sources: ['x'],
+      },
+    ]);
   });
 
   it('drops writer links to items that were never fetched', async () => {
