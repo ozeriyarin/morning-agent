@@ -1,0 +1,181 @@
+{
+  "date": "2026-10-10",
+  "generatedAt": "2026-10-10T14:45:46.141Z",
+  "dryRun": false,
+  "fetchedCount": 1317,
+  "items": [
+    {
+      "title": "Quoting The New York Times",
+      "link": "https://simonwillison.net/2026/Oct/10/the-new-york-times/",
+      "published": "2026-10-10T02:04:12.000Z",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Deno is joining Cloudflare",
+      "link": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare/",
+      "published": "2026-10-09T22:48:37.000Z",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Quoting Matthew Green",
+      "link": "https://simonwillison.net/2026/Oct/9/matthew-green/",
+      "published": "2026-10-09T15:02:29.000Z",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "A new feature for my blog, built using my voice",
+      "link": "https://simonwillison.net/2026/Oct/9/built-using-my-voice/",
+      "published": "2026-10-09T12:54:06.000Z",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Sophos cuts threat investigation time by 96% with OpenAI Daybreak",
+      "link": "https://openai.com/index/sophos",
+      "published": "2026-10-09T07:00:00.000Z",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "Asana cuts model costs 76x in browser tests with GPT-6.1 Sol",
+      "link": "https://openai.com/index/asana-browser-agent",
+      "published": "2026-10-09T07:00:00.000Z",
+      "sources": [
+        "OpenAI News"
+      ]
+    }
+  ],
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "Quoting The New York Times",
+      "link": "https://simonwillison.net/2026/Oct/10/the-new-york-times/",
+      "decision": "must_read"
+    },
+    {
+      "title": "Deno is joining Cloudflare",
+      "link": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare/",
+      "decision": "skip"
+    },
+    {
+      "title": "Quoting Matthew Green",
+      "link": "https://simonwillison.net/2026/Oct/9/matthew-green/",
+      "decision": "skip"
+    },
+    {
+      "title": "A new feature for my blog, built using my voice",
+      "link": "https://simonwillison.net/2026/Oct/9/built-using-my-voice/",
+      "decision": "skip"
+    },
+    {
+      "title": "Sophos cuts threat investigation time by 96% with OpenAI Daybreak",
+      "link": "https://openai.com/index/sophos",
+      "decision": "skip"
+    },
+    {
+      "title": "Asana cuts model costs 76x in browser tests with GPT-6.1 Sol",
+      "link": "https://openai.com/index/asana-browser-agent",
+      "decision": "skip"
+    }
+  ],
+  "calls": [
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 896,
+      "outputTokens": 35,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 743.0551520000008,
+      "costUsd": 0.001071
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 908,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 695.5250090000009,
+      "costUsd": 0.001073
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 899,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 691.3130560000009,
+      "costUsd": 0.001064
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 902,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 831.8815809999996,
+      "costUsd": 0.001067
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 882,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 764.9534780000013,
+      "costUsd": 0.001047
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 883,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 1153.6676910000024,
+      "costUsd": 0.001048
+    },
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 252,
+      "outputTokens": 520,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 1437,
+      "latencyMs": 5844.650588999997,
+      "costUsd": 0.0092965
+    }
+  ],
+  "totalCostUsd": 0.0156665,
+  "writer": "ai",
+  "missingSections": [],
+  "concept": {
+    "name": "agent loop",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent"
+  },
+  "briefChars": 673,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "Hacker News AI",
+      "message": "The operation was aborted due to timeout"
+    }
+  ]
+}

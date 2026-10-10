@@ -2,7 +2,7 @@
 
 One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <name>`.
 
-- [ ] agent loop
+- [x] 2026-10-10 agent loop
 - [ ] tool calling
 - [ ] typed tool registry
 - [ ] bounded tool rounds
