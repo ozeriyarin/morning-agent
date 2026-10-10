@@ -1,6 +1,7 @@
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
+import { EnvHttpProxyAgent, setGlobalDispatcher } from 'undici';
 import { briefConfigSchema, loadEnv, loadJson, pricesSchema } from './config.js';
 import { isIsoDate, todayIn } from './dates.js';
 import { runBrief } from './run/run-brief.js';
@@ -18,7 +19,13 @@ export function parseCli(argv: string[]): { dryRun: boolean; date?: string } {
   return { dryRun: values['dry-run'], date: values.date };
 }
 
+// Sandboxes route egress through HTTPS_PROXY; Node's fetch ignores it unless told so.
+function useEnvProxy(): void {
+  if (process.env.HTTPS_PROXY || process.env.HTTP_PROXY) setGlobalDispatcher(new EnvHttpProxyAgent());
+}
+
 async function main(): Promise<number> {
+  useEnvProxy();
   const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
   const args = parseCli(process.argv.slice(2));
   const config = await loadJson(join(root, 'config', 'brief.json'), briefConfigSchema);

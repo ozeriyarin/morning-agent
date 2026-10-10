@@ -17,6 +17,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.133.0",
     "fast-xml-parser": "^5.11.2",
+    "undici": "^8.11.2",
     "zod": "^4.6.5"
   },
   "devDependencies": {
