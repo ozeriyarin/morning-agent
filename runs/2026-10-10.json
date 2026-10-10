@@ -1,6 +1,6 @@
 {
   "date": "2026-10-10",
-  "generatedAt": "2026-10-10T15:14:22.794Z",
+  "generatedAt": "2026-10-10T15:47:20.631Z",
   "dryRun": false,
   "fetchedCount": 1317,
   "items": [
@@ -53,13 +53,22 @@
       ]
     }
   ],
-  "calendar": [],
+  "calendar": [
+    {
+      "title": "תכנון לו״ז שבועי",
+      "start": "2026-10-10T18:00:00.000Z",
+      "end": "2026-10-10T18:20:00.000Z",
+      "allDay": false,
+      "source": "icloud"
+    }
+  ],
+  "icloud": "ok",
   "skippedUnseen": 0,
   "decisions": [
     {
       "title": "Quoting The New York Times",
       "link": "https://simonwillison.net/2026/Oct/10/the-new-york-times/",
-      "decision": "skip"
+      "decision": "must_read"
     },
     {
       "title": "Deno is joining Cloudflare",
@@ -69,7 +78,7 @@
     {
       "title": "Quoting Matthew Green",
       "link": "https://simonwillison.net/2026/Oct/9/matthew-green/",
-      "decision": "mention"
+      "decision": "skip"
     },
     {
       "title": "A new feature for my blog, built using my voice",
@@ -92,11 +101,11 @@
       "role": "decision",
       "model": "claude-haiku-4-5-20251001",
       "inputTokens": 896,
-      "outputTokens": 33,
+      "outputTokens": 35,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 898.9626219999991,
-      "costUsd": 0.001061
+      "latencyMs": 862.2681659999998,
+      "costUsd": 0.001071
     },
     {
       "role": "decision",
@@ -105,7 +114,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 866.2711820000004,
+      "latencyMs": 882.3057239999998,
       "costUsd": 0.001073
     },
     {
@@ -115,7 +124,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 870.6124010000003,
+      "latencyMs": 907.1461950000003,
       "costUsd": 0.001064
     },
     {
@@ -125,7 +134,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 871.9726449999998,
+      "latencyMs": 888.1710999999996,
       "costUsd": 0.001067
     },
     {
@@ -135,7 +144,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 863.5845050000007,
+      "latencyMs": 865.3883290000003,
       "costUsd": 0.001047
     },
     {
@@ -145,27 +154,25 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 647.0045570000002,
+      "latencyMs": 643.5507070000003,
       "costUsd": 0.001048
     },
     {
       "role": "writer",
       "model": "claude-sonnet-5-5",
-      "inputTokens": 374,
-      "outputTokens": 634,
+      "inputTokens": 449,
+      "outputTokens": 770,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 1584,
-      "latencyMs": 8785.323591,
-      "costUsd": 0.011048
+      "latencyMs": 7663.335692,
+      "costUsd": 0.012558
     }
   ],
-  "totalCostUsd": 0.017408,
+  "totalCostUsd": 0.018928,
   "writer": "ai",
-  "missingSections": [
-    "weather"
-  ],
+  "missingSections": [],
   "concept": {
-    "name": "tool calling",
+    "name": "typed tool registry",
     "queueEmpty": false,
     "marked": true
   },
@@ -173,17 +180,12 @@
     "sender": "telegram",
     "status": "sent"
   },
-  "briefChars": 797,
+  "briefChars": 1053,
   "errors": [
     {
       "stage": "source",
-      "source": "weather",
-      "message": "The operation was aborted due to timeout"
-    },
-    {
-      "stage": "source",
       "source": "Hacker News AI",
-      "message": "The operation was aborted due to timeout"
+      "message": "HTTP 502"
     }
   ]
 }
