@@ -92,7 +92,7 @@ export class FeedSource implements Source<Item[]> {
     readonly name: string,
     private readonly url: string,
     private readonly fetchFn: typeof fetch,
-    private readonly timeoutMs = 15_000,
+    private readonly timeoutMs = 30_000,
   ) {}
 
   async fetch(): Promise<Item[]> {

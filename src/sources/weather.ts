@@ -68,7 +68,7 @@ export class OpenMeteoSource implements Source<WeatherDay> {
   constructor(
     private readonly location: WeatherLocation,
     private readonly fetchFn: typeof fetch,
-    private readonly timeoutMs = 10_000,
+    private readonly timeoutMs = 25_000,
   ) {}
 
   async fetch(ctx: FetchContext): Promise<WeatherDay> {
