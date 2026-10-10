@@ -11,6 +11,9 @@ describe('redaction', () => {
     ['?chat_id=555&text=hi', '?chat_id=[REDACTED]&text=hi'],
     ['explicit s3cret value', 'explicit [REDACTED] value'],
     ['nothing to hide', 'nothing to hide'],
+    ['https://a%40b.c:pw@caldav.icloud.com/x', 'https://[REDACTED]@caldav.icloud.com/x'],
+    ['Authorization: Basic YTpi=', 'Authorization: Basic [REDACTED]'],
+    ['body BEGIN:VCALENDAR\r\nSUMMARY:x\r\nEND:VCALENDAR!', 'body [REDACTED iCalendar]!'],
   ])('redactText(%j) is %j', (input, expected) => {
     expect(redactText(input, ['s3cret'])).toBe(expected);
   });

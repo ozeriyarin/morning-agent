@@ -8,7 +8,7 @@ The brief gains a `היום ביומן` section with today's Google Calendar eve
 
 ## Design decision: calendar through the routine, not through code
 
-The cloud routine runs as a Claude Code session with the claude.ai **Google Calendar** connector attached. The session queries today's events through the connector and writes them to `input/calendar-<date>.json` before running `npm run brief`. The script treats that file as a source (`CalendarFileSource`): present and valid → events section; absent → the brief says the calendar was not available. No OAuth code, no Google secrets in the environment, and a local dry run can use a fixture file. The hand-off file is gitignored; the run record keeps event titles and times only (no attendee emails, no descriptions, no links).
+The cloud routine runs as a Claude Code session with the claude.ai **Google Calendar** connector attached. The session queries today's events through the connector and writes them to `input/calendar-<date>.json` before running `npm run brief`. The script treats that file as a source (`CalendarFileSource`): present and valid → events section; absent → the brief says the calendar was not available. No OAuth code, no Google secrets in the environment, and a local dry run can use a fixture file. The hand-off file is gitignored; the run record keeps event titles and times only (no attendee emails, no descriptions, no links). Since v3 each recorded event also carries `source` (`google` | `icloud`).
 
 Hand-off file schema (`input/calendar-YYYY-MM-DD.json`):
 ```json

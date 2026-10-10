@@ -1,25 +1,28 @@
 # Morning Agent
 
 Morning Agent sends one short Hebrew briefing to Telegram every morning at 07:00 Israel time:
-today's weather in Modi'in, today's Google Calendar events, the AI news from the last 24 hours
+today's weather in Modi'in, today's Google and iCloud Calendar events, the AI news from the last 24 hours
 that matter, and one interview concept explained with an answer to think about. Every run also writes an auditable record (items, decisions, tokens, cost,
 latency, errors) to `runs/YYYY-MM-DD.json`.
 
 The project is spec-driven: product docs live in `agent-os/product/`, coding standards in
 `agent-os/standards/`, and each feature starts as a spec in `agent-os/specs/` (v1:
 `agent-os/specs/2026-10-10-brief-v1/spec.md`, v2 calendar:
-`agent-os/specs/2026-10-10-brief-v2-calendar/spec.md`).
+`agent-os/specs/2026-10-10-brief-v2-calendar/spec.md`, v3 iCloud:
+`agent-os/specs/2026-10-10-brief-v3-icloud/spec.md`).
 
 ## Architecture
 
 ```
-npm run brief [--dry-run] [--date YYYY-MM-DD] [--calendar <path>]
+npm run brief [--dry-run] [--date YYYY-MM-DD] [--calendar <path>] [--icloud <path.ics>]
 └── src/cli.ts                    args, config + env loading, exit code
     └── src/run/wiring.ts         real clients, or fakes for --dry-run
         └── src/run/run-brief.ts  orchestration, cost, redaction, record
             ├── collect (in parallel, each failure degrades one section)
             │   ├── sources/weather.ts   Open-Meteo -> mapWeather() -> WeatherDay (Hebrew WMO label)
             │   ├── sources/calendar-file.ts  input/calendar-<date>.json -> CalendarEvent[] (sorted)
+            │   ├── sources/icloud-calendar.ts  CalDAV PROPFIND + REPORT (expand) -> parseICalendar()
+            │   ├── sources/calendar-merge.ts   mergeCalendars(google, icloud): dedupe, all-day first
             │   ├── sources/feeds.ts     RSS + Atom -> parseFeed() -> withinWindow(24h) -> dedupe()
             │   └── sources/concepts.ts  concepts/queue.md -> next unused concept
             ├── decide (<= 40 newest items, one cheap call each)
@@ -48,6 +51,7 @@ npm test                                      # Vitest, no network
 npm run brief -- --dry-run                    # fake decisions, template writer, prints to the console
 npm run brief -- --dry-run --date 2026-10-11  # pretend "today" is another day
 npm run brief -- --dry-run --date 2026-10-11 --calendar test/fixtures/calendar-sample.json
+npm run brief -- --dry-run --date 2026-10-12 --icloud test/fixtures/icloud-report.ics
 npm run brief                                 # real run: Haiku + Sonnet + Telegram
 ```
 
@@ -63,7 +67,8 @@ A real run needs these environment variables (see `.env.example`; never commit a
 | `TELEGRAM_BOT_TOKEN`        | bot token from @BotFather                                                                        |
 | `TELEGRAM_CHAT_ID`          | the recipient's chat id                                                                          |
 | `MORNING_ANTHROPIC_API_KEY` | decision model and writer (`ANTHROPIC_API_KEY` also accepted; cloud sessions withhold that name) |
-| `ICLOUD_APP_PASSWORD`       | reserved for the iCloud calendar (roadmap 3)                                                     |
+| `ICLOUD_USERNAME`           | optional: Apple ID email for the iCloud calendar (see "iCloud Calendar")                         |
+| `ICLOUD_APP_PASSWORD`       | optional: iCloud app-specific password; iCloud is skipped unless both iCloud variables are set   |
 
 Other checks: `npm run typecheck`, `npm run lint`, `npm run format`.
 
@@ -99,6 +104,39 @@ invalid file still sends the brief with `היומן לא היה זמין`, and t
 source error with reason `missing` or `invalid`. The record keeps only `title`, `start`, `end`
 and `allDay` per event: never attendees, descriptions, locations or links.
 
+## iCloud Calendar
+
+iCloud events are fetched by the script itself over CalDAV (`src/sources/icloud-calendar.ts`,
+plain `fetch` + `fast-xml-parser`, no extra dependency) and merged with the Google hand-off file.
+It is optional: when `ICLOUD_USERNAME` or `ICLOUD_APP_PASSWORD` is missing, iCloud is skipped and
+the record says `"icloud": "disabled"`.
+
+Create an app-specific password (never use the Apple ID password itself):
+
+1. Sign in at https://account.apple.com with the Apple ID (two-factor authentication must be on).
+2. Open **Sign-In and Security** -> **App-Specific Passwords** -> **Generate an app-specific
+   password** (the **+** button).
+3. Name it `morning-agent` and copy the `xxxx-xxxx-xxxx-xxxx` value; Apple shows it only once.
+4. Set `ICLOUD_USERNAME` (the Apple ID email) and `ICLOUD_APP_PASSWORD` as secrets of the
+   routine's cloud environment (or in a local `.env`). Revoke it on the same page at any time.
+
+The routine's network allow list must include `caldav.icloud.com` and `*.icloud.com` (Apple
+serves each account from a `pNN-caldav.icloud.com` host). The script sends the credentials only
+to `https://*.icloud.com`.
+
+How it works: `PROPFIND` for the principal, then the calendar home, then the calendars in it
+(only those that accept `VEVENT`); then one `REPORT` `calendar-query` per calendar (at most 3 in
+parallel) with `expand` for the local day, so recurring events arrive as instances. Cancelled
+events are dropped. Requests time out after 25 s and responses over 1 MB are rejected. Events in
+both calendars (same title, ignoring case and spacing, and same start minute) appear once, as the
+Google copy; the record tags each event with `source: google | icloud`. If iCloud fails, the
+brief still sends with the Google events and the note `(iCloud לא היה זמין)`, and the record lists
+a `calendar` error with reason `icloud`. The Apple ID, the password and raw iCalendar text are
+redacted from the record.
+
+`--icloud <path.ics>` parses a saved iCalendar file instead of calling iCloud, for an offline
+preview (`test/fixtures/icloud-report.ics` is synthetic).
+
 ## Adding a feed
 
 Append an entry to `feeds` in `config/brief.json`:
@@ -129,7 +167,7 @@ The brief runs as a Claude Code cloud routine named "Morning brief": cron `0 4 *
 Israel summer time; change to `0 5 * * *` after DST ends on 2026-10-25), repo
 `ozeriyarin/morning-agent`, model `claude-sonnet-5-5`, allowed tools Bash, Read, Write, Edit,
 Glob, Grep, plus the Google Calendar connector. The secrets are environment variables of the
-routine's cloud environment.
+routine's cloud environment, whose allow list includes `caldav.icloud.com` and `*.icloud.com`.
 
 Routine prompt:
 

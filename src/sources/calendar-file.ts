@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { z } from 'zod';
 import { clockTime } from '../dates.js';
 import { SourceError, type CalendarEvent, type FetchContext, type Source } from '../types.js';
+import { byCalendarOrder } from './calendar-merge.js';
 
 const instant = z.string().refine((value) => !Number.isNaN(Date.parse(value)), 'not a date');
 
@@ -23,6 +24,9 @@ export const calendarFileSchema = z.object({
 
 const invalid = (message: string) => new SourceError('calendar', message, 'invalid');
 
+export const eventTime = (start: string, end: string, allDay: boolean, timeZone: string) =>
+  allDay ? null : `${clockTime(new Date(start), timeZone)}–${clockTime(new Date(end), timeZone)}`;
+
 // All-day events first, then timed events by start; times rendered in the given zone.
 export function parseCalendarFile(raw: unknown, date: string, timeZone: string): CalendarEvent[] {
   const parsed = calendarFileSchema.safeParse(raw);
@@ -40,13 +44,10 @@ export function parseCalendarFile(raw: unknown, date: string, timeZone: string):
       end,
       allDay,
       ...(location && { location }),
-      time: allDay
-        ? null
-        : `${clockTime(new Date(start), timeZone)}–${clockTime(new Date(end), timeZone)}`,
+      time: eventTime(start, end, allDay, timeZone),
+      source: 'google' as const,
     }))
-    .sort(
-      (a, b) => Number(b.allDay) - Number(a.allDay) || Date.parse(a.start) - Date.parse(b.start),
-    );
+    .sort(byCalendarOrder);
 }
 
 // Reads the file the cloud routine writes from the Google Calendar connector before the run.

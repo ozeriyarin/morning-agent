@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { briefConfigSchema, ConfigError, loadEnv, loadJson, pricesSchema } from './config.js';
+import {
+  briefConfigSchema,
+  ConfigError,
+  loadEnv,
+  loadICloudCredentials,
+  loadJson,
+  pricesSchema,
+} from './config.js';
 
 const full = {
   TELEGRAM_BOT_TOKEN: '1:abc',
@@ -52,5 +59,18 @@ describe('committed config files', () => {
     expect(Object.keys(prices.models)).toEqual(
       expect.arrayContaining(['claude-haiku-4-5-20251001', 'claude-sonnet-5-5']),
     );
+  });
+});
+
+describe('loadICloudCredentials', () => {
+  it.each([
+    [{}, null],
+    [{ ICLOUD_USERNAME: 'u@example.invalid', ICLOUD_APP_PASSWORD: ' ' }, null],
+    [
+      { ICLOUD_USERNAME: 'u@example.invalid', ICLOUD_APP_PASSWORD: 'p' },
+      { username: 'u@example.invalid', password: 'p' },
+    ],
+  ])('reads %j as %j', (env, expected) => {
+    expect(loadICloudCredentials(env)).toEqual(expected);
   });
 });

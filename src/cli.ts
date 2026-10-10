@@ -2,25 +2,38 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { EnvHttpProxyAgent, setGlobalDispatcher } from 'undici';
-import { briefConfigSchema, loadEnv, loadJson, pricesSchema } from './config.js';
+import {
+  briefConfigSchema,
+  loadEnv,
+  loadICloudCredentials,
+  loadJson,
+  pricesSchema,
+} from './config.js';
 import { isIsoDate, todayIn } from './dates.js';
 import { runBrief } from './run/run-brief.js';
 import { buildDeps, recordPath } from './run/wiring.js';
 
-export function parseCli(argv: string[]): { dryRun: boolean; date?: string; calendar?: string } {
+export function parseCli(argv: string[]): {
+  dryRun: boolean;
+  date?: string;
+  calendar?: string;
+  icloud?: string;
+} {
   const { values } = parseArgs({
     args: argv,
     options: {
       'dry-run': { type: 'boolean', default: false },
       date: { type: 'string' },
       calendar: { type: 'string' },
+      icloud: { type: 'string' },
     },
     strict: true,
   });
   if (values.date !== undefined && !isIsoDate(values.date)) {
     throw new Error(`--date must be YYYY-MM-DD, got "${values.date}"`);
   }
-  return { dryRun: values['dry-run'], date: values.date, calendar: values.calendar };
+  const { date, calendar, icloud } = values;
+  return { dryRun: values['dry-run'], date, calendar, icloud };
 }
 
 // Sandboxes route egress through HTTPS_PROXY; Node's fetch ignores it unless told so.
@@ -38,7 +51,16 @@ async function main(): Promise<number> {
   const env = loadEnv(process.env, args.dryRun);
   const date = args.date ?? todayIn(config.location.timezone, new Date());
   const calendarPath = args.calendar && resolve(args.calendar);
-  const deps = buildDeps({ env, config, prices, root, fetchFn: fetch, calendarPath });
+  const deps = buildDeps({
+    env,
+    config,
+    prices,
+    root,
+    fetchFn: fetch,
+    calendarPath,
+    icloud: loadICloudCredentials(process.env),
+    icloudPath: args.icloud && resolve(args.icloud),
+  });
   const { record } = await runBrief(deps, { date, dryRun: args.dryRun });
   console.error(
     `record: ${recordPath(root, date, args.dryRun)} · delivery: ${record.delivery.status}` +

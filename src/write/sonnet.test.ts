@@ -83,6 +83,7 @@ describe('validateBrief', () => {
       allDay: false,
       location: 'Zoom',
       time: '14:00–15:00',
+      source: 'google' as const,
     };
     await new SonnetWriter(client).write({ ...input, calendar: [event] });
     const sent = JSON.stringify(client.requests[0]?.messages);

@@ -117,6 +117,7 @@ function render(brief: Brief, missing: Section[]): string {
     '',
     `<b>${TITLES.calendar}</b>`,
     ...calendarLines(brief.calendar),
+    ...(brief.icloudUnavailable ? ['(iCloud לא היה זמין)'] : []),
     '',
     ...section('news', newsLines(brief.news)),
     '',

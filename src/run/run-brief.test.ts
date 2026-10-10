@@ -2,10 +2,17 @@ import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { briefConfigSchema, loadJson, pricesSchema, type Prices } from '../config.js';
+import {
+  briefConfigSchema,
+  loadICloudCredentials,
+  loadJson,
+  pricesSchema,
+  type Prices,
+} from '../config.js';
 import { FakeDecisionModel } from '../decide/fake.js';
 import { TelegramSender } from '../deliver/telegram.js';
 import { CalendarFileSource } from '../sources/calendar-file.js';
+import { ICloudCalendarSource } from '../sources/icloud-calendar.js';
 import { FileConceptStore } from '../sources/concepts.js';
 import { parseFeed } from '../sources/feeds.js';
 import type {
@@ -421,18 +428,26 @@ describe('runBrief calendar', () => {
       new CalendarFileSource(root, 'Asia/Jerusalem', CALENDAR_SAMPLE),
     );
     expect(record.calendar).toEqual([
-      { title: 'יום הולדת לנוי', start: '2026-10-11', end: '2026-10-12', allDay: true },
+      {
+        title: 'יום הולדת לנוי',
+        start: '2026-10-11',
+        end: '2026-10-12',
+        allDay: true,
+        source: 'google',
+      },
       {
         title: 'סנכרון צוות',
         start: '2026-10-11T06:30:00Z',
         end: '2026-10-11T07:00:00Z',
         allDay: false,
+        source: 'google',
       },
       {
         title: 'ראיון טכני',
         start: '2026-10-11T14:00:00+03:00',
         end: '2026-10-11T15:00:00+03:00',
         allDay: false,
+        source: 'google',
       },
     ]);
     const json = JSON.stringify(record);
@@ -457,5 +472,117 @@ describe('runBrief calendar', () => {
     const { record } = await runBrief(wired, { date: CALENDAR_DATE, dryRun: true });
     expect(printed[0]).toContain(SAMPLE_SECTION);
     expect(record.errors.some((e) => e.source === 'calendar')).toBe(false);
+  });
+});
+
+describe('runBrief iCloud', () => {
+  const ICLOUD = { username: 'fixture.user@example.invalid', password: 'abcd-efgh-ijkl-mnop' };
+  const offline: typeof fetch = async () => {
+    throw new TypeError('fetch failed: offline');
+  };
+  const google = () => new CalendarFileSource(root, 'Asia/Jerusalem', CALENDAR_SAMPLE);
+  const icloudVia = (fetchFn: typeof fetch) =>
+    new ICloudCalendarSource(ICLOUD, 'Asia/Jerusalem', fetchFn);
+  const dryWired = (over: Partial<Parameters<typeof buildDeps>[0]>, printed: string[]) =>
+    buildDeps({
+      env: { dryRun: true },
+      config,
+      prices,
+      root,
+      fetchFn: offline,
+      print: (t) => printed.push(t),
+      ...over,
+    });
+
+  it.each([
+    ['ICLOUD_USERNAME', { ICLOUD_APP_PASSWORD: ICLOUD.password }],
+    ['ICLOUD_APP_PASSWORD', { ICLOUD_USERNAME: ICLOUD.username }],
+  ])(
+    'v3 criterion 5: "When `ICLOUD_USERNAME` or `ICLOUD_APP_PASSWORD` is missing, the iCloud source is disabled, the record says so, and the Google file still renders." (%s)',
+    async (_, env) => {
+      const printed: string[] = [];
+      const icloud = loadICloudCredentials(env);
+      expect(icloud).toBeNull();
+      const wired = dryWired({ icloud, calendarPath: CALENDAR_SAMPLE }, printed);
+      expect(wired.icloud).toBeNull();
+      const { record } = await runBrief(wired, { date: CALENDAR_DATE, dryRun: true });
+      expect(printed[0]).toContain(SAMPLE_SECTION);
+      expect(printed[0]).not.toContain('iCloud');
+      expect(record.icloud).toBe('disabled');
+      expect(record.errors.some((e) => e.source === 'calendar')).toBe(false);
+    },
+  );
+
+  it.each([
+    ['HTTP 401', async () => new Response('', { status: 401 })],
+    [
+      'a timeout',
+      async () => {
+        throw new DOMException('The operation was aborted due to timeout', 'TimeoutError');
+      },
+    ],
+  ])(
+    'v3 criterion 6: "When CalDAV returns 401 or times out, the brief still sends with Google events and the `(iCloud לא היה זמין)` note; the record has a `calendar` error with reason `icloud`." (%s)',
+    async (_, fetchFn: typeof fetch) => {
+      const { html, record } = await runBrief(
+        await deps({ calendar: google(), icloud: icloudVia(fetchFn) }),
+        { date: CALENDAR_DATE, dryRun: false },
+      );
+      expect(sender.sent).toHaveLength(1);
+      expect(html).toContain(`${SAMPLE_SECTION}\n(iCloud לא היה זמין)`);
+      expect(record.errors).toEqual([
+        { stage: 'source', source: 'calendar', reason: 'icloud', message: expect.any(String) },
+      ]);
+      expect(record).toMatchObject({ icloud: 'failed', missingSections: [] });
+    },
+  );
+
+  it('v3 criterion 7: "The record never contains the Apple ID, the app password or the raw iCalendar text (redaction test using an error message that embeds the request URL with credentials)."', async () => {
+    const ics = await fixture('icloud-report.ics');
+    const user = encodeURIComponent(ICLOUD.username);
+    const leaky: typeof fetch = async (url, init) => {
+      const auth = (init?.headers as Record<string, string>).Authorization;
+      throw new Error(
+        `request to ${String(url).replace('//', `//${user}:${ICLOUD.password}@`)} failed ` +
+          `(${auth}) for ${ICLOUD.username}; body ${ics}`,
+      );
+    };
+    const secrets = dryWired({ icloud: ICLOUD }, []).secrets;
+    expect(secrets).toEqual(expect.arrayContaining([ICLOUD.username, ICLOUD.password]));
+    const { record } = await runBrief(
+      await deps({ calendar: google(), icloud: icloudVia(leaky), secrets }),
+      { date: CALENDAR_DATE, dryRun: false },
+    );
+    const json = JSON.stringify(record);
+
+    expect(record.errors).toContainEqual(expect.objectContaining({ reason: 'icloud' }));
+    expect(json).toContain('caldav.icloud.com');
+    for (const leak of [
+      ICLOUD.username,
+      user,
+      ICLOUD.password,
+      'BEGIN:VCALENDAR',
+      'DTSTART',
+      'Basic Zm',
+    ])
+      expect(json).not.toContain(leak);
+  });
+
+  it('v3 criterion 8: "`--dry-run --icloud test/fixtures/icloud-report.ics` previews the iCloud parsing offline."', async () => {
+    const printed: string[] = [];
+    const wired = dryWired({ icloudPath: 'test/fixtures/icloud-report.ics' }, printed);
+    const { record } = await runBrief(wired, { date: '2026-10-12', dryRun: true });
+    expect(printed[0]).toContain(
+      [
+        '<b>היום ביומן</b>',
+        'כל היום: יום הולדת לאמא',
+        '08:30–09:15 רופא שיניים (מרפאה, רחוב העצמאות 1)',
+        '18:00–19:00 אימון ריצה',
+      ].join('\n'),
+    );
+    expect(record.icloud).toBe('ok');
+    expect(record.calendar?.map((e) => e.source)).toEqual(['icloud', 'icloud', 'icloud']);
+    expect(record.errors).toContainEqual(expect.objectContaining({ reason: 'missing' }));
+    expect(record.missingSections).not.toContain('calendar');
   });
 });

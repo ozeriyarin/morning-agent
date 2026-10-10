@@ -29,6 +29,7 @@ export interface CalendarEvent {
   allDay: boolean;
   location?: string;
   time: string | null;
+  source: 'google' | 'icloud';
 }
 
 export interface FetchContext {
@@ -79,6 +80,7 @@ export interface WrittenBrief {
 
 export interface Brief extends WrittenBrief {
   calendar: CalendarEvent[] | null;
+  icloudUnavailable?: boolean;
 }
 
 export interface WriterInput {
@@ -122,7 +124,8 @@ export interface RunRecord {
   dryRun: boolean;
   fetchedCount: number;
   items: Pick<Item, 'title' | 'link' | 'published' | 'sources'>[];
-  calendar: Pick<CalendarEvent, 'title' | 'start' | 'end' | 'allDay'>[] | null;
+  calendar: Pick<CalendarEvent, 'title' | 'start' | 'end' | 'allDay' | 'source'>[] | null;
+  icloud: 'ok' | 'disabled' | 'failed';
   skippedUnseen: number;
   decisions: { title: string; link: string; decision: Decision; error?: string }[];
   calls: CallRecord[];
@@ -135,7 +138,7 @@ export interface RunRecord {
   errors: RunError[];
 }
 
-export type SourceFailure = 'missing' | 'invalid';
+export type SourceFailure = 'missing' | 'invalid' | 'icloud';
 
 export class SourceError extends Error {
   constructor(

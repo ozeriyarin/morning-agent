@@ -2,6 +2,9 @@ const PATTERNS: [RegExp, string][] = [
   [/bot\d+:[\w-]+/g, 'bot[REDACTED]'],
   [/sk-ant-[\w-]+/g, '[REDACTED]'],
   [/(chat_id=)[^&\s"]+/g, '$1[REDACTED]'],
+  [/(\/\/)[^/\s@]+@/g, '$1[REDACTED]@'],
+  [/(Basic )[\w+/=]+/g, '$1[REDACTED]'],
+  [/BEGIN:VCALENDAR[\s\S]*?(END:VCALENDAR|$)/g, '[REDACTED iCalendar]'],
 ];
 
 export function redactText(text: string, secrets: string[]): string {

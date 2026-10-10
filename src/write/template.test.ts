@@ -33,7 +33,14 @@ const input: WriterInput = {
   mention: [item(2)],
   concept: 'agent loop',
   calendar: [
-    { title: 'יום הולדת', start: '2026-10-10', end: '2026-10-11', allDay: true, time: null },
+    {
+      title: 'יום הולדת',
+      start: '2026-10-10',
+      end: '2026-10-11',
+      allDay: true,
+      time: null,
+      source: 'google',
+    },
     {
       title: 'ראיון <טכני>',
       start: '2026-10-10T14:00:00+03:00',
@@ -41,6 +48,7 @@ const input: WriterInput = {
       allDay: false,
       location: 'Zoom',
       time: '14:00–15:00',
+      source: 'icloud',
     },
   ],
 };

@@ -1,6 +1,7 @@
 import type { Prices } from '../config.js';
 import { priceCall, totalCost } from '../cost.js';
 import { clockTime, dayMonth, hebrewWeekday, zonedTime } from '../dates.js';
+import { mergeCalendars } from '../sources/calendar-merge.js';
 import { dedupe, sortNewestFirst, withinWindow } from '../sources/feeds.js';
 import type { ConceptStore } from '../sources/concepts.js';
 import {
@@ -37,6 +38,7 @@ const DECISION_CONCURRENCY = 5;
 export interface RunDeps {
   weather: Source<WeatherDay>;
   calendar: Source<CalendarEvent[]>;
+  icloud?: Source<CalendarEvent[]> | null;
   feeds: Source<Item[]>[];
   concepts: ConceptStore;
   decisionModel: DecisionModel;
@@ -113,14 +115,16 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
   const reference = zonedTime(opts.date, deps.localTime, deps.timeZone);
   const ctx = { date: opts.date, reference };
 
-  const [[weatherResult, conceptResult, calendarResult], feedResults] = await Promise.all([
-    Promise.allSettled([
-      deps.weather.fetch(ctx),
-      deps.concepts.next(),
-      deps.calendar.fetch(ctx),
-    ] as const),
-    Promise.allSettled(deps.feeds.map((feed) => feed.fetch(ctx))),
-  ]);
+  const [[weatherResult, conceptResult, calendarResult, icloudResult], feedResults] =
+    await Promise.all([
+      Promise.allSettled([
+        deps.weather.fetch(ctx),
+        deps.concepts.next(),
+        deps.calendar.fetch(ctx),
+        deps.icloud ? deps.icloud.fetch(ctx) : [],
+      ] as const),
+      Promise.allSettled(deps.feeds.map((feed) => feed.fetch(ctx))),
+    ]);
 
   let weather: WeatherDay | null = null;
   if (weatherResult.status === 'fulfilled') weather = weatherResult.value;
@@ -133,10 +137,9 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
     });
   }
 
-  let calendar: CalendarEvent[] | null = null;
-  if (calendarResult.status === 'fulfilled') calendar = calendarResult.value;
+  let google: CalendarEvent[] | null = null;
+  if (calendarResult.status === 'fulfilled') google = calendarResult.value;
   else {
-    missing.add('calendar');
     const reason = calendarResult.reason;
     errors.push({
       stage: 'source',
@@ -145,6 +148,21 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       message: message(reason),
     });
   }
+
+  let icloud: RunRecord['icloud'] = deps.icloud ? 'ok' : 'disabled';
+  if (icloudResult.status === 'rejected') {
+    icloud = 'failed';
+    errors.push({
+      stage: 'source',
+      source: 'calendar',
+      reason: 'icloud',
+      message: message(icloudResult.reason),
+    });
+  }
+  const icloudEvents = icloudResult.status === 'fulfilled' ? icloudResult.value : [];
+  const calendar =
+    google === null && icloud !== 'ok' ? null : mergeCalendars(google ?? [], icloudEvents);
+  if (calendar === null) missing.add('calendar');
 
   let concept: string | null = null;
   if (conceptResult.status === 'fulfilled') concept = conceptResult.value;
@@ -199,6 +217,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
   const brief: Brief = {
     ...written.brief,
     calendar,
+    icloudUnavailable: icloud === 'failed' && google !== null,
     greeting: input.greeting,
     news: keepKnownLinks(written.brief.news, toDecide),
     concept:
@@ -238,7 +257,14 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
         sources,
       })),
       calendar:
-        calendar?.map(({ title, start, end, allDay }) => ({ title, start, end, allDay })) ?? null,
+        calendar?.map(({ title, start, end, allDay, source }) => ({
+          title,
+          start,
+          end,
+          allDay,
+          source,
+        })) ?? null,
+      icloud,
       skippedUnseen: items.length - toDecide.length,
       decisions,
       calls,

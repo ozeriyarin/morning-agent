@@ -8,6 +8,11 @@ import { ConsoleSender } from '../deliver/console.js';
 import { TelegramSender } from '../deliver/telegram.js';
 import { CalendarFileSource } from '../sources/calendar-file.js';
 import { FileConceptStore } from '../sources/concepts.js';
+import {
+  ICloudCalendarSource,
+  ICloudFileSource,
+  type ICloudCredentials,
+} from '../sources/icloud-calendar.js';
 import { FeedSource } from '../sources/feeds.js';
 import { OpenMeteoSource } from '../sources/weather.js';
 import { SonnetWriter } from '../write/sonnet.js';
@@ -21,6 +26,8 @@ export interface WiringOptions {
   root: string;
   fetchFn: typeof fetch;
   calendarPath?: string;
+  icloud?: ICloudCredentials | null;
+  icloudPath?: string;
   print?: (text: string) => void;
 }
 
@@ -30,14 +37,20 @@ export function recordPath(root: string, date: string, dryRun: boolean): string 
 
 // Dry runs swap only the AI and Telegram clients; weather and feeds are still fetched.
 export function buildDeps(options: WiringOptions): RunDeps {
-  const { env, config, prices, root, fetchFn, calendarPath, print } = options;
+  const { env, config, prices, root, fetchFn, calendarPath, icloud, icloudPath, print } = options;
+  const timeZone = config.location.timezone;
   const live = 'dryRun' in env ? null : env;
   const client = live
     ? new Anthropic({ apiKey: live.ANTHROPIC_API_KEY, timeout: 60_000, maxRetries: 1 })
     : null;
   return {
     weather: new OpenMeteoSource(config.location, fetchFn),
-    calendar: new CalendarFileSource(root, config.location.timezone, calendarPath),
+    calendar: new CalendarFileSource(root, timeZone, calendarPath),
+    icloud: icloudPath
+      ? new ICloudFileSource(icloudPath, timeZone)
+      : icloud
+        ? new ICloudCalendarSource(icloud, timeZone, fetchFn)
+        : null,
     feeds: config.feeds.map((feed) => new FeedSource(feed.name, feed.url, fetchFn)),
     concepts: new FileConceptStore(join(root, 'concepts', 'queue.md')),
     decisionModel: client ? new HaikuDecisionModel(client) : new FakeDecisionModel(),
@@ -46,8 +59,11 @@ export function buildDeps(options: WiringOptions): RunDeps {
       ? new TelegramSender(live.TELEGRAM_BOT_TOKEN, live.TELEGRAM_CHAT_ID, fetchFn)
       : new ConsoleSender(print),
     prices,
-    secrets: live ? [live.TELEGRAM_BOT_TOKEN, live.TELEGRAM_CHAT_ID, live.ANTHROPIC_API_KEY] : [],
-    timeZone: config.location.timezone,
+    secrets: [
+      ...(live ? [live.TELEGRAM_BOT_TOKEN, live.TELEGRAM_CHAT_ID, live.ANTHROPIC_API_KEY] : []),
+      ...(icloud ? [icloud.username, icloud.password] : []),
+    ],
+    timeZone,
     localTime: config.schedule.localTime,
     now: () => new Date(),
     writeRecord: async (record) => {

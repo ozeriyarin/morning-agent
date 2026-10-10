@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { z } from 'zod';
+import type { ICloudCredentials } from './sources/icloud-calendar.js';
 
 const secret = (name: string) =>
   z.string({ error: `${name} is required` }).min(1, `${name} is required`);
@@ -8,7 +9,6 @@ const liveEnvSchema = z.object({
   TELEGRAM_BOT_TOKEN: secret('TELEGRAM_BOT_TOKEN'),
   TELEGRAM_CHAT_ID: secret('TELEGRAM_CHAT_ID'),
   ANTHROPIC_API_KEY: secret('MORNING_ANTHROPIC_API_KEY or ANTHROPIC_API_KEY'),
-  ICLOUD_APP_PASSWORD: z.string().optional(),
 });
 
 export type LiveEnv = z.infer<typeof liveEnvSchema>;
@@ -30,6 +30,15 @@ export function loadEnv(source: Record<string, string | undefined>, dryRun: bool
     throw new ConfigError(parsed.error.issues.map((issue) => issue.message).join('; '));
   }
   return parsed.data;
+}
+
+// Both are optional; iCloud is enabled only when both are set, in live and dry runs alike.
+export function loadICloudCredentials(
+  source: Record<string, string | undefined>,
+): ICloudCredentials | null {
+  const username = source.ICLOUD_USERNAME?.trim();
+  const password = source.ICLOUD_APP_PASSWORD?.trim();
+  return username && password ? { username, password } : null;
 }
 
 export const briefConfigSchema = z.object({
