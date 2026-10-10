@@ -1,6 +1,6 @@
 {
   "date": "2026-10-10",
-  "generatedAt": "2026-10-10T14:45:46.141Z",
+  "generatedAt": "2026-10-10T15:14:22.794Z",
   "dryRun": false,
   "fetchedCount": 1317,
   "items": [
@@ -53,12 +53,13 @@
       ]
     }
   ],
+  "calendar": [],
   "skippedUnseen": 0,
   "decisions": [
     {
       "title": "Quoting The New York Times",
       "link": "https://simonwillison.net/2026/Oct/10/the-new-york-times/",
-      "decision": "must_read"
+      "decision": "skip"
     },
     {
       "title": "Deno is joining Cloudflare",
@@ -68,12 +69,12 @@
     {
       "title": "Quoting Matthew Green",
       "link": "https://simonwillison.net/2026/Oct/9/matthew-green/",
-      "decision": "skip"
+      "decision": "mention"
     },
     {
       "title": "A new feature for my blog, built using my voice",
       "link": "https://simonwillison.net/2026/Oct/9/built-using-my-voice/",
-      "decision": "skip"
+      "decision": "mention"
     },
     {
       "title": "Sophos cuts threat investigation time by 96% with OpenAI Daybreak",
@@ -91,11 +92,11 @@
       "role": "decision",
       "model": "claude-haiku-4-5-20251001",
       "inputTokens": 896,
-      "outputTokens": 35,
+      "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 743.0551520000008,
-      "costUsd": 0.001071
+      "latencyMs": 898.9626219999991,
+      "costUsd": 0.001061
     },
     {
       "role": "decision",
@@ -104,7 +105,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 695.5250090000009,
+      "latencyMs": 866.2711820000004,
       "costUsd": 0.001073
     },
     {
@@ -114,7 +115,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 691.3130560000009,
+      "latencyMs": 870.6124010000003,
       "costUsd": 0.001064
     },
     {
@@ -124,7 +125,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 831.8815809999996,
+      "latencyMs": 871.9726449999998,
       "costUsd": 0.001067
     },
     {
@@ -134,7 +135,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 764.9534780000013,
+      "latencyMs": 863.5845050000007,
       "costUsd": 0.001047
     },
     {
@@ -144,25 +145,27 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 1153.6676910000024,
+      "latencyMs": 647.0045570000002,
       "costUsd": 0.001048
     },
     {
       "role": "writer",
       "model": "claude-sonnet-5-5",
-      "inputTokens": 252,
-      "outputTokens": 520,
+      "inputTokens": 374,
+      "outputTokens": 634,
       "cacheReadTokens": 0,
-      "cacheWriteTokens": 1437,
-      "latencyMs": 5844.650588999997,
-      "costUsd": 0.0092965
+      "cacheWriteTokens": 1584,
+      "latencyMs": 8785.323591,
+      "costUsd": 0.011048
     }
   ],
-  "totalCostUsd": 0.0156665,
+  "totalCostUsd": 0.017408,
   "writer": "ai",
-  "missingSections": [],
+  "missingSections": [
+    "weather"
+  ],
   "concept": {
-    "name": "agent loop",
+    "name": "tool calling",
     "queueEmpty": false,
     "marked": true
   },
@@ -170,8 +173,13 @@
     "sender": "telegram",
     "status": "sent"
   },
-  "briefChars": 673,
+  "briefChars": 797,
   "errors": [
+    {
+      "stage": "source",
+      "source": "weather",
+      "message": "The operation was aborted due to timeout"
+    },
     {
       "stage": "source",
       "source": "Hacker News AI",
