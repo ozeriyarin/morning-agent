@@ -1,0 +1,238 @@
+{
+  "from": "2026-10-03",
+  "to": "2026-10-10",
+  "dryRun": false,
+  "runs": [
+    "2026-10-10"
+  ],
+  "storedItems": 6,
+  "items": [
+    {
+      "date": "2026-10-10",
+      "title": "Quoting The New York Times",
+      "original": "must_read",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.000996,
+          "latencyMs": 924.285457
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000025746,
+          "latencyMs": 587.40416,
+          "confidence": 0.35
+        }
+      }
+    },
+    {
+      "date": "2026-10-10",
+      "title": "Deno is joining Cloudflare",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.000998,
+          "latencyMs": 900.531358
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.00002583,
+          "latencyMs": 606.7656780000001,
+          "confidence": 0.31
+        }
+      }
+    },
+    {
+      "date": "2026-10-10",
+      "title": "Quoting Matthew Green",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.000994,
+          "latencyMs": 921.2900750000001
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000025662,
+          "latencyMs": 592.9942860000001,
+          "confidence": 0.69
+        }
+      }
+    },
+    {
+      "date": "2026-10-10",
+      "title": "A new feature for my blog, built using my voice",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001,
+          "latencyMs": 896.9477260000001
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000025956,
+          "latencyMs": 566.537559,
+          "confidence": 0.38
+        }
+      }
+    },
+    {
+      "date": "2026-10-10",
+      "title": "Sophos cuts threat investigation time by 96% with OpenAI Daybreak",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001007,
+          "latencyMs": 921.284096
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000026334,
+          "latencyMs": 588.7940540000001,
+          "confidence": 0.7
+        }
+      }
+    },
+    {
+      "date": "2026-10-10",
+      "title": "Asana cuts model costs 76x in browser tests with GPT-6.1 Sol",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.00101,
+          "latencyMs": 643.1737049999999
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000026334,
+          "latencyMs": 181.06131099999993,
+          "confidence": 0.16
+        }
+      }
+    }
+  ],
+  "models": {
+    "haiku": {
+      "model": "claude-haiku-4-5-20251001",
+      "decisions": 6,
+      "counts": {
+        "must_read": 0,
+        "mention": 0,
+        "skip": 6
+      },
+      "errors": 0,
+      "costUsd": 0.006005,
+      "meanLatencyMs": 867.9187361666668
+    },
+    "jev": {
+      "model": "typesafe/jev-1.13",
+      "decisions": 6,
+      "counts": {
+        "must_read": 0,
+        "mention": 5,
+        "skip": 1
+      },
+      "errors": 0,
+      "costUsd": 0.00015586200000000002,
+      "meanLatencyMs": 520.5928413333334
+    }
+  },
+  "agreement": {
+    "labels": [
+      "original",
+      "haiku",
+      "jev"
+    ],
+    "cells": [
+      [
+        {
+          "agree": 6,
+          "total": 6
+        },
+        {
+          "agree": 4,
+          "total": 6
+        },
+        {
+          "agree": 2,
+          "total": 6
+        }
+      ],
+      [
+        {
+          "agree": 4,
+          "total": 6
+        },
+        {
+          "agree": 6,
+          "total": 6
+        },
+        {
+          "agree": 1,
+          "total": 6
+        }
+      ],
+      [
+        {
+          "agree": 2,
+          "total": 6
+        },
+        {
+          "agree": 1,
+          "total": 6
+        },
+        {
+          "agree": 6,
+          "total": 6
+        }
+      ]
+    ]
+  },
+  "disagreements": [
+    {
+      "title": "Quoting The New York Times",
+      "choices": {
+        "original": "must_read",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Deno is joining Cloudflare",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Quoting Matthew Green",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "A new feature for my blog, built using my voice",
+      "choices": {
+        "original": "mention",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Asana cuts model costs 76x in browser tests with GPT-6.1 Sol",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    }
+  ]
+}
