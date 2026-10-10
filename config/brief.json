@@ -1,0 +1,20 @@
+{
+  "recipient": "yarin",
+  "language": "he",
+  "location": {
+    "name": "מודיעין",
+    "latitude": 31.89,
+    "longitude": 35.01,
+    "timezone": "Asia/Jerusalem"
+  },
+  "schedule": { "localTime": "07:00" },
+  "feeds": [
+    { "name": "Simon Willison", "url": "https://simonwillison.net/atom/everything/" },
+    {
+      "name": "Hacker News AI",
+      "url": "https://hnrss.org/newest?q=AI+OR+LLM+OR+Claude&points=50"
+    },
+    { "name": "OpenAI News", "url": "https://openai.com/news/rss.xml" }
+  ],
+  "todo": "Anthropic news has no RSS feed (https://www.anthropic.com/rss.xml returned 404 on 2026-10-10); add it to feeds when one exists."
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title><![CDATA[OpenAI News]]></title>
+        <description><![CDATA[The OpenAI blog]]></description>
+        <link>https://openai.com/news</link>
+        <image>
+            <url>https://openai.com/apple-icon.png</url>
+            <title>OpenAI News</title>
+            <link>https://openai.com/news</link>
+        </image>
+        <generator>OpenAI</generator>
+        <lastBuildDate>Sat, 10 Oct 2026 10:05:00 GMT</lastBuildDate>
+        <atom:link href="https://openai.com/news/rss.xml" rel="self" type="application/rss+xml"/>
+        <language><![CDATA[en-US]]></language>
+        <item>
+            <title><![CDATA[Sophos cuts threat investigation time by 96% with OpenAI Daybreak]]></title>
+            <description><![CDATA[Discover how Sophos uses OpenAI’s Daybreak to cut cyber-threat investigation time by 96% and automate 52% of MDR cases while preserving human oversight.]]></description>
+            <link>https://openai.com/index/sophos</link>
+            <guid isPermaLink="true">https://openai.com/index/sophos</guid>
+            <pubDate>Fri, 09 Oct 2026 07:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Asana cuts model costs 76x in browser tests with GPT-6.1 Sol]]></title>
+            <description><![CDATA[Using GPT-6 Astra in Codex, Asana made its browser agent 76x cheaper and 5x faster in tests to offer customers more capable models.]]></description>
+            <link>https://openai.com/index/asana-browser-agent</link>
+            <guid isPermaLink="true">https://openai.com/index/asana-browser-agent</guid>
+            <pubDate>Fri, 09 Oct 2026 07:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[How Oracle turns days of work into minutes with ChatGPT and Codex]]></title>
+            <description><![CDATA[Across recruiting, engineering, and operations, Oracle turns specialist knowledge into fast, repeatable workflows with ChatGPT Work and Codex.]]></description>
+            <link>https://openai.com/index/oracle</link>
+            <guid isPermaLink="true">https://openai.com/index/oracle</guid>
+            <pubDate>Thu, 08 Oct 2026 16:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Pollo AI turns creative ideas into campaigns with OpenAI]]></title>
+            <description><![CDATA[With GPT-5.6, GPT-6 Astra, and GPT‑Image‑2.5, Pollo AI helps creators turn bold ideas into detailed images and cinematic video ads.]]></description>
+            <link>https://openai.com/index/pollo-ai</link>
+            <guid isPermaLink="true">https://openai.com/index/pollo-ai</guid>
+            <category><![CDATA[Startup]]></category>
+            <pubDate>Thu, 08 Oct 2026 12:00:00 GMT</pubDate>
+        </item>
+    </channel>
+</rss>

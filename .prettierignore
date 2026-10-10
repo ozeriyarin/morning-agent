@@ -1,0 +1,6 @@
+node_modules/
+runs/
+test/fixtures/
+package-lock.json
+agent-os/
+.claude/
