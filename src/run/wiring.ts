@@ -2,6 +2,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { BriefConfig, Env, Prices } from '../config.js';
+import { loadRecords } from '../records.js';
 import { selectDecisionModel, type Decider } from '../decide/select.js';
 import { ConsoleSender } from '../deliver/console.js';
 import { TelegramSender } from '../deliver/telegram.js';
@@ -79,6 +80,7 @@ export function buildDeps(options: WiringOptions): RunDeps {
     timeZone,
     localTime: config.schedule.localTime,
     now: () => new Date(),
+    history: (from, to) => loadRecords(join(root, 'runs'), from, to),
     writeRecord: async (record) => {
       const path = recordPath(root, record.date, record.dryRun);
       await mkdir(join(root, 'runs'), { recursive: true });

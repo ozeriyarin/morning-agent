@@ -10,6 +10,7 @@
   "scripts": {
     "brief": "tsx src/cli.ts",
     "replay": "tsx src/replay-cli.ts",
+    "report": "tsx src/report-cli.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",

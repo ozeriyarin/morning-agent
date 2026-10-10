@@ -4,6 +4,7 @@ import type {
   Item,
   Section,
   WeatherDay,
+  WeeklySummary,
   Writer,
   WriterInput,
   WriterResult,
@@ -104,6 +105,10 @@ function calendarLines(events: CalendarEvent[] | null): string[] {
   });
 }
 
+function weeklyLine(w: WeeklySummary): string {
+  return `השבוע: ${w.days} ימים, עלות ~$${w.costUsd.toFixed(3)}, ${w.items} פריטים נבדקו, ${w.errors} שגיאות`;
+}
+
 function render(brief: Brief, missing: Section[]): string {
   const section = (key: Section, body: string[]) => [
     `<b>${TITLES[key]}</b>`,
@@ -129,6 +134,7 @@ function render(brief: Brief, missing: Section[]): string {
     ]),
     '',
     escapeHtml(brief.footer),
+    ...(brief.weekly ? [weeklyLine(brief.weekly)] : []),
   ].join('\n');
 }
 

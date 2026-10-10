@@ -14,7 +14,8 @@ import { isIsoDate } from './dates.js';
 import { FakeDecisionModel } from './decide/fake.js';
 import { HaikuDecisionModel } from './decide/haiku.js';
 import { JevDecisionModel } from './decide/jev.js';
-import { loadRuns, renderMarkdown, replay } from './replay/replay.js';
+import { loadRecords } from './records.js';
+import { renderMarkdown, replay } from './replay/replay.js';
 import { redact } from './run/redact.js';
 import { anthropicClient } from './run/wiring.js';
 import type { DecisionModel } from './types.js';
@@ -93,7 +94,7 @@ async function main(): Promise<void> {
     from: args.from,
     to: args.to,
     dryRun: args.dryRun,
-    runs: await loadRuns(join(root, 'runs'), args.from, args.to),
+    runs: await loadRecords(join(root, 'runs'), args.from, args.to),
     models: buildReplayModels(args.models, args.dryRun, keys, fetch),
     prices: await loadJson(join(root, 'config', 'prices.json'), pricesSchema),
   });

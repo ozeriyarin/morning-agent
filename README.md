@@ -10,7 +10,8 @@ The project is spec-driven: product docs live in `agent-os/product/`, coding sta
 `agent-os/specs/2026-10-10-brief-v1/spec.md`, v2 calendar:
 `agent-os/specs/2026-10-10-brief-v2-calendar/spec.md`, v3 iCloud:
 `agent-os/specs/2026-10-10-brief-v3-icloud/spec.md`, v4 Jev:
-`agent-os/specs/2026-10-10-brief-v4-jev/spec.md`).
+`agent-os/specs/2026-10-10-brief-v4-jev/spec.md`, v5 cost view:
+`agent-os/specs/2026-10-10-brief-v5-cost-view/spec.md`).
 
 ## Architecture
 
@@ -43,6 +44,10 @@ npm run brief [--dry-run] [--date YYYY-MM-DD] [--calendar <path>] [--icloud <pat
 npm run replay -- --from <date> --to <date> [--models haiku,jev] [--dry-run]
 └── src/replay-cli.ts             re-decides stored items -> reports/replay-<from>-<to>.json
     └── src/replay/replay.ts      load runs, dedupe by title, agreement, cost, latency, Markdown
+npm run report -- [--from <date>] [--to <date>] [--format md|json]
+└── src/report-cli.ts             default: the 7 days ending today -> reports/report-<from>-<to>.json
+    └── src/report/report.ts      summarise(): per-day and total items, decisions, cost, latency, errors
+src/records.ts       run-record schema + loadRecords(), shared by replay, report and the weekly line
 config/brief.json    location, feeds, recipient, language, local send time, decisionModel
 config/prices.json   $ per 1M input / output / cache-read / cache-write tokens, per model
 concepts/queue.md    the learning queue
@@ -218,6 +223,50 @@ Runs: 2026-10-01, 2026-10-02 · 5 unique items of 6 stored
 | A benchmark of local models       | mention  | mention | must_read |
 ```
 
+## History
+
+`npm run report` summarises the committed run records (`runs/<date>.json`; dry-run records are
+ignored) over a date range: per day the delivery status, items fetched / in window / decided,
+decisions by label, decision and writer calls with tokens, cache reads, cost and mean latency,
+errors by source, calendar events, iCloud status and the concept; then totals (cost by role and
+by model, mean cost per day, mean latency per role, errors by source, writer cache hit ratio).
+
+```bash
+npm run report                                                # the 7 days ending today (Asia/Jerusalem)
+npm run report -- --from 2026-10-04 --to 2026-10-10           # any range, Markdown on stdout
+npm run report -- --from 2026-10-04 --to 2026-10-10 --format json
+```
+
+Every run writes `reports/report-<from>-<to>.json`; stdout gets only the Markdown (or the JSON
+with `--format json`). To refresh the table below, run the first command and paste its output
+here. On Sundays the brief footer gains a second line computed in code (no AI) from the previous
+7 days' records, where a day without a record counts as not run:
+`השבוע: N ימים, עלות ~$X, M פריטים נבדקו, K שגיאות`.
+
+Latest table (`npm run report -- --from 2026-10-04 --to 2026-10-10`; the routine replaces it on
+Sundays):
+
+```markdown
+## Run report
+
+Days with a record: 2026-10-10
+
+| Date       | Delivery | Fetched | In window | Decided | must_read | mention | skip | Decision calls                             | Writer calls                               | Cost    | Errors         | Calendar | iCloud | Concept             |
+| ---------- | -------- | ------- | --------- | ------- | --------- | ------- | ---- | ------------------------------------------ | ------------------------------------------ | ------- | -------------- | -------- | ------ | ------------------- |
+| 2026-10-10 | sent     | 1317    | 6         | 6       | 1         | 1       | 4    | 6 × 5370/200 tok, cache 0, $0.0064, 841 ms | 1 × 449/770 tok, cache 0, $0.0126, 7663 ms | $0.0189 | Hacker News AI | 1        | ok     | typed tool registry |
+
+### Totals
+
+- Days run: 1, delivered: 1
+- Items: 1317 fetched, 6 in window, 6 decided
+- Cost: $0.0189 (mean $0.0189 per day)
+- Cost by role: decision $0.0064, writer $0.0126
+- Cost by model: claude-haiku-4-5-20251001: $0.0064, claude-sonnet-5-5: $0.0126
+- Mean latency: decision 841 ms, writer 7663 ms
+- Writer cache hit ratio: 0.00
+- Errors: 1 (Hacker News AI: 1)
+```
+
 ## Adding a feed
 
 Append an entry to `feeds` in `config/brief.json`:
@@ -258,9 +307,12 @@ Install dependencies with `npm ci`. Run `npm test`; if it fails, stop and report
 tests without sending a brief. Using the Google Calendar connector, list the events for today
 (Asia/Jerusalem) on the primary calendar; write them to `input/calendar-<today>.json` exactly in
 the hand-off schema (title, start, end, allDay, location; nothing else). If the connector fails,
-do not create the file and continue. Run `npm run brief`. Then commit `runs/<date>.json` and
-`concepts/queue.md` with the message `brief: <date>` (date as YYYY-MM-DD, Asia/Jerusalem) and
-push. Finally report the Telegram delivery status and the total cost from the run record.
+do not create the file and continue. Run `npm run brief`. On Sundays (Asia/Jerusalem), then run
+`npm run report` (the last 7 days) and replace the table under "Latest table" in `README.md` with
+the Markdown it prints. Then commit `runs/<date>.json` and `concepts/queue.md` (on Sundays also
+`reports/report-<from>-<to>.json` and `README.md`) with the message `brief: <date>` (date as
+YYYY-MM-DD, Asia/Jerusalem) and push. Finally report the Telegram delivery status and the total
+cost from the run record.
 ```
 
 ## Why these design choices

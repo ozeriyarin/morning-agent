@@ -113,6 +113,7 @@ async function deps(over: Partial<RunDeps> = {}): Promise<RunDeps> {
     timeZone: 'Asia/Jerusalem',
     localTime: '07:00',
     now: () => new Date('2026-10-10T04:00:00Z'),
+    history: async () => [],
     writeRecord: async (record) => {
       records.push(record);
     },
@@ -704,5 +705,73 @@ describe('runBrief with Jev decisions', () => {
     expect(json).toContain('openrouter.ai');
     expect(json).not.toContain(OPENROUTER_KEY);
     expect(json).not.toContain('sk-or-');
+  });
+});
+
+describe('runBrief weekly footer', () => {
+  const SUNDAY = '2026-10-11';
+  const day = (date: string, costUsd: number, items: number, errors: number) => ({
+    date,
+    dryRun: false,
+    items: Array.from({ length: items }, (_, i) => ({ title: `t${i}`, link: `l${i}` })),
+    calls: [{ role: 'writer', model: 'claude-sonnet-5-5', costUsd }],
+    delivery: { sender: 'telegram', status: 'sent' },
+    errors: Array.from({ length: errors }, () => ({ stage: 'source', source: 'weather' })),
+  });
+
+  async function wiredRun(date: string) {
+    const offline: typeof fetch = async () => {
+      throw new TypeError('fetch failed: offline');
+    };
+    const wired = buildDeps({ env: { dryRun: true }, config, prices, root, fetchFn: offline });
+    return runBrief(wired, { date, dryRun: true });
+  }
+
+  it('v5 criterion 7: "On a Sunday run, the brief footer contains the weekly line with the counts from the previous 7 days; on other days it does not."', async () => {
+    await mkdir(join(root, 'runs'));
+    const stored = [
+      day('2026-10-03', 5, 9, 9),
+      day('2026-10-04', 0.01, 3, 1),
+      day('2026-10-07', 0.02, 4, 0),
+      day('2026-10-10', 0.004, 2, 2),
+      day('2026-10-11', 5, 9, 9),
+    ];
+    for (const r of stored)
+      await writeFile(join(root, 'runs', `${r.date}.json`), JSON.stringify(r));
+    await writeFile(
+      join(root, 'runs', '2026-10-09.dry-run.json'),
+      JSON.stringify({ ...day('2026-10-09', 5, 9, 9), dryRun: true }),
+    );
+
+    const sunday = await wiredRun(SUNDAY);
+    const lines = sunday.html.split('\n');
+    expect(lines.at(-2)).toMatch(/^נוצר ב-/);
+    expect(lines.at(-1)).toBe('השבוע: 3 ימים, עלות ~$0.034, 9 פריטים נבדקו, 3 שגיאות');
+
+    const saturday = await wiredRun(DATE);
+    expect(saturday.html).not.toContain('השבוע:');
+    expect(saturday.html.split('\n').at(-1)).toMatch(/^נוצר ב-/);
+  });
+
+  it('a Sunday with no history says 0 days, and an unreadable history only drops the line', async () => {
+    const empty = await runBrief(await deps({ history: async () => [] }), {
+      date: SUNDAY,
+      dryRun: false,
+    });
+    expect(empty.html).toContain('השבוע: 0 ימים, עלות ~$0.000, 0 פריטים נבדקו, 0 שגיאות');
+
+    const broken = await runBrief(
+      await deps({
+        history: async () => {
+          throw new Error('runs/2026-10-08.json: invalid JSON');
+        },
+      }),
+      { date: SUNDAY, dryRun: false },
+    );
+    expect(broken.html).not.toContain('השבוע:');
+    expect(broken.record.errors).toContainEqual(
+      expect.objectContaining({ stage: 'source', source: 'weekly' }),
+    );
+    expect(broken.record.delivery.status).toBe('sent');
   });
 });

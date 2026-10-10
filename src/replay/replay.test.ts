@@ -6,7 +6,9 @@ import { loadJson, pricesSchema } from '../config.js';
 import { HAIKU_MODEL } from '../decide/haiku.js';
 import { JEV_MODEL } from '../decide/jev.js';
 import type { Decision, DecisionModel, DecisionResult, Item } from '../types.js';
-import { collectItems, datesBetween, loadRuns, renderMarkdown, replay } from './replay.js';
+import { datesBetween } from '../dates.js';
+import { loadRecords } from '../records.js';
+import { collectItems, renderMarkdown, replay } from './replay.js';
 
 const RUNS = 'test/fixtures/runs';
 const prices = await loadJson('config/prices.json', pricesSchema);
@@ -52,14 +54,14 @@ describe('replay', () => {
       '2026-10-01',
       '2026-10-02',
     ]);
-    expect((await loadRuns(RUNS, '2026-09-30', '2026-10-03')).map((r) => r.date)).toEqual([
+    expect((await loadRecords(RUNS, '2026-09-30', '2026-10-03')).map((r) => r.date)).toEqual([
       '2026-10-01',
       '2026-10-02',
     ]);
   });
 
   it("keeps the first day an item appeared with that day's decision, and tolerates a missing summary", async () => {
-    const items = collectItems(await loadRuns(RUNS, '2026-10-01', '2026-10-02'));
+    const items = collectItems(await loadRecords(RUNS, '2026-10-01', '2026-10-02'));
     expect(items[0]).toMatchObject({
       date: '2026-10-01',
       original: 'must_read',
@@ -76,7 +78,7 @@ describe('replay', () => {
     );
     const seen: string[] = [];
     const model = new ScriptedModel('m', (i) => (seen.push(i.summary), 'skip'), 0, 1);
-    const runs = await loadRuns(dir, '2026-10-05', '2026-10-05');
+    const runs = await loadRecords(dir, '2026-10-05', '2026-10-05');
     await replay({
       from: '2026-10-05',
       to: '2026-10-05',
@@ -91,7 +93,7 @@ describe('replay', () => {
   it('v4 criterion 7: "Replay over two fixture run records with overlapping items dedupes by title, decides each item once per model, and produces the agreement matrix, per-model cost and latency, and the disagreement list; the Markdown table renders the same numbers."', async () => {
     const haiku = new ScriptedModel(HAIKU_MODEL, haikuChoice, 0.001, 100);
     const jev = new ScriptedModel(JEV_MODEL, jevChoice, 0.0001, 40);
-    const runs = await loadRuns(RUNS, '2026-10-01', '2026-10-02');
+    const runs = await loadRecords(RUNS, '2026-10-01', '2026-10-02');
     const report = await replay({
       from: '2026-10-01',
       to: '2026-10-02',
@@ -167,7 +169,7 @@ describe('replay', () => {
       from: '2026-10-01',
       to: '2026-10-02',
       dryRun: false,
-      runs: await loadRuns(RUNS, '2026-10-01', '2026-10-02'),
+      runs: await loadRecords(RUNS, '2026-10-01', '2026-10-02'),
       models: { jev: failing },
       prices,
     });

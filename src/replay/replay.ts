@@ -1,27 +1,9 @@
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
-import { z } from 'zod';
 import type { Prices } from '../config.js';
 import { priceCall } from '../cost.js';
+import type { StoredRecord } from '../records.js';
 import { decideAll } from '../run/run-brief.js';
 import { normalizeTitle } from '../sources/feeds.js';
 import { DECISIONS, type Decision, type DecisionModel, type Item } from '../types.js';
-
-const recordSchema = z.object({
-  date: z.string(),
-  items: z.array(
-    z.object({
-      title: z.string(),
-      link: z.string(),
-      published: z.string().default(''),
-      summary: z.string().default(''),
-      sources: z.array(z.string()).default([]),
-    }),
-  ),
-  decisions: z.array(z.object({ title: z.string(), decision: z.enum(DECISIONS) })).default([]),
-});
-
-export type StoredRun = z.infer<typeof recordSchema>;
 
 export interface ReplayItem {
   date: string;
@@ -68,26 +50,8 @@ export interface ReplayReport {
   disagreements: { title: string; choices: Record<string, Decision | null> }[];
 }
 
-export function datesBetween(from: string, to: string): string[] {
-  const dates: string[] = [];
-  const end = Date.parse(`${to}T00:00:00Z`);
-  for (let t = Date.parse(`${from}T00:00:00Z`); t <= end; t += 86_400_000)
-    dates.push(new Date(t).toISOString().slice(0, 10));
-  return dates;
-}
-
-// Reads runs/<date>.json for each day in range; days without a live record are skipped.
-export async function loadRuns(dir: string, from: string, to: string): Promise<StoredRun[]> {
-  const runs: StoredRun[] = [];
-  for (const date of datesBetween(from, to)) {
-    const text = await readFile(join(dir, `${date}.json`), 'utf8').catch(() => null);
-    if (text !== null) runs.push(recordSchema.parse(JSON.parse(text)));
-  }
-  return runs;
-}
-
 // The first day an item appeared wins, together with the decision made that day.
-export function collectItems(runs: StoredRun[]): ReplayItem[] {
+export function collectItems(runs: StoredRecord[]): ReplayItem[] {
   const byTitle = new Map<string, ReplayItem>();
   for (const run of runs) {
     const decided = new Map(run.decisions.map((d) => [normalizeTitle(d.title), d.decision]));
@@ -122,7 +86,7 @@ export interface ReplayInput {
   from: string;
   to: string;
   dryRun: boolean;
-  runs: StoredRun[];
+  runs: StoredRecord[];
   models: Record<string, DecisionModel>;
   prices: Prices;
 }

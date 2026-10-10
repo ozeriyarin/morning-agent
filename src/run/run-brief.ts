@@ -1,6 +1,8 @@
 import type { Prices } from '../config.js';
 import { priceCall, totalCost } from '../cost.js';
-import { clockTime, dayMonth, hebrewWeekday, zonedTime } from '../dates.js';
+import { addDays, clockTime, dayMonth, hebrewWeekday, isSunday, zonedTime } from '../dates.js';
+import type { StoredRecord } from '../records.js';
+import { summarise } from '../report/report.js';
 import { mergeCalendars } from '../sources/calendar-merge.js';
 import { dedupe, sortNewestFirst, withinWindow } from '../sources/feeds.js';
 import type { ConceptStore } from '../sources/concepts.js';
@@ -19,6 +21,7 @@ import {
   type Sender,
   type Source,
   type WeatherDay,
+  type WeeklySummary,
   type Writer,
   type WriterInput,
   type WrittenBrief,
@@ -51,6 +54,7 @@ export interface RunDeps {
   timeZone: string;
   localTime: string;
   now: () => Date;
+  history: (from: string, to: string) => Promise<StoredRecord[]>;
   writeRecord: (record: RunRecord) => Promise<void>;
 }
 
@@ -100,6 +104,26 @@ async function writeBrief(
     errors.push({ stage: 'writer', message: message(error) });
     const call = error instanceof WriterError ? error.call : undefined;
     return { brief: templateBrief(input), mode: 'fallback', omitted: [], call };
+  }
+}
+
+// Sunday footer: the 7 days before the run date; a day without a record counts as not run.
+async function weeklySummary(
+  deps: RunDeps,
+  date: string,
+  errors: RunError[],
+): Promise<WeeklySummary | undefined> {
+  try {
+    const { totals } = summarise(await deps.history(addDays(date, -7), addDays(date, -1)));
+    return {
+      days: totals.daysRun,
+      costUsd: totals.costUsd,
+      items: totals.items.inWindow,
+      errors: totals.errors,
+    };
+  } catch (error) {
+    errors.push({ stage: 'source', source: 'weekly', message: message(error) });
+    return undefined;
   }
 }
 
@@ -219,6 +243,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
   const calls: CallRecord[] = usages.map((c) => priceCall(c, deps.prices));
   const total = totalCost(calls);
   const now = deps.now();
+  const weekly = isSunday(opts.date) ? await weeklySummary(deps, opts.date, errors) : undefined;
   const brief: Brief = {
     ...written.brief,
     calendar,
@@ -228,6 +253,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
     concept:
       concept === null && !missing.has('concept') ? QUEUE_EMPTY_CONCEPT : written.brief.concept,
     footer: `נוצר ב-${clockTime(now, deps.timeZone)} · ${items.length} פריטים נבדקו · עלות ~$${total.toFixed(3)}`,
+    weekly,
   };
   const missingSections = [...missing];
   const html = formatBrief(brief, missingSections);

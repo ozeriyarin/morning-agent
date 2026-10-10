@@ -3,7 +3,8 @@ import { ConfigError, loadJson, pricesSchema } from './config.js';
 import { FakeDecisionModel } from './decide/fake.js';
 import { HaikuDecisionModel } from './decide/haiku.js';
 import { JevDecisionModel } from './decide/jev.js';
-import { loadRuns, replay } from './replay/replay.js';
+import { loadRecords } from './records.js';
+import { replay } from './replay/replay.js';
 import { buildReplayModels, parseReplayArgs, reportPath } from './replay-cli.js';
 
 const KEYS = { anthropicKey: 'sk-ant-synthetic', openRouterKey: 'sk-or-v1-synthetic' };
@@ -66,7 +67,7 @@ describe('replay CLI', () => {
       from: '2026-10-01',
       to: '2026-10-02',
       dryRun: true,
-      runs: await loadRuns('test/fixtures/runs', '2026-10-01', '2026-10-02'),
+      runs: await loadRecords('test/fixtures/runs', '2026-10-01', '2026-10-02'),
       models,
       prices: await loadJson('config/prices.json', pricesSchema),
     });

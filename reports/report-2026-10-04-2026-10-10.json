@@ -1,0 +1,73 @@
+{
+  "days": [
+    {
+      "date": "2026-10-10",
+      "delivery": "sent",
+      "items": {
+        "fetched": 1317,
+        "inWindow": 6,
+        "decided": 6
+      },
+      "decisions": {
+        "must_read": 1,
+        "mention": 1,
+        "skip": 4
+      },
+      "calls": {
+        "decision": {
+          "calls": 6,
+          "inputTokens": 5370,
+          "outputTokens": 200,
+          "cacheReadTokens": 0,
+          "costUsd": 0.006370000000000001,
+          "meanLatencyMs": 841.4717035
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 449,
+          "outputTokens": 770,
+          "cacheReadTokens": 0,
+          "costUsd": 0.012558,
+          "meanLatencyMs": 7663.335692
+        }
+      },
+      "costUsd": 0.018928,
+      "errors": [
+        {
+          "source": "Hacker News AI"
+        }
+      ],
+      "calendarEvents": 1,
+      "icloud": "ok",
+      "concept": "typed tool registry"
+    }
+  ],
+  "totals": {
+    "daysRun": 1,
+    "daysDelivered": 1,
+    "items": {
+      "fetched": 1317,
+      "inWindow": 6,
+      "decided": 6
+    },
+    "costUsd": 0.018928,
+    "costByRole": {
+      "decision": 0.006370000000000001,
+      "writer": 0.012558
+    },
+    "costByModel": {
+      "claude-haiku-4-5-20251001": 0.006370000000000001,
+      "claude-sonnet-5-5": 0.012558
+    },
+    "meanCostPerDay": 0.018928,
+    "meanLatencyMs": {
+      "decision": 841.4717035,
+      "writer": 7663.335692
+    },
+    "errors": 1,
+    "errorsBySource": {
+      "Hacker News AI": 1
+    },
+    "writerCacheHitRatio": 0
+  }
+}

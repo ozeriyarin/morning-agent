@@ -82,9 +82,17 @@ export interface WrittenBrief {
   footer: string;
 }
 
+export interface WeeklySummary {
+  days: number;
+  costUsd: number;
+  items: number;
+  errors: number;
+}
+
 export interface Brief extends WrittenBrief {
   calendar: CalendarEvent[] | null;
   icloudUnavailable?: boolean;
+  weekly?: WeeklySummary;
 }
 
 export interface WriterInput {

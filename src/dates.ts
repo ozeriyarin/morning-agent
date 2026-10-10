@@ -47,3 +47,17 @@ export function clockTime(now: Date, timeZone: string): string {
 export function isIsoDate(value: string): boolean {
   return /^\d{4}-\d{2}-\d{2}$/.test(value) && !Number.isNaN(Date.parse(`${value}T00:00:00Z`));
 }
+
+export function addDays(date: string, days: number): string {
+  return new Date(Date.parse(`${date}T00:00:00Z`) + days * 86_400_000).toISOString().slice(0, 10);
+}
+
+export function datesBetween(from: string, to: string): string[] {
+  const dates: string[] = [];
+  for (let d = from; d <= to; d = addDays(d, 1)) dates.push(d);
+  return dates;
+}
+
+export function isSunday(date: string): boolean {
+  return new Date(`${date}T12:00:00Z`).getUTCDay() === 0;
+}
