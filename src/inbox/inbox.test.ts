@@ -176,7 +176,7 @@ describe('inbox', () => {
       message(7, `/concept ${TOKEN}`),
     ]);
     const result = await runInbox(deps(root, updates, sender, leaky).inboxDeps);
-    expect(sender.sent[1]).toBe(COMMAND_FAILED);
+    expect(sender.sent[1]).toBe('שירות המיקום (geocoding-api.open-meteo.com) לא זמין כרגע');
     expect(sender.sent[2]).toBe('נוסף לתור: "[REDACTED]", מקום 2');
     const written = Object.values(await snapshot(root)).join('\n');
     const output = [...sender.sent, ...result.errors, summaryLine(result), written].join('\n');

@@ -1,3 +1,4 @@
+import { escapeHtml } from '../write/template.js';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { z } from 'zod';
@@ -107,8 +108,9 @@ export async function runInbox(deps: InboxDeps): Promise<InboxResult> {
         );
       }
     } catch (error) {
-      result.errors.push(scrub(errorText(error)));
-      reply = COMMAND_FAILED;
+      const text = scrub(errorText(error));
+      result.errors.push(text);
+      reply = text.startsWith('שירות ') ? escapeHtml(text) : COMMAND_FAILED;
     }
     try {
       await deps.sender.send(scrub(reply));

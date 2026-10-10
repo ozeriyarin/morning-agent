@@ -58,11 +58,23 @@ export function costMessage(totals: ReportSummary['totals'], days: number): stri
   ].join('\n');
 }
 
+// Names the failing service so a blocked host shows up on the phone instead of a generic error.
+async function step<T>(service: string, work: () => Promise<T>): Promise<T> {
+  try {
+    return await work();
+  } catch (error: unknown) {
+    const cause = error instanceof Error && error.cause instanceof Error ? ` (${error.cause.message})` : '';
+    throw new Error(`שירות ${service} לא זמין כרגע${cause}`, { cause: error });
+  }
+}
+
 async function weather(place: string, ctx: CommandContext): Promise<string> {
-  const found = await geocode(place, ctx.timeZone, ctx.fetchFn);
+  const found = await step('המיקום (geocoding-api.open-meteo.com)', () => geocode(place, ctx.timeZone, ctx.fetchFn));
   if (!found) return `לא מצאתי מקום בשם "${escapeHtml(place)}"`;
   const date = todayIn(found.timezone, ctx.now);
-  const day = await new OpenMeteoSource(found, ctx.fetchFn).fetch({ date, reference: ctx.now });
+  const day = await step('מזג האוויר (api.open-meteo.com)', () =>
+    new OpenMeteoSource(found, ctx.fetchFn).fetch({ date, reference: ctx.now }),
+  );
   const line = `${weatherSummary(day)} ${weatherAdvice(day)}`;
   return `<b>${escapeHtml(found.name)}</b>: ${escapeHtml(line)}`;
 }
