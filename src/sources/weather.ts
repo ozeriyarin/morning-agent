@@ -56,10 +56,57 @@ export function mapWeather(response: unknown, date: string): WeatherDay {
   };
 }
 
+// The brief and the inbox /weather reply share these two sentences.
+export function weatherSummary(day: WeatherDay): string {
+  return `${day.label}, ${day.min}°-${day.max}°, סיכוי לגשם ${day.precipitationProbability}%.`;
+}
+
+export function weatherAdvice(day: WeatherDay): string {
+  if (day.precipitationProbability >= 50) return 'כדאי לקחת מטרייה.';
+  if (day.min <= 12) return 'קריר בבוקר, כדאי לקחת ז׳קט.';
+  if (day.max >= 30) return 'חם היום, לשתות הרבה מים.';
+  return 'יום נעים, אין צורך בהכנות מיוחדות.';
+}
+
 export interface WeatherLocation {
   latitude: number;
   longitude: number;
   timezone: string;
+}
+
+export interface Place extends WeatherLocation {
+  name: string;
+}
+
+const geocodingSchema = z.object({
+  results: z
+    .array(
+      z.object({
+        name: z.string(),
+        latitude: z.number(),
+        longitude: z.number(),
+        timezone: z.string().optional(),
+      }),
+    )
+    .default([]),
+});
+
+// Null when Open-Meteo knows no such place; a place without a timezone gets `fallbackZone`.
+export async function geocode(
+  name: string,
+  fallbackZone: string,
+  fetchFn: typeof fetch,
+  timeoutMs = 15_000,
+): Promise<Place | null> {
+  const params = new URLSearchParams({ name, language: 'he', count: '1' });
+  const res = await fetchFn(`https://geocoding-api.open-meteo.com/v1/search?${params}`, {
+    signal: AbortSignal.timeout(timeoutMs),
+  });
+  if (!res.ok) throw new SourceError('geocoding', `Open-Meteo geocoding HTTP ${res.status}`);
+  const parsed = geocodingSchema.safeParse(await res.json());
+  if (!parsed.success) throw new SourceError('geocoding', 'unexpected geocoding response shape');
+  const hit = parsed.data.results[0];
+  return hit ? { ...hit, timezone: hit.timezone ?? fallbackZone } : null;
 }
 
 export class OpenMeteoSource implements Source<WeatherDay> {

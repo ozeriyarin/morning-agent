@@ -2,7 +2,7 @@ import { mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { FileConceptStore, markUsed, nextConcept, readQueue } from './concepts.js';
+import { addConcept, FileConceptStore, markUsed, nextConcept, readQueue } from './concepts.js';
 
 const queue = [
   '# Concept queue',
@@ -47,5 +47,23 @@ describe('concept queue', () => {
     expect(await store.next()).toBe('tool calling');
     await store.markUsed('tool calling', '2026-10-10');
     expect(await store.next()).toBe('RAG');
+  });
+
+  it('addConcept appends a missing concept with the file line ending and reports its position', () => {
+    const crlf = queue.replace(/\n/g, '\r\n');
+    const added = addConcept(crlf, 'MCP');
+    expect(added).toMatchObject({ added: true, position: 3, entry: { name: 'MCP', usedOn: null } });
+    expect(added.markdown).toBe(`${crlf}- [ ] MCP\r\n`);
+    expect(addConcept('- [ ] RAG', 'MCP').markdown).toBe('- [ ] RAG\n- [ ] MCP\n');
+  });
+
+  it('addConcept leaves a present concept alone, matching case-insensitively', () => {
+    expect(addConcept(queue, 'rag')).toEqual({
+      markdown: queue,
+      added: false,
+      entry: { name: 'RAG', usedOn: null },
+      position: 2,
+    });
+    expect(addConcept(queue, 'Agent Loop')).toMatchObject({ added: false, position: null });
   });
 });

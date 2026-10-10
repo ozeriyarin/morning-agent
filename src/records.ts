@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { z } from 'zod';
-import { datesBetween } from './dates.js';
+import { addDays, datesBetween } from './dates.js';
 import { DECISIONS } from './types.js';
 
 const callSchema = z.object({
@@ -57,4 +57,13 @@ export async function loadRecords(dir: string, from: string, to: string): Promis
     if (record && !record.dryRun) records.push(record);
   }
   return records;
+}
+
+// The newest non-dry-run record within `days` days ending `today`, or null.
+export async function latestRecord(
+  dir: string,
+  today: string,
+  days = 7,
+): Promise<StoredRecord | null> {
+  return (await loadRecords(dir, addDays(today, 1 - days), today)).at(-1) ?? null;
 }

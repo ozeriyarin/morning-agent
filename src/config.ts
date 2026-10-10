@@ -31,6 +31,18 @@ export function loadEnv(source: Record<string, string | undefined>, dryRun: bool
   return parsed.data;
 }
 
+const telegramEnvSchema = liveEnvSchema.pick({ TELEGRAM_BOT_TOKEN: true, TELEGRAM_CHAT_ID: true });
+export type TelegramEnv = z.infer<typeof telegramEnvSchema>;
+
+// The inbox talks to Telegram only, so it needs no Anthropic key.
+export function loadTelegramEnv(source: Record<string, string | undefined>): TelegramEnv {
+  const parsed = telegramEnvSchema.safeParse(source);
+  if (!parsed.success) {
+    throw new ConfigError(parsed.error.issues.map((issue) => issue.message).join('; '));
+  }
+  return parsed.data;
+}
+
 // Cloud sessions withhold ANTHROPIC_API_KEY from the shell, so a project-specific name comes first.
 export function loadAnthropicKey(source: Record<string, string | undefined>): string | undefined {
   return source.MORNING_ANTHROPIC_API_KEY || source.ANTHROPIC_API_KEY || undefined;

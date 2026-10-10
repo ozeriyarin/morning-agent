@@ -1,5 +1,6 @@
 import type { Prices } from '../config.js';
 import { priceCall } from '../cost.js';
+import type { FeedbackLabel } from '../inbox/feedback.js';
 import type { StoredRecord } from '../records.js';
 import { decideAll } from '../run/run-brief.js';
 import { normalizeTitle } from '../sources/feeds.js';
@@ -43,10 +44,11 @@ export interface ReplayReport {
     date: string;
     title: string;
     original: Decision | null;
+    feedback?: FeedbackLabel;
     choices: Record<string, ModelChoice>;
   }[];
   models: Record<string, ModelStats>;
-  agreement: { labels: string[]; cells: AgreementCell[][] };
+  agreement: { labels: string[]; cells: AgreementCell[][]; feedback?: AgreementCell[] };
   disagreements: { title: string; choices: Record<string, Decision | null> }[];
 }
 
@@ -89,7 +91,12 @@ export interface ReplayInput {
   runs: StoredRecord[];
   models: Record<string, DecisionModel>;
   prices: Prices;
+  feedback?: Map<string, FeedbackLabel>;
 }
+
+// A keep label agrees with must_read or mention, a drop label with skip.
+const agreesWith = (label: FeedbackLabel, decision: Decision) =>
+  (label === 'keep') === (decision !== 'skip');
 
 // Each deduped item is decided once per model; `original` is the decision stored in the record.
 export async function replay(input: ReplayInput): Promise<ReplayReport> {
@@ -112,6 +119,7 @@ export async function replay(input: ReplayInput): Promise<ReplayReport> {
     date: r.date,
     title: r.item.title,
     original: r.original,
+    feedback: input.feedback?.get(normalizeTitle(r.item.title)),
     choices: Object.fromEntries(names.map((name, m) => [name, perModel[m]?.[i] as ModelChoice])),
   }));
   const labels = ['original', ...names];
@@ -124,6 +132,14 @@ export async function replay(input: ReplayInput): Promise<ReplayReport> {
       return { agree, total: compared.length };
     }),
   );
+  const labelled = rows.flatMap((row) => (row.feedback ? [{ row, label: row.feedback }] : []));
+  const feedback = labels.map((l): AgreementCell => {
+    const compared = labelled.flatMap(({ row, label }) => {
+      const decision = pick(row, l);
+      return decision === null ? [] : [agreesWith(label, decision)];
+    });
+    return { agree: compared.filter(Boolean).length, total: compared.length };
+  });
   // With one model the comparison is against the stored decision instead.
   const contenders = names.length > 1 ? names : labels;
   const disagreements = rows
@@ -142,7 +158,7 @@ export async function replay(input: ReplayInput): Promise<ReplayReport> {
     models: Object.fromEntries(
       models.map(([name, model], m) => [name, stats(model.model, perModel[m] ?? [])]),
     ),
-    agreement: { labels, cells },
+    agreement: { labels, cells, ...(labelled.length && { feedback }) },
     disagreements,
   };
 }
@@ -154,7 +170,7 @@ const share = ({ agree, total }: AgreementCell) =>
   total ? `${agree}/${total} (${Math.round((agree / total) * 100)}%)` : '-';
 
 export function renderMarkdown(report: ReplayReport): string {
-  const { labels, cells } = report.agreement;
+  const { labels, cells, feedback } = report.agreement;
   const head = ['Model', 'Decisions', ...DECISIONS, 'Errors', 'Cost (USD)', 'Mean latency (ms)'];
   return [
     `## Replay ${report.from} to ${report.to}${report.dryRun ? ' (dry run, fake models)' : ''}`,
@@ -177,7 +193,10 @@ export function renderMarkdown(report: ReplayReport): string {
     '',
     table(
       ['', ...labels],
-      labels.map((label, i) => [label, ...(cells[i] ?? []).map(share)]),
+      [
+        ...labels.map((label, i) => [label, ...(cells[i] ?? []).map(share)]),
+        ...(feedback ? [['feedback', ...feedback.map(share)]] : []),
+      ],
     ),
     '',
     '### Disagreements',

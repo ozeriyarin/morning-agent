@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { SourceError } from '../types.js';
-import { mapWeather, OpenMeteoSource, weatherLabel } from './weather.js';
+import { geocode, mapWeather, OpenMeteoSource, weatherLabel } from './weather.js';
 
 const fixture: unknown = JSON.parse(readFileSync('test/fixtures/open-meteo-modiin.json', 'utf8'));
 const location = { latitude: 31.89, longitude: 35.01, timezone: 'Asia/Jerusalem' };
@@ -55,5 +55,30 @@ describe('weather', () => {
     await expect(new OpenMeteoSource(location, fetchFn).fetch(ctx)).rejects.toThrow(
       'Open-Meteo HTTP 500',
     );
+  });
+
+  it('geocode asks for one Hebrew result and maps it to a place', async () => {
+    let url = '';
+    const body: unknown = JSON.parse(readFileSync('test/fixtures/geocoding-tel-aviv.json', 'utf8'));
+    const fetchFn: typeof fetch = async (input) => {
+      url = String(input);
+      return Response.json(body);
+    };
+    expect(await geocode('תל אביב', 'UTC', fetchFn)).toEqual({
+      name: 'תל אביב-יפו',
+      latitude: 32.08088,
+      longitude: 34.78057,
+      timezone: 'Asia/Jerusalem',
+    });
+    expect(url).toContain('https://geocoding-api.open-meteo.com/v1/search?');
+    expect(url).toContain('language=he');
+    expect(url).toContain('count=1');
+  });
+
+  it('geocode returns null for no results and throws on an HTTP failure', async () => {
+    const empty: typeof fetch = async () => Response.json({ generationtime_ms: 1 });
+    expect(await geocode('nowhere', 'UTC', empty)).toBeNull();
+    const down: typeof fetch = async () => new Response('down', { status: 503 });
+    await expect(geocode('x', 'UTC', down)).rejects.toThrow('geocoding HTTP 503');
   });
 });

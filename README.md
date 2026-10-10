@@ -11,7 +11,8 @@ The project is spec-driven: product docs live in `agent-os/product/`, coding sta
 `agent-os/specs/2026-10-10-brief-v2-calendar/spec.md`, v3 iCloud:
 `agent-os/specs/2026-10-10-brief-v3-icloud/spec.md`, v4 Jev:
 `agent-os/specs/2026-10-10-brief-v4-jev/spec.md`, v5 cost view:
-`agent-os/specs/2026-10-10-brief-v5-cost-view/spec.md`).
+`agent-os/specs/2026-10-10-brief-v5-cost-view/spec.md`, v6 inbox:
+`agent-os/specs/2026-10-10-brief-v6-inbox/spec.md`).
 
 ## Architecture
 
@@ -47,7 +48,14 @@ npm run replay -- --from <date> --to <date> [--models haiku,jev] [--dry-run]
 npm run report -- [--from <date>] [--to <date>] [--format md|json]
 └── src/report-cli.ts             default: the 7 days ending today -> reports/report-<from>-<to>.json
     └── src/report/report.ts      summarise(): per-day and total items, decisions, cost, latency, errors
-src/records.ts       run-record schema + loadRecords(), shared by replay, report and the weekly line
+npm run inbox
+└── src/inbox-cli.ts              Telegram env only, offset in state/telegram-offset.json
+    └── src/inbox/inbox.ts        getUpdates -> commands or feedback -> replies -> new offset
+        ├── inbox/telegram-updates.ts  Bot API getUpdates with offset, text messages only
+        ├── inbox/commands.ts     /weather, /cost, /concept, /help (anything else: help)
+        └── inbox/feedback.ts     feedback/<date>.json, keep/drop labels matched to item titles
+src/records.ts       run-record schema + loadRecords() + latestRecord(), shared by replay, report,
+                     the weekly line and the inbox
 config/brief.json    location, feeds, recipient, language, local send time, decisionModel
 config/prices.json   $ per 1M input / output / cache-read / cache-write tokens, per model
 concepts/queue.md    the learning queue
@@ -313,6 +321,52 @@ the Markdown it prints. Then commit `runs/<date>.json` and `concepts/queue.md` (
 `reports/report-<from>-<to>.json` and `README.md`) with the message `brief: <date>` (date as
 YYYY-MM-DD, Asia/Jerusalem) and push. Finally report the Telegram delivery status and the total
 cost from the run record.
+```
+
+## Talking to the bot
+
+Write to the bot in the same Telegram chat that gets the brief. An hourly "Inbox" routine reads
+new messages with `getUpdates` (07:00–23:00 Israel time), so answers arrive within the hour.
+Messages from any other chat are ignored and only counted. Commands are case-insensitive and take
+Hebrew or English arguments:
+
+| Command           | Reply                                                                                        |
+| ----------------- | -------------------------------------------------------------------------------------------- |
+| `/weather <מקום>` | today's forecast there, in the brief's weather line, e.g. `תל אביב-יפו: מעונן, 21°-29°, ...` |
+| `/cost [days]`    | the `npm run report` totals for the last N days (default 7, at most 90)                      |
+| `/concept <name>` | adds `- [ ] <name>` to `concepts/queue.md` unless it is there, and replies with its place    |
+| `/help`           | the command list (also the reply to any unknown command)                                     |
+
+`/weather` resolves the place with Open-Meteo geocoding (Hebrew names, first match) and answers
+`לא מצאתי מקום בשם "<place>"` when nothing matches. Any other text, or a reply to the brief, is
+feedback and gets `תודה, נרשם.`; it is appended to `feedback/<date>.json` as
+`{ at, text, replyToBriefDate? }`. When the text has 👍 / 👎, `כן`, `לא`, `מעניין` or
+`לא מעניין` (any negation means drop) plus words from exactly one news title of the latest run
+record, the entry also gets `{ title, label: "keep" | "drop" }`, e.g. `👎 tidy desk`. The replay
+(`npm run replay`) reads those labels for its range (plus the next day) and adds a `feedback` row
+to the agreement table: `keep` agrees with `must_read` or `mention`, `drop` with `skip`.
+
+Safety: at most 20 messages per run; on the very first run (no `state/telegram-offset.json`)
+messages older than 24 hours are skipped; nothing in a message runs except the four commands;
+replies are Telegram HTML with every value escaped; the bot token and chat id are scrubbed from
+incoming text before it reaches a reply, the queue or a feedback file. The run prints one line,
+e.g. `inbox: 3 updates, 1 commands, 1 feedback, 1 ignored from other chats, 0 stale, 0 errors`.
+With nothing new it calls only `getUpdates` and changes no file.
+
+```bash
+npm run inbox      # needs TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID only
+```
+
+The "Inbox" routine: cron `0 4-20 * * *` UTC (07:00–23:00 Israel summer time; `0 5-21 * * *`
+after DST ends), same repo, model and environment as the brief, with `api.telegram.org`,
+`api.open-meteo.com` and `geocoding-api.open-meteo.com` on the allow list. Routine prompt:
+
+```text
+Install dependencies with `npm ci` (the sandbox starts without node_modules). Run
+`npm run inbox`. Then, only if `git status --porcelain` shows changes under `state/`,
+`feedback/` or `concepts/queue.md`, commit exactly those paths with the message
+`inbox: <date> <HH:MM>` (Asia/Jerusalem) and push; never commit anything else. Finally report the
+summary line the command printed.
 ```
 
 ## Why these design choices

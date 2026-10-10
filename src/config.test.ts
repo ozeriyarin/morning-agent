@@ -5,6 +5,7 @@ import {
   loadEnv,
   loadICloudCredentials,
   loadJson,
+  loadTelegramEnv,
   pricesSchema,
 } from './config.js';
 
@@ -48,6 +49,16 @@ describe('loadEnv', () => {
 
   it('needs no secrets in a dry run', () => {
     expect(loadEnv({}, true)).toEqual({ dryRun: true });
+  });
+});
+
+describe('loadTelegramEnv', () => {
+  it('needs only the Telegram variables and names a missing one', () => {
+    const { ANTHROPIC_API_KEY: _dropped, ...telegram } = full;
+    expect(loadTelegramEnv(telegram)).toEqual(telegram);
+    expect(() => loadTelegramEnv({ TELEGRAM_BOT_TOKEN: '1:abc' })).toThrow(
+      'TELEGRAM_CHAT_ID is required',
+    );
   });
 });
 

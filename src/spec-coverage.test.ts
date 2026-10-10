@@ -22,6 +22,7 @@ describe('spec coverage', () => {
     ['2026-10-10-brief-v3-icloud', 'v3 ', 9],
     ['2026-10-10-brief-v4-jev', 'v4 ', 9],
     ['2026-10-10-brief-v5-cost-view', 'v5 ', 9],
+    ['2026-10-10-brief-v6-inbox', 'v6 ', 10],
   ])('%s: every acceptance criterion has a test whose name quotes it', (spec, prefix, count) => {
     const list = criteria(spec);
     expect(list.map((c) => c.n)).toEqual(numbered(count));
@@ -50,5 +51,9 @@ describe('spec coverage', () => {
 
   it('v5 criterion 9: "`npm test` passes; every criterion has a test whose name quotes it."', () => {
     expect(criteria('2026-10-10-brief-v5-cost-view')).toHaveLength(9);
+  });
+
+  it('v6 criterion 10: "`npm test` passes; every criterion has a test whose name quotes it."', () => {
+    expect(criteria('2026-10-10-brief-v6-inbox')).toHaveLength(10);
   });
 });

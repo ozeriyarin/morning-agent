@@ -31,6 +31,27 @@ export function markUsed(markdown: string, name: string, date: string): string {
     .join('\n');
 }
 
+export interface QueueAddition {
+  markdown: string;
+  added: boolean;
+  entry: QueueEntry;
+  position: number | null;
+}
+
+// Case-insensitive presence check; `position` counts unused entries only, null once used.
+export function addConcept(markdown: string, name: string): QueueAddition {
+  const key = name.toLowerCase();
+  const found = readQueue(markdown).find((e) => e.name.toLowerCase() === key);
+  const eol = markdown.includes('\r\n') ? '\r\n' : '\n';
+  const body = markdown === '' || markdown.endsWith('\n') ? markdown : markdown + eol;
+  const next = found ? markdown : `${body}- [ ] ${name}${eol}`;
+  const entry = found ?? { name, usedOn: null };
+  const pending = readQueue(next).filter((e) => e.usedOn === null);
+  const position =
+    entry.usedOn === null ? pending.findIndex((e) => e.name.toLowerCase() === key) + 1 : null;
+  return { markdown: next, added: !found, entry, position };
+}
+
 export interface ConceptStore {
   next(): Promise<string | null>;
   markUsed(name: string, date: string): Promise<void>;
@@ -45,5 +66,12 @@ export class FileConceptStore implements ConceptStore {
 
   async markUsed(name: string, date: string): Promise<void> {
     await writeFile(this.path, markUsed(await readFile(this.path, 'utf8'), name, date));
+  }
+
+  // Writes only when the concept was missing, so a repeated /concept leaves the file untouched.
+  async add(name: string): Promise<QueueAddition> {
+    const result = addConcept(await readFile(this.path, 'utf8'), name);
+    if (result.added) await writeFile(this.path, result.markdown);
+    return result;
   }
 }

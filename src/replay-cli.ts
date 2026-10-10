@@ -10,10 +10,11 @@ import {
   loadOpenRouterKey,
   pricesSchema,
 } from './config.js';
-import { isIsoDate } from './dates.js';
+import { addDays, isIsoDate } from './dates.js';
 import { FakeDecisionModel } from './decide/fake.js';
 import { HaikuDecisionModel } from './decide/haiku.js';
 import { JevDecisionModel } from './decide/jev.js';
+import { loadFeedbackLabels } from './inbox/feedback.js';
 import { loadRecords } from './records.js';
 import { renderMarkdown, replay } from './replay/replay.js';
 import { redact } from './run/redact.js';
@@ -97,6 +98,8 @@ async function main(): Promise<void> {
     runs: await loadRecords(join(root, 'runs'), args.from, args.to),
     models: buildReplayModels(args.models, args.dryRun, keys, fetch),
     prices: await loadJson(join(root, 'config', 'prices.json'), pricesSchema),
+    // Feedback sent overnight lands in the next day's file.
+    feedback: await loadFeedbackLabels(join(root, 'feedback'), args.from, addDays(args.to, 1)),
   });
   const secrets = [keys.anthropicKey ?? '', keys.openRouterKey ?? ''];
   const path = reportPath(root, args);

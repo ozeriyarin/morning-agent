@@ -128,9 +128,9 @@ export function summarise(records: StoredRecord[]): ReportSummary {
   };
 }
 
-const usd = (n: number) => `$${n.toFixed(4)}`;
-const ms = (n: number) => `${n.toFixed(0)} ms`;
-const list = (record: Record<string, number>, format: (n: number) => string = String) =>
+export const usd = (n: number) => `$${n.toFixed(4)}`;
+export const ms = (n: number) => `${n.toFixed(0)} ms`;
+export const list = (record: Record<string, number>, format: (n: number) => string = String) =>
   Object.entries(record)
     .map(([k, v]) => `${k}: ${format(v)}`)
     .join(', ') || 'none';

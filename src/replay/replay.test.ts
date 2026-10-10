@@ -8,6 +8,7 @@ import { JEV_MODEL } from '../decide/jev.js';
 import type { Decision, DecisionModel, DecisionResult, Item } from '../types.js';
 import { datesBetween } from '../dates.js';
 import { loadRecords } from '../records.js';
+import { normalizeTitle } from '../sources/feeds.js';
 import { collectItems, renderMarkdown, replay } from './replay.js';
 
 const RUNS = 'test/fixtures/runs';
@@ -179,5 +180,37 @@ describe('replay', () => {
       'A benchmark of local models',
       'Weekend gardening notes',
     ]);
+  });
+
+  it('v6 criterion 8: "Replay reports a feedback agreement row when labelled items exist."', async () => {
+    const input = {
+      from: '2026-10-01',
+      to: '2026-10-02',
+      dryRun: false,
+      runs: await loadRecords(RUNS, '2026-10-01', '2026-10-02'),
+      prices,
+    };
+    const models = () => ({
+      haiku: new ScriptedModel(HAIKU_MODEL, haikuChoice, 0.001, 100),
+      jev: new ScriptedModel(JEV_MODEL, jevChoice, 0.0001, 40),
+    });
+    const feedback = new Map([
+      [normalizeTitle('Anthropic ships Claude Code hooks'), 'keep' as const],
+      [normalizeTitle('Startup raises $20M for LLM evals'), 'drop' as const],
+      [normalizeTitle('A benchmark of local models'), 'drop' as const],
+    ]);
+    const report = await replay({ ...input, models: models(), feedback });
+    const cell = (agree: number) => ({ agree, total: 3 });
+    expect(report.agreement.feedback).toEqual([cell(2), cell(1), cell(2)]);
+    expect(report.items.filter((i) => i.feedback).map((i) => [i.title, i.feedback])).toEqual([
+      ['Anthropic ships Claude Code hooks', 'keep'],
+      ['Startup raises $20M for LLM evals', 'drop'],
+      ['A benchmark of local models', 'drop'],
+    ]);
+    expect(renderMarkdown(report)).toContain('| feedback | 2/3 (67%) | 1/3 (33%) | 2/3 (67%) |');
+
+    const unlabelled = await replay({ ...input, models: models(), feedback: new Map() });
+    expect(unlabelled.agreement).not.toHaveProperty('feedback');
+    expect(renderMarkdown(unlabelled)).not.toContain('| feedback |');
   });
 });

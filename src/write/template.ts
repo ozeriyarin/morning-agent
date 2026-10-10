@@ -1,16 +1,16 @@
+import { weatherAdvice, weatherSummary } from '../sources/weather.js';
 import type {
   Brief,
   CalendarEvent,
   Item,
   Section,
-  WeatherDay,
   WeeklySummary,
   Writer,
   WriterInput,
   WriterResult,
 } from '../types.js';
 
-const TITLES: Record<Section, string> = {
+export const TITLES: Record<Section, string> = {
   weather: 'מזג אוויר במודיעין',
   calendar: 'היום ביומן',
   news: 'AI היום',
@@ -34,13 +34,6 @@ export function escapeHtml(value: string): string {
     .replace(/"/g, '&quot;');
 }
 
-function weatherAdvice(day: WeatherDay): string {
-  if (day.precipitationProbability >= 50) return 'כדאי לקחת מטרייה.';
-  if (day.min <= 12) return 'קריר בבוקר, כדאי לקחת ז׳קט.';
-  if (day.max >= 30) return 'חם היום, לשתות הרבה מים.';
-  return 'יום נעים, אין צורך בהכנות מיוחדות.';
-}
-
 const link = (url: string, title: string) =>
   `<a href="${escapeHtml(url)}">${escapeHtml(title)}</a>`;
 
@@ -52,7 +45,7 @@ export function templateBrief(input: WriterInput): Brief {
     greeting: input.greeting,
     weather: w
       ? {
-          summary: `${w.label}, ${w.min}°-${w.max}°, סיכוי לגשם ${w.precipitationProbability}%.`,
+          summary: weatherSummary(w),
           advice: weatherAdvice(w),
         }
       : { summary: 'אין נתוני מזג אוויר.', advice: 'כדאי לבדוק תחזית לפני היציאה.' },
