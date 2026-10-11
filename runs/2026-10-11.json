@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-11",
+  "generatedAt": "2026-10-11T04:02:10.975Z",
+  "dryRun": false,
+  "fetchedCount": 1317,
+  "items": [
+    {
+      "title": "Dwarf Fortress uses version control now",
+      "link": "https://simonwillison.net/2026/Oct/11/dwarf-fortress/",
+      "published": "2026-10-11T00:52:37.000Z",
+      "summary": "I remember hearing a while ago that Dwarf Fortress didn't use version control. That fact has been lodged in my head, because given its inherent complexity I have trouble imagining a codebase that would benefit from version control more . That's art. I went looking and I'm sad to report that the days",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Python 3.15.0 added to actions/python-versions",
+      "link": "https://simonwillison.net/2026/Oct/10/python-actions/",
+      "published": "2026-10-10T23:58:04.000Z",
+      "summary": "Python 3.15.0 added to actions/python-versions Bit of a niche link, but I've been waiting for this for a couple of days - I even told ChatGPT to check for it: Clone https://github.com/actions/python-versions and git pull once an hour until they add the stable 3.15 - then tell me about it Now that th",
+      "sources": [
+        "Simon Willison"
+      ]
+    }
+  ],
+  "calendar": [
+    {
+      "title": "חלון זמנים הכנה לראיונות",
+      "start": "2026-10-11T06:00:00.000Z",
+      "end": "2026-10-11T15:00:00.000Z",
+      "allDay": false,
+      "source": "icloud"
+    },
+    {
+      "title": "עבודת פרוייקטור",
+      "start": "2026-10-11T07:00:00.000Z",
+      "end": "2026-10-11T10:00:00.000Z",
+      "allDay": false,
+      "source": "icloud"
+    }
+  ],
+  "icloud": "ok",
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "Dwarf Fortress uses version control now",
+      "link": "https://simonwillison.net/2026/Oct/11/dwarf-fortress/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "Python 3.15.0 added to actions/python-versions",
+      "link": "https://simonwillison.net/2026/Oct/10/python-actions/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    }
+  ],
+  "calls": [
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 899,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 698.0223750000005,
+      "costUsd": 0.001064
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 923,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 676.1319950000016,
+      "costUsd": 0.001088
+    },
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 254,
+      "outputTokens": 779,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 1896,
+      "latencyMs": 12816.577039,
+      "costUsd": 0.013038
+    }
+  ],
+  "totalCostUsd": 0.015189999999999999,
+  "writer": "ai",
+  "missingSections": [
+    "weather"
+  ],
+  "concept": {
+    "name": "bounded tool rounds",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": "two-sum",
+    "tipIndex": 0,
+    "marked": true
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent"
+  },
+  "briefChars": 1332,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "weather",
+      "message": "fetch failed"
+    },
+    {
+      "stage": "source",
+      "source": "Hacker News AI",
+      "message": "HTTP 502"
+    }
+  ]
+}
