@@ -33,6 +33,13 @@ export interface CalendarEvent {
   source: 'google' | 'icloud';
 }
 
+export interface Reminder {
+  title: string;
+  due: string;
+  allDay: boolean;
+  time: string | null;
+}
+
 export interface FetchContext {
   date: string;
   reference: Date;
@@ -107,6 +114,7 @@ export interface WeeklySummary {
 export interface Brief extends WrittenBrief {
   calendar: CalendarEvent[] | null;
   icloudUnavailable?: boolean;
+  reminders?: Reminder[];
   weekly?: WeeklySummary;
   interviewPick: InterviewPick;
   interviewExplained: boolean;
@@ -156,6 +164,7 @@ export interface RunRecord {
   items: Pick<Item, 'title' | 'link' | 'published' | 'summary' | 'sources'>[];
   calendar: Pick<CalendarEvent, 'title' | 'start' | 'end' | 'allDay' | 'source'>[] | null;
   icloud: 'ok' | 'disabled' | 'failed';
+  reminders: Pick<Reminder, 'title' | 'due' | 'allDay'>[];
   skippedUnseen: number;
   decisions: {
     title: string;
@@ -178,7 +187,7 @@ export interface RunRecord {
   warnings?: string[];
 }
 
-export type SourceFailure = 'missing' | 'invalid' | 'icloud';
+export type SourceFailure = 'missing' | 'invalid' | 'icloud' | 'icloud-reminders';
 
 export class SourceError extends Error {
   constructor(

@@ -1,7 +1,13 @@
 import { readFile } from 'node:fs/promises';
 import { XMLParser } from 'fast-xml-parser';
-import { zonedTime } from '../dates.js';
-import { SourceError, type CalendarEvent, type FetchContext, type Source } from '../types.js';
+import { clockTime, zonedTime } from '../dates.js';
+import {
+  SourceError,
+  type CalendarEvent,
+  type FetchContext,
+  type Reminder,
+  type Source,
+} from '../types.js';
 import { eventTime } from './calendar-file.js';
 
 export interface ICloudCredentials {
@@ -12,6 +18,7 @@ export interface ICloudCredentials {
 export interface ICloudDiscovery {
   home: string;
   calendars: { url: string; name: string }[];
+  todoCalendars: { url: string; name: string }[];
 }
 
 const CALDAV_ROOT = 'https://caldav.icloud.com/';
@@ -86,9 +93,22 @@ function toEvent(props: Map<string, Property>, timeZone: string): CalendarEvent 
   };
 }
 
-// Unfolds lines and reads each VEVENT, ignoring nested components such as VALARM.
-export function parseICalendar(text: string, timeZone: string): CalendarEvent[] {
-  const events: CalendarEvent[] = [];
+function toReminder(props: Map<string, Property>, timeZone: string): Reminder | null {
+  const due = props.get('DUE');
+  if (!due || props.has('COMPLETED')) return null;
+  if (props.get('STATUS')?.value.trim().toUpperCase() === 'COMPLETED') return null;
+  const { iso, allDay } = icalTime(due.value, due.tzid, timeZone);
+  return {
+    title: unescapeText(props.get('SUMMARY')?.value ?? '') || 'ללא כותרת',
+    due: iso,
+    allDay,
+    time: allDay ? null : clockTime(new Date(iso), timeZone),
+  };
+}
+
+// Unfolds lines and collects each `name` component's properties, ignoring nested ones (VALARM).
+function components(text: string, name: 'VEVENT' | 'VTODO'): Map<string, Property>[] {
+  const found: Map<string, Property>[] = [];
   const stack: string[] = [];
   let props = new Map<string, Property>();
   for (const line of text.replace(/\r?\n[ \t]/g, '').split(/\r?\n/)) {
@@ -97,24 +117,42 @@ export function parseICalendar(text: string, timeZone: string): CalendarEvent[] 
     const component = p.value.trim().toUpperCase();
     if (p.name === 'BEGIN') {
       stack.push(component);
-      if (component === 'VEVENT') props = new Map();
+      if (component === name) props = new Map();
     } else if (p.name === 'END') {
-      const event = stack.pop() === 'VEVENT' ? toEvent(props, timeZone) : null;
-      if (event) events.push(event);
-    } else if (stack.at(-1) === 'VEVENT' && !props.has(p.name)) props.set(p.name, p);
+      if (stack.pop() === name) found.push(props);
+    } else if (stack.at(-1) === name && !props.has(p.name)) props.set(p.name, p);
   }
-  return events;
+  return found;
 }
+
+export const parseICalendar = (text: string, timeZone: string): CalendarEvent[] =>
+  components(text, 'VEVENT').flatMap((props) => toEvent(props, timeZone) ?? []);
+
+export const parseReminders = (text: string, timeZone: string): Reminder[] =>
+  components(text, 'VTODO').flatMap((props) => toReminder(props, timeZone) ?? []);
+
+const dayBounds = (date: string, timeZone: string) => ({
+  dayStart: zonedTime(date, '00:00', timeZone).getTime(),
+  dayEnd: zonedTime(nextDay(date), '00:00', timeZone).getTime(),
+});
 
 // Keeps events that overlap the local day; servers may include the neighbouring all-day events.
 export function onDay(events: CalendarEvent[], date: string, timeZone: string): CalendarEvent[] {
-  const dayStart = zonedTime(date, '00:00', timeZone).getTime();
-  const dayEnd = zonedTime(nextDay(date), '00:00', timeZone).getTime();
+  const { dayStart, dayEnd } = dayBounds(date, timeZone);
   return events.filter((e) => {
     if (e.allDay) return e.start <= date && date < e.end;
     const start = Date.parse(e.start);
     return start < dayEnd && (Date.parse(e.end) > dayStart || start >= dayStart);
   });
+}
+
+// Reminders due on the local day, all-day first then by time; servers may ignore the time-range.
+export function remindersOnDay(reminders: Reminder[], date: string, timeZone: string): Reminder[] {
+  const { dayStart, dayEnd } = dayBounds(date, timeZone);
+  const due = (r: Reminder) => Date.parse(r.due);
+  return reminders
+    .filter((r) => (r.allDay ? r.due === date : due(r) >= dayStart && due(r) < dayEnd))
+    .sort((a, b) => Number(b.allDay) - Number(a.allDay) || due(a) - due(b));
 }
 
 const xml = new XMLParser({
@@ -163,14 +201,24 @@ const davTime = (instant: Date) =>
 const DAV = 'xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav"';
 const propfindBody = (props: string) =>
   `<?xml version="1.0" encoding="utf-8"?><d:propfind ${DAV}><d:prop>${props}</d:prop></d:propfind>`;
-const reportBody = (start: string, end: string) =>
-  `<?xml version="1.0" encoding="utf-8"?><c:calendar-query ${DAV}><d:prop><c:calendar-data>` +
-  `<c:expand start="${start}" end="${end}"/></c:calendar-data></d:prop><c:filter>` +
-  `<c:comp-filter name="VCALENDAR"><c:comp-filter name="VEVENT">` +
+const reportBody = (component: 'VEVENT' | 'VTODO', start: string, end: string) =>
+  `<?xml version="1.0" encoding="utf-8"?><c:calendar-query ${DAV}><d:prop>` +
+  (component === 'VEVENT'
+    ? `<c:calendar-data><c:expand start="${start}" end="${end}"/></c:calendar-data>`
+    : '<c:calendar-data/>') +
+  `</d:prop><c:filter><c:comp-filter name="VCALENDAR"><c:comp-filter name="${component}">` +
   `<c:time-range start="${start}" end="${end}"/></c:comp-filter></c:comp-filter></c:filter>` +
   `</c:calendar-query>`;
 
-// Reads today's VEVENTs from iCloud over CalDAV (Basic auth, app-specific password).
+// Component names a collection accepts; a collection without the set is taken as VEVENT-only.
+function componentSet(prop: Node): string[] {
+  const set = prop['supported-calendar-component-set'];
+  if (set === undefined) return ['VEVENT'];
+  const comps = asNode(set).comp;
+  return Array.isArray(comps) ? comps.map((c) => String(asNode(c)['@_name'])) : [];
+}
+
+// Reads today's VEVENTs and VTODOs from iCloud over CalDAV (Basic auth, app-specific password).
 export class ICloudCalendarSource implements Source<CalendarEvent[]> {
   readonly name = 'icloud';
   private readonly auth: string;
@@ -217,7 +265,7 @@ export class ICloudCalendarSource implements Source<CalendarEvent[]> {
     return icloudUrl(href, base);
   }
 
-  // Principal, then calendar home, then the calendars in it that accept VEVENTs.
+  // Principal, then calendar home, then its VEVENT calendars and VTODO (reminder) lists.
   async discover(): Promise<ICloudDiscovery> {
     const principal = await this.findHref(
       CALDAV_ROOT,
@@ -231,39 +279,48 @@ export class ICloudCalendarSource implements Source<CalendarEvent[]> {
       '1',
       propfindBody('<d:displayname/><d:resourcetype/><c:supported-calendar-component-set/>'),
     );
-    const calendars = davResponses(listing.text)
-      .filter(({ prop }) => 'calendar' in asNode(prop.resourcetype))
-      .filter(({ prop }) => {
-        const set = prop['supported-calendar-component-set'];
-        if (set === undefined) return true;
-        const comps = asNode(set).comp;
-        return Array.isArray(comps) && comps.some((c) => asNode(c)['@_name'] === 'VEVENT');
-      })
-      .map(({ href, prop }) => ({
-        url: icloudUrl(href, listing.url),
-        name: textOf(prop.displayname)?.trim() ?? '',
-      }));
-    return { home, calendars };
+    const collections = davResponses(listing.text).filter(
+      ({ prop }) => 'calendar' in asNode(prop.resourcetype),
+    );
+    const accepting = (component: 'VEVENT' | 'VTODO') =>
+      collections
+        .filter(({ prop }) => componentSet(prop).includes(component))
+        .map(({ href, prop }) => ({
+          url: icloudUrl(href, listing.url),
+          name: textOf(prop.displayname)?.trim() ?? '',
+        }));
+    return { home, calendars: accepting('VEVENT'), todoCalendars: accepting('VTODO') };
+  }
+
+  // Today's calendar-data texts from the given collections, at most 3 REPORTs in parallel.
+  private async query(lists: { url: string }[], component: 'VEVENT' | 'VTODO', date: string) {
+    const start = davTime(zonedTime(date, '00:00', this.timeZone));
+    const end = davTime(zonedTime(nextDay(date), '00:00', this.timeZone));
+    const texts: string[] = [];
+    for (let i = 0; i < lists.length; i += PARALLEL_CALENDARS) {
+      const reports = await Promise.all(
+        lists
+          .slice(i, i + PARALLEL_CALENDARS)
+          .map((c) => this.dav('REPORT', c.url, '1', reportBody(component, start, end))),
+      );
+      for (const { text } of reports)
+        for (const { prop } of davResponses(text)) texts.push(textOf(prop['calendar-data']) ?? '');
+    }
+    return texts;
   }
 
   async fetch(ctx: FetchContext): Promise<CalendarEvent[]> {
     const { calendars } = await (this.discovery ??= this.discover());
-    const start = davTime(zonedTime(ctx.date, '00:00', this.timeZone));
-    const end = davTime(zonedTime(nextDay(ctx.date), '00:00', this.timeZone));
-    const events: CalendarEvent[] = [];
-    for (let i = 0; i < calendars.length; i += PARALLEL_CALENDARS) {
-      const reports = await Promise.all(
-        calendars
-          .slice(i, i + PARALLEL_CALENDARS)
-          .map((c) => this.dav('REPORT', c.url, '1', reportBody(start, end))),
-      );
-      for (const { text } of reports)
-        for (const { prop } of davResponses(text)) {
-          const data = textOf(prop['calendar-data']);
-          if (data) events.push(...parseICalendar(data, this.timeZone));
-        }
-    }
+    const texts = await this.query(calendars, 'VEVENT', ctx.date);
+    const events = texts.flatMap((text) => parseICalendar(text, this.timeZone));
     return onDay(events, ctx.date, this.timeZone);
+  }
+
+  async reminders(ctx: FetchContext): Promise<Reminder[]> {
+    const { todoCalendars } = await (this.discovery ??= this.discover());
+    const texts = await this.query(todoCalendars, 'VTODO', ctx.date);
+    const reminders = texts.flatMap((text) => parseReminders(text, this.timeZone));
+    return remindersOnDay(reminders, ctx.date, this.timeZone);
   }
 }
 
@@ -279,5 +336,10 @@ export class ICloudFileSource implements Source<CalendarEvent[]> {
   async fetch(ctx: FetchContext): Promise<CalendarEvent[]> {
     const text = await readFile(this.path, 'utf8');
     return onDay(parseICalendar(text, this.timeZone), ctx.date, this.timeZone);
+  }
+
+  async reminders(ctx: FetchContext): Promise<Reminder[]> {
+    const text = await readFile(this.path, 'utf8');
+    return remindersOnDay(parseReminders(text, this.timeZone), ctx.date, this.timeZone);
   }
 }

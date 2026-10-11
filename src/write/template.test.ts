@@ -106,6 +106,16 @@ describe('templateBrief + formatBrief', () => {
     );
   });
 
+  it('renders reminders under the events, escaped', () => {
+    const reminders = [
+      { title: 'חשבון', due: '2026-10-10', allDay: true, time: null },
+      { title: 'לקנות <חלב>', due: '2026-10-10T14:30:00.000Z', allDay: false, time: '17:30' },
+    ];
+    expect(formatBrief({ ...templateBrief(input), reminders })).toContain(
+      '(Zoom)\nתזכורות:\nכל היום: חשבון\n17:30 לקנות &lt;חלב&gt;\n',
+    );
+  });
+
   it('says the calendar was unavailable when it is null', () => {
     expect(formatBrief(templateBrief({ ...input, calendar: null }))).toContain(
       '<b>היום ביומן</b>\nהיומן לא היה זמין',

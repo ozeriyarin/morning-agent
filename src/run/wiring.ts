@@ -48,6 +48,11 @@ export function buildDeps(options: WiringOptions): RunDeps {
   const openRouterKey = options.openRouterKey ?? null;
   const timeZone = config.location.timezone;
   const live = 'dryRun' in env ? null : env;
+  const icloudSource = icloudPath
+    ? new ICloudFileSource(icloudPath, timeZone)
+    : icloud
+      ? new ICloudCalendarSource(icloud, timeZone, fetchFn)
+      : null;
   const client = live ? anthropicClient(live.ANTHROPIC_API_KEY) : null;
   const decision = selectDecisionModel({
     flag: options.decider,
@@ -59,11 +64,11 @@ export function buildDeps(options: WiringOptions): RunDeps {
   return {
     weather: new OpenMeteoSource(config.location, fetchFn),
     calendar: new CalendarFileSource(root, timeZone, calendarPath),
-    icloud: icloudPath
-      ? new ICloudFileSource(icloudPath, timeZone)
-      : icloud
-        ? new ICloudCalendarSource(icloud, timeZone, fetchFn)
-        : null,
+    icloud: icloudSource,
+    reminders: icloudSource && {
+      name: 'icloud-reminders',
+      fetch: (ctx) => icloudSource.reminders(ctx),
+    },
     feeds: config.feeds.map((feed) => new FeedSource(feed.name, feed.url, fetchFn)),
     concepts: new FileConceptStore(join(root, 'concepts', 'queue.md')),
     interview: new FileInterviewStore(

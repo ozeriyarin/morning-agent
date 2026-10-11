@@ -15,7 +15,7 @@ import { JEV_MODEL, JevDecisionModel } from '../decide/jev.js';
 import { JEV_NO_KEY_WARNING } from '../decide/select.js';
 import { TelegramSender } from '../deliver/telegram.js';
 import { CalendarFileSource } from '../sources/calendar-file.js';
-import { ICloudCalendarSource } from '../sources/icloud-calendar.js';
+import { ICloudCalendarSource, ICloudFileSource } from '../sources/icloud-calendar.js';
 import { FileConceptStore } from '../sources/concepts.js';
 import { FileInterviewStore } from '../sources/interview.js';
 import { parseFeed } from '../sources/feeds.js';
@@ -23,6 +23,7 @@ import type {
   CalendarEvent,
   CallUsage,
   Item,
+  Reminder,
   RunRecord,
   Sender,
   Source,
@@ -695,6 +696,83 @@ describe('runBrief iCloud', () => {
     expect(record.calendar?.map((e) => e.source)).toEqual(['icloud', 'icloud', 'icloud']);
     expect(record.errors).toContainEqual(expect.objectContaining({ reason: 'missing' }));
     expect(record.missingSections).not.toContain('calendar');
+  });
+});
+
+describe('runBrief reminders', () => {
+  const TZ = 'Asia/Jerusalem';
+  const REMINDERS_DATE = '2026-10-12';
+  const events = new ICloudFileSource('test/fixtures/icloud-report.ics', TZ);
+  const remindersOf = (path: string): Source<Reminder[]> => ({
+    name: 'icloud-reminders',
+    fetch: (ctx) => new ICloudFileSource(path, TZ).reminders(ctx),
+  });
+  const run = async (over: Partial<RunDeps>) =>
+    runBrief(await deps({ icloud: events, ...over }), { date: REMINDERS_DATE, dryRun: false });
+
+  it('v8 criterion 4: "The brief renders `תזכורות:` under the events with all-day first, then by time; with zero reminders the sub-block is absent."', async () => {
+    const { html } = await run({ reminders: remindersOf('test/fixtures/icloud-reminders.ics') });
+    expect(html).toContain(
+      [
+        '18:00–19:00 אימון ריצה',
+        'תזכורות:',
+        'כל היום: לשלם חשבון חשמל',
+        '17:30 להתקשר לאינסטלטור',
+        '',
+      ].join('\n'),
+    );
+    const none = await run({ reminders: remindersOf('test/fixtures/icloud-report.ics') });
+    expect(none.html).toContain('18:00–19:00 אימון ריצה\n\n');
+    expect(none.html).not.toContain('תזכורות');
+  });
+
+  it('v8 criterion 5: "A VTODO query failure records a `calendar` error with reason `icloud-reminders` while events still render."', async () => {
+    const failing = source<Reminder[]>('icloud-reminders', new Error('CalDAV REPORT failed: 500'));
+    const { html, record } = await run({ reminders: failing });
+    expect(html).toContain('18:00–19:00 אימון ריצה');
+    expect(html).not.toContain('iCloud לא היה זמין');
+    expect(record.errors).toContainEqual({
+      stage: 'source',
+      source: 'calendar',
+      reason: 'icloud-reminders',
+      message: 'CalDAV REPORT failed: 500',
+    });
+    expect(record).toMatchObject({ icloud: 'ok', reminders: [], missingSections: [] });
+  });
+
+  it('records one iCloud error when discovery fails for both events and reminders', async () => {
+    const down = new Error('CalDAV PROPFIND failed: HTTP 401');
+    const { record } = await run({
+      icloud: source<CalendarEvent[]>('icloud', down),
+      reminders: source<Reminder[]>('icloud-reminders', down),
+    });
+    expect(record.errors.filter((e) => e.source === 'calendar')).toEqual([
+      { stage: 'source', source: 'calendar', reason: 'icloud', message: down.message },
+    ]);
+  });
+
+  it('v8 criterion 6: "The record stores reminders as `{ title, due, allDay }` only (redaction test: description/alarms never stored)."', async () => {
+    const printed: string[] = [];
+    const wired = buildDeps({
+      env: { dryRun: true },
+      config,
+      prices,
+      root,
+      fetchFn: async () => {
+        throw new TypeError('fetch failed: offline');
+      },
+      icloudPath: 'test/fixtures/icloud-reminders.ics',
+      print: (t) => printed.push(t),
+    });
+    const { record } = await runBrief(wired, { date: REMINDERS_DATE, dryRun: true });
+    expect(record.reminders).toEqual([
+      { title: 'לשלם חשבון חשמל', due: REMINDERS_DATE, allDay: true },
+      { title: 'להתקשר לאינסטלטור', due: '2026-10-12T14:30:00.000Z', allDay: false },
+    ]);
+    const json = JSON.stringify(record);
+    for (const leak of ['פרטים פרטיים', 'התראה פנימית', 'VALARM', 'NEEDS-ACTION', 'שהושלמה'])
+      expect(json).not.toContain(leak);
+    expect(printed[0]).toContain('תזכורות:\nכל היום: לשלם חשבון חשמל');
   });
 });
 

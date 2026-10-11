@@ -17,6 +17,7 @@ import {
   type DecisionResult,
   type InterviewPick,
   type Item,
+  type Reminder,
   type RunError,
   type RunRecord,
   type Section,
@@ -45,6 +46,7 @@ export interface RunDeps {
   weather: Source<WeatherDay>;
   calendar: Source<CalendarEvent[]>;
   icloud?: Source<CalendarEvent[]> | null;
+  reminders?: Source<Reminder[]> | null;
   feeds: Source<Item[]>[];
   concepts: ConceptStore;
   interview: InterviewStore;
@@ -150,7 +152,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
   const ctx = { date: opts.date, reference };
 
   const [
-    [weatherResult, conceptResult, calendarResult, icloudResult, interviewResult],
+    [weatherResult, conceptResult, calendarResult, icloudResult, remindersResult, interviewResult],
     feedResults,
   ] = await Promise.all([
     Promise.allSettled([
@@ -158,6 +160,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       deps.concepts.next(),
       deps.calendar.fetch(ctx),
       deps.icloud ? deps.icloud.fetch(ctx) : [],
+      deps.reminders ? deps.reminders.fetch(ctx) : [],
       deps.interview.next(),
     ] as const),
     Promise.allSettled(deps.feeds.map((feed) => feed.fetch(ctx))),
@@ -196,6 +199,15 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       message: message(icloudResult.reason),
     });
   }
+  // A shared discovery failure is already recorded as the iCloud error.
+  if (remindersResult.status === 'rejected' && icloud !== 'failed')
+    errors.push({
+      stage: 'source',
+      source: 'calendar',
+      reason: 'icloud-reminders',
+      message: message(remindersResult.reason),
+    });
+  const reminders = remindersResult.status === 'fulfilled' ? remindersResult.value : [];
   const icloudEvents = icloudResult.status === 'fulfilled' ? icloudResult.value : [];
   const calendar =
     google === null && icloud !== 'ok' ? null : mergeCalendars(google ?? [], icloudEvents);
@@ -267,6 +279,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
     ...written.brief,
     calendar,
     icloudUnavailable: icloud === 'failed' && google !== null,
+    reminders,
     greeting: input.greeting,
     news: keepKnownLinks(written.brief.news, toDecide),
     concept:
@@ -328,6 +341,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
           source,
         })) ?? null,
       icloud,
+      reminders: reminders.map(({ title, due, allDay }) => ({ title, due, allDay })),
       skippedUnseen: items.length - toDecide.length,
       decisions,
       calls,

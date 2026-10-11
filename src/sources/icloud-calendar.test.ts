@@ -1,7 +1,13 @@
 import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
 import { SourceError, type CalendarEvent } from '../types.js';
-import { ICloudCalendarSource, onDay, parseICalendar } from './icloud-calendar.js';
+import {
+  ICloudCalendarSource,
+  onDay,
+  parseICalendar,
+  parseReminders,
+  remindersOnDay,
+} from './icloud-calendar.js';
 
 const TZ = 'Asia/Jerusalem';
 const DATE = '2026-10-12';
@@ -11,6 +17,7 @@ const HOME = 'https://p01-caldav.icloud.com/10000000001/calendars/';
 
 const fixture = (name: string) => readFile(`test/fixtures/${name}`, 'utf8');
 const ics = await fixture('icloud-report.ics');
+const remindersIcs = await fixture('icloud-reminders.ics');
 const propfind: Record<string, string> = {
   'https://caldav.icloud.com/': await fixture('icloud-propfind-principal.xml'),
   'https://caldav.icloud.com/10000000001/principal/': await fixture('icloud-propfind-home.xml'),
@@ -74,6 +81,10 @@ describe('ICloudCalendarSource', () => {
       calendars: [
         { url: `${HOME}home/`, name: 'בית' },
         { url: `${HOME}work/`, name: 'Work' },
+      ],
+      todoCalendars: [
+        { url: `${HOME}work/`, name: 'Work' },
+        { url: `${HOME}tasks/`, name: 'תזכורות' },
       ],
     });
     expect(sent.map((r) => [r.method, r.headers.Depth])).toEqual([
@@ -185,6 +196,77 @@ describe('ICloudCalendarSource', () => {
     expect(await failure(source.discover())).toMatchObject({
       message: expect.stringContaining('1 MB'),
     });
+  });
+});
+
+describe('ICloudCalendarSource reminders', () => {
+  it('v8 criterion 1: "Discovery keeps VTODO collections in a separate list and VEVENT collections as before (fixture with one of each)."', async () => {
+    const { calendars, todoCalendars } = await caldav({}).source.discover();
+    expect(calendars.map((c) => c.name)).toEqual(['בית', 'Work']);
+    expect(todoCalendars.map((c) => c.name)).toEqual(['Work', 'תזכורות']);
+  });
+
+  it('v8 criterion 2: "Parsing the reminders fixture yields two reminders (one timed with the correct local time, one all-day) and drops the completed one."', async () => {
+    const { source, sent } = caldav({ [`${HOME}tasks/`]: reportXml(remindersIcs) });
+    expect(await source.reminders(ctx)).toEqual([
+      { title: 'לשלם חשבון חשמל', due: DATE, allDay: true, time: null },
+      { title: 'להתקשר לאינסטלטור', due: '2026-10-12T14:30:00.000Z', allDay: false, time: '17:30' },
+    ]);
+    const reports = sent.filter((r) => r.method === 'REPORT');
+    expect(reports.map((r) => r.url)).toEqual([`${HOME}work/`, `${HOME}tasks/`]);
+    expect(reports[0]?.body).toContain(
+      '<c:comp-filter name="VTODO"><c:time-range start="20261011T210000Z" end="20261012T210000Z"/>',
+    );
+    expect(reports[0]?.body).not.toContain('expand');
+    expect(parseReminders(remindersIcs, TZ).map((r) => r.title)).not.toContain('תזכורת שהושלמה');
+  });
+
+  it('shares one discovery between events and reminders', async () => {
+    const { source, sent } = caldav({});
+    await Promise.all([source.fetch(ctx), source.reminders(ctx)]);
+    expect(sent.filter((r) => r.method === 'PROPFIND')).toHaveLength(3);
+  });
+
+  it('rejects reminders on a failed VTODO REPORT while events still load', async () => {
+    const { source } = caldav(
+      { [`${HOME}home/`]: reportXml(ics) },
+      { [`${HOME}tasks/`]: new Response('', { status: 500 }) },
+    );
+    expect(await failure(source.reminders(ctx))).toMatchObject({ source: 'calendar' });
+    expect(await source.fetch(ctx)).toHaveLength(3);
+  });
+});
+
+describe('parseReminders', () => {
+  const vtodo = (...lines: string[]) =>
+    ['BEGIN:VCALENDAR', 'BEGIN:VTODO', 'SUMMARY:r', ...lines, 'END:VTODO', 'END:VCALENDAR'].join(
+      '\n',
+    );
+  const today = (...lines: string[]) =>
+    remindersOnDay(parseReminders(vtodo(...lines), TZ), DATE, TZ);
+
+  it.each([
+    ['DATE the day before', ['DUE;VALUE=DATE:20261011']],
+    ['DATE the day after', ['DUE;VALUE=DATE:20261013']],
+    ['UTC the evening before the local day', ['DUE:20261011T205900Z']],
+    ['UTC at the local midnight that ends the day', ['DUE:20261012T210000Z']],
+    ['no DUE', ['DTSTART:20261012T090000Z']],
+  ])(
+    'v8 criterion 3: "A reminder whose `DUE` is outside the local day is not shown; a reminder without `DUE` is not shown." (%s)',
+    (_, lines) => {
+      expect(today(...lines)).toEqual([]);
+    },
+  );
+
+  it.each([
+    ['UTC Z inside the local day', ['DUE:20261011T210000Z'], '00:00'],
+    ['TZID wall clock', ['DUE;TZID=Asia/Jerusalem:20261012T235900'], '23:59'],
+  ])('keeps %s', (_, lines, time) => {
+    expect(today(...lines)).toEqual([expect.objectContaining({ time, allDay: false })]);
+  });
+
+  it('drops a reminder with a COMPLETED stamp even without STATUS', () => {
+    expect(today('DUE;VALUE=DATE:20261012', 'COMPLETED:20261012T050000Z')).toEqual([]);
   });
 });
 

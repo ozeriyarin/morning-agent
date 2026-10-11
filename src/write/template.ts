@@ -3,6 +3,7 @@ import type {
   Brief,
   CalendarEvent,
   Item,
+  Reminder,
   Section,
   WeeklySummary,
   Writer,
@@ -103,6 +104,11 @@ function calendarLines(events: CalendarEvent[] | null): string[] {
   });
 }
 
+function reminderLines(reminders: Reminder[] = []): string[] {
+  if (reminders.length === 0) return [];
+  return ['תזכורות:', ...reminders.map((r) => `${r.time ?? 'כל היום:'} ${escapeHtml(r.title)}`)];
+}
+
 // Only an AI-written explanation is shown; the template and the fallback point to the link.
 function interviewLines(brief: Brief): string[] {
   const { problem, tip } = brief.interviewPick;
@@ -140,6 +146,7 @@ function render(brief: Brief, missing: Section[]): string {
     '',
     `<b>${TITLES.calendar}</b>`,
     ...calendarLines(brief.calendar),
+    ...reminderLines(brief.reminders),
     ...(brief.icloudUnavailable ? ['(iCloud לא היה זמין)'] : []),
     '',
     ...section('news', newsLines(brief.news)),

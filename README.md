@@ -159,8 +159,17 @@ brief still sends with the Google events and the note `(iCloud לא היה זמ�
 a `calendar` error with reason `icloud`. The Apple ID, the password and raw iCalendar text are
 redacted from the record.
 
+Apple Reminders come over the same account, no extra credentials: reminder lists are the
+collections whose component set includes `VTODO`, queried with a `VTODO` `calendar-query` for the
+local day. Reminders due today (by `DUE`; ones without `DUE` and completed ones are skipped) are
+listed under the events as `תזכורות:`, all-day first, then by time; the sub-block is omitted when
+there are none and is never trimmed. The record keeps only `reminders: [{ title, due, allDay }]`.
+If the reminders query fails, the events still render and the record lists a `calendar` error with
+reason `icloud-reminders`.
+
 `--icloud <path.ics>` parses a saved iCalendar file instead of calling iCloud, for an offline
-preview (`test/fixtures/icloud-report.ics` is synthetic).
+preview of events and reminders (`test/fixtures/icloud-report.ics` and
+`test/fixtures/icloud-reminders.ics` are synthetic).
 
 ## Jev decision model
 
