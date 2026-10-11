@@ -309,6 +309,35 @@ export class ICloudCalendarSource implements Source<CalendarEvent[]> {
     return texts;
   }
 
+  // Diagnostic: every collection with its component set, and the DUE dates of all VTODOs.
+  async probe(): Promise<{
+    collections: { name: string; components: string[] }[];
+    dues: string[];
+  }> {
+    const { home, todoCalendars } = await (this.discovery ??= this.discover());
+    const listing = await this.dav(
+      'PROPFIND',
+      home,
+      '1',
+      propfindBody('<d:displayname/><d:resourcetype/><c:supported-calendar-component-set/>'),
+    );
+    const collections = davResponses(listing.text)
+      .filter(({ prop }) => 'calendar' in asNode(prop.resourcetype))
+      .map(({ prop }) => ({
+        name: textOf(prop.displayname)?.trim() ?? '',
+        components: componentSet(prop),
+      }));
+    const body = reportBody('VTODO', '19700101T000000Z', '20991231T000000Z');
+    const dues: string[] = [];
+    for (const list of todoCalendars) {
+      const { text } = await this.dav('REPORT', list.url, '1', body);
+      for (const { prop } of davResponses(text))
+        for (const line of (textOf(prop['calendar-data']) ?? '').split(/\r?\n/))
+          if (line.startsWith('DUE')) dues.push(line);
+    }
+    return { collections, dues };
+  }
+
   async fetch(ctx: FetchContext): Promise<CalendarEvent[]> {
     const { calendars } = await (this.discovery ??= this.discover());
     const texts = await this.query(calendars, 'VEVENT', ctx.date);

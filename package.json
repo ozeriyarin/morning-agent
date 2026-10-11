@@ -12,6 +12,7 @@
     "replay": "tsx src/replay-cli.ts",
     "report": "tsx src/report-cli.ts",
     "inbox": "tsx src/inbox-cli.ts",
+    "icloud:probe": "tsx src/icloud-probe-cli.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
