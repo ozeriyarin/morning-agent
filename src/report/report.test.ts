@@ -213,6 +213,17 @@ describe('report', () => {
     ).not.toThrow();
   });
 
+  it('v11 criterion 4: "Older records with the array shape still load, and the report\'s per-day event count is the array length for them and `count` for new ones."', async () => {
+    const v11 = { calendar: { count: 4, allDay: 1, timed: 3, bySource: { google: 2, icloud: 2 } } };
+    const dir = await runsDir({
+      '2026-10-10.json': raw('2026-10-10'),
+      '2026-10-11.json': raw('2026-10-11', v11),
+      '2026-10-12.json': raw('2026-10-12', { calendar: null }),
+    });
+    const { days } = summarise(await loadRecords(dir, '2026-10-10', '2026-10-12'));
+    expect(days.map((d) => d.calendarEvents)).toEqual([1, 4, null]);
+  });
+
   it('reads records with the v8 reminders array, the v9 reminders object, or none', () => {
     const v8 = { reminders: [{ title: 'x', due: '2026-10-11', allDay: true }] };
     const v9 = { reminders: { count: 1, source: 'file' } };

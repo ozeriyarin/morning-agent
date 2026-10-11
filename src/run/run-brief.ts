@@ -367,14 +367,15 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
         summary: summary.slice(0, RECORD_SUMMARY_CHARS),
         sources,
       })),
-      calendar:
-        calendar?.map(({ title, start, end, allDay, source }) => ({
-          title,
-          start,
-          end,
-          allDay,
-          source,
-        })) ?? null,
+      calendar: calendar && {
+        count: calendar.length,
+        allDay: calendar.filter((e) => e.allDay).length,
+        timed: calendar.filter((e) => !e.allDay).length,
+        bySource: {
+          google: calendar.filter((e) => e.source === 'google').length,
+          icloud: calendar.filter((e) => e.source === 'icloud').length,
+        },
+      },
       icloud,
       reminders: { count: reminders.length, source: remindersOutcome.source },
       skippedUnseen: items.length - toDecide.length,

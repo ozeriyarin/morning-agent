@@ -85,7 +85,7 @@ function summariseDay(r: StoredRecord): DaySummary {
       source: errorSource(e),
       ...(e.reason && { reason: e.reason }),
     })),
-    calendarEvents: r.calendar?.length ?? null,
+    calendarEvents: Array.isArray(r.calendar) ? r.calendar.length : (r.calendar?.count ?? null),
     icloud: r.icloud ?? null,
     concept: r.concept?.name ?? null,
   };

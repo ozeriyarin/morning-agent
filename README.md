@@ -128,8 +128,8 @@ that file (`src/sources/calendar-file.ts`), so there is no OAuth code and no Goo
 `היום ביומן` section lists all-day events first (`כל היום: כותרת`), then timed events by start as
 `HH:MM–HH:MM כותרת (מיקום)` in Asia/Jerusalem; no events gives `אין אירועים היום`. A missing or
 invalid file still sends the brief with `היומן לא היה זמין`, and the record lists a `calendar`
-source error with reason `missing` or `invalid`. The record keeps only `title`, `start`, `end`
-and `allDay` per event: never attendees, descriptions, locations or links.
+source error with reason `missing` or `invalid`. The record keeps only event counts (see "Records
+for every run" below): never titles, times, attendees, descriptions, locations or links.
 
 ## iCloud Calendar
 
@@ -156,7 +156,7 @@ How it works: `PROPFIND` for the principal, then the calendar home, then the cal
 parallel) with `expand` for the local day, so recurring events arrive as instances. Cancelled
 events are dropped. Requests time out after 25 s and responses over 1 MB are rejected. Events in
 both calendars (same title, ignoring case and spacing, and same start minute) appear once, as the
-Google copy; the record tags each event with `source: google | icloud`. If iCloud fails, the
+Google copy; the record counts the merged events per source (`bySource`). If iCloud fails, the
 brief still sends with the Google events and the note `(iCloud לא היה זמין)`, and the record lists
 a `calendar` error with reason `icloud`. The Apple ID, the password and raw iCalendar text are
 redacted from the record.
@@ -468,6 +468,11 @@ summary line the command printed.
   decision, per-call model, tokens (including cache reads and writes), latency and cost priced
   from `config/prices.json`, the delivery status and all errors. That makes cost and quality
   reviewable over time and lets a new decision model be A/B-tested against recorded runs.
+  Records are public, so the calendar is stored only as
+  `calendar: { count, allDay, timed, bySource: { google, icloud } }` (`null` when both calendars
+  failed) and reminders only as `{ count, source }`: event and reminder titles, times and
+  locations are never committed. Records committed on 2026-10-10 and 2026-10-11 still hold event
+  titles in git history; purging them is left to the owner.
 - **Secrets stay out of the repo.** Secrets are read only from `process.env`, validated once at
   startup in `src/config.ts`, and redacted from every string in the record (including error
   messages that embed the Telegram request URL) before it is written. Non-secret settings are

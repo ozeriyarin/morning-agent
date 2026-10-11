@@ -162,7 +162,12 @@ export interface RunRecord {
   dryRun: boolean;
   fetchedCount: number;
   items: Pick<Item, 'title' | 'link' | 'published' | 'summary' | 'sources'>[];
-  calendar: Pick<CalendarEvent, 'title' | 'start' | 'end' | 'allDay' | 'source'>[] | null;
+  calendar: {
+    count: number;
+    allDay: number;
+    timed: number;
+    bySource: Record<CalendarEvent['source'], number>;
+  } | null;
   icloud: 'ok' | 'disabled' | 'failed';
   reminders: { count: number; source: 'file' | 'icloud' | 'none' };
   skippedUnseen: number;

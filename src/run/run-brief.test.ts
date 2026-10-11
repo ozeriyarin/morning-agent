@@ -541,29 +541,12 @@ describe('runBrief calendar', () => {
     const { record } = await calendarRun(
       new CalendarFileSource(root, 'Asia/Jerusalem', CALENDAR_SAMPLE),
     );
-    expect(record.calendar).toEqual([
-      {
-        title: 'יום הולדת לנוי',
-        start: '2026-10-11',
-        end: '2026-10-12',
-        allDay: true,
-        source: 'google',
-      },
-      {
-        title: 'סנכרון צוות',
-        start: '2026-10-11T06:30:00Z',
-        end: '2026-10-11T07:00:00Z',
-        allDay: false,
-        source: 'google',
-      },
-      {
-        title: 'ראיון טכני',
-        start: '2026-10-11T14:00:00+03:00',
-        end: '2026-10-11T15:00:00+03:00',
-        allDay: false,
-        source: 'google',
-      },
-    ]);
+    expect(record.calendar).toEqual({
+      count: 3,
+      allDay: 1,
+      timed: 2,
+      bySource: { google: 3, icloud: 0 },
+    });
     const json = JSON.stringify(record);
     for (const leak of ['noy.private@example.com', 'קוד כניסה', 'secret-event-id', 'Zoom', 'משרד'])
       expect(json).not.toContain(leak);
@@ -695,9 +678,99 @@ describe('runBrief iCloud', () => {
       ].join('\n'),
     );
     expect(record.icloud).toBe('ok');
-    expect(record.calendar?.map((e) => e.source)).toEqual(['icloud', 'icloud', 'icloud']);
+    expect(record.calendar?.bySource).toEqual({ google: 0, icloud: 3 });
     expect(record.errors).toContainEqual(expect.objectContaining({ reason: 'missing' }));
     expect(record.missingSections).not.toContain('calendar');
+  });
+});
+
+describe('runBrief record privacy', () => {
+  const event = (
+    title: string,
+    start: string,
+    source: CalendarEvent['source'],
+    allDay = false,
+  ): CalendarEvent => ({ title, start, end: start, allDay, time: null, source });
+
+  it('v11 criterion 1: "A delivered run with two Google events and two iCloud events (one all-day) stores `calendar: { count: 4, allDay: 1, timed: 3, bySource: { google: 2, icloud: 2 } }`."', async () => {
+    const google = [
+      event('פגישה א', '2026-10-11T06:00:00Z', 'google'),
+      event('פגישה ב', '2026-10-11T08:00:00Z', 'google'),
+    ];
+    const icloud = [
+      event('חג', '2026-10-11', 'icloud', true),
+      event('אימון', '2026-10-11T15:00:00Z', 'icloud'),
+    ];
+    const { record } = await runBrief(
+      await deps({
+        calendar: source('calendar', google),
+        icloud: source('icloud', icloud),
+      }),
+      { date: CALENDAR_DATE, dryRun: false },
+    );
+    expect(record.delivery.status).toBe('sent');
+    expect(record.calendar).toEqual({
+      count: 4,
+      allDay: 1,
+      timed: 3,
+      bySource: { google: 2, icloud: 2 },
+    });
+  });
+
+  it('v11 criterion 2: "No calendar event title, location or time from the fixtures appears anywhere in the record JSON (redaction test over the serialised record)."', async () => {
+    const tz = 'Asia/Jerusalem';
+    const google = await runBrief(
+      await deps({ calendar: new CalendarFileSource(root, tz, CALENDAR_SAMPLE) }),
+      { date: CALENDAR_DATE, dryRun: false },
+    );
+    const icloud = await runBrief(
+      await deps({ icloud: new ICloudFileSource('test/fixtures/icloud-report.ics', tz) }),
+      { date: '2026-10-12', dryRun: false },
+    );
+    expect(google.record.calendar?.count).toBe(3);
+    expect(icloud.record.calendar?.count).toBe(3);
+    const json = JSON.stringify([google.record, icloud.record]);
+    for (const leak of [
+      'ראיון טכני',
+      'יום הולדת לנוי',
+      'סנכרון צוות',
+      'Zoom',
+      'משרד',
+      'יום הולדת לאמא',
+      'רופא שיניים',
+      'מרפאה',
+      'העצמאות',
+      'אימון ריצה',
+      'ישיבה שבוטלה',
+      '2026-10-11T14:00',
+      '2026-10-11T06:30',
+      '2026-10-12T08:30',
+      '2026-10-12T15:00',
+      '09:30',
+      '14:00',
+      '08:30',
+      '09:15',
+      '18:00',
+      '"start"',
+      '"end"',
+    ])
+      expect(json).not.toContain(leak);
+  });
+
+  it('v11 criterion 3: "When both calendars fail the record stores `calendar: null` and the error entries as before."', async () => {
+    const { record } = await runBrief(
+      await deps({
+        calendar: new CalendarFileSource(root, 'Asia/Jerusalem'),
+        icloud: source<CalendarEvent[]>('icloud', new Error('HTTP 401')),
+      }),
+      { date: CALENDAR_DATE, dryRun: false },
+    );
+    expect(record).toMatchObject({ calendar: null, icloud: 'failed' });
+    expect(record.missingSections).toContain('calendar');
+    expect(record.errors).toEqual([
+      { stage: 'source', source: 'calendar', reason: 'missing', message: expect.any(String) },
+      { stage: 'source', source: 'calendar', reason: 'icloud', message: 'HTTP 401' },
+    ]);
   });
 });
 

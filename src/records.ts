@@ -28,7 +28,10 @@ export const recordSchema = z.object({
       sources: z.array(z.string()).default([]),
     }),
   ),
-  calendar: z.array(z.unknown()).nullable().default(null),
+  calendar: z
+    .union([z.array(z.unknown()), z.object({ count: z.number() })])
+    .nullable()
+    .default(null),
   icloud: z.enum(['ok', 'disabled', 'failed']).optional(),
   decisions: z
     .array(
