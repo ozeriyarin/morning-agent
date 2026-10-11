@@ -2,9 +2,24 @@
 
 Each item is one spec in `agent-os/specs/`. Ship in order; each step is usable on its own.
 
-1. **Brief v1: weather + AI news + concept of the day → Telegram.** Collector CLI, decision step (Haiku 4.5 behind a `DecisionModel` interface), writer, Telegram sender, run record. Runs as a Claude Code cloud routine at 07:00 Asia/Jerusalem.
-2. **Google Calendar.** Today's events through the claude.ai Google Calendar connector attached to the routine (no OAuth code in the repo).
-3. **Apple / iCloud Calendar.** Today's events via iCloud CalDAV with an app-specific password stored as an environment secret.
-4. **Decision model swap.** `JevDecisionModel` implementing the same interface; A/B the decisions against Haiku on the recorded runs before switching.
-5. **Cost and quality view.** A small report over the committed run records: items per day, decisions, tokens, cost, latency; weekly summary in the Sunday brief.
-6. **Second recipient.** Per-person config (calendar sources, feeds, language) so a family member can get their own brief.
+## Shipped
+
+1. **Brief v1: weather + AI news + concept of the day → Telegram** (`2026-10-10-brief-v1`). Collector CLI, decision step (Haiku 4.5 behind `DecisionModel`), writer, Telegram sender, run record. Cloud routine at 07:00 Asia/Jerusalem.
+2. **Google Calendar** (`2026-10-10-brief-v2-calendar`). Today's events through the claude.ai Google Calendar connector attached to the routine, handed over as `input/calendar-<date>.json`. Concept section gains `תשובה`.
+3. **Apple / iCloud Calendar** (`2026-10-10-brief-v3-icloud`). Today's events via iCloud CalDAV with an app-specific password, merged with Google.
+4. **Decision model swap** (`2026-10-10-brief-v4-jev`). `JevDecisionModel` via the OpenRouter decisions API; `npm run replay` A/Bs decisions on recorded runs. First replay: Jev 38× cheaper, 1/6 agreement → Haiku stays default.
+5. **Cost and quality view** (`2026-10-10-brief-v5-cost-view`). `npm run report` over the run records; weekly line in the Sunday brief; Sunday replay routine.
+6. **Telegram inbox** (`2026-10-10-brief-v6-inbox`). Hourly routine answers `/weather <place>`, `/cost`, `/concept`, `/help` and stores feedback for the replay.
+7. **Interview question of the day** (`2026-10-10-brief-v7-interview`). LeetCode-style problem with a Hebrew approach, complexity and trap, plus a tip, from committed queues.
+8. **Apple Reminders over CalDAV** (`2026-10-11-brief-v8-reminders`). VTODO lists in the calendar section. Verified in production as empty: upgraded Reminders are not served over CalDAV. Kept as the fallback path.
+9. **Apple Reminders via a mailed hand-off file** (`2026-10-11-brief-v9-reminders-mail`). An iPhone Shortcut mails today's reminders to Gmail at 06:45; the routine copies the body into `input/reminders-<date>.json`. Record keeps only a count and source.
+
+## Next
+
+10. **Jev criteria tuning.** After a week of replay data with feedback labels, rewrite the Jev criteria text and re-run the A/B; switch the default only if agreement with feedback beats Haiku.
+11. **Decision batching.** One Haiku call for all items instead of one per item, if quality holds on replay; cuts the decision cost and latency.
+12. **Second recipient.** Per-person config (calendar sources, feeds, language) so a family member can get their own brief.
+
+## Operations
+
+- DST ends 2026-10-25: move all three routines one hour later in UTC (brief 04→05, replay 05→06, inbox 4–20→5–21).

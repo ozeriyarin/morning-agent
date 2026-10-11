@@ -15,10 +15,11 @@ Morning Agent sends Yarin one short Hebrew briefing on Telegram every morning at
 
 ## What it does
 
-1. Collects: today's weather for Modi'in, today's events (Google Calendar, Apple/iCloud Calendar), the last 24 hours of AI news from a few trusted feeds, and the next concept from a learning queue.
-2. Decides: a cheap decision model (Haiku 4.5 today, Jev when access arrives) classifies each item as must-read, mention or skip.
-3. Writes: Claude composes one Hebrew brief with a fixed structure, including one concept explained in a few lines.
+1. Collects: today's weather for Modi'in, today's events (Google Calendar, Apple/iCloud Calendar) and Apple Reminders, the last 24 hours of AI news from a few trusted feeds, the next concept from a learning queue, and the next interview problem and tip.
+2. Decides: a cheap decision model (Haiku 4.5 by default, Jev available behind the same interface) classifies each item as must-read, mention or skip.
+3. Writes: Claude composes one Hebrew brief with a fixed structure, including one concept explained in a few lines and how to approach the interview problem.
 4. Delivers: Telegram message to Yarin, and a run record (items, decisions, tokens, cost, latency) committed to the repo.
+5. Listens: an hourly inbox answers commands (`/weather`, `/cost`, `/concept`) and stores feedback on news items as ground truth for the weekly replay.
 
 ## Principles
 
