@@ -15,6 +15,7 @@ import {
   type CallUsage,
   type DecisionModel,
   type DecisionResult,
+  type FetchContext,
   type InterviewPick,
   type Item,
   type Reminder,
@@ -47,6 +48,7 @@ export interface RunDeps {
   calendar: Source<CalendarEvent[]>;
   icloud?: Source<CalendarEvent[]> | null;
   reminders?: Source<Reminder[]> | null;
+  remindersFile?: Source<Reminder[]> | null;
   feeds: Source<Item[]>[];
   concepts: ConceptStore;
   interview: InterviewStore;
@@ -117,6 +119,31 @@ async function writeBrief(
   }
 }
 
+interface RemindersOutcome {
+  reminders: Reminder[];
+  source: RunRecord['reminders']['source'];
+  fileError?: unknown;
+  icloudError?: unknown;
+}
+
+// The hand-off file wins; iCloud is asked only when the file is missing or invalid.
+async function fetchReminders(deps: RunDeps, ctx: FetchContext): Promise<RemindersOutcome> {
+  let fileError: unknown;
+  if (deps.remindersFile) {
+    try {
+      return { reminders: await deps.remindersFile.fetch(ctx), source: 'file' };
+    } catch (error) {
+      if (!(error instanceof SourceError && error.reason === 'missing')) fileError = error;
+    }
+  }
+  if (!deps.reminders) return { reminders: [], source: 'none', fileError };
+  try {
+    return { reminders: await deps.reminders.fetch(ctx), source: 'icloud', fileError };
+  } catch (icloudError) {
+    return { reminders: [], source: 'none', fileError, icloudError };
+  }
+}
+
 // Sunday footer: the 7 days before the run date; a day without a record counts as not run.
 async function weeklySummary(
   deps: RunDeps,
@@ -152,18 +179,19 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
   const ctx = { date: opts.date, reference };
 
   const [
-    [weatherResult, conceptResult, calendarResult, icloudResult, remindersResult, interviewResult],
+    [weatherResult, conceptResult, calendarResult, icloudResult, interviewResult],
     feedResults,
+    remindersOutcome,
   ] = await Promise.all([
     Promise.allSettled([
       deps.weather.fetch(ctx).catch(() => deps.weather.fetch(ctx)),
       deps.concepts.next(),
       deps.calendar.fetch(ctx),
       deps.icloud ? deps.icloud.fetch(ctx) : [],
-      deps.reminders ? deps.reminders.fetch(ctx) : [],
       deps.interview.next(),
     ] as const),
     Promise.allSettled(deps.feeds.map((feed) => feed.fetch(ctx))),
+    fetchReminders(deps, ctx),
   ]);
 
   let weather: WeatherDay | null = null;
@@ -199,15 +227,22 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       message: message(icloudResult.reason),
     });
   }
-  // A shared discovery failure is already recorded as the iCloud error.
-  if (remindersResult.status === 'rejected' && icloud !== 'failed')
+  const { reminders, fileError, icloudError } = remindersOutcome;
+  // One reminders error at most: the file's, else iCloud's unless discovery already failed.
+  if (fileError !== undefined)
+    errors.push({
+      stage: 'source',
+      source: 'calendar',
+      reason: 'reminders-file',
+      message: message(fileError),
+    });
+  else if (icloudError !== undefined && icloud !== 'failed')
     errors.push({
       stage: 'source',
       source: 'calendar',
       reason: 'icloud-reminders',
-      message: message(remindersResult.reason),
+      message: message(icloudError),
     });
-  const reminders = remindersResult.status === 'fulfilled' ? remindersResult.value : [];
   const icloudEvents = icloudResult.status === 'fulfilled' ? icloudResult.value : [];
   const calendar =
     google === null && icloud !== 'ok' ? null : mergeCalendars(google ?? [], icloudEvents);
@@ -341,7 +376,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
           source,
         })) ?? null,
       icloud,
-      reminders: reminders.map(({ title, due, allDay }) => ({ title, due, allDay })),
+      reminders: { count: reminders.length, source: remindersOutcome.source },
       skippedUnseen: items.length - toDecide.length,
       decisions,
       calls,

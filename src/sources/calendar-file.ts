@@ -5,7 +5,7 @@ import { clockTime } from '../dates.js';
 import { SourceError, type CalendarEvent, type FetchContext, type Source } from '../types.js';
 import { byCalendarOrder } from './calendar-merge.js';
 
-const instant = z.string().refine((value) => !Number.isNaN(Date.parse(value)), 'not a date');
+export const instant = z.string().refine((value) => !Number.isNaN(Date.parse(value)), 'not a date');
 
 export const calendarFileSchema = z.object({
   date: z.iso.date(),
@@ -27,18 +27,43 @@ const invalid = (message: string) => new SourceError('calendar', message, 'inval
 export const eventTime = (start: string, end: string, allDay: boolean, timeZone: string) =>
   allDay ? null : `${clockTime(new Date(start), timeZone)}–${clockTime(new Date(end), timeZone)}`;
 
-// All-day events first, then timed events by start; times rendered in the given zone.
-export function parseCalendarFile(raw: unknown, date: string, timeZone: string): CalendarEvent[] {
-  const parsed = calendarFileSchema.safeParse(raw);
+// Validates a routine hand-off file's shape and that it is for the run date.
+export function parseHandOff<T extends { date: string }>(
+  schema: z.ZodType<T>,
+  raw: unknown,
+  date: string,
+  kind: string,
+): T {
+  const parsed = schema.safeParse(raw);
   if (!parsed.success) {
     const issues = parsed.error.issues.map((i) => `${i.path.join('.') || '(root)'}: ${i.message}`);
-    throw invalid(`calendar hand-off file has the wrong shape: ${issues.join('; ')}`);
+    throw invalid(`${kind} hand-off file has the wrong shape: ${issues.join('; ')}`);
   }
   if (parsed.data.date !== date) {
-    throw invalid(`calendar hand-off file is for ${parsed.data.date}, not ${date}`);
+    throw invalid(`${kind} hand-off file is for ${parsed.data.date}, not ${date}`);
   }
-  return parsed.data.events
-    .map(({ title, start, end, allDay, location }) => ({
+  return parsed.data;
+}
+
+// Reads a routine hand-off file: `missing` when absent, `invalid` when it is not JSON.
+export async function readHandOff(path: string, kind: string): Promise<unknown> {
+  let text: string;
+  try {
+    text = await readFile(path, 'utf8');
+  } catch {
+    throw new SourceError('calendar', `${kind} hand-off file not found`, 'missing');
+  }
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw invalid(`${kind} hand-off file is not valid JSON`);
+  }
+}
+
+// All-day events first, then timed events by start; times rendered in the given zone.
+export function parseCalendarFile(raw: unknown, date: string, timeZone: string): CalendarEvent[] {
+  return parseHandOff(calendarFileSchema, raw, date, 'calendar')
+    .events.map(({ title, start, end, allDay, location }) => ({
       title,
       start,
       end,
@@ -62,18 +87,6 @@ export class CalendarFileSource implements Source<CalendarEvent[]> {
 
   async fetch(ctx: FetchContext): Promise<CalendarEvent[]> {
     const path = this.path ?? join(this.root, 'input', `calendar-${ctx.date}.json`);
-    let text: string;
-    try {
-      text = await readFile(path, 'utf8');
-    } catch {
-      throw new SourceError('calendar', 'calendar hand-off file not found', 'missing');
-    }
-    let raw: unknown;
-    try {
-      raw = JSON.parse(text);
-    } catch {
-      throw invalid('calendar hand-off file is not valid JSON');
-    }
-    return parseCalendarFile(raw, ctx.date, this.timeZone);
+    return parseCalendarFile(await readHandOff(path, 'calendar'), ctx.date, this.timeZone);
   }
 }

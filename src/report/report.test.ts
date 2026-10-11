@@ -212,4 +212,11 @@ describe('report', () => {
       toMarkdown(summarise([recordSchema.parse({ date: '2026-10-01', items: [] })])),
     ).not.toThrow();
   });
+
+  it('reads records with the v8 reminders array, the v9 reminders object, or none', () => {
+    const v8 = { reminders: [{ title: 'x', due: '2026-10-11', allDay: true }] };
+    const v9 = { reminders: { count: 1, source: 'file' } };
+    const days = [raw('2026-10-11', v8), raw('2026-10-12', v9), raw('2026-10-13')];
+    expect(summarise(days.map((d) => recordSchema.parse(d))).totals.daysRun).toBe(3);
+  });
 });

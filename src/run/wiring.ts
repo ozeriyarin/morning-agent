@@ -15,6 +15,7 @@ import {
   type ICloudCredentials,
 } from '../sources/icloud-calendar.js';
 import { FeedSource } from '../sources/feeds.js';
+import { RemindersFileSource } from '../sources/reminders-file.js';
 import { OpenMeteoSource } from '../sources/weather.js';
 import { SonnetWriter } from '../write/sonnet.js';
 import { TemplateWriter } from '../write/template.js';
@@ -29,6 +30,7 @@ export interface WiringOptions {
   calendarPath?: string;
   icloud?: ICloudCredentials | null;
   icloudPath?: string;
+  remindersPath?: string;
   decider?: Decider;
   openRouterKey?: string | null;
   print?: (text: string) => void;
@@ -69,6 +71,7 @@ export function buildDeps(options: WiringOptions): RunDeps {
       name: 'icloud-reminders',
       fetch: (ctx) => icloudSource.reminders(ctx),
     },
+    remindersFile: new RemindersFileSource(root, timeZone, options.remindersPath),
     feeds: config.feeds.map((feed) => new FeedSource(feed.name, feed.url, fetchFn)),
     concepts: new FileConceptStore(join(root, 'concepts', 'queue.md')),
     interview: new FileInterviewStore(

@@ -20,7 +20,7 @@ The project is spec-driven: product docs live in `agent-os/product/`, coding sta
 
 ```
 npm run brief [--dry-run] [--date YYYY-MM-DD] [--calendar <path>] [--icloud <path.ics>]
-              [--decider fake|haiku|jev]
+              [--reminders <path.json>] [--decider fake|haiku|jev]
 └── src/cli.ts                    args, config + env loading, exit code
     └── src/run/wiring.ts         real clients, or fakes for --dry-run
         └── src/run/run-brief.ts  orchestration, cost, redaction, record
@@ -29,6 +29,7 @@ npm run brief [--dry-run] [--date YYYY-MM-DD] [--calendar <path>] [--icloud <pat
             │   ├── sources/calendar-file.ts  input/calendar-<date>.json -> CalendarEvent[] (sorted)
             │   ├── sources/icloud-calendar.ts  CalDAV PROPFIND + REPORT (expand) -> parseICalendar()
             │   ├── sources/calendar-merge.ts   mergeCalendars(google, icloud): dedupe, all-day first
+            │   ├── sources/reminders-file.ts  input/reminders-<date>.json -> Reminder[] (else iCloud)
             │   ├── sources/feeds.ts     RSS + Atom -> parseFeed() -> withinWindow(24h) -> dedupe()
             │   ├── sources/concepts.ts  concepts/queue.md -> next unused concept
             │   └── sources/interview.ts interview/problems.md + tips.md -> next problem and tip
@@ -76,6 +77,7 @@ npm run brief -- --dry-run                    # fake decisions, template writer,
 npm run brief -- --dry-run --date 2026-10-11  # pretend "today" is another day
 npm run brief -- --dry-run --date 2026-10-11 --calendar test/fixtures/calendar-sample.json
 npm run brief -- --dry-run --date 2026-10-12 --icloud test/fixtures/icloud-report.ics
+npm run brief -- --dry-run --date 2026-10-12 --reminders test/fixtures/reminders-file.json
 npm run brief                                 # real run: Haiku + Sonnet + Telegram
 ```
 
@@ -163,13 +165,47 @@ Apple Reminders come over the same account, no extra credentials: reminder lists
 collections whose component set includes `VTODO`, queried with a `VTODO` `calendar-query` for the
 local day. Reminders due today (by `DUE`; ones without `DUE` and completed ones are skipped) are
 listed under the events as `תזכורות:`, all-day first, then by time; the sub-block is omitted when
-there are none and is never trimmed. The record keeps only `reminders: [{ title, due, allDay }]`.
+there are none and is never trimmed. The record keeps only `reminders: { count, source }`.
 If the reminders query fails, the events still render and the record lists a `calendar` error with
 reason `icloud-reminders`.
 
 `--icloud <path.ics>` parses a saved iCalendar file instead of calling iCloud, for an offline
 preview of events and reminders (`test/fixtures/icloud-report.ics` and
 `test/fixtures/icloud-reminders.ics` are synthetic).
+
+## Apple Reminders via Shortcut
+
+iCloud does not serve the upgraded Apple Reminders over CalDAV, so an iPhone Shortcut mails the
+day's reminders at 06:45 to the owner's Gmail with the subject `reminders <date>` (date as
+YYYY-MM-DD) and a body that is a JSON array (`due` is an ISO-8601 datetime, or `YYYY-MM-DD` for
+an all-day reminder):
+
+```json
+[
+  { "title": "לאסוף חבילה", "due": "2026-10-12T16:45:00+03:00", "allDay": false },
+  { "title": "להזמין תור", "due": "2026-10-12", "allDay": true }
+]
+```
+
+The routine wraps the array as
+`{ "date": "<date>", "timezone": "Asia/Jerusalem", "source": "shortcut", "reminders": [...] }`
+in `input/reminders-<date>.json` (gitignored), and `src/sources/reminders-file.ts` reads it. When
+the file exists it replaces the iCloud reminders; when it is missing, iCloud is asked as before;
+when it is invalid, the record lists a `calendar` error with reason `reminders-file` and iCloud is
+asked (if that fails too, only the file error is recorded). Reminders for another day are dropped
+and the rest render under `תזכורות:` exactly like iCloud ones. The record keeps only
+`reminders: { count, source }` with `source` one of `file`, `icloud`, `none`; never titles or due
+times. `--reminders <path>` reads another file instead (`test/fixtures/reminders-file.json` is
+synthetic). The routine gains the allowed tools `mcp__Gmail__*` and this step after the calendar
+step:
+
+```text
+Using the Gmail connector, search for a message with the subject `reminders <today>` received in
+the last 12 hours. If there is one, write its body to `input/reminders-<today>.json`; if the body
+is a bare JSON array, wrap it as { "date": "<today>", "timezone": "Asia/Jerusalem", "source":
+"shortcut", "reminders": <array> }. If there is none, or the connector fails, do not create the
+file and continue.
+```
 
 ## Jev decision model
 

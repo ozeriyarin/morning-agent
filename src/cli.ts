@@ -20,6 +20,7 @@ export function parseCli(argv: string[]): {
   date?: string;
   calendar?: string;
   icloud?: string;
+  reminders?: string;
   decider?: Decider;
 } {
   const { values } = parseArgs({
@@ -29,6 +30,7 @@ export function parseCli(argv: string[]): {
       date: { type: 'string' },
       calendar: { type: 'string' },
       icloud: { type: 'string' },
+      reminders: { type: 'string' },
       decider: { type: 'string' },
     },
     strict: true,
@@ -36,11 +38,11 @@ export function parseCli(argv: string[]): {
   if (values.date !== undefined && !isIsoDate(values.date)) {
     throw new Error(`--date must be YYYY-MM-DD, got "${values.date}"`);
   }
-  const { date, calendar, icloud, decider } = values;
+  const { date, calendar, icloud, reminders, decider } = values;
   if (decider !== undefined && !isDecider(decider)) {
     throw new Error(`--decider must be one of ${DECIDERS.join(', ')}, got "${decider}"`);
   }
-  return { dryRun: values['dry-run'], date, calendar, icloud, decider };
+  return { dryRun: values['dry-run'], date, calendar, icloud, reminders, decider };
 }
 
 function isDecider(value: string): value is Decider {
@@ -71,6 +73,7 @@ async function main(): Promise<number> {
     calendarPath,
     icloud: loadICloudCredentials(process.env),
     icloudPath: args.icloud && resolve(args.icloud),
+    remindersPath: args.reminders && resolve(args.reminders),
     decider: args.decider,
     openRouterKey: loadOpenRouterKey(process.env),
   });

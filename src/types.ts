@@ -164,7 +164,7 @@ export interface RunRecord {
   items: Pick<Item, 'title' | 'link' | 'published' | 'summary' | 'sources'>[];
   calendar: Pick<CalendarEvent, 'title' | 'start' | 'end' | 'allDay' | 'source'>[] | null;
   icloud: 'ok' | 'disabled' | 'failed';
-  reminders: Pick<Reminder, 'title' | 'due' | 'allDay'>[];
+  reminders: { count: number; source: 'file' | 'icloud' | 'none' };
   skippedUnseen: number;
   decisions: {
     title: string;
@@ -187,7 +187,8 @@ export interface RunRecord {
   warnings?: string[];
 }
 
-export type SourceFailure = 'missing' | 'invalid' | 'icloud' | 'icloud-reminders';
+export type SourceFailure =
+  'missing' | 'invalid' | 'icloud' | 'icloud-reminders' | 'reminders-file';
 
 export class SourceError extends Error {
   constructor(

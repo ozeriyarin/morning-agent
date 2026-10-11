@@ -19,6 +19,7 @@ import { ICloudCalendarSource, ICloudFileSource } from '../sources/icloud-calend
 import { FileConceptStore } from '../sources/concepts.js';
 import { FileInterviewStore } from '../sources/interview.js';
 import { parseFeed } from '../sources/feeds.js';
+import { RemindersFileSource } from '../sources/reminders-file.js';
 import type {
   CalendarEvent,
   CallUsage,
@@ -32,6 +33,7 @@ import type {
 } from '../types.js';
 import { MAX_BRIEF_CHARS, templateBrief, TemplateWriter } from '../write/template.js';
 import { MAX_DECISIONS, RECORD_SUMMARY_CHARS, runBrief, type RunDeps } from './run-brief.js';
+import { parseCli } from '../cli.js';
 import { buildDeps } from './wiring.js';
 
 const DATE = '2026-10-10';
@@ -737,7 +739,11 @@ describe('runBrief reminders', () => {
       reason: 'icloud-reminders',
       message: 'CalDAV REPORT failed: 500',
     });
-    expect(record).toMatchObject({ icloud: 'ok', reminders: [], missingSections: [] });
+    expect(record).toMatchObject({
+      icloud: 'ok',
+      reminders: { count: 0, source: 'none' },
+      missingSections: [],
+    });
   });
 
   it('records one iCloud error when discovery fails for both events and reminders', async () => {
@@ -765,14 +771,139 @@ describe('runBrief reminders', () => {
       print: (t) => printed.push(t),
     });
     const { record } = await runBrief(wired, { date: REMINDERS_DATE, dryRun: true });
-    expect(record.reminders).toEqual([
-      { title: 'לשלם חשבון חשמל', due: REMINDERS_DATE, allDay: true },
-      { title: 'להתקשר לאינסטלטור', due: '2026-10-12T14:30:00.000Z', allDay: false },
-    ]);
+    expect(record.reminders).toEqual({ count: 2, source: 'icloud' });
     const json = JSON.stringify(record);
-    for (const leak of ['פרטים פרטיים', 'התראה פנימית', 'VALARM', 'NEEDS-ACTION', 'שהושלמה'])
+    for (const leak of [
+      'פרטים פרטיים',
+      'התראה פנימית',
+      'VALARM',
+      'NEEDS-ACTION',
+      'שהושלמה',
+      'לשלם חשבון חשמל',
+      'להתקשר לאינסטלטור',
+      '2026-10-12T14:30',
+    ])
       expect(json).not.toContain(leak);
     expect(printed[0]).toContain('תזכורות:\nכל היום: לשלם חשבון חשמל');
+  });
+});
+
+describe('runBrief reminders from the Shortcut file', () => {
+  const TZ = 'Asia/Jerusalem';
+  const REMINDERS_DATE = '2026-10-12';
+  const FIXTURE = 'test/fixtures/reminders-file.json';
+  const ICLOUD_BLOCK = 'תזכורות:\nכל היום: לשלם חשבון חשמל\n17:30 להתקשר לאינסטלטור\n';
+  const FILE_BLOCK = 'תזכורות:\nכל היום: להזמין תור לרופא\n16:45 לאסוף חבילה מהדואר\n';
+  const icloudReminders: Source<Reminder[]> = {
+    name: 'icloud-reminders',
+    fetch: (ctx) => new ICloudFileSource('test/fixtures/icloud-reminders.ics', TZ).reminders(ctx),
+  };
+  const fileWith = async (content: string) => {
+    await mkdir(join(root, 'input'), { recursive: true });
+    await writeFile(join(root, 'input', `reminders-${REMINDERS_DATE}.json`), content);
+    return new RemindersFileSource(root, TZ);
+  };
+  const run = async (over: Partial<RunDeps>) =>
+    runBrief(await deps(over), { date: REMINDERS_DATE, dryRun: true });
+
+  it('v9 criterion 2: "A missing reminders file falls back to the iCloud reminders source; an invalid file records a `calendar` error with reason `reminders-file` and still renders iCloud reminders."', async () => {
+    const missing = await run({
+      remindersFile: new RemindersFileSource(root, TZ),
+      reminders: icloudReminders,
+    });
+    expect(missing.html).toContain(ICLOUD_BLOCK);
+    expect(missing.record.reminders).toEqual({ count: 2, source: 'icloud' });
+    expect(missing.record.errors.filter((e) => e.source === 'calendar')).toEqual([]);
+
+    const invalid = await run({ remindersFile: await fileWith('{'), reminders: icloudReminders });
+    expect(invalid.html).toContain(ICLOUD_BLOCK);
+    expect(invalid.record.reminders).toEqual({ count: 2, source: 'icloud' });
+    expect(invalid.record.errors).toContainEqual({
+      stage: 'source',
+      source: 'calendar',
+      reason: 'reminders-file',
+      message: 'reminders hand-off file is not valid JSON',
+    });
+  });
+
+  it('v9 criterion 3: "When both the file and iCloud fail, exactly one error is recorded."', async () => {
+    const { record } = await run({
+      remindersFile: await fileWith('{'),
+      reminders: source<Reminder[]>('icloud-reminders', new Error('CalDAV REPORT failed: 500')),
+    });
+    expect(record.errors).toEqual([
+      expect.objectContaining({ source: 'calendar', reason: 'reminders-file' }),
+    ]);
+    expect(record.reminders).toEqual({ count: 0, source: 'none' });
+  });
+
+  it('does not ask iCloud for reminders when the file exists', async () => {
+    const { html, record } = await run({
+      remindersFile: new RemindersFileSource(root, TZ, FIXTURE),
+      reminders: source<Reminder[]>('icloud-reminders', new Error('must not be called')),
+    });
+    expect(html).toContain(FILE_BLOCK);
+    expect(record.errors).toEqual([]);
+    expect(record.reminders).toEqual({ count: 2, source: 'file' });
+  });
+
+  it('v9 criterion 4: "The brief renders `תזכורות:` from the file source exactly as from iCloud (same template, no new rendering)."', async () => {
+    const sameAsIcloud = {
+      date: REMINDERS_DATE,
+      timezone: TZ,
+      source: 'shortcut',
+      reminders: [
+        { title: 'להתקשר לאינסטלטור', due: '2026-10-12T17:30:00+03:00', allDay: false },
+        { title: 'לשלם חשבון חשמל', due: REMINDERS_DATE, allDay: true },
+      ],
+    };
+    const fromFile = await run({ remindersFile: await fileWith(JSON.stringify(sameAsIcloud)) });
+    const fromIcloud = await run({ reminders: icloudReminders });
+    expect(fromFile.html).toContain(ICLOUD_BLOCK);
+    expect(fromFile.html).toBe(fromIcloud.html);
+  });
+
+  it('v9 criterion 5: "The record stores only `reminders: { count, source }`; no title or due value from the file appears anywhere in the record (redaction test)."', async () => {
+    const { record } = await run({ remindersFile: new RemindersFileSource(root, TZ, FIXTURE) });
+    expect(record.reminders).toEqual({ count: 2, source: 'file' });
+    const json = JSON.stringify(record);
+    // The all-day due equals the run date, which the record keeps as `date`.
+    for (const leak of [
+      'לאסוף חבילה מהדואר',
+      'להזמין תור לרופא',
+      'לחדש את הביטוח',
+      '16:45',
+      '2026-10-12T16:45',
+      '2026-10-12T13:45',
+      '2026-10-13T09:00',
+    ])
+      expect(json).not.toContain(leak);
+  });
+
+  it('v9 criterion 6: "`--reminders <path>` renders the fixture in a dry run and marks nothing."', async () => {
+    const queues = ['concepts/queue.md', 'interview/problems.md', 'interview/tips.md'];
+    const before = await Promise.all(queues.map((q) => readFile(join(root, q), 'utf8')));
+    const printed: string[] = [];
+    const wired = buildDeps({
+      env: { dryRun: true },
+      config,
+      prices,
+      root,
+      fetchFn: async () => {
+        throw new TypeError('fetch failed: offline');
+      },
+      remindersPath: parseCli(['--dry-run', '--reminders', FIXTURE]).reminders,
+      print: (t) => printed.push(t),
+    });
+    const { record } = await runBrief(wired, { date: REMINDERS_DATE, dryRun: true });
+    expect(printed[0]).toContain(FILE_BLOCK);
+    expect(record).toMatchObject({
+      reminders: { count: 2, source: 'file' },
+      concept: { marked: false },
+      interview: { marked: false },
+    });
+    const after = await Promise.all(queues.map((q) => readFile(join(root, q), 'utf8')));
+    expect(after).toEqual(before);
   });
 });
 
