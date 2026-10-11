@@ -38,12 +38,13 @@ npm run brief [--dry-run] [--date YYYY-MM-DD] [--calendar <path>] [--icloud <pat
             │   ├── decide/haiku.ts      claude-haiku-4-5, closed-choice tool: must_read | mention | skip
             │   ├── decide/jev.ts        typesafe/jev-1.13 via OpenRouter decisions, same rule text
             │   └── decide/fake.ts       keyword rules for --dry-run and tests
-            ├── write (one call per run)
-            │   ├── write/sonnet.ts      claude-sonnet-5-5, cached system prompt, JSON-schema output
+            ├── write (one call per run; a second only when Sonnet fails)
+            │   ├── write/chain.ts       Sonnet -> Haiku -> template, first valid output wins
+            │   ├── write/sonnet.ts      claude-sonnet-5-5 (or Haiku 4.5), cached prompt, JSON-schema output
             │   ├── write/writer.ts      BriefSchema (zod) + validateBrief()
             │   └── write/template.ts    template brief (dry run + fallback), formatBrief() -> Telegram HTML
             ├── deliver
-            │   ├── deliver/telegram.ts  Bot API sendMessage, parse_mode HTML
+            │   ├── deliver/telegram.ts  Bot API sendMessage, parse_mode HTML, one retry
             │   └── deliver/console.ts   prints the brief for --dry-run
             └── record -> runs/<date>.json (redacted; dry runs write runs/<date>.dry-run.json)
 npm run replay -- --from <date> --to <date> [--models haiku,jev] [--dry-run]
@@ -98,6 +99,18 @@ A real run needs these environment variables (see `.env.example`; never commit a
 | `OPENROUTER_API_KEY`        | optional: OpenRouter key for the Jev decision model (see "Jev decision model")                   |
 
 Other checks: `npm run typecheck`, `npm run lint`, `npm run format`.
+
+## Resilience
+
+The writer is a chain: Sonnet, then Haiku 4.5 with the same prompt and schema, then the template.
+A rung is skipped when it throws or its output fails validation, and each skipped rung adds a
+`writer <model> failed: <reason>` error. A normal morning makes one writer call; a Sonnet failure
+costs one extra Haiku call (both priced in the record), and if Haiku fails too the template brief
+is sent at no model cost, without the interview explanation. The record says which rung wrote the
+brief (`writer: sonnet | haiku | template`) and `writerAttempts`; records from before v10 say `ai`
+or `fallback`, which the report counts as `sonnet` and `template`. Telegram delivery retries once
+after 2 seconds on a network error, a timeout, a 429 or a 5xx; a 400 or 401 (bad token or chat id)
+fails at once. `delivery.attempts` records the count, and a second failure still exits non-zero.
 
 ## Calendar hand-off
 
@@ -462,7 +475,7 @@ summary line the command printed.
   tool whose only argument is an enum, or a Jev choice question with the same three options. Anything outside `must_read | mention | skip` becomes `skip` and the reason is
   recorded, so nothing free-text is ever parsed. Generation is the expensive part and runs once
   per day on Sonnet, with a cached system prompt and a JSON schema; its output is validated and
-  the run falls back to a deterministic template rather than sending nothing. Both roles sit
+  the run falls back to Haiku, then to a deterministic template, rather than sending nothing. Both roles sit
   behind interfaces (`DecisionModel`, `Writer`), so a model swap is a new class, not a rewrite.
 - **Records for every run.** Each run commits a JSON record with the items fetched, every
   decision, per-call model, tokens (including cache reads and writes), latency and cost priced

@@ -39,6 +39,7 @@ export const recordSchema = z.object({
     )
     .default([]),
   calls: z.array(callSchema).default([]),
+  writer: z.enum(['sonnet', 'haiku', 'template', 'ai', 'fallback']).optional(),
   concept: z.object({ name: z.string().nullable() }).optional(),
   delivery: z.object({ status: z.enum(['sent', 'printed', 'failed']) }).optional(),
   errors: z

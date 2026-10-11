@@ -3,6 +3,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { BriefConfig, Env, Prices } from '../config.js';
 import { loadRecords } from '../records.js';
+import { HAIKU_MODEL } from '../decide/haiku.js';
 import { selectDecisionModel, type Decider } from '../decide/select.js';
 import { ConsoleSender } from '../deliver/console.js';
 import { TelegramSender } from '../deliver/telegram.js';
@@ -17,6 +18,7 @@ import {
 import { FeedSource } from '../sources/feeds.js';
 import { RemindersFileSource } from '../sources/reminders-file.js';
 import { OpenMeteoSource } from '../sources/weather.js';
+import { ChainWriter } from '../write/chain.js';
 import { SonnetWriter } from '../write/sonnet.js';
 import { TemplateWriter } from '../write/template.js';
 import type { RunDeps } from './run-brief.js';
@@ -80,7 +82,13 @@ export function buildDeps(options: WiringOptions): RunDeps {
     ),
     decisionModel: decision.model,
     warnings: decision.warnings,
-    writer: client ? new SonnetWriter(client) : new TemplateWriter(),
+    writer: client
+      ? new ChainWriter([
+          new SonnetWriter(client),
+          new SonnetWriter(client, { model: HAIKU_MODEL }),
+          new TemplateWriter(),
+        ])
+      : new TemplateWriter(),
     sender: live
       ? new TelegramSender(live.TELEGRAM_BOT_TOKEN, live.TELEGRAM_CHAT_ID, fetchFn)
       : new ConsoleSender(print),

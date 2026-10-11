@@ -14,10 +14,10 @@ Each item is one spec in `agent-os/specs/`. Ship in order; each step is usable o
 8. **Apple Reminders over CalDAV** (`2026-10-11-brief-v8-reminders`). VTODO lists in the calendar section. Verified in production as empty: upgraded Reminders are not served over CalDAV. Kept as the fallback path.
 9. **Apple Reminders via a mailed hand-off file** (`2026-10-11-brief-v9-reminders-mail`). An iPhone Shortcut mails today's reminders to Gmail at 06:45; the routine copies the body into `input/reminders-<date>.json`. Record keeps only a count and source.
 10. **Record privacy** (`2026-10-11-brief-v11-record-privacy`). The committed run record stores calendar events as counts only (total, all-day, timed, per source), never titles or times.
+11. **Resilience: writer chain and Telegram retry** (`2026-10-11-brief-v10-resilience`). Sonnet → Haiku → template writer chain and one Telegram retry on network errors, 429 and 5xx. The record says which rung wrote the brief and how many send attempts it took.
 
 ## Next
 
-11. **Resilience: writer chain and Telegram retry** (`2026-10-11-brief-v10-resilience`), spec ready. Sonnet → Haiku → template writer chain and one Telegram retry.
 12. **Jev criteria tuning.** After a week of replay data with feedback labels, rewrite the Jev criteria text and re-run the A/B; switch the default only if agreement with feedback beats Haiku.
 13. **Decision batching.** One Haiku call for all items instead of one per item, if quality holds on replay; cuts the decision cost and latency.
 14. **Second recipient.** Per-person config (calendar sources, feeds, language) so a family member can get their own brief.

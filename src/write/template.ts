@@ -77,7 +77,7 @@ export function templateBrief(input: WriterInput): Brief {
 }
 
 export class TemplateWriter implements Writer {
-  readonly mode = 'template';
+  readonly name = 'template';
 
   async write(input: WriterInput): Promise<WriterResult> {
     return { brief: templateBrief(input) };

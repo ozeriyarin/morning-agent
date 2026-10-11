@@ -1,7 +1,7 @@
 import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   briefConfigSchema,
   loadICloudCredentials,
@@ -10,7 +10,7 @@ import {
   type Prices,
 } from '../config.js';
 import { FakeDecisionModel } from '../decide/fake.js';
-import { HaikuDecisionModel } from '../decide/haiku.js';
+import { HAIKU_MODEL, HaikuDecisionModel } from '../decide/haiku.js';
 import { JEV_MODEL, JevDecisionModel } from '../decide/jev.js';
 import { JEV_NO_KEY_WARNING } from '../decide/select.js';
 import { TelegramSender } from '../deliver/telegram.js';
@@ -30,10 +30,14 @@ import type {
   Source,
   WeatherDay,
   Writer,
+  WriterInput,
 } from '../types.js';
+import { ChainWriter } from '../write/chain.js';
+import { SONNET_MODEL } from '../write/sonnet.js';
+import { WriterError } from '../write/writer.js';
 import { MAX_BRIEF_CHARS, templateBrief, TemplateWriter } from '../write/template.js';
 import { MAX_DECISIONS, RECORD_SUMMARY_CHARS, runBrief, type RunDeps } from './run-brief.js';
-import { parseCli } from '../cli.js';
+import { exitCode, parseCli } from '../cli.js';
 import { buildDeps } from './wiring.js';
 
 const DATE = '2026-10-10';
@@ -98,7 +102,7 @@ class CapturingSender implements Sender {
   sent: string[] = [];
   async send(html: string) {
     this.sent.push(html);
-    return { status: 'sent' as const };
+    return { status: 'sent' as const, attempts: 1 };
   }
 }
 
@@ -207,7 +211,7 @@ describe('runBrief', () => {
 
   it('criterion 5: "Writer output is validated against the schema; a missing section fails validation and the run falls back to a template brief with a `חסר: <section>` line instead of sending nothing."', async () => {
     const writer: Writer = {
-      mode: 'ai',
+      name: 'sonnet',
       write: async (input) => {
         const { concept: _dropped, ...rest } = templateBrief(input);
         return { brief: rest, call: usage('writer', 'claude-sonnet-5-5', 1) };
@@ -218,7 +222,7 @@ describe('runBrief', () => {
     expect(sender.sent).toHaveLength(1);
     expect(sender.sent[0]).toContain('<b>מושג היום</b>\nחסר: מושג היום');
     expect(sender.sent[0]).toContain('מעונן, 19°-31°');
-    expect(record.writer).toBe('fallback');
+    expect(record.writer).toBe('template');
     expect(record.missingSections).toEqual(['concept']);
     expect(record.errors).toContainEqual({
       stage: 'writer',
@@ -229,14 +233,14 @@ describe('runBrief', () => {
 
   it('a writer that throws still sends the template brief', async () => {
     const writer: Writer = {
-      mode: 'ai',
+      name: 'sonnet',
       write: async () => {
         throw new Error('timeout');
       },
     };
     const { record } = await runBrief(await deps({ writer }), { date: DATE, dryRun: false });
     expect(sender.sent).toHaveLength(1);
-    expect(record).toMatchObject({ writer: 'fallback', delivery: { status: 'sent' } });
+    expect(record).toMatchObject({ writer: 'template', delivery: { status: 'sent' } });
   });
 
   it('criterion 6: "The record never contains the Telegram token, the chat id or the API key, even when an error message includes the request URL (redaction test)."', async () => {
@@ -248,7 +252,7 @@ describe('runBrief', () => {
     });
     const { record } = await runBrief(
       await deps({
-        sender: new TelegramSender(TOKEN, CHAT_ID, leaky),
+        sender: new TelegramSender(TOKEN, CHAT_ID, leaky, 15_000, 0),
         decisionModel: failingDecision,
       }),
       { date: DATE, dryRun: false },
@@ -360,7 +364,7 @@ describe('runBrief', () => {
 
   it('v7 criterion 6: "The record stores `interview.slug` and `tipIndex`; no problem text beyond title/slug is stored."', async () => {
     const writer: Writer = {
-      mode: 'ai',
+      name: 'sonnet',
       write: async (input) => ({
         brief: {
           ...templateBrief(input),
@@ -384,7 +388,7 @@ describe('runBrief', () => {
       call: usage('decision', 'claude-haiku-4-5-20251001', 1),
     });
     const writer: Writer = {
-      mode: 'ai',
+      name: 'sonnet',
       write: async (input) => ({
         brief: templateBrief(input),
         call: usage('writer', 'claude-sonnet-5-5', 3),
@@ -467,7 +471,7 @@ describe('runBrief', () => {
 
   it('drops writer links to items that were never fetched', async () => {
     const writer: Writer = {
-      mode: 'ai',
+      name: 'sonnet',
       write: async (input) => {
         const brief = templateBrief(input);
         brief.news.mention.push({ title: 'Invented', url: 'https://evil.example/' });
@@ -1130,5 +1134,126 @@ describe('runBrief weekly footer', () => {
       expect.objectContaining({ stage: 'source', source: 'weekly' }),
     );
     expect(broken.record.delivery.status).toBe('sent');
+  });
+});
+
+describe('runBrief writer chain and delivery retry', () => {
+  type Outcome = 'valid' | 'invalid' | 'throws' | 'throws-with-usage';
+  const rung = (name: 'sonnet' | 'haiku', model: string, outcome: Outcome) => ({
+    name,
+    model,
+    write: vi.fn(async (input: WriterInput) => {
+      const call = usage('writer', model, 1);
+      if (outcome === 'throws') throw new Error('request timed out');
+      if (outcome === 'throws-with-usage')
+        throw new WriterError('writer stopped with refusal', call);
+      const { concept, ...rest } = templateBrief(input);
+      return { brief: outcome === 'valid' ? { ...rest, concept } : rest, call };
+    }),
+  });
+  const chainRun = async (sonnet: Outcome, haiku: Outcome) => {
+    const rungs = [rung('sonnet', SONNET_MODEL, sonnet), rung('haiku', HAIKU_MODEL, haiku)];
+    const writer = new ChainWriter([...rungs, new TemplateWriter()]);
+    const { record } = await runBrief(await deps({ writer }), { date: DATE, dryRun: false });
+    const writerErrors = record.errors.filter((e) => e.stage === 'writer');
+    return { record, writerErrors, sonnet: rungs[0]?.write, haiku: rungs[1]?.write };
+  };
+
+  it('v10 criterion 1: "With a Sonnet writer that throws and a Haiku writer that returns a valid brief, the chain returns the Haiku brief, the record says `writer: \'haiku\'` and `writerAttempts: 2`, and the run has one `writer` error naming Sonnet."', async () => {
+    const { record, writerErrors } = await chainRun('throws', 'valid');
+    expect(record).toMatchObject({ writer: 'haiku', writerAttempts: 2, missingSections: [] });
+    expect(writerErrors).toEqual([
+      { stage: 'writer', message: `writer ${SONNET_MODEL} failed: request timed out` },
+    ]);
+    expect(sender.sent).toHaveLength(1);
+  });
+
+  it('v10 criterion 2: "With a Sonnet output that fails validation, the chain moves to the next rung instead of using the template directly; with both model rungs failing, the template renders and `writer: \'template\'`, `writerAttempts: 3`."', async () => {
+    const next = await chainRun('invalid', 'valid');
+    expect(next.haiku).toHaveBeenCalledOnce();
+    expect(next.record).toMatchObject({ writer: 'haiku', writerAttempts: 2, missingSections: [] });
+    expect(next.writerErrors[0]?.message).toMatch(
+      /claude-sonnet-5-5 failed: .*validation.*concept/,
+    );
+
+    sender.sent = [];
+    const both = await chainRun('invalid', 'throws');
+    expect(both.record).toMatchObject({ writer: 'template', writerAttempts: 3 });
+    expect(both.writerErrors.map((e) => e.message.split(':')[0])).toEqual([
+      `writer ${SONNET_MODEL} failed`,
+      `writer ${HAIKU_MODEL} failed`,
+    ]);
+    expect(sender.sent[0]).toContain('<b>מזג אוויר במודיעין</b>');
+  });
+
+  it('v10 criterion 3: "When Sonnet succeeds, Haiku is never called and `writerAttempts` is 1 (spy assertion)."', async () => {
+    const { record, sonnet, haiku, writerErrors } = await chainRun('valid', 'valid');
+    expect(sonnet).toHaveBeenCalledOnce();
+    expect(haiku).not.toHaveBeenCalled();
+    expect(record).toMatchObject({ writer: 'sonnet', writerAttempts: 1 });
+    expect(record.calls.filter((c) => c.role === 'writer')).toHaveLength(1);
+    expect(writerErrors).toEqual([]);
+  });
+
+  it('v10 criterion 4: "Cost usage from a failed rung is still included in the record\'s `calls` and total cost."', async () => {
+    const [sonnetPrice, haikuPrice] = [prices.models[SONNET_MODEL], prices.models[HAIKU_MODEL]];
+    if (!sonnetPrice || !haikuPrice) throw new Error('prices.json lacks a writer model');
+    const cost = (p: typeof sonnetPrice) =>
+      (1000 * p.input + 100 * p.output + 500 * p.cacheRead + 10 * p.cacheWrite) / 1e6;
+    for (const failure of ['throws-with-usage', 'invalid'] as const) {
+      const { record } = await chainRun(failure, 'valid');
+      const writerCalls = record.calls.filter((c) => c.role === 'writer');
+      expect(writerCalls.map((c) => c.model)).toEqual([SONNET_MODEL, HAIKU_MODEL]);
+      expect(writerCalls[0]?.costUsd).toBeCloseTo(cost(sonnetPrice), 12);
+      expect(writerCalls[1]?.costUsd).toBeCloseTo(cost(haikuPrice), 12);
+      expect(record.totalCostUsd).toBeCloseTo(cost(sonnetPrice) + cost(haikuPrice), 12);
+    }
+  });
+
+  it('v10 criterion 6: "A second Telegram failure still records `delivery.status: \'failed\'` with `attempts: 2` and the run exits non-zero."', async () => {
+    let posts = 0;
+    const down: typeof fetch = async () => {
+      posts++;
+      return new Response('Bad Gateway', { status: 502 });
+    };
+    const telegram = new TelegramSender(TOKEN, CHAT_ID, down, 15_000, 0);
+    const { record } = await runBrief(await deps({ sender: telegram }), {
+      date: DATE,
+      dryRun: false,
+    });
+    expect(posts).toBe(2);
+    expect(record.delivery).toEqual({ sender: 'telegram', status: 'failed', attempts: 2 });
+    expect(record.errors).toContainEqual({
+      stage: 'delivery',
+      message: expect.stringContaining('HTTP 502'),
+    });
+    expect(record.concept.marked).toBe(false);
+    expect(exitCode(record)).toBe(1);
+  });
+
+  it('a retried send that succeeds records two attempts and exits zero', async () => {
+    const replies = [500, 200];
+    const flaky: typeof fetch = async () => new Response('{}', { status: replies.shift() ?? 200 });
+    const telegram = new TelegramSender(TOKEN, CHAT_ID, flaky, 15_000, 0);
+    const { record } = await runBrief(await deps({ sender: telegram }), {
+      date: DATE,
+      dryRun: false,
+    });
+    expect(record.delivery).toEqual({ sender: 'telegram', status: 'sent', attempts: 2 });
+    expect(record.errors.filter((e) => e.stage === 'delivery')).toEqual([]);
+    expect(exitCode(record)).toBe(0);
+  });
+
+  it('wires Sonnet, Haiku and the template when a client exists, the template alone for a dry run', () => {
+    const live = {
+      TELEGRAM_BOT_TOKEN: TOKEN,
+      TELEGRAM_CHAT_ID: CHAT_ID,
+      ANTHROPIC_API_KEY: API_KEY,
+    };
+    const wired = buildDeps({ env: live, config, prices, root, fetchFn: fetch });
+    expect(wired.writer).toBeInstanceOf(ChainWriter);
+    expect(wired.writer.name).toBe('sonnet');
+    const dry = buildDeps({ env: { dryRun: true }, config, prices, root, fetchFn: fetch });
+    expect(dry.writer).toBeInstanceOf(TemplateWriter);
   });
 });

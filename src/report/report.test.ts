@@ -224,6 +224,19 @@ describe('report', () => {
     expect(days.map((d) => d.calendarEvents)).toEqual([1, 4, null]);
   });
 
+  it("v10 criterion 7: \"Older records with `writer: 'ai' | 'fallback'` still load and the report counts them under `sonnet` / `template`.\"", async () => {
+    const dir = await runsDir({
+      '2026-10-09.json': raw('2026-10-09', { writer: 'fallback' }),
+      '2026-10-10.json': raw('2026-10-10'),
+      '2026-10-11.json': raw('2026-10-11', { writer: 'haiku', writerAttempts: 2 }),
+      '2026-10-12.json': raw('2026-10-12', { writer: 'sonnet', writerAttempts: 1 }),
+    });
+    const summary = summarise(await loadRecords(dir, '2026-10-09', '2026-10-12'));
+    expect(summary.days.map((d) => d.writer)).toEqual(['template', 'sonnet', 'haiku', 'sonnet']);
+    expect(summary.totals.briefsByWriter).toEqual({ sonnet: 2, haiku: 1, template: 1 });
+    expect(toMarkdown(summary)).toContain('- Briefs by writer: sonnet: 2, haiku: 1, template: 1');
+  });
+
   it('reads records with the v8 reminders array, the v9 reminders object, or none', () => {
     const v8 = { reminders: [{ title: 'x', due: '2026-10-11', allDay: true }] };
     const v9 = { reminders: { count: 1, source: 'file' } };

@@ -7,6 +7,6 @@ export class ConsoleSender implements Sender {
 
   async send(html: string): Promise<SendResult> {
     this.print(html);
-    return { status: 'printed' };
+    return { status: 'printed', attempts: 1 };
   }
 }

@@ -135,13 +135,17 @@ export interface WriterResult {
   call?: CallUsage;
 }
 
+export type WriterName = 'sonnet' | 'haiku' | 'template';
+
 export interface Writer {
-  readonly mode: 'ai' | 'template';
+  readonly name: WriterName;
+  readonly model?: string;
   write(input: WriterInput): Promise<WriterResult>;
 }
 
 export interface SendResult {
   status: 'sent' | 'printed';
+  attempts: number;
 }
 
 export interface Sender {
@@ -182,11 +186,12 @@ export interface RunRecord {
   }[];
   calls: CallRecord[];
   totalCostUsd: number;
-  writer: 'ai' | 'template' | 'fallback';
+  writer: WriterName;
+  writerAttempts: number;
   missingSections: Section[];
   concept: { name: string | null; queueEmpty: boolean; marked: boolean };
   interview: { slug: string | null; tipIndex: number | null; marked: boolean };
-  delivery: { sender: string; status: 'sent' | 'printed' | 'failed' };
+  delivery: { sender: string; status: 'sent' | 'printed' | 'failed'; attempts: number };
   briefChars: number;
   errors: RunError[];
   warnings?: string[];

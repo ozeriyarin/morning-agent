@@ -25,7 +25,7 @@ class FakeSender implements Sender {
   sent: string[] = [];
   async send(html: string) {
     this.sent.push(html);
-    return { status: 'sent' as const };
+    return { status: 'sent' as const, attempts: 1 };
   }
 }
 

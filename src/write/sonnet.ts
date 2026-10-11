@@ -1,11 +1,13 @@
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
 import { callUsage, type MessagesClient } from '../cost.js';
+import { HAIKU_MODEL } from '../decide/haiku.js';
 import type {
   CalendarEvent,
   InterviewProblem,
   Item,
   Writer,
   WriterInput,
+  WriterName,
   WriterResult,
 } from '../types.js';
 import { BriefSchema, WriterError } from './writer.js';
@@ -37,14 +39,21 @@ const toProblem = (p: InterviewProblem | null) =>
   p && { title: p.title, difficulty: p.difficulty, pattern: p.pattern, url: p.url };
 
 export class SonnetWriter implements Writer {
-  readonly mode = 'ai';
+  readonly name: WriterName;
+  readonly model: string;
 
-  constructor(private readonly client: MessagesClient) {}
+  constructor(
+    private readonly client: MessagesClient,
+    options: { model?: string } = {},
+  ) {
+    this.model = options.model ?? SONNET_MODEL;
+    this.name = this.model === HAIKU_MODEL ? 'haiku' : 'sonnet';
+  }
 
   async write(input: WriterInput): Promise<WriterResult> {
     const started = performance.now();
     const response = await this.client.messages.create({
-      model: SONNET_MODEL,
+      model: this.model,
       max_tokens: 4000,
       system: [{ type: 'text', text: WRITER_SYSTEM, cache_control: { type: 'ephemeral' } }],
       output_config: { effort: 'low', format: BRIEF_FORMAT },
@@ -66,7 +75,7 @@ export class SonnetWriter implements Writer {
         },
       ],
     });
-    const call = callUsage('writer', SONNET_MODEL, response.usage, performance.now() - started);
+    const call = callUsage('writer', this.model, response.usage, performance.now() - started);
     if (response.stop_reason !== 'end_turn') {
       throw new WriterError(
         `writer stopped with ${response.stop_reason ?? 'no stop reason'}`,

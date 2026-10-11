@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { HAIKU_MODEL } from '../decide/haiku.js';
 import { fakeClient } from '../testing/fake-client.js';
 import type { WriterInput } from '../types.js';
 import { SONNET_MODEL, SonnetWriter, WRITER_SYSTEM } from './sonnet.js';
@@ -42,6 +43,18 @@ describe('SonnetWriter', () => {
       model: SONNET_MODEL,
       cacheReadTokens: 800,
     });
+  });
+
+  it('the Haiku rung is the same writer with the Haiku model, prompt, cache and schema', async () => {
+    const brief = JSON.stringify(templateBrief(input));
+    const sonnet = fakeClient([{ type: 'text', text: brief }]);
+    const haiku = fakeClient([{ type: 'text', text: brief }]);
+    await new SonnetWriter(sonnet).write(input);
+    const writer = new SonnetWriter(haiku, { model: HAIKU_MODEL });
+    const result = await writer.write(input);
+    expect(writer).toMatchObject({ name: 'haiku', model: HAIKU_MODEL });
+    expect(haiku.requests[0]).toEqual({ ...sonnet.requests[0], model: HAIKU_MODEL });
+    expect(result.call?.model).toBe(HAIKU_MODEL);
   });
 
   it('returns unparseable text as a null brief so validation fails', async () => {

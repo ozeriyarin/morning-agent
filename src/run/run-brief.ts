@@ -1,6 +1,7 @@
 import type { Prices } from '../config.js';
 import { priceCall, totalCost } from '../cost.js';
 import { addDays, clockTime, dayMonth, hebrewWeekday, isSunday, zonedTime } from '../dates.js';
+import { TelegramError } from '../deliver/telegram.js';
 import type { StoredRecord } from '../records.js';
 import { summarise } from '../report/report.js';
 import { mergeCalendars } from '../sources/calendar-merge.js';
@@ -28,15 +29,9 @@ import {
   type WeeklySummary,
   type Writer,
   type WriterInput,
-  type WrittenBrief,
 } from '../types.js';
-import {
-  formatBrief,
-  QUEUE_EMPTY_CONCEPT,
-  templateBrief,
-  visibleLength,
-} from '../write/template.js';
-import { validateBrief, WriterError } from '../write/writer.js';
+import { ChainWriter, type ChainResult } from '../write/chain.js';
+import { formatBrief, QUEUE_EMPTY_CONCEPT, visibleLength } from '../write/template.js';
 import { redact } from './redact.js';
 
 export const MAX_DECISIONS = 40;
@@ -100,23 +95,12 @@ async function writeBrief(
   writer: Writer,
   input: WriterInput,
   errors: RunError[],
-): Promise<{
-  brief: WrittenBrief;
-  mode: RunRecord['writer'];
-  omitted: Section[];
-  call?: CallUsage;
-}> {
-  try {
-    const { brief, call } = await writer.write(input);
-    const checked = validateBrief(brief);
-    if (checked.ok) return { brief: checked.brief, mode: writer.mode, omitted: [], call };
-    errors.push({ stage: 'writer', message: `writer output failed validation: ${checked.error}` });
-    return { brief: templateBrief(input), mode: 'fallback', omitted: checked.missing, call };
-  } catch (error) {
-    errors.push({ stage: 'writer', message: message(error) });
-    const call = error instanceof WriterError ? error.call : undefined;
-    return { brief: templateBrief(input), mode: 'fallback', omitted: [], call };
-  }
+): Promise<ChainResult> {
+  const chain = writer instanceof ChainWriter ? writer : new ChainWriter([writer]);
+  const result = await chain.write(input);
+  for (const { model, error } of result.failures)
+    errors.push({ stage: 'writer', message: `writer ${model} failed: ${message(error)}` });
+  return result;
 }
 
 interface RemindersOutcome {
@@ -305,7 +289,9 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
   const written = await writeBrief(deps.writer, input, errors);
   for (const section of written.omitted) missing.add(section);
 
-  const usages = [...results.map((r) => r.call), written.call].filter((c): c is CallUsage => !!c);
+  const usages = [...results.map((r) => r.call), ...written.calls].filter(
+    (c): c is CallUsage => !!c,
+  );
   const calls: CallRecord[] = usages.map((c) => priceCall(c, deps.prices));
   const total = totalCost(calls);
   const now = deps.now();
@@ -322,15 +308,17 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
     footer: `נוצר ב-${clockTime(now, deps.timeZone)} · ${items.length} פריטים נבדקו · עלות ~$${total.toFixed(3)}`,
     weekly,
     interviewPick: interview,
-    interviewExplained: written.mode === 'ai',
+    interviewExplained: written.writer !== 'template',
   };
   const missingSections = [...missing];
   const html = formatBrief(brief, missingSections);
 
   let delivery: RunRecord['delivery']['status'] = 'failed';
+  let attempts = 1;
   try {
-    delivery = (await deps.sender.send(html)).status;
+    ({ status: delivery, attempts } = await deps.sender.send(html));
   } catch (error) {
+    if (error instanceof TelegramError) attempts = error.attempts;
     errors.push({ stage: 'delivery', message: message(error) });
   }
 
@@ -382,7 +370,8 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       decisions,
       calls,
       totalCostUsd: total,
-      writer: written.mode,
+      writer: written.writer,
+      writerAttempts: written.attempts,
       missingSections,
       concept: { name: concept, queueEmpty: concept === null && !missing.has('concept'), marked },
       interview: {
@@ -390,7 +379,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
         tipIndex: interview.tip?.index ?? null,
         marked: interviewMarked,
       },
-      delivery: { sender: deps.sender.name, status: delivery },
+      delivery: { sender: deps.sender.name, status: delivery, attempts },
       briefChars: visibleLength(html),
       errors,
       ...(deps.warnings?.length && { warnings: deps.warnings }),

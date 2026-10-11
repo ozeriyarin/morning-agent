@@ -14,6 +14,7 @@ import { isIsoDate, todayIn } from './dates.js';
 import { DECIDERS, type Decider } from './decide/select.js';
 import { runBrief } from './run/run-brief.js';
 import { buildDeps, recordPath } from './run/wiring.js';
+import type { RunRecord } from './types.js';
 
 export function parseCli(argv: string[]): {
   dryRun: boolean;
@@ -82,8 +83,11 @@ async function main(): Promise<number> {
     `record: ${recordPath(root, date, args.dryRun)} · delivery: ${record.delivery.status}` +
       ` · cost: $${record.totalCostUsd.toFixed(4)} · errors: ${record.errors.length}`,
   );
-  return record.delivery.status === 'failed' ? 1 : 0;
+  return exitCode(record);
 }
+
+export const exitCode = (record: RunRecord): number =>
+  record.delivery.status === 'failed' ? 1 : 0;
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   main().then(

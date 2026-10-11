@@ -1,9 +1,18 @@
 import type { StoredCall, StoredRecord } from '../records.js';
 import { redact } from '../run/redact.js';
-import { DECISIONS, type CallRecord, type Decision } from '../types.js';
+import { DECISIONS, type CallRecord, type Decision, type WriterName } from '../types.js';
 
 type Role = CallRecord['role'];
 const ROLES: Role[] = ['decision', 'writer'];
+const WRITERS: WriterName[] = ['sonnet', 'haiku', 'template'];
+// Records before v10 said `ai` for Sonnet and `fallback` for the template after a failure.
+const WRITER_OF: Record<NonNullable<StoredRecord['writer']>, WriterName> = {
+  sonnet: 'sonnet',
+  haiku: 'haiku',
+  template: 'template',
+  ai: 'sonnet',
+  fallback: 'template',
+};
 
 export interface RoleStats {
   calls: number;
@@ -25,6 +34,7 @@ export interface DaySummary {
   calendarEvents: number | null;
   icloud: 'ok' | 'disabled' | 'failed' | null;
   concept: string | null;
+  writer: WriterName | null;
 }
 
 export interface ReportSummary {
@@ -41,6 +51,7 @@ export interface ReportSummary {
     errors: number;
     errorsBySource: Record<string, number>;
     writerCacheHitRatio: number;
+    briefsByWriter: Record<WriterName, number>;
   };
 }
 
@@ -88,6 +99,7 @@ function summariseDay(r: StoredRecord): DaySummary {
     calendarEvents: Array.isArray(r.calendar) ? r.calendar.length : (r.calendar?.count ?? null),
     icloud: r.icloud ?? null,
     concept: r.concept?.name ?? null,
+    writer: r.writer ? WRITER_OF[r.writer] : null,
   };
 }
 
@@ -124,6 +136,9 @@ export function summarise(records: StoredRecord[]): ReportSummary {
       errors: errors.length,
       errorsBySource: tally(errors),
       writerCacheHitRatio: writer.inputTokens ? writer.cacheReadTokens / writer.inputTokens : 0,
+      briefsByWriter: Object.fromEntries(
+        WRITERS.map((w) => [w, days.filter((d) => d.writer === w).length]),
+      ) as Record<WriterName, number>,
     },
   };
 }
@@ -193,6 +208,7 @@ export function toMarkdown(summary: ReportSummary): string {
     `- Cost by model: ${list(t.costByModel, usd)}`,
     `- Mean latency: decision ${ms(t.meanLatencyMs.decision)}, writer ${ms(t.meanLatencyMs.writer)}`,
     `- Writer cache hit ratio: ${t.writerCacheHitRatio.toFixed(2)}`,
+    `- Briefs by writer: ${list(t.briefsByWriter)}`,
     `- Errors: ${t.errors} (${list(t.errorsBySource)})`,
     '',
   ].join('\n');
