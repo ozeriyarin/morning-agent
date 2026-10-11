@@ -49,6 +49,15 @@ describe('RemindersFileSource', () => {
     ]);
   });
 
+  it.each([
+    ['absent at local 00:00', '2026-10-12T00:00:00+03:00', undefined, null],
+    ['absent at 16:45', '2026-10-12T16:45:00+03:00', undefined, '16:45'],
+    ['explicitly false at local 00:00', '2026-10-12T00:00:00+03:00', false, '00:00'],
+  ])('resolves allDay when %s', (_, due, allDay, time) => {
+    const raw = { ...sample, reminders: [{ title: 'תזכורת', due, allDay }] };
+    expect(parseRemindersFile(raw, DATE, TZ)).toMatchObject([{ allDay: time === null, time }]);
+  });
+
   it('reads input/reminders-<date>.json under the root by default', async () => {
     const source = await sourceWith(JSON.stringify(sample));
     expect((await source.fetch(ctx)).map((r) => r.title)).toEqual([

@@ -178,11 +178,12 @@ preview of events and reminders (`test/fixtures/icloud-report.ics` and
 iCloud does not serve the upgraded Apple Reminders over CalDAV, so an iPhone Shortcut mails the
 day's reminders at 06:45 to the owner's Gmail with the subject `reminders <date>` (date as
 YYYY-MM-DD) and a body that is a JSON array (`due` is an ISO-8601 datetime, or `YYYY-MM-DD` for
-an all-day reminder):
+an all-day reminder). `allDay` is optional: when absent, a reminder is all-day if `due` is a bare
+date or falls at exactly 00:00:00 local time in the configured zone; an explicit value wins:
 
 ```json
 [
-  { "title": "לאסוף חבילה", "due": "2026-10-12T16:45:00+03:00", "allDay": false },
+  { "title": "לאסוף חבילה", "due": "2026-10-12T16:45:00+03:00" },
   { "title": "להזמין תור", "due": "2026-10-12", "allDay": true }
 ]
 ```
