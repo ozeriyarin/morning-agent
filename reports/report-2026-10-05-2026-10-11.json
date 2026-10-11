@@ -45,69 +45,65 @@
       "date": "2026-10-11",
       "delivery": "sent",
       "items": {
-        "fetched": 1317,
-        "inWindow": 2,
-        "decided": 2
+        "fetched": 1337,
+        "inWindow": 8,
+        "decided": 8
       },
       "decisions": {
         "must_read": 0,
-        "mention": 0,
-        "skip": 2
+        "mention": 1,
+        "skip": 7
       },
       "calls": {
         "decision": {
-          "calls": 2,
-          "inputTokens": 1822,
-          "outputTokens": 66,
+          "calls": 8,
+          "inputTokens": 7310,
+          "outputTokens": 264,
           "cacheReadTokens": 0,
-          "costUsd": 0.0021520000000000003,
-          "meanLatencyMs": 673.3505395
+          "costUsd": 0.008629999999999999,
+          "meanLatencyMs": 662.2721581249998
         },
         "writer": {
           "calls": 1,
-          "inputTokens": 295,
-          "outputTokens": 804,
+          "inputTokens": 452,
+          "outputTokens": 829,
           "cacheReadTokens": 0,
-          "costUsd": 0.01337,
-          "meanLatencyMs": 8733.981464
+          "costUsd": 0.013934,
+          "meanLatencyMs": 8912.414861000001
         }
       },
-      "costUsd": 0.015522000000000001,
-      "errors": [
-        {
-          "source": "Hacker News AI"
-        }
-      ],
+      "costUsd": 0.022564,
+      "errors": [],
       "calendarEvents": 2,
       "icloud": "ok",
-      "concept": "prompt caching"
+      "concept": "guardrails"
     }
   ],
   "totals": {
     "daysRun": 2,
     "daysDelivered": 2,
     "items": {
-      "fetched": 2634,
-      "inWindow": 8,
-      "decided": 8
+      "fetched": 2654,
+      "inWindow": 14,
+      "decided": 14
     },
-    "costUsd": 0.034449999999999995,
+    "costUsd": 0.041492,
     "costByRole": {
-      "decision": 0.008522,
-      "writer": 0.025928
+      "decision": 0.015000000000000003,
+      "writer": 0.026492
     },
     "costByModel": {
-      "claude-haiku-4-5-20251001": 0.008522,
-      "claude-sonnet-5-5": 0.025928
+      "claude-haiku-4-5-20251001": 0.015000000000000003,
+      "claude-sonnet-5-5": 0.026492
     },
-    "meanCostPerDay": 0.017224999999999997,
+    "meanCostPerDay": 0.020746,
     "meanLatencyMs": {
-      "decision": 799.4414125000001,
-      "writer": 8198.658578
+      "decision": 739.0719632857142,
+      "writer": 8287.8752765
     },
-    "errors": 2,
+    "errors": 1,
     "errorsBySource": {
-      "Hacker News AI": 2
+      "Hacker News AI": 1
     },
     "writerCacheHitRatio": 0
   }

@@ -1,9 +1,18 @@
 {
   "date": "2026-10-11",
-  "generatedAt": "2026-10-11T06:31:45.605Z",
+  "generatedAt": "2026-10-11T07:25:44.744Z",
   "dryRun": false,
-  "fetchedCount": 1317,
+  "fetchedCount": 1337,
   "items": [
+    {
+      "title": "500B Tokens Later: Letting AI Agents Decompile a First-Person Shooter",
+      "link": "https://momo5502.com/posts/2026-10-09-game-decompilation/",
+      "published": "2026-10-11T02:02:38.000Z",
+      "summary": "Article URL: https://momo5502.com/posts/2026-10-09-game-decompilation/ Comments URL: https://news.ycombinator.com/item?id=50039092 Points: 78 # Comments: 58",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
     {
       "title": "Dwarf Fortress uses version control now",
       "link": "https://simonwillison.net/2026/Oct/11/dwarf-fortress/",
@@ -14,12 +23,57 @@
       ]
     },
     {
+      "title": "Anthropic Bans Cruelty to Claude, Still Won't Say What It Protects",
+      "link": "https://rews.cc/a/anthropic-bans-cruelty-to-claude-still-won-t-say-what-it-pro-bd99f6",
+      "published": "2026-10-11T00:08:31.000Z",
+      "summary": "Article URL: https://rews.cc/a/anthropic-bans-cruelty-to-claude-still-won-t-say-what-it-pro-bd99f6 Comments URL: https://news.ycombinator.com/item?id=50038383 Points: 61 # Comments: 116",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
       "title": "Python 3.15.0 added to actions/python-versions",
       "link": "https://simonwillison.net/2026/Oct/10/python-actions/",
       "published": "2026-10-10T23:58:04.000Z",
       "summary": "Python 3.15.0 added to actions/python-versions Bit of a niche link, but I've been waiting for this for a couple of days - I even told ChatGPT to check for it: Clone https://github.com/actions/python-versions and git pull once an hour until they add the stable 3.15 - then tell me about it Now that th",
       "sources": [
         "Simon Willison"
+      ]
+    },
+    {
+      "title": "Nvidia in talks to acquire US 'open' model startup Reflection AI",
+      "link": "https://www.ft.com/content/052610c5-22b4-4dd4-932e-b7f9f0628b6a",
+      "published": "2026-10-10T18:48:35.000Z",
+      "summary": "Article URL: https://www.ft.com/content/052610c5-22b4-4dd4-932e-b7f9f0628b6a Comments URL: https://news.ycombinator.com/item?id=50035886 Points: 158 # Comments: 101",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "My personal AI agent posted my bank details on company Slack",
+      "link": "https://www.businessinsider.com/personal-ai-agent-grok-bot-posted-bank-details-company-slack-2026-10",
+      "published": "2026-10-10T14:46:16.000Z",
+      "summary": "Article URL: https://www.businessinsider.com/personal-ai-agent-grok-bot-posted-bank-details-company-slack-2026-10 Comments URL: https://news.ycombinator.com/item?id=50033517 Points: 61 # Comments: 66",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Talorys – A self-hosted personal AI agent on Cloudflare's free tier",
+      "link": "https://github.com/rociiu/talorys",
+      "published": "2026-10-10T10:52:09.000Z",
+      "summary": "Article URL: https://github.com/rociiu/talorys Comments URL: https://news.ycombinator.com/item?id=50031614 Points: 280 # Comments: 130",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "AI Data Centers Not Paying Their Costs, Will Keep Using NDAs and Seek Tax Breaks",
+      "link": "https://www.warren.senate.gov/newsroom/press-releases/ai-data-center-companies-reveal-to-warren-blumenthal-van-hollen-they-are-not-paying-their-full-costs-will-continue-using-ndas-and-seeking-tax-breaks/",
+      "published": "2026-10-10T09:30:03.000Z",
+      "summary": "Article URL: https://www.warren.senate.gov/newsroom/press-releases/ai-data-center-companies-reveal-to-warren-blumenthal-van-hollen-they-are-not-paying-their-full-costs-will-continue-using-ndas-and-seeking-tax-breaks/ Comments URL: https://news.ycombinator.com/item?id=50031156 Points: 56 # Comments: ",
+      "sources": [
+        "Hacker News AI"
       ]
     }
   ],
@@ -40,12 +94,27 @@
     }
   ],
   "icloud": "ok",
-  "reminders": [],
+  "reminders": {
+    "count": 0,
+    "source": "icloud"
+  },
   "skippedUnseen": 0,
   "decisions": [
     {
+      "title": "500B Tokens Later: Letting AI Agents Decompile a First-Person Shooter",
+      "link": "https://momo5502.com/posts/2026-10-09-game-decompilation/",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
       "title": "Dwarf Fortress uses version control now",
       "link": "https://simonwillison.net/2026/Oct/11/dwarf-fortress/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "Anthropic Bans Cruelty to Claude, Still Won't Say What It Protects",
+      "link": "https://rews.cc/a/anthropic-bans-cruelty-to-claude-still-won-t-say-what-it-pro-bd99f6",
       "decision": "skip",
       "model": "claude-haiku-4-5-20251001"
     },
@@ -54,9 +123,43 @@
       "link": "https://simonwillison.net/2026/Oct/10/python-actions/",
       "decision": "skip",
       "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "Nvidia in talks to acquire US 'open' model startup Reflection AI",
+      "link": "https://www.ft.com/content/052610c5-22b4-4dd4-932e-b7f9f0628b6a",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "My personal AI agent posted my bank details on company Slack",
+      "link": "https://www.businessinsider.com/personal-ai-agent-grok-bot-posted-bank-details-company-slack-2026-10",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "Talorys – A self-hosted personal AI agent on Cloudflare's free tier",
+      "link": "https://github.com/rociiu/talorys",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "AI Data Centers Not Paying Their Costs, Will Keep Using NDAs and Seek Tax Breaks",
+      "link": "https://www.warren.senate.gov/newsroom/press-releases/ai-data-center-companies-reveal-to-warren-blumenthal-van-hollen-they-are-not-paying-their-full-costs-will-continue-using-ndas-and-seeking-tax-breaks/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
     }
   ],
   "calls": [
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 905,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 716.3486480000001,
+      "costUsd": 0.00107
+    },
     {
       "role": "decision",
       "model": "claude-haiku-4-5-20251001",
@@ -64,7 +167,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 675.5496130000001,
+      "latencyMs": 737.7665729999999,
       "costUsd": 0.001064
     },
     {
@@ -74,43 +177,87 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 671.1514659999998,
+      "latencyMs": 720.4945079999998,
       "costUsd": 0.001088
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 923,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 732.0826370000004,
+      "costUsd": 0.001088
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 911,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 699.9057780000003,
+      "costUsd": 0.001076
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 907,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 548.8820699999997,
+      "costUsd": 0.001072
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 892,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 566.0445879999988,
+      "costUsd": 0.001057
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 950,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 576.6524629999994,
+      "costUsd": 0.001115
     },
     {
       "role": "writer",
       "model": "claude-sonnet-5-5",
-      "inputTokens": 295,
-      "outputTokens": 804,
+      "inputTokens": 452,
+      "outputTokens": 829,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 1896,
-      "latencyMs": 8733.981464,
-      "costUsd": 0.01337
+      "latencyMs": 8912.414861000001,
+      "costUsd": 0.013934
     }
   ],
-  "totalCostUsd": 0.015522000000000001,
+  "totalCostUsd": 0.022564,
   "writer": "ai",
   "missingSections": [],
   "concept": {
-    "name": "prompt caching",
+    "name": "guardrails",
     "queueEmpty": false,
     "marked": true
   },
   "interview": {
-    "slug": "valid-palindrome",
-    "tipIndex": 1,
+    "slug": "valid-parentheses",
+    "tipIndex": 2,
     "marked": true
   },
   "delivery": {
     "sender": "telegram",
     "status": "sent"
   },
-  "briefChars": 1430,
-  "errors": [
-    {
-      "stage": "source",
-      "source": "Hacker News AI",
-      "message": "HTTP 502"
-    }
-  ]
+  "briefChars": 1441,
+  "errors": []
 }

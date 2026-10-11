@@ -7,7 +7,7 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-10 typed tool registry
 - [x] 2026-10-11 bounded tool rounds
 - [x] 2026-10-11 prompt caching
-- [ ] guardrails
+- [x] 2026-10-11 guardrails
 - [ ] audit logging
 - [ ] RAG
 - [ ] embeddings and chunking
