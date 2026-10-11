@@ -71,7 +71,12 @@ export interface RunOutcome {
   record: RunRecord;
 }
 
-const message = (error: unknown) => (error instanceof Error ? error.message : String(error));
+// Keeps the underlying cause (e.g. a proxy connect timeout) so records say why a fetch failed.
+const message = (error: unknown): string => {
+  if (!(error instanceof Error)) return String(error);
+  const cause = error.cause instanceof Error ? ` (${error.cause.message})` : '';
+  return `${error.message}${cause}`;
+};
 
 export async function decideAll(model: DecisionModel, items: Item[]): Promise<DecisionResult[]> {
   const results: DecisionResult[] = [];
@@ -149,7 +154,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
     feedResults,
   ] = await Promise.all([
     Promise.allSettled([
-      deps.weather.fetch(ctx),
+      deps.weather.fetch(ctx).catch(() => deps.weather.fetch(ctx)),
       deps.concepts.next(),
       deps.calendar.fetch(ctx),
       deps.icloud ? deps.icloud.fetch(ctx) : [],

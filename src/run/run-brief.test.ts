@@ -129,11 +129,11 @@ async function deps(over: Partial<RunDeps> = {}): Promise<RunDeps> {
 beforeEach(async () => {
   root = await mkdtemp(join(tmpdir(), 'brief-'));
   await mkdir(join(root, 'concepts'));
-  const queue = await readFile('concepts/queue.md', 'utf8');
-  await writeFile(join(root, 'concepts', 'queue.md'), queue.replace(/- \[x\] \S+ /g, '- [ ] '));
   await mkdir(join(root, 'interview'));
-  await writeFile(PROBLEMS(), await readFile('interview/problems.md', 'utf8'));
-  await writeFile(TIPS(), await readFile('interview/tips.md', 'utf8'));
+  for (const queue of ['concepts/queue.md', 'interview/problems.md', 'interview/tips.md']) {
+    const text = await readFile(queue, 'utf8');
+    await writeFile(join(root, queue), text.replace(/- \[x\] \d{4}-\d{2}-\d{2} /g, '- [ ] '));
+  }
   records = [];
   sender = new CapturingSender();
 });

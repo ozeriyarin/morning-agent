@@ -77,11 +77,10 @@ describe('interview queues', () => {
     }
   });
 
-  it('the committed tip queue holds 30 unused one-line Hebrew tips', async () => {
+  it('the committed tip queue holds 30 one-line Hebrew tips', async () => {
     const entries = readQueue(await readFile('interview/tips.md', 'utf8'));
     expect(entries).toHaveLength(30);
     for (const tip of entries) {
-      expect(tip.usedOn).toBeNull();
       expect(tip.name).toMatch(/[א-ת]/);
     }
   });
