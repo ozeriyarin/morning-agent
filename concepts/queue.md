@@ -8,7 +8,7 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-11 bounded tool rounds
 - [x] 2026-10-11 prompt caching
 - [x] 2026-10-11 guardrails
-- [ ] audit logging
+- [x] 2026-10-11 audit logging
 - [ ] RAG
 - [ ] embeddings and chunking
 - [ ] structured outputs

@@ -61,22 +61,22 @@
           "outputTokens": 264,
           "cacheReadTokens": 0,
           "costUsd": 0.008629999999999999,
-          "meanLatencyMs": 662.2721581249998
+          "meanLatencyMs": 623.8958469999999
         },
         "writer": {
           "calls": 1,
-          "inputTokens": 452,
-          "outputTokens": 829,
-          "cacheReadTokens": 0,
-          "costUsd": 0.013934,
-          "meanLatencyMs": 8912.414861000001
+          "inputTokens": 451,
+          "outputTokens": 806,
+          "cacheReadTokens": 1896,
+          "costUsd": 0.009341200000000001,
+          "meanLatencyMs": 8244.626364
         }
       },
-      "costUsd": 0.022564,
+      "costUsd": 0.0179712,
       "errors": [],
       "calendarEvents": 2,
       "icloud": "ok",
-      "concept": "guardrails"
+      "concept": "audit logging"
     }
   ],
   "totals": {
@@ -87,24 +87,24 @@
       "inWindow": 14,
       "decided": 14
     },
-    "costUsd": 0.041492,
+    "costUsd": 0.0368992,
     "costByRole": {
       "decision": 0.015000000000000003,
-      "writer": 0.026492
+      "writer": 0.0218992
     },
     "costByModel": {
       "claude-haiku-4-5-20251001": 0.015000000000000003,
-      "claude-sonnet-5-5": 0.026492
+      "claude-sonnet-5-5": 0.0218992
     },
-    "meanCostPerDay": 0.020746,
+    "meanCostPerDay": 0.0184496,
     "meanLatencyMs": {
-      "decision": 739.0719632857142,
-      "writer": 8287.8752765
+      "decision": 717.142642642857,
+      "writer": 7953.981028
     },
     "errors": 1,
     "errorsBySource": {
       "Hacker News AI": 1
     },
-    "writerCacheHitRatio": 0
+    "writerCacheHitRatio": 2.1066666666666665
   }
 }

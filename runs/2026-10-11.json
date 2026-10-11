@@ -1,6 +1,6 @@
 {
   "date": "2026-10-11",
-  "generatedAt": "2026-10-11T07:25:44.744Z",
+  "generatedAt": "2026-10-11T07:29:56.757Z",
   "dryRun": false,
   "fetchedCount": 1337,
   "items": [
@@ -95,8 +95,8 @@
   ],
   "icloud": "ok",
   "reminders": {
-    "count": 0,
-    "source": "icloud"
+    "count": 6,
+    "source": "file"
   },
   "skippedUnseen": 0,
   "decisions": [
@@ -157,7 +157,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 716.3486480000001,
+      "latencyMs": 646.6476529999995,
       "costUsd": 0.00107
     },
     {
@@ -167,7 +167,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 737.7665729999999,
+      "latencyMs": 670.8388780000005,
       "costUsd": 0.001064
     },
     {
@@ -177,7 +177,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 720.4945079999998,
+      "latencyMs": 665.4696019999997,
       "costUsd": 0.001088
     },
     {
@@ -187,7 +187,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 732.0826370000004,
+      "latencyMs": 692.3235029999996,
       "costUsd": 0.001088
     },
     {
@@ -197,7 +197,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 699.9057780000003,
+      "latencyMs": 637.1104220000002,
       "costUsd": 0.001076
     },
     {
@@ -207,7 +207,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 548.8820699999997,
+      "latencyMs": 560.4870069999997,
       "costUsd": 0.001072
     },
     {
@@ -217,7 +217,7 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 566.0445879999988,
+      "latencyMs": 552.311498,
       "costUsd": 0.001057
     },
     {
@@ -227,37 +227,37 @@
       "outputTokens": 33,
       "cacheReadTokens": 0,
       "cacheWriteTokens": 0,
-      "latencyMs": 576.6524629999994,
+      "latencyMs": 565.9782129999994,
       "costUsd": 0.001115
     },
     {
       "role": "writer",
       "model": "claude-sonnet-5-5",
-      "inputTokens": 452,
-      "outputTokens": 829,
-      "cacheReadTokens": 0,
-      "cacheWriteTokens": 1896,
-      "latencyMs": 8912.414861000001,
-      "costUsd": 0.013934
+      "inputTokens": 451,
+      "outputTokens": 806,
+      "cacheReadTokens": 1896,
+      "cacheWriteTokens": 0,
+      "latencyMs": 8244.626364,
+      "costUsd": 0.009341200000000001
     }
   ],
-  "totalCostUsd": 0.022564,
+  "totalCostUsd": 0.0179712,
   "writer": "ai",
   "missingSections": [],
   "concept": {
-    "name": "guardrails",
+    "name": "audit logging",
     "queueEmpty": false,
     "marked": true
   },
   "interview": {
-    "slug": "valid-parentheses",
-    "tipIndex": 2,
+    "slug": "binary-search",
+    "tipIndex": 3,
     "marked": true
   },
   "delivery": {
     "sender": "telegram",
     "status": "sent"
   },
-  "briefChars": 1441,
+  "briefChars": 1626,
   "errors": []
 }
