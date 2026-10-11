@@ -4,7 +4,7 @@ One problem per line: `- [ ] <slug> | <title> | <difficulty> | <pattern> | <url>
 becomes `- [x] YYYY-MM-DD …`. The order cycles through the patterns, so every 7 days mix them.
 
 - [x] 2026-10-11 two-sum | Two Sum | easy | hash map | https://leetcode.com/problems/two-sum/
-- [ ] valid-palindrome | Valid Palindrome | easy | two pointers | https://leetcode.com/problems/valid-palindrome/
+- [x] 2026-10-11 valid-palindrome | Valid Palindrome | easy | two pointers | https://leetcode.com/problems/valid-palindrome/
 - [ ] valid-parentheses | Valid Parentheses | easy | stack | https://leetcode.com/problems/valid-parentheses/
 - [ ] binary-search | Binary Search | easy | binary search | https://leetcode.com/problems/binary-search/
 - [ ] best-time-to-buy-and-sell-stock | Best Time to Buy and Sell Stock | easy | sliding window | https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
