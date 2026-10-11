@@ -214,16 +214,8 @@ asked (if that fails too, only the file error is recorded). Reminders for anothe
 and the rest render under `תזכורות:` exactly like iCloud ones. The record keeps only
 `reminders: { count, source }` with `source` one of `file`, `icloud`, `none`; never titles or due
 times. `--reminders <path>` reads another file instead (`test/fixtures/reminders-file.json` is
-synthetic). The routine gains the allowed tools `mcp__Gmail__*` and this step after the calendar
-step:
-
-```text
-Using the Gmail connector, search for a message with the subject `reminders <today>` received in
-the last 12 hours. If there is one, write its body to `input/reminders-<today>.json`; if the body
-is a bare JSON array, wrap it as { "date": "<today>", "timezone": "Asia/Jerusalem", "source":
-"shortcut", "reminders": <array> }. If there is none, or the connector fails, do not create the
-file and continue.
-```
+synthetic). The routine fetches the mail with the Gmail connector in step 4 of its prompt (see
+"The routine").
 
 ## Jev decision model
 
@@ -350,8 +342,8 @@ here. On Sundays the brief footer gains a second line computed in code (no AI) f
 7 days' records, where a day without a record counts as not run:
 `השבוע: N ימים, עלות ~$X, M פריטים נבדקו, K שגיאות`.
 
-Latest table (`npm run report -- --from 2026-10-04 --to 2026-10-10`; the routine replaces it on
-Sundays):
+Latest table (`npm run report -- --from 2026-10-04 --to 2026-10-10`; refreshed by hand, the
+routine only commits the Sunday report file):
 
 ```markdown
 ## Run report
@@ -435,27 +427,28 @@ tip or the explanation. Add a problem or a tip by appending a `- [ ]` line in th
 
 ## The routine
 
-The brief runs as a Claude Code cloud routine named "Morning brief": cron `0 4 * * *` UTC (07:00
-Israel summer time; change to `0 5 * * *` after DST ends on 2026-10-25), repo
+The brief runs as a Claude Code cloud routine named "Morning brief v2": cron `0 4 * * *` UTC
+(07:00 Israel summer time; change to `0 5 * * *` after DST ends on 2026-10-25), repo
 `ozeriyarin/morning-agent`, model `claude-sonnet-5-5`, allowed tools Bash, Read, Write, Edit,
-Glob, Grep, plus the Google Calendar connector. The secrets are environment variables of the
-routine's cloud environment, whose allow list includes `caldav.icloud.com`, `*.icloud.com` and
-`openrouter.ai`.
+Glob, Grep, `mcp__Google_Calendar__*` and `mcp__Gmail__*`. The secrets are environment variables
+of the routine's cloud environment, whose allow list includes `registry.npmjs.org`, `github.com`,
+`api.telegram.org`, `api.open-meteo.com`, `geocoding-api.open-meteo.com`, the feed hosts,
+`caldav.icloud.com`, `*.icloud.com` and `openrouter.ai`. On Sundays the routine commits the
+`reports/report-<from>-<to>.json` file; it does not edit `README.md`.
 
 Routine prompt:
 
 ```text
-Install dependencies with `npm ci`. Run `npm test`; if it fails, stop and report the failing
-tests without sending a brief. Using the Google Calendar connector, list the events for today
-(Asia/Jerusalem) on the primary calendar; write them to `input/calendar-<today>.json` exactly in
-the hand-off schema (title, start, end, allDay, location; nothing else). If the connector fails,
-do not create the file and continue. Run `npm run brief`. On Sundays (Asia/Jerusalem), then run
-`npm run report` (the last 7 days) and replace the table under "Latest table" in `README.md` with
-the Markdown it prints. Then commit `runs/<date>.json`, `concepts/queue.md`, `interview/problems.md` and
-`interview/tips.md` (on Sundays also
-`reports/report-<from>-<to>.json` and `README.md`) with the message `brief: <date>` (date as
-YYYY-MM-DD, Asia/Jerusalem) and push. Finally report the Telegram delivery status and the total
-cost from the run record.
+You are the scheduled runner for the morning-agent repo (already checked out in the working directory, branch main). Do exactly this, in order, and stop if a step fails:
+
+1. Run `npm ci` (fall back to `npm install` if there is no lockfile).
+2. Run `npm test`. If tests fail, do not send anything: report the failing test names and stop.
+3. Compute today's date in Asia/Jerusalem as YYYY-MM-DD (`TZ=Asia/Jerusalem date +%F`). Using the Google Calendar connector tools, list the events of the primary calendar for that day (00:00 to 23:59 Asia/Jerusalem). Create the folder `input/` if needed and write `input/calendar-<date>.json` with exactly this shape and nothing else: {"date": "<date>", "timezone": "Asia/Jerusalem", "source": "google", "events": [{"title": string, "start": ISO-8601 datetime, "end": ISO-8601 datetime, "allDay": boolean, "location": string or omitted}]}. For all-day events use the day's 00:00 and 23:59 in +03:00 (or +02:00 after DST ends) as start/end. Do not include attendees, descriptions or links. If the connector is unavailable or fails, do not create the file and continue.
+4. Using the Gmail connector, search `subject:reminders newer_than:1d` and keep only messages whose subject starts with `reminders <date>` (the subject may have extra text after the date). Take the newest one, read its plain-text body, and write it to `input/reminders-<date>.json`; if the body is a bare JSON array, wrap it as {"date": "<date>", "timezone": "Asia/Jerusalem", "source": "shortcut", "reminders": <array>}. Do not read any other mail. If there is none, or the connector fails, do not create the file and continue.
+5. Run the real brief: if the file /root/.ccr/ca-bundle.crt exists run `NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt npm run brief`, otherwise `npm run brief`. It reads TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, MORNING_ANTHROPIC_API_KEY (and OPENROUTER_API_KEY, ICLOUD_USERNAME, ICLOUD_APP_PASSWORD when set) from the environment, honours HTTPS_PROXY and reads the hand-off files from steps 3 and 4. Capture its output.
+6. If today is a Sunday in Asia/Jerusalem, also run `npm run report` (default range: last 7 days) so `reports/report-<from>-<to>.json` is written.
+7. If the run wrote a file under runs/ (not a *.dry-run.json), commit `runs/`, `concepts/queue.md`, `interview/problems.md`, `interview/tips.md` and any new `reports/report-*.json` with the message `brief: <date>`, then `git pull --rebase origin main` if needed and push to origin main. Never commit `input/` or anything else. Never print or commit secret values.
+8. Report: delivery status (sent or not, Telegram error text if any), whether the calendar file was written and how many events it had, whether the reminders file was written and how many reminders it had (no titles), the total cost from the record, the number of items checked, and any errors listed in the record (quote exact messages). Do not paste the Telegram token, chat id, API keys or reminder titles anywhere.
 ```
 
 ## Talking to the bot
@@ -470,7 +463,7 @@ Hebrew or English arguments:
 | `/weather <מקום>` | today's forecast there, in the brief's weather line, e.g. `תל אביב-יפו: מעונן, 21°-29°, ...` |
 | `/cost [days]`    | the `npm run report` totals for the last N days (default 7, at most 90)                      |
 | `/concept <name>` | adds `- [ ] <name>` to `concepts/queue.md` unless it is there, and replies with its place    |
-| `/help`           | the command list (also the reply to any unknown command)                                     |
+| `/help`           | the commands, plus how feedback and 👍 / 👎 labels work (also the reply to unknown commands) |
 
 `/weather` resolves the place with Open-Meteo geocoding (Hebrew names, first match) and answers
 `לא מצאתי מקום בשם "<place>"` when nothing matches. Any other text, or a reply to the brief, is
@@ -479,7 +472,8 @@ feedback and gets `תודה, נרשם.`; it is appended to `feedback/<date>.json
 `לא מעניין` (any negation means drop) plus words from exactly one news title of the latest run
 record, the entry also gets `{ title, label: "keep" | "drop" }`, e.g. `👎 tidy desk`. The replay
 (`npm run replay`) reads those labels for its range (plus the next day) and adds a `feedback` row
-to the agreement table: `keep` agrees with `must_read` or `mention`, `drop` with `skip`.
+to the agreement table: `keep` agrees with `must_read` or `mention`, `drop` with `skip`. The same
+labels also feed the frozen eval set through `npm run eval -- build`.
 
 Safety: at most 20 messages per run; on the very first run (no `state/telegram-offset.json`)
 messages older than 24 hours are skipped; nothing in a message runs except the four commands;

@@ -125,6 +125,9 @@ describe('inbox commands', () => {
     expect(HELP_TEXT).toContain('/weather');
     expect(HELP_TEXT).toContain('/cost');
     expect(HELP_TEXT).toContain('/concept');
+    expect(HELP_TEXT).toContain('👍 או 👎 (או כן/לא)');
+    expect(HELP_TEXT).toContain('npm run eval');
+    expect(HELP_TEXT.split('\n').length).toBeLessThanOrEqual(8);
     expect(ctx.urls).toHaveLength(0);
   });
 });
