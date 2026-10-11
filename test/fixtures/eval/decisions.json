@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "fixture00000",
+      "title": "Anthropic ships Claude Code hooks",
+      "link": "https://example.com/eval/0",
+      "summary": "",
+      "published": "2026-10-01T00:00:00.000Z",
+      "label": "must_read",
+      "labeledAt": "2026-10-02T06:00:00.000Z",
+      "source": "feedback"
+    },
+    {
+      "id": "fixture00001",
+      "title": "Startup raises $20M for LLM evals",
+      "link": "https://example.com/eval/1",
+      "summary": "",
+      "published": "2026-10-01T00:00:00.000Z",
+      "label": "mention",
+      "labeledAt": "2026-10-02T06:00:00.000Z",
+      "source": "manual"
+    },
+    {
+      "id": "fixture00002",
+      "title": "A benchmark of local models",
+      "link": "https://example.com/eval/2",
+      "summary": "",
+      "published": "2026-10-01T00:00:00.000Z",
+      "label": "skip",
+      "labeledAt": "2026-10-02T06:00:00.000Z",
+      "source": "feedback"
+    },
+    {
+      "id": "fixture00003",
+      "title": "Ten tips for a tidy desk",
+      "link": "https://example.com/eval/3",
+      "summary": "",
+      "published": "2026-10-01T00:00:00.000Z",
+      "label": "skip",
+      "labeledAt": "2026-10-02T06:00:00.000Z",
+      "source": "manual"
+    },
+    {
+      "id": "fixture00004",
+      "title": "Weekend gardening notes",
+      "link": "https://example.com/eval/4",
+      "summary": "",
+      "published": "2026-10-01T00:00:00.000Z",
+      "label": "mention",
+      "labeledAt": "2026-10-02T06:00:00.000Z",
+      "source": "feedback"
+    },
+    {
+      "id": "fixture00005",
+      "title": "MCP servers explained",
+      "link": "https://example.com/eval/5",
+      "summary": "",
+      "published": "2026-10-01T00:00:00.000Z",
+      "label": "mention",
+      "labeledAt": "2026-10-02T06:00:00.000Z",
+      "source": "manual"
+    },
+    {
+      "id": "fixture00006",
+      "title": "OpenAI raises prices",
+      "link": "https://example.com/eval/6",
+      "summary": "",
+      "published": "2026-10-01T00:00:00.000Z",
+      "label": "must_read",
+      "labeledAt": "2026-10-02T06:00:00.000Z",
+      "source": "feedback"
+    }
+  ]
+}

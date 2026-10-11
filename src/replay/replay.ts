@@ -163,7 +163,7 @@ export async function replay(input: ReplayInput): Promise<ReplayReport> {
   };
 }
 
-const table = (head: string[], body: string[][]) =>
+export const table = (head: string[], body: string[][]) =>
   [head, head.map(() => '---'), ...body].map((r) => `| ${r.join(' | ')} |`).join('\n');
 
 const share = ({ agree, total }: AgreementCell) =>

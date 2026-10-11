@@ -21,8 +21,8 @@ import { redact } from './run/redact.js';
 import { anthropicClient } from './run/wiring.js';
 import type { DecisionModel } from './types.js';
 
-const REPLAY_MODELS = ['haiku', 'jev'] as const;
-type ReplayModel = (typeof REPLAY_MODELS)[number];
+export const REPLAY_MODELS = ['haiku', 'jev'] as const;
+export type ReplayModel = (typeof REPLAY_MODELS)[number];
 
 export interface ReplayArgs {
   from: string;
@@ -46,14 +46,18 @@ export function parseReplayArgs(argv: string[]): ReplayArgs {
   if (!from || !to || !isIsoDate(from) || !isIsoDate(to) || from > to) {
     throw new Error('--from and --to are required as YYYY-MM-DD with --from <= --to');
   }
-  const models = [...new Set(values.models.split(',').map((m) => m.trim()))];
+  return { from, to, models: parseModels(values.models), dryRun: values['dry-run'] };
+}
+
+export function parseModels(value: string): ReplayModel[] {
+  const models = [...new Set(value.split(',').map((m) => m.trim()))];
   for (const m of models)
     if (!(REPLAY_MODELS as readonly string[]).includes(m))
       throw new Error(`--models takes ${REPLAY_MODELS.join(',')}, got "${m}"`);
-  return { from, to, models: models as ReplayModel[], dryRun: values['dry-run'] };
+  return models as ReplayModel[];
 }
 
-interface ReplayKeys {
+export interface ReplayKeys {
   anthropicKey?: string;
   openRouterKey: string | null;
 }

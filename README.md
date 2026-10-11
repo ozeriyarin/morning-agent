@@ -50,6 +50,10 @@ npm run brief [--dry-run] [--date YYYY-MM-DD] [--calendar <path>] [--icloud <pat
 npm run replay -- --from <date> --to <date> [--models haiku,jev] [--dry-run]
 └── src/replay-cli.ts             re-decides stored items -> reports/replay-<from>-<to>.json
     └── src/replay/replay.ts      load runs, dedupe by title, agreement, cost, latency, Markdown
+npm run eval -- build [--from <date> --to <date>] | label <fragment> <label> [--relabel] | score
+└── src/eval-cli.ts               frozen labelled set eval/decisions.json -> reports/eval-<date>-<model>.json
+    ├── src/eval/eval-set.ts      schema, title-hash ids, build from feedback, manual labels
+    └── src/eval/score.ts         accuracy, per-label precision/recall, confusion matrix, Markdown
 npm run report -- [--from <date>] [--to <date>] [--format md|json]
 └── src/report-cli.ts             default: the 7 days ending today -> reports/report-<from>-<to>.json
     └── src/report/report.ts      summarise(): per-day and total items, decisions, cost, latency, errors
@@ -293,6 +297,38 @@ Runs: 2026-10-01, 2026-10-02 · 5 unique items of 6 stored
 | Startup raises $20M for LLM evals | skip     | mention | skip      |
 | A benchmark of local models       | mention  | mention | must_read |
 ```
+
+## Evaluating decisions
+
+`eval/decisions.json` is a committed, frozen set of news items labelled `must_read`, `mention` or
+`skip` by Yarin, never by a model. Each item keeps only `id` (12-char sha1 of the normalised
+title, so an item is never added twice), `title`, `link`, `summary`, `published`, `label`,
+`labeledAt` and `source` (`feedback` or `manual`); no feedback text or chat id reaches the file.
+The set only grows, and an existing label changes only through `--relabel`.
+
+```bash
+npm run eval -- build --from 2026-10-10 --to 2026-10-11   # default: the 7 days ending today
+npm run eval -- label "tidy desk" skip                     # one item from the latest run record
+npm run eval -- label "tidy desk" mention --relabel        # change an existing label
+npm run eval -- score                                      # haiku and jev, live calls
+npm run eval -- score --models jev --dry-run               # fakes, no network, no keys
+```
+
+`build` joins the run records in the range with the Telegram feedback labels (plus the next day's
+file): `drop` becomes `skip`, and `keep` becomes the decision stored that day when it was
+`must_read` or `mention`, otherwise `mention`. Unlabelled items stay out. It prints
+`added <n>, set size <m>`. `label` is how the set grows on days without feedback: the fragment is
+matched against the latest record's titles the same way Telegram feedback is, and an unknown or
+ambiguous fragment is refused.
+
+`score` runs each model over the whole set and prints accuracy, per-label precision/recall, a 3×3
+confusion matrix (rows are the label, columns the prediction), cost and mean latency, and writes
+`reports/eval-<date>-<model>.json` (date in Asia/Jerusalem; dry runs write `.dry-run.json`,
+gitignored). Under 30 items it prints a warning that the numbers are too early to read much into.
+The replay stays the tool for a day-range A/B; `score` is the frozen-set check.
+
+Rule: run `npm run eval -- score` before changing a decider's prompt or criteria, run it again
+after, and paste the before/after tables in the commit message.
 
 ## History
 
