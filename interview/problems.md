@@ -7,7 +7,7 @@ becomes `- [x] YYYY-MM-DD …`. The order cycles through the patterns, so every 
 - [x] 2026-10-11 valid-palindrome | Valid Palindrome | easy | two pointers | https://leetcode.com/problems/valid-palindrome/
 - [x] 2026-10-11 valid-parentheses | Valid Parentheses | easy | stack | https://leetcode.com/problems/valid-parentheses/
 - [x] 2026-10-11 binary-search | Binary Search | easy | binary search | https://leetcode.com/problems/binary-search/
-- [ ] best-time-to-buy-and-sell-stock | Best Time to Buy and Sell Stock | easy | sliding window | https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+- [x] 2026-10-12 best-time-to-buy-and-sell-stock | Best Time to Buy and Sell Stock | easy | sliding window | https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
 - [ ] maximum-depth-of-binary-tree | Maximum Depth of Binary Tree | easy | trees | https://leetcode.com/problems/maximum-depth-of-binary-tree/
 - [ ] flood-fill | Flood Fill | easy | BFS/DFS | https://leetcode.com/problems/flood-fill/
 - [ ] climbing-stairs | Climbing Stairs | easy | dynamic programming | https://leetcode.com/problems/climbing-stairs/

@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-12",
+  "generatedAt": "2026-10-12T04:12:54.868Z",
+  "dryRun": false,
+  "fetchedCount": 1317,
+  "items": [],
+  "calendar": {
+    "count": 2,
+    "allDay": 0,
+    "timed": 2,
+    "bySource": {
+      "google": 0,
+      "icloud": 2
+    }
+  },
+  "icloud": "ok",
+  "reminders": {
+    "count": 4,
+    "source": "file"
+  },
+  "skippedUnseen": 0,
+  "decisions": [],
+  "calls": [
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 325,
+      "outputTokens": 753,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 1896,
+      "latencyMs": 8267.258437,
+      "costUsd": 0.01292
+    }
+  ],
+  "totalCostUsd": 0.01292,
+  "writer": "sonnet",
+  "writerAttempts": 1,
+  "missingSections": [],
+  "concept": {
+    "name": "RAG",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": "best-time-to-buy-and-sell-stock",
+    "tipIndex": 4,
+    "marked": true
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent",
+    "attempts": 1
+  },
+  "briefChars": 1529,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "Hacker News AI",
+      "message": "fetch failed (Connect Timeout Error (attempted address: hnrss.org:443, timeout: 10000ms))"
+    }
+  ]
+}
