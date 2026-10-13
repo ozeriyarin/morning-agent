@@ -10,7 +10,7 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-11 guardrails
 - [x] 2026-10-11 audit logging
 - [x] 2026-10-12 RAG
-- [ ] embeddings and chunking
+- [x] 2026-10-13 embeddings and chunking
 - [ ] structured outputs
 - [ ] spec-driven development
 - [ ] MCP

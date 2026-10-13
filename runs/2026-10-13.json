@@ -1,0 +1,408 @@
+{
+  "date": "2026-10-13",
+  "generatedAt": "2026-10-13T04:12:17.675Z",
+  "dryRun": false,
+  "fetchedCount": 1337,
+  "items": [
+    {
+      "title": "AI is a tool and using it well takes skill",
+      "link": "https://yyhh.org/blog/2026/10/ai-is-a-tool/",
+      "published": "2026-10-12T21:40:18.000Z",
+      "summary": "Article URL: https://yyhh.org/blog/2026/10/ai-is-a-tool/ Comments URL: https://news.ycombinator.com/item?id=50063427 Points: 274 # Comments: 231",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Intel D270 GPU AI Accelerator–Up to 480 GB LPDDR5X",
+      "link": "https://www.intel.com/content/www/us/en/products/details/discrete-gpus/data-center-gpu/d-series.html",
+      "published": "2026-10-12T21:35:35.000Z",
+      "summary": "Article URL: https://www.intel.com/content/www/us/en/products/details/discrete-gpus/data-center-gpu/d-series.html Comments URL: https://news.ycombinator.com/item?id=50063365 Points: 108 # Comments: 46",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Epic Games tells employees to use AI to get Disney game done",
+      "link": "https://www.avclub.com/epic-games-disney-ai-delay",
+      "published": "2026-10-12T20:07:42.000Z",
+      "summary": "Article URL: https://www.avclub.com/epic-games-disney-ai-delay Comments URL: https://news.ycombinator.com/item?id=50062237 Points: 80 # Comments: 63",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "AI models may be capable of self-replicating without access to a datacenter",
+      "link": "https://www.anthropic.com/research/self-replicating-ai",
+      "published": "2026-10-12T19:25:29.000Z",
+      "summary": "Article URL: https://www.anthropic.com/research/self-replicating-ai Comments URL: https://news.ycombinator.com/item?id=50061603 Points: 81 # Comments: 97",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Hello Python 3.15, goodbye 3.10, and now I can use 3.11",
+      "link": "https://simonwillison.net/2026/Oct/12/python-3-15/",
+      "published": "2026-10-12T18:15:38.000Z",
+      "summary": "Python 3.15 is here ! Here's the essential What's new in Python 3.15 guide, this year curated by 3.14 and 3.15 release manager Hugo van Kemenade. As someone who builds open source software that works in every supported Python version, I get to say goodbye to Python 3.10 and start embracing features ",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "'AI' Is Not a Tool by Rich Hickey",
+      "link": "https://www.linkedin.com/pulse/ai-tool-rich-hickey-kjl8e",
+      "published": "2026-10-12T18:00:25.000Z",
+      "summary": "https://gist.github.com/svieira/619d60dea942a8d4498cba3bb6b1... Comments URL: https://news.ycombinator.com/item?id=50060269 Points: 239 # Comments: 119",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "AI coding agents generate more code, but not more software",
+      "link": "https://arstechnica.com/ai/2026/10/ai-coding-agents-generate-more-code-but-not-more-software/",
+      "published": "2026-10-12T17:14:01.000Z",
+      "summary": "Article URL: https://arstechnica.com/ai/2026/10/ai-coding-agents-generate-more-code-but-not-more-software/ Comments URL: https://news.ycombinator.com/item?id=50059523 Points: 319 # Comments: 275",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "web-edit 0.1a0",
+      "link": "https://simonwillison.net/2026/Oct/12/web-edit/",
+      "published": "2026-10-12T15:54:36.000Z",
+      "summary": "Release: web-edit 0.1a0 I was working on a project from my phone using Codex Remote when I found myself wanting to edit a credentials file without round-tripping those credentials through the LLM itself. So... I had Codex and GPT-6 Astra Extra High build this Python web app which provides a web UI f",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Kevin Kelly's 2016 AI Predictions, 10 Years Later",
+      "link": "https://taylor.town/kk-ai-2026",
+      "published": "2026-10-12T15:16:45.000Z",
+      "summary": "Article URL: https://taylor.town/kk-ai-2026 Comments URL: https://news.ycombinator.com/item?id=50057668 Points: 155 # Comments: 52",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Why aren't AI companies being charged for hacking?",
+      "link": "https://mortoray.com/why-arent-ai-companies-being-charged-for-hacking/",
+      "published": "2026-10-12T14:52:37.000Z",
+      "summary": "Article URL: https://mortoray.com/why-arent-ai-companies-being-charged-for-hacking/ Comments URL: https://news.ycombinator.com/item?id=50057278 Points: 314 # Comments: 337",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "\"Just Ask Claude\" Is a Rare and Valuable Skill",
+      "link": "https://justismills.substack.com/p/just-ask-claude-is-a-rare-and-valuable",
+      "published": "2026-10-12T13:20:04.000Z",
+      "summary": "Article URL: https://justismills.substack.com/p/just-ask-claude-is-a-rare-and-valuable Comments URL: https://news.ycombinator.com/item?id=50056063 Points: 53 # Comments: 65",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "AI less regulated than milk, Microsoft president says in warning over safety",
+      "link": "https://www.theguardian.com/technology/2026/oct/12/ai-less-regulated-than-milk-microsoft-president-calls-for-tougher-rules",
+      "published": "2026-10-12T12:46:52.000Z",
+      "summary": "Article URL: https://www.theguardian.com/technology/2026/oct/12/ai-less-regulated-than-milk-microsoft-president-calls-for-tougher-rules Comments URL: https://news.ycombinator.com/item?id=50055654 Points: 69 # Comments: 75",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "QGIS enacts moratorium on AI contributions",
+      "link": "https://github.com/qgis/QGIS-Enhancement-Proposals/pull/387",
+      "published": "2026-10-12T11:22:24.000Z",
+      "summary": "https://lists.osgeo.org/pipermail/qgis-developer/2026-Septem... Comments URL: https://news.ycombinator.com/item?id=50054751 Points: 369 # Comments: 398",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "datasette-ports 0.4",
+      "link": "https://simonwillison.net/2026/Oct/12/datasette-ports/",
+      "published": "2026-10-12T04:57:07.000Z",
+      "summary": "Release: datasette-ports 0.4 My plugin for detecting and listing all Datasette instances on the current machine now works with the latest version, and displays the detected PID as well. Knowing the PID makes it easier to attach the new Python 3.15 profiler . Tags: datasette",
+      "sources": [
+        "Simon Willison"
+      ]
+    }
+  ],
+  "calendar": {
+    "count": 2,
+    "allDay": 0,
+    "timed": 2,
+    "bySource": {
+      "google": 0,
+      "icloud": 2
+    }
+  },
+  "icloud": "ok",
+  "reminders": {
+    "count": 2,
+    "source": "file"
+  },
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "AI is a tool and using it well takes skill",
+      "link": "https://yyhh.org/blog/2026/10/ai-is-a-tool/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "Intel D270 GPU AI Accelerator–Up to 480 GB LPDDR5X",
+      "link": "https://www.intel.com/content/www/us/en/products/details/discrete-gpus/data-center-gpu/d-series.html",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "Epic Games tells employees to use AI to get Disney game done",
+      "link": "https://www.avclub.com/epic-games-disney-ai-delay",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "AI models may be capable of self-replicating without access to a datacenter",
+      "link": "https://www.anthropic.com/research/self-replicating-ai",
+      "decision": "must_read",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "Hello Python 3.15, goodbye 3.10, and now I can use 3.11",
+      "link": "https://simonwillison.net/2026/Oct/12/python-3-15/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "'AI' Is Not a Tool by Rich Hickey",
+      "link": "https://www.linkedin.com/pulse/ai-tool-rich-hickey-kjl8e",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "AI coding agents generate more code, but not more software",
+      "link": "https://arstechnica.com/ai/2026/10/ai-coding-agents-generate-more-code-but-not-more-software/",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "web-edit 0.1a0",
+      "link": "https://simonwillison.net/2026/Oct/12/web-edit/",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "Kevin Kelly's 2016 AI Predictions, 10 Years Later",
+      "link": "https://taylor.town/kk-ai-2026",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "Why aren't AI companies being charged for hacking?",
+      "link": "https://mortoray.com/why-arent-ai-companies-being-charged-for-hacking/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "\"Just Ask Claude\" Is a Rare and Valuable Skill",
+      "link": "https://justismills.substack.com/p/just-ask-claude-is-a-rare-and-valuable",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "AI less regulated than milk, Microsoft president says in warning over safety",
+      "link": "https://www.theguardian.com/technology/2026/oct/12/ai-less-regulated-than-milk-microsoft-president-calls-for-tougher-rules",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "QGIS enacts moratorium on AI contributions",
+      "link": "https://github.com/qgis/QGIS-Enhancement-Proposals/pull/387",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    },
+    {
+      "title": "datasette-ports 0.4",
+      "link": "https://simonwillison.net/2026/Oct/12/datasette-ports/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001"
+    }
+  ],
+  "calls": [
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 892,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 738.747836999999,
+      "costUsd": 0.001057
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 917,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 713.084354999999,
+      "costUsd": 0.001082
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 889,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 732.0801449999999,
+      "costUsd": 0.001054
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 894,
+      "outputTokens": 35,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 706.0206440000002,
+      "costUsd": 0.001069
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 928,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 730.7971770000004,
+      "costUsd": 0.001093
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 901,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 530.1975899999998,
+      "costUsd": 0.001066
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 906,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 575.610752999999,
+      "costUsd": 0.001071
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 911,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 580.6062730000012,
+      "costUsd": 0.001076
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 889,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 533.1212130000004,
+      "costUsd": 0.001054
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 896,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 867.0152449999987,
+      "costUsd": 0.001061
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 901,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 551.4119620000001,
+      "costUsd": 0.001066
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 915,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 547.3224919999993,
+      "costUsd": 0.00108
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 894,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 565.1582239999989,
+      "costUsd": 0.001059
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 898,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 546.84483,
+      "costUsd": 0.001063
+    },
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 759,
+      "outputTokens": 1033,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 1896,
+      "latencyMs": 13801.097433,
+      "costUsd": 0.016588
+    }
+  ],
+  "totalCostUsd": 0.031539,
+  "writer": "sonnet",
+  "writerAttempts": 1,
+  "missingSections": [],
+  "concept": {
+    "name": "embeddings and chunking",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": "maximum-depth-of-binary-tree",
+    "tipIndex": 5,
+    "marked": true
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent",
+    "attempts": 1
+  },
+  "briefChars": 1674,
+  "errors": []
+}
