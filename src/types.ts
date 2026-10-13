@@ -51,7 +51,7 @@ export interface Source<T> {
 }
 
 export interface CallRecord {
-  role: 'decision' | 'writer';
+  role: 'decision' | 'writer' | 'embed';
   model: string;
   inputTokens: number;
   outputTokens: number;
@@ -86,9 +86,15 @@ export interface DecisionResult {
   probabilities?: Record<string, number>;
 }
 
+export interface DecisionExample {
+  title: string;
+  label: Decision;
+  score: number;
+}
+
 export interface DecisionModel {
   readonly model: string;
-  decide(item: Item): Promise<DecisionResult>;
+  decide(item: Item, examples?: DecisionExample[]): Promise<DecisionResult>;
 }
 
 export interface WrittenBrief {
@@ -120,12 +126,16 @@ export interface Brief extends WrittenBrief {
   interviewExplained: boolean;
 }
 
+export interface NewsItem extends Item {
+  seenBefore?: { title: string; date: string };
+}
+
 export interface WriterInput {
   greeting: string;
   weather: WeatherDay | null;
-  mustRead: Item[];
-  mention: Item[];
-  concept: string | null;
+  mustRead: NewsItem[];
+  mention: NewsItem[];
+  concept: { name: string; related: string[] } | null;
   calendar: CalendarEvent[] | null;
   interview: InterviewPick;
 }
@@ -183,6 +193,7 @@ export interface RunRecord {
     confidence?: number;
     probabilities?: Record<string, number>;
     error?: string;
+    examples: number;
   }[];
   calls: CallRecord[];
   totalCostUsd: number;
@@ -191,6 +202,13 @@ export interface RunRecord {
   missingSections: Section[];
   concept: { name: string | null; queueEmpty: boolean; marked: boolean };
   interview: { slug: string | null; tipIndex: number | null; marked: boolean };
+  memory: {
+    indexSize: number;
+    seenBefore: number;
+    examples: number;
+    related: number;
+    chunkIds: string[];
+  } | null;
   delivery: { sender: string; status: 'sent' | 'printed' | 'failed'; attempts: number };
   briefChars: number;
   errors: RunError[];

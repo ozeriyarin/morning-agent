@@ -16,12 +16,13 @@ Each item is one spec in `agent-os/specs/`. Ship in order; each step is usable o
 10. **Record privacy** (`2026-10-11-brief-v11-record-privacy`). The committed run record stores calendar events as counts only (total, all-day, timed, per source), never titles or times.
 11. **Resilience: writer chain and Telegram retry** (`2026-10-11-brief-v10-resilience`). Sonnet → Haiku → template writer chain and one Telegram retry on network errors, 429 and 5xx. The record says which rung wrote the brief and how many send attempts it took.
 12. **Frozen eval set for the decision step** (`2026-10-11-brief-v12-eval-set`). `eval/decisions.json` holds items labelled by Yarin (Telegram feedback or `npm run eval -- label`); `npm run eval -- score` reports accuracy, per-label precision/recall, a confusion matrix, cost and latency per model.
+13. **Memory: retrieval over past runs** (`2026-10-13-brief-v13-memory`). Voyage embeddings in a committed `memory/index.json`; must-reads that follow up a past item say so, decisions get up to 3 labelled similar items as examples, and the concept links to a related past one.
 
 ## Next
 
-13. **Jev criteria tuning.** After a week of replay data with feedback labels, rewrite the Jev criteria text and re-run the A/B; switch the default only if agreement with feedback beats Haiku.
-14. **Decision batching.** One Haiku call for all items instead of one per item, if quality holds on replay; cuts the decision cost and latency.
-15. **Second recipient.** Per-person config (calendar sources, feeds, language) so a family member can get their own brief.
+14. **Jev criteria tuning.** After a week of replay data with feedback labels, rewrite the Jev criteria text and re-run the A/B; switch the default only if agreement with feedback beats Haiku.
+15. **Decision batching.** One Haiku call for all items instead of one per item, if quality holds on replay; cuts the decision cost and latency.
+16. **Second recipient.** Per-person config (calendar sources, feeds, language) so a family member can get their own brief.
 
 ## Operations
 

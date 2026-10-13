@@ -3,7 +3,7 @@ import { redact } from '../run/redact.js';
 import { DECISIONS, type CallRecord, type Decision, type WriterName } from '../types.js';
 
 type Role = CallRecord['role'];
-const ROLES: Role[] = ['decision', 'writer'];
+const ROLES: Role[] = ['decision', 'writer', 'embed'];
 const WRITERS: WriterName[] = ['sonnet', 'haiku', 'template'];
 // Records before v10 said `ai` for Sonnet and `fallback` for the template after a failure.
 const WRITER_OF: Record<NonNullable<StoredRecord['writer']>, WriterName> = {
@@ -204,7 +204,7 @@ export function toMarkdown(summary: ReportSummary): string {
     `- Days run: ${t.daysRun}, delivered: ${t.daysDelivered}`,
     `- Items: ${t.items.fetched} fetched, ${t.items.inWindow} in window, ${t.items.decided} decided`,
     `- Cost: ${usd(t.costUsd)} (mean ${usd(t.meanCostPerDay)} per day)`,
-    `- Cost by role: decision ${usd(t.costByRole.decision)}, writer ${usd(t.costByRole.writer)}`,
+    `- Cost by role: decision ${usd(t.costByRole.decision)}, writer ${usd(t.costByRole.writer)}, embed ${usd(t.costByRole.embed)}`,
     `- Cost by model: ${list(t.costByModel, usd)}`,
     `- Mean latency: decision ${ms(t.meanLatencyMs.decision)}, writer ${ms(t.meanLatencyMs.writer)}`,
     `- Writer cache hit ratio: ${t.writerCacheHitRatio.toFixed(2)}`,

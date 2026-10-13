@@ -20,7 +20,7 @@ The project is spec-driven: product docs live in `agent-os/product/`, coding sta
 
 ```
 npm run brief [--dry-run] [--date YYYY-MM-DD] [--calendar <path>] [--icloud <path.ics>]
-              [--reminders <path.json>] [--decider fake|haiku|jev]
+              [--reminders <path.json>] [--decider fake|haiku|jev] [--memory <index.json>]
 └── src/cli.ts                    args, config + env loading, exit code
     └── src/run/wiring.ts         real clients, or fakes for --dry-run
         └── src/run/run-brief.ts  orchestration, cost, redaction, record
@@ -33,7 +33,9 @@ npm run brief [--dry-run] [--date YYYY-MM-DD] [--calendar <path>] [--icloud <pat
             │   ├── sources/feeds.ts     RSS + Atom -> parseFeed() -> withinWindow(24h) -> dedupe()
             │   ├── sources/concepts.ts  concepts/queue.md -> next unused concept
             │   └── sources/interview.ts interview/problems.md + tips.md -> next problem and tip
-            ├── decide (<= 40 newest items, one cheap call each)
+            ├── recall (one Voyage call for the day's titles + the concept; failure = no memory)
+            │   └── retrieve/memory.ts   memory/index.json -> seen-before, few-shot examples, related concepts
+            ├── decide (<= 40 newest items, one cheap call each, with up to 3 labelled examples)
             │   ├── decide/select.ts     --decider, else config decisionModel, else haiku
             │   ├── decide/haiku.ts      claude-haiku-4-5, closed-choice tool: must_read | mention | skip
             │   ├── decide/jev.ts        typesafe/jev-1.13 via OpenRouter decisions, same rule text
@@ -54,6 +56,11 @@ npm run eval -- build [--from <date> --to <date>] | label <fragment> <label> [--
 └── src/eval-cli.ts               frozen labelled set eval/decisions.json -> reports/eval-<date>-<model>.json
     ├── src/eval/eval-set.ts      schema, title-hash ids, build from feedback, manual labels
     └── src/eval/score.ts         accuracy, per-label precision/recall, confusion matrix, Markdown
+npm run memory -- build [--from <date> --to <date>] [--dry-run]
+└── src/memory-cli.ts             run records + eval labels + used concepts -> memory/index.json
+    ├── src/retrieve/embed.ts     Voyage embeddings (voyage-3.5-lite) and the offline fake
+    ├── src/retrieve/memory-index.ts  index schema, load/save, embed-only-new-ids build
+    └── src/retrieve/search.ts    cosine top-k with kind / date / label filters, pure
 npm run report -- [--from <date>] [--to <date>] [--format md|json]
 └── src/report-cli.ts             default: the 7 days ending today -> reports/report-<from>-<to>.json
     └── src/report/report.ts      summarise(): per-day and total items, decisions, cost, latency, errors
@@ -67,6 +74,7 @@ src/records.ts       run-record schema + loadRecords() + latestRecord(), shared 
                      the weekly line and the inbox
 config/brief.json    location, feeds, recipient, language, local send time, decisionModel
 config/prices.json   $ per 1M input / output / cache-read / cache-write tokens, per model
+memory/index.json    the committed vector index over past news items and concepts
 concepts/queue.md    the learning queue
 interview/           the interview problem and tip queues
 ```
@@ -101,6 +109,7 @@ A real run needs these environment variables (see `.env.example`; never commit a
 | `ICLOUD_USERNAME`           | optional: Apple ID email for the iCloud calendar (see "iCloud Calendar")                         |
 | `ICLOUD_APP_PASSWORD`       | optional: iCloud app-specific password; iCloud is skipped unless both iCloud variables are set   |
 | `OPENROUTER_API_KEY`        | optional: OpenRouter key for the Jev decision model (see "Jev decision model")                   |
+| `VOYAGE_API_KEY`            | optional: Voyage AI key for memory embeddings (see "Memory (retrieval)")                         |
 
 Other checks: `npm run typecheck`, `npm run lint`, `npm run format`.
 
@@ -321,6 +330,55 @@ The replay stays the tool for a day-range A/B; `score` is the frozen-set check.
 
 Rule: run `npm run eval -- score` before changing a decider's prompt or criteria, run it again
 after, and paste the before/after tables in the commit message.
+
+## Memory (retrieval)
+
+The agent remembers past mornings through one committed file, `memory/index.json`: one embedding
+per past news item (its title, from the run records) and per used concept (its name, from the
+`[x]` lines of `concepts/queue.md`), with `meta` holding only the title, link, stored decision and
+eval label of an item, or the concept's name. Summaries, sources and feedback text never reach
+the file. Ids are the eval id (12-char title hash) for news and `concept:<normalised name>` for
+concepts. There is no vector database: the index is pretty JSON and search is cosine similarity
+in TypeScript (`src/retrieve/search.ts`).
+
+```bash
+npm run memory -- build                                    # default: the 7 days ending today
+npm run memory -- build --from 2026-10-01 --to 2026-10-13  # backfill a range
+npm run memory -- build --dry-run                          # fake embedder, writes nothing, no key
+```
+
+`build` embeds only ids not yet in the index (a second build adds nothing), refreshes the eval
+label on chunks already indexed, and prints `added <n>, index size <m>`. Embeddings come from
+Voyage AI (`POST https://api.voyageai.com/v1/embeddings`, model `voyage-3.5-lite`, batches of
+128, 30 s timeout, one retry on 429/5xx), priced from `config/prices.json` at $0.02 per 1M tokens.
+
+Every morning the brief embeds the day's titles and the concept name in one call and uses the
+index three ways (thresholds in the `memory` block of `config/brief.json`):
+
+- **Seen before**: a must-read whose closest past news item (dated before today and within
+  `seenDays`, default 30) scores at least `seenThreshold` (0.80) gets a why line that starts
+  with `המשך ל"<title>" מה-<D.M>:`.
+- **Few-shot decisions**: each decision gets up to `examples` (3) past items that carry an eval
+  label and score at least `exampleThreshold` (0.60), as `"<title>" → <label>` lines in the
+  prompt; with none, the prompt is exactly the one without memory.
+- **Related concepts**: up to two past concepts scoring at least 0.60; the writer connects the
+  explanation to one of them in one clause.
+
+The run record gets `memory: { indexSize, seenBefore, examples, related, chunkIds }` (counts and
+ids only), `examples` per decision, and the embed call under role `embed` (the report counts it
+in "cost by role"). A missing index or a Voyage failure records one `memory` error and the brief
+goes out without memory. With `"memory": { "enabled": false }` or no `VOYAGE_API_KEY`, a real run
+skips memory with one warning and makes no embed call. A dry run uses memory only with
+`--memory <path>` (fake embedder; `test/fixtures/memory/index.json` is a small synthetic index):
+
+```bash
+npm run brief -- --dry-run --date 2026-10-14 --memory test/fixtures/memory/index.json
+```
+
+Routine step (the owner adds it to the routine prompt): after `npm run brief`, run
+`npm run memory -- build` and commit `memory/index.json` together with the run record. The
+routine's allow list must include `api.voyageai.com`, and `VOYAGE_API_KEY` goes in its cloud
+environment.
 
 ## History
 

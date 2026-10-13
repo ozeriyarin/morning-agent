@@ -2,11 +2,12 @@ import { z } from 'zod';
 import {
   DECISIONS,
   type Decision,
+  type DecisionExample,
   type DecisionModel,
   type DecisionResult,
   type Item,
 } from '../types.js';
-import { DECISION_RULES, mapDecision } from './decision-model.js';
+import { DECISION_RULES, examplesBlock, mapDecision } from './decision-model.js';
 
 export const JEV_MODEL = 'typesafe/jev-1.13';
 export const OPENROUTER_DECISIONS_URL = 'https://openrouter.ai/api/alpha/decisions';
@@ -32,13 +33,13 @@ const responseSchema = z.object({
 });
 
 // Instructions and criteria are cut from the same DECISION_RULES text Haiku gets, for parity.
-function decisionQuestion() {
+function decisionQuestion(examples?: DecisionExample[]) {
   const lines = DECISION_RULES.split('\n');
   const criterion = (d: Decision) =>
     lines.find((line) => line.startsWith(`- ${d}: `))?.slice(d.length + 4) ?? d;
   return {
     type: 'choice' as const,
-    instructions: `${lines[0]} Classify state.item following state.rules.`,
+    instructions: `${lines[0]} Classify state.item following state.rules.${examplesBlock(examples)}`,
     criteria: Object.fromEntries(DECISIONS.map((d) => [d, criterion(d)])) as Record<
       Decision,
       string
@@ -46,7 +47,7 @@ function decisionQuestion() {
   };
 }
 
-function jevRequest(model: string, item: Item) {
+function jevRequest(model: string, item: Item, examples?: DecisionExample[]) {
   return {
     model,
     state: {
@@ -58,7 +59,7 @@ function jevRequest(model: string, item: Item) {
       },
       rules: DECISION_RULES,
     },
-    questions: { decision: decisionQuestion() },
+    questions: { decision: decisionQuestion(examples) },
   };
 }
 
@@ -86,9 +87,9 @@ export class JevDecisionModel implements DecisionModel {
     this.retryDelayMs = options.retryDelayMs ?? 1_000;
   }
 
-  async decide(item: Item): Promise<DecisionResult> {
+  async decide(item: Item, examples?: DecisionExample[]): Promise<DecisionResult> {
     const started = performance.now();
-    const body = JSON.stringify(jevRequest(this.model, item));
+    const body = JSON.stringify(jevRequest(this.model, item, examples));
     let response = await this.post(body);
     if (retryable(response.status)) {
       await new Promise((resolve) => setTimeout(resolve, this.retryDelayMs));

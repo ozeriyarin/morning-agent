@@ -1,8 +1,10 @@
+import { dayMonth } from '../dates.js';
 import { weatherAdvice, weatherSummary } from '../sources/weather.js';
 import type {
   Brief,
   CalendarEvent,
   Item,
+  NewsItem,
   Reminder,
   Section,
   WeeklySummary,
@@ -37,6 +39,9 @@ export function escapeHtml(value: string): string {
     .replace(/"/g, '&quot;');
 }
 
+const seenBeforePrefix = ({ seenBefore }: NewsItem) =>
+  seenBefore ? `המשך ל"${seenBefore.title}" מה-${dayMonth(seenBefore.date)}: ` : '';
+
 const link = (url: string, title: string) =>
   `<a href="${escapeHtml(url)}">${escapeHtml(title)}</a>`;
 
@@ -55,16 +60,16 @@ export function templateBrief(input: WriterInput): Brief {
     news: {
       mustRead: input.mustRead.map((item) => ({
         ...toLink(item),
-        why: `(${item.sources.join(', ')})`,
+        why: `${seenBeforePrefix(item)}(${item.sources.join(', ')})`,
       })),
       mention: input.mention.map(toLink),
       quietDay: input.mustRead.length + input.mention.length === 0,
     },
     concept: input.concept
       ? {
-          name: input.concept,
-          explanation: `במצב תבנית אין הסבר כתוב. נסו להסביר לעצמכם את "${input.concept}" בשלוש שורות: מה זה, למה צריך, ומה המחיר.`,
-          question: `מתי לא היית משתמש/ת ב-${input.concept}, ולמה?`,
+          name: input.concept.name,
+          explanation: `במצב תבנית אין הסבר כתוב. נסו להסביר לעצמכם את "${input.concept.name}" בשלוש שורות: מה זה, למה צריך, ומה המחיר.`,
+          question: `מתי לא היית משתמש/ת ב-${input.concept.name}, ולמה?`,
           answer: 'ראו את ההסבר למעלה.',
         }
       : QUEUE_EMPTY_CONCEPT,

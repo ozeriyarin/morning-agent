@@ -1,5 +1,11 @@
 import { callUsage, type MessagesClient } from '../cost.js';
-import { DECISIONS, type DecisionModel, type DecisionResult, type Item } from '../types.js';
+import {
+  DECISIONS,
+  type DecisionExample,
+  type DecisionModel,
+  type DecisionResult,
+  type Item,
+} from '../types.js';
 import { DECISION_RULES, DECISION_TOOL_NAME, itemPrompt, mapDecision } from './decision-model.js';
 
 export const HAIKU_MODEL = 'claude-haiku-4-5-20251001';
@@ -9,7 +15,7 @@ export class HaikuDecisionModel implements DecisionModel {
 
   constructor(private readonly client: MessagesClient) {}
 
-  async decide(item: Item): Promise<DecisionResult> {
+  async decide(item: Item, examples?: DecisionExample[]): Promise<DecisionResult> {
     const started = performance.now();
     const response = await this.client.messages.create({
       model: this.model,
@@ -28,7 +34,7 @@ export class HaikuDecisionModel implements DecisionModel {
         },
       ],
       tool_choice: { type: 'tool', name: DECISION_TOOL_NAME },
-      messages: [{ role: 'user', content: itemPrompt(item) }],
+      messages: [{ role: 'user', content: itemPrompt(item, examples) }],
     });
     const call = callUsage('decision', this.model, response.usage, performance.now() - started);
     const block = response.content.find((b) => b.type === 'tool_use');

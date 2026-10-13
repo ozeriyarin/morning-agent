@@ -11,7 +11,7 @@ const input: WriterInput = {
   weather: null,
   mustRead: [],
   mention: [],
-  concept: 'RAG',
+  concept: { name: 'RAG', related: [] },
   calendar: null,
   interview: {
     problem: {
@@ -137,6 +137,38 @@ describe('validateBrief', () => {
       tip: 'פתחו בעוזר שרץ בפרודקשן',
     });
     expect(WRITER_SYSTEM).toContain('never a full solution');
+  });
+
+  it('v13 criterion 5: "The writer prompt gains the `seenBefore` rule and the related-concept rule; the template fallback prefixes a seen-before must-read with `המשך ל"<title>" מה-<D.M>:`." (prompt)', async () => {
+    expect(WRITER_SYSTEM).toContain(
+      'when an item has seen_before, its why starts with המשך ל"<seen_before.title>" מה-<seen_before.date>:',
+    );
+    expect(WRITER_SYSTEM).toContain('mention items ignore seen_before');
+    expect(WRITER_SYSTEM).toContain(
+      'when concept.related is non-empty, connect the explanation to one related concept in one clause',
+    );
+    const client = fakeClient([{ type: 'text', text: '{}' }]);
+    const news = {
+      id: 'https://example.com/1',
+      title: 'Hooks v2',
+      link: 'https://example.com/1',
+      published: '2026-10-10T01:00:00.000Z',
+      summary: '',
+      sources: ['Simon Willison'],
+    };
+    const seenBefore = { title: 'Hooks v1', date: '2026-10-03' };
+    const concept = { name: 'RAG', related: ['embeddings and chunking'] };
+    await new SonnetWriter(client).write({
+      ...input,
+      mustRead: [{ ...news, seenBefore }],
+      concept,
+    });
+    const sent = JSON.parse(String(client.requests[0]?.messages[0]?.content)) as {
+      must_read: unknown[];
+      concept: unknown;
+    };
+    expect(sent.must_read[0]).toMatchObject({ seen_before: { title: 'Hooks v1', date: '3.10' } });
+    expect(sent.concept).toEqual(concept);
   });
 
   it('sends calendar titles and times, never locations', async () => {

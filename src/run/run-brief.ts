@@ -8,17 +8,20 @@ import { mergeCalendars } from '../sources/calendar-merge.js';
 import { dedupe, sortNewestFirst, withinWindow } from '../sources/feeds.js';
 import type { ConceptStore } from '../sources/concepts.js';
 import type { InterviewStore } from '../sources/interview.js';
+import type { MemorySource, Recall } from '../retrieve/memory.js';
 import {
   SourceError,
   type Brief,
   type CalendarEvent,
   type CallRecord,
   type CallUsage,
+  type DecisionExample,
   type DecisionModel,
   type DecisionResult,
   type FetchContext,
   type InterviewPick,
   type Item,
+  type NewsItem,
   type Reminder,
   type RunError,
   type RunRecord,
@@ -48,6 +51,7 @@ export interface RunDeps {
   concepts: ConceptStore;
   interview: InterviewStore;
   decisionModel: DecisionModel;
+  memory?: MemorySource | null;
   warnings?: string[];
   writer: Writer;
   sender: Sender;
@@ -77,11 +81,15 @@ const message = (error: unknown): string => {
   return `${error.message}${cause}`;
 };
 
-export async function decideAll(model: DecisionModel, items: Item[]): Promise<DecisionResult[]> {
+export async function decideAll(
+  model: DecisionModel,
+  items: Item[],
+  examples: DecisionExample[][] = [],
+): Promise<DecisionResult[]> {
   const results: DecisionResult[] = [];
   for (let i = 0; i < items.length; i += DECISION_CONCURRENCY) {
-    const batch = items.slice(i, i + DECISION_CONCURRENCY).map((item) =>
-      model.decide(item).catch((error: unknown): DecisionResult => ({
+    const batch = items.slice(i, i + DECISION_CONCURRENCY).map((item, j) =>
+      model.decide(item, examples[i + j]).catch((error: unknown): DecisionResult => ({
         decision: 'skip',
         error: `decision call failed: ${message(error)}`,
       })),
@@ -261,7 +269,16 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
 
   const items = sortNewestFirst(dedupe(withinWindow(fetched, reference)));
   const toDecide = items.slice(0, MAX_DECISIONS);
-  const results = await decideAll(deps.decisionModel, toDecide);
+  let recall: Recall | null = null;
+  if (deps.memory) {
+    try {
+      recall = await deps.memory.recall(opts.date, toDecide, concept);
+    } catch (error) {
+      errors.push({ stage: 'source', source: 'memory', message: message(error) });
+    }
+  }
+  const examples = toDecide.map((item) => recall?.examples.get(item.id) ?? []);
+  const results = await decideAll(deps.decisionModel, toDecide, examples);
   const decisions = toDecide.map((item, i) => {
     const r = results[i] ?? { decision: 'skip' as const, error: 'no decision' };
     if (r.error) errors.push({ stage: 'decision', source: item.title, message: r.error });
@@ -273,23 +290,33 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       ...(r.confidence !== undefined && { confidence: r.confidence }),
       ...(r.probabilities && { probabilities: r.probabilities }),
       ...(r.error && { error: r.error }),
+      examples: examples[i]?.length ?? 0,
     };
   });
-  const pick = (d: string) => toDecide.filter((_, i) => results[i]?.decision === d);
+  const pick = (d: string) =>
+    toDecide
+      .filter((_, i) => results[i]?.decision === d)
+      .map((item): NewsItem => {
+        const seen = recall?.seenBefore.get(item.id);
+        return seen ? { ...item, seenBefore: { title: seen.title, date: seen.date } } : item;
+      });
 
   const input: WriterInput = {
     greeting: `בוקר טוב, יום ${hebrewWeekday(opts.date)} ${dayMonth(opts.date)}`,
     weather,
     mustRead: pick('must_read'),
     mention: pick('mention'),
-    concept,
+    concept:
+      concept === null
+        ? null
+        : { name: concept, related: recall?.relatedConcepts.map((c) => c.name) ?? [] },
     calendar,
     interview,
   };
   const written = await writeBrief(deps.writer, input, errors);
   for (const section of written.omitted) missing.add(section);
 
-  const usages = [...results.map((r) => r.call), ...written.calls].filter(
+  const usages = [...(recall?.calls ?? []), ...results.map((r) => r.call), ...written.calls].filter(
     (c): c is CallUsage => !!c,
   );
   const calls: CallRecord[] = usages.map((c) => priceCall(c, deps.prices));
@@ -378,6 +405,13 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
         slug: interview.problem?.slug ?? null,
         tipIndex: interview.tip?.index ?? null,
         marked: interviewMarked,
+      },
+      memory: recall && {
+        indexSize: recall.indexSize,
+        seenBefore: recall.seenBefore.size,
+        examples: examples.reduce((n, e) => n + e.length, 0),
+        related: recall.relatedConcepts.length,
+        chunkIds: recall.chunkIds,
       },
       delivery: { sender: deps.sender.name, status: delivery, attempts },
       briefChars: visibleLength(html),

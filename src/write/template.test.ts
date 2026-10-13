@@ -31,7 +31,7 @@ const input: WriterInput = {
   },
   mustRead: [item(1, 'Claude <Code> & MCP')],
   mention: [item(2)],
-  concept: 'agent loop',
+  concept: { name: 'agent loop', related: [] },
   calendar: [
     {
       title: 'יום הולדת',
@@ -126,6 +126,18 @@ describe('templateBrief + formatBrief', () => {
     expect(formatBrief(templateBrief(input))).toContain(
       '<b>שאלה למחשבה:</b> מתי לא היית משתמש/ת ב-agent loop, ולמה?\n<b>תשובה:</b> ראו את ההסבר למעלה.',
     );
+  });
+
+  it('v13 criterion 5: "The writer prompt gains the `seenBefore` rule and the related-concept rule; the template fallback prefixes a seen-before must-read with `המשך ל"<title>" מה-<D.M>:`." (template)', () => {
+    const seenBefore = { title: 'Claude Code hooks', date: '2026-10-03' };
+    const mention = [{ ...item(2), seenBefore }];
+    const brief = templateBrief({ ...input, mustRead: [{ ...item(1), seenBefore }], mention });
+    expect(brief.news.mustRead[0]?.why).toBe('המשך ל"Claude Code hooks" מה-3.10: (Simon Willison)');
+    expect(formatBrief(brief)).toContain(
+      '</a> - המשך ל&quot;Claude Code hooks&quot; מה-3.10: (Simon Willison)',
+    );
+    expect(brief.news.mention).toEqual([{ title: 'Item 2', url: item(2).link }]);
+    expect(templateBrief(input).news.mustRead[0]?.why).toBe('(Simon Willison)');
   });
 
   it('says it was a quiet day when nothing was kept', () => {

@@ -8,6 +8,7 @@ import {
   loadICloudCredentials,
   loadJson,
   loadOpenRouterKey,
+  loadVoyageKey,
   pricesSchema,
 } from './config.js';
 import { isIsoDate, todayIn } from './dates.js';
@@ -23,6 +24,7 @@ export function parseCli(argv: string[]): {
   icloud?: string;
   reminders?: string;
   decider?: Decider;
+  memory?: string;
 } {
   const { values } = parseArgs({
     args: argv,
@@ -33,17 +35,19 @@ export function parseCli(argv: string[]): {
       icloud: { type: 'string' },
       reminders: { type: 'string' },
       decider: { type: 'string' },
+      memory: { type: 'string' },
     },
     strict: true,
   });
   if (values.date !== undefined && !isIsoDate(values.date)) {
     throw new Error(`--date must be YYYY-MM-DD, got "${values.date}"`);
   }
-  const { date, calendar, icloud, reminders, decider } = values;
+  const { date, calendar, icloud, reminders, decider, memory } = values;
+  if (memory !== undefined && !values['dry-run']) throw new Error('--memory needs --dry-run');
   if (decider !== undefined && !isDecider(decider)) {
     throw new Error(`--decider must be one of ${DECIDERS.join(', ')}, got "${decider}"`);
   }
-  return { dryRun: values['dry-run'], date, calendar, icloud, reminders, decider };
+  return { dryRun: values['dry-run'], date, calendar, icloud, reminders, decider, memory };
 }
 
 function isDecider(value: string): value is Decider {
@@ -77,6 +81,8 @@ async function main(): Promise<number> {
     remindersPath: args.reminders && resolve(args.reminders),
     decider: args.decider,
     openRouterKey: loadOpenRouterKey(process.env),
+    voyageKey: loadVoyageKey(process.env),
+    memoryPath: args.memory && resolve(args.memory),
   });
   const { record } = await runBrief(deps, { date, dryRun: args.dryRun });
   console.error(

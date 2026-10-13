@@ -23,6 +23,7 @@ import { RemindersFileSource } from '../sources/reminders-file.js';
 import type {
   CalendarEvent,
   CallUsage,
+  DecisionExample,
   Item,
   Reminder,
   RunRecord,
@@ -38,7 +39,10 @@ import { WriterError } from '../write/writer.js';
 import { MAX_BRIEF_CHARS, templateBrief, TemplateWriter } from '../write/template.js';
 import { MAX_DECISIONS, RECORD_SUMMARY_CHARS, runBrief, type RunDeps } from './run-brief.js';
 import { exitCode, parseCli } from '../cli.js';
-import { buildDeps } from './wiring.js';
+import { buildDeps, MEMORY_DISABLED_WARNING, MEMORY_NO_KEY_WARNING } from './wiring.js';
+import { FakeEmbedder, VoyageEmbedder, type Embedder } from '../retrieve/embed.js';
+import { saveIndex, type MemoryChunk } from '../retrieve/memory-index.js';
+import { MemorySource } from '../retrieve/memory.js';
 
 const DATE = '2026-10-10';
 const CALENDAR_DATE = '2026-10-11';
@@ -1037,7 +1041,7 @@ describe('runBrief with Jev decisions', () => {
       date: DATE,
       dryRun: false,
     });
-    expect(record.warnings).toEqual([JEV_NO_KEY_WARNING]);
+    expect(record.warnings).toEqual([JEV_NO_KEY_WARNING, MEMORY_NO_KEY_WARNING]);
     expect(
       liveWired({ decider: 'jev', openRouterKey: OPENROUTER_KEY }).decisionModel,
     ).toBeInstanceOf(JevDecisionModel);
@@ -1255,5 +1259,163 @@ describe('runBrief writer chain and delivery retry', () => {
     expect(wired.writer.name).toBe('sonnet');
     const dry = buildDeps({ env: { dryRun: true }, config, prices, root, fetchFn: fetch });
     expect(dry.writer).toBeInstanceOf(TemplateWriter);
+  });
+});
+
+describe('runBrief memory', () => {
+  const live = { TELEGRAM_BOT_TOKEN: TOKEN, TELEGRAM_CHAT_ID: CHAT_ID, ANTHROPIC_API_KEY: API_KEY };
+  const VOYAGE_KEY = 'pa-synthetic-voyage-key';
+  const indexPath = () => join(root, 'memory', 'index.json');
+  const fake = new FakeEmbedder();
+  const vector = async (text: string) => (await fake.embed([text])).vectors[0] ?? [];
+
+  class RecordingModel extends FakeDecisionModel {
+    received: (DecisionExample[] | undefined)[] = [];
+    override async decide(item: Item, examples?: DecisionExample[]) {
+      this.received.push(examples);
+      return super.decide(item);
+    }
+  }
+
+  // A past chunk whose text equals today's newest title scores 1, under a different id and title.
+  async function writeIndex(): Promise<string> {
+    const { record } = await runBrief(await deps(), { date: DATE, dryRun: true });
+    const newest = record.items[0]?.title ?? '';
+    const chunks: MemoryChunk[] = [
+      {
+        id: 'past-news',
+        kind: 'news',
+        text: newest,
+        date: '2026-10-09',
+        vector: await vector(newest),
+        meta: { title: 'Earlier post', link: 'https://example.com/earlier', label: 'must_read' },
+      },
+      {
+        id: 'concept:tool calling',
+        kind: 'concept',
+        text: 'tool calling',
+        date: '2026-10-08',
+        vector: await vector('agent loop'),
+        meta: { name: 'tool calling' },
+      },
+    ];
+    await saveIndex(indexPath(), { version: 1, model: 'voyage-3.5-lite', dims: 8, chunks });
+    records = [];
+    sender.sent = [];
+    return newest;
+  }
+
+  const voyageFetch: typeof fetch = async (_url, init) => {
+    const { input } = JSON.parse(String(init?.body)) as { input: string[] };
+    const { vectors } = await fake.embed(input);
+    return Response.json({
+      data: vectors.map((embedding, index) => ({ embedding, index })),
+      usage: { total_tokens: 1000 },
+    });
+  };
+
+  const memoryOver = (embedder: Embedder) => new MemorySource(indexPath(), embedder, config.memory);
+
+  it('v13 criterion 6: "The record stores `memory` with counts and chunk ids only, and the embed call with its cost; when the index is missing or the embedder throws, the record has one `memory` error and the brief is still delivered with no `seenBefore` and no examples." (counts and cost)', async () => {
+    const newest = await writeIndex();
+    const decisionModel = new RecordingModel(() => ({ decision: 'must_read' }));
+    const memory = memoryOver(new VoyageEmbedder(VOYAGE_KEY, voyageFetch));
+    const { record, html } = await runBrief(await deps({ decisionModel, memory }), {
+      date: DATE,
+      dryRun: false,
+    });
+
+    expect(record.memory).toEqual({
+      indexSize: 2,
+      seenBefore: 1,
+      examples: 1,
+      related: 1,
+      chunkIds: ['past-news', 'concept:tool calling'],
+    });
+    expect(record.calls[0]).toMatchObject({
+      role: 'embed',
+      model: 'voyage-3.5-lite',
+      inputTokens: 1000,
+      costUsd: 0.00002,
+    });
+    expect(record.totalCostUsd).toBeCloseTo(0.00002, 10);
+    expect(JSON.stringify(record.memory)).not.toContain('Earlier post');
+    expect(JSON.stringify(record)).not.toContain(VOYAGE_KEY);
+    expect(record.decisions[0]).toMatchObject({ title: newest, examples: 1 });
+    expect(decisionModel.received[0]).toEqual([
+      { title: 'Earlier post', label: 'must_read', score: expect.closeTo(1, 6) },
+    ]);
+    expect(html).toContain('המשך ל&quot;Earlier post&quot; מה-9.10:');
+    expect(record.errors).toEqual([]);
+  });
+
+  const broken: Embedder = { model: 'broken', embed: () => Promise.reject(new Error('down')) };
+
+  it.each([
+    ['the index is missing', false, new FakeEmbedder()],
+    ['the embedder throws', true, broken],
+  ])(
+    'v13 criterion 6: "The record stores `memory` with counts and chunk ids only, and the embed call with its cost; when the index is missing or the embedder throws, the record has one `memory` error and the brief is still delivered with no `seenBefore` and no examples." (%s)',
+    async (_case, withIndex, embedder) => {
+      if (withIndex) await writeIndex();
+      const decisionModel = new RecordingModel();
+      const { record, html } = await runBrief(
+        await deps({ decisionModel, memory: memoryOver(embedder) }),
+        { date: DATE, dryRun: false },
+      );
+      expect(record.errors).toEqual([
+        { stage: 'source', source: 'memory', message: expect.any(String) },
+      ]);
+      expect(sender.sent).toHaveLength(1);
+      expect(record.delivery.status).toBe('sent');
+      expect(record.memory).toBeNull();
+      expect(html).not.toContain('המשך ל');
+      expect(decisionModel.received.every((e) => e?.length === 0)).toBe(true);
+      expect(record.decisions.every((d) => d.examples === 0)).toBe(true);
+    },
+  );
+
+  it('v13 criterion 7: "With `memory.enabled: false` or no `VOYAGE_API_KEY`, no embed call is made, no error is recorded, and the output equals a v12 run."', async () => {
+    await writeIndex();
+    const fetchFn = vi.fn<typeof fetch>();
+    const disabled = { ...config, memory: { ...config.memory, enabled: false } };
+    const wire = (over: Partial<Parameters<typeof buildDeps>[0]>) =>
+      buildDeps({ env: live, config, prices, root, fetchFn, ...over });
+    const off = wire({ config: disabled, voyageKey: VOYAGE_KEY });
+    const noKey = wire({});
+    expect(off).toMatchObject({ memory: null, warnings: [MEMORY_DISABLED_WARNING] });
+    expect(noKey).toMatchObject({ memory: null, warnings: [MEMORY_NO_KEY_WARNING] });
+    expect(wire({ voyageKey: VOYAGE_KEY }).memory).toBeInstanceOf(MemorySource);
+    const dry = buildDeps({ env: { dryRun: true }, config, prices, root, fetchFn });
+    expect(dry).toMatchObject({ memory: null, warnings: [] });
+
+    const v12 = await runBrief(await deps(), { date: DATE, dryRun: true });
+    for (const { memory } of [off, noKey]) {
+      const run = await runBrief(await deps({ memory }), { date: DATE, dryRun: true });
+      expect(run.html).toBe(v12.html);
+      expect(run.record.errors).toEqual([]);
+      expect(run.record.memory).toBeNull();
+      expect(run.record.calls.filter((c) => c.role === 'embed')).toEqual([]);
+    }
+    expect(fetchFn).not.toHaveBeenCalled();
+  });
+
+  it('a dry run with --memory reads the fixture index with the fake embedder', async () => {
+    const offline: typeof fetch = async () => {
+      throw new TypeError('fetch failed: offline');
+    };
+    const wired = buildDeps({
+      env: { dryRun: true },
+      config,
+      prices,
+      root,
+      fetchFn: offline,
+      memoryPath: 'test/fixtures/memory/index.json',
+      print: () => undefined,
+    });
+    const { record } = await runBrief(wired, { date: DATE, dryRun: true });
+    expect(record.memory).toMatchObject({ indexSize: 8 });
+    expect(record.errors.filter((e) => e.source === 'memory')).toEqual([]);
+    expect(record.calls).toEqual([]);
   });
 });

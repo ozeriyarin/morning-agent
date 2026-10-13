@@ -6,6 +6,7 @@ import {
   loadICloudCredentials,
   loadJson,
   loadTelegramEnv,
+  loadVoyageKey,
   pricesSchema,
 } from './config.js';
 
@@ -68,8 +69,31 @@ describe('committed config files', () => {
     const prices = await loadJson('config/prices.json', pricesSchema);
     expect(brief.location.timezone).toBe('Asia/Jerusalem');
     expect(Object.keys(prices.models)).toEqual(
-      expect.arrayContaining(['claude-haiku-4-5-20251001', 'claude-sonnet-5-5']),
+      expect.arrayContaining(['claude-haiku-4-5-20251001', 'claude-sonnet-5-5', 'voyage-3.5-lite']),
     );
+    expect(brief.memory).toEqual({
+      enabled: true,
+      seenThreshold: 0.8,
+      exampleThreshold: 0.6,
+      examples: 3,
+      seenDays: 30,
+    });
+  });
+
+  it('an older config without a memory block loads with the memory defaults', async () => {
+    const { memory: _dropped, ...older } = await loadJson('config/brief.json', briefConfigSchema);
+    const brief = briefConfigSchema.parse(older);
+    expect(brief.memory).toMatchObject({ enabled: true, seenThreshold: 0.8, examples: 3 });
+  });
+});
+
+describe('loadVoyageKey', () => {
+  it.each([
+    [{}, null],
+    [{ VOYAGE_API_KEY: ' ' }, null],
+    [{ VOYAGE_API_KEY: ' pa-x ' }, 'pa-x'],
+  ])('reads %j as %j', (env, expected) => {
+    expect(loadVoyageKey(env)).toBe(expected);
   });
 });
 

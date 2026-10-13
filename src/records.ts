@@ -5,7 +5,7 @@ import { addDays, datesBetween } from './dates.js';
 import { DECISIONS } from './types.js';
 
 const callSchema = z.object({
-  role: z.enum(['decision', 'writer']),
+  role: z.enum(['decision', 'writer', 'embed']),
   model: z.string(),
   inputTokens: z.number().default(0),
   outputTokens: z.number().default(0),

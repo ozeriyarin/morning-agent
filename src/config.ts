@@ -62,6 +62,23 @@ export function loadOpenRouterKey(source: Record<string, string | undefined>): s
   return source.OPENROUTER_API_KEY?.trim() || null;
 }
 
+// Optional: without it live runs skip memory with a warning.
+export function loadVoyageKey(source: Record<string, string | undefined>): string | null {
+  return source.VOYAGE_API_KEY?.trim() || null;
+}
+
+const memoryConfigSchema = z
+  .object({
+    enabled: z.boolean().default(true),
+    seenThreshold: z.number().min(0).max(1).default(0.8),
+    exampleThreshold: z.number().min(0).max(1).default(0.6),
+    examples: z.number().int().nonnegative().default(3),
+    seenDays: z.number().int().positive().default(30),
+  })
+  .prefault({});
+
+export type MemoryConfig = z.infer<typeof memoryConfigSchema>;
+
 export const briefConfigSchema = z.object({
   recipient: z.string().min(1),
   language: z.literal('he'),
@@ -74,6 +91,7 @@ export const briefConfigSchema = z.object({
   schedule: z.object({ localTime: z.string().regex(/^\d{2}:\d{2}$/) }),
   feeds: z.array(z.object({ name: z.string().min(1), url: z.url() })).min(1),
   decisionModel: z.enum(['haiku', 'jev']).default('haiku'),
+  memory: memoryConfigSchema,
 });
 
 export type BriefConfig = z.infer<typeof briefConfigSchema>;

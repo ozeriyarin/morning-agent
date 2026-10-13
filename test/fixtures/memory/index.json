@@ -1,0 +1,174 @@
+{
+  "version": 1,
+  "model": "voyage-3.5-lite",
+  "dims": 8,
+  "chunks": [
+    {
+      "id": "b48858eefbfd",
+      "kind": "news",
+      "text": "Anthropic ships Claude Code hooks",
+      "date": "2026-10-01",
+      "vector": [
+        -0.0745,
+        -0.0353,
+        0.8431,
+        0.3412,
+        0.0824,
+        -0.4824,
+        -0.0824,
+        0.5216
+      ],
+      "meta": {
+        "title": "Anthropic ships Claude Code hooks",
+        "link": "https://example.com/a/hooks",
+        "decision": "must_read",
+        "label": "must_read"
+      }
+    },
+    {
+      "id": "4cf39c47e0b8",
+      "kind": "news",
+      "text": "Startup raises $20M for LLM evals",
+      "date": "2026-10-01",
+      "vector": [
+        0.0588,
+        -0.2157,
+        0.4902,
+        0.1294,
+        0.1294,
+        -0.3804,
+        -0.4353,
+        -0.5059
+      ],
+      "meta": {
+        "title": "Startup raises $20M for LLM evals",
+        "link": "https://example.com/a/raise",
+        "decision": "skip",
+        "label": "mention"
+      }
+    },
+    {
+      "id": "605074153c1e",
+      "kind": "news",
+      "text": "Ten tips for a tidy desk",
+      "date": "2026-10-01",
+      "vector": [
+        0.7961,
+        -0.5608,
+        -0.8118,
+        -0.2078,
+        0.2549,
+        0.051,
+        0.9922,
+        0.6314
+      ],
+      "meta": {
+        "title": "Ten tips for a tidy desk",
+        "link": "https://example.com/a/desk",
+        "decision": "skip",
+        "label": "skip"
+      }
+    },
+    {
+      "id": "791efe09587c",
+      "kind": "news",
+      "text": "A benchmark of local models",
+      "date": "2026-10-02",
+      "vector": [
+        -0.3961,
+        -0.3569,
+        -0.8275,
+        -0.7255,
+        -0.1765,
+        0.7882,
+        -0.302,
+        -0.4196
+      ],
+      "meta": {
+        "title": "A benchmark of local models",
+        "link": "https://example.com/b/bench",
+        "decision": "mention",
+        "label": "skip"
+      }
+    },
+    {
+      "id": "8021ccdb4f26",
+      "kind": "news",
+      "text": "Weekend gardening notes",
+      "date": "2026-10-02",
+      "vector": [
+        0.6314,
+        -0.4431,
+        0.2392,
+        0.6078,
+        0.5529,
+        -0.8745,
+        0.9216,
+        0.8039
+      ],
+      "meta": {
+        "title": "Weekend gardening notes",
+        "link": "https://example.com/b/garden",
+        "decision": "mention",
+        "label": "mention"
+      }
+    },
+    {
+      "id": "concept:agent loop",
+      "kind": "concept",
+      "text": "agent loop",
+      "date": "2026-10-10",
+      "vector": [
+        0.2549,
+        -0.4745,
+        -0.8431,
+        0.0039,
+        0.3255,
+        0.0431,
+        0.4824,
+        0.7569
+      ],
+      "meta": {
+        "name": "agent loop"
+      }
+    },
+    {
+      "id": "concept:rag",
+      "kind": "concept",
+      "text": "RAG",
+      "date": "2026-10-12",
+      "vector": [
+        0.9373,
+        -0.0039,
+        0.4196,
+        0.9765,
+        -0.851,
+        0.8196,
+        0.2392,
+        -0.2706
+      ],
+      "meta": {
+        "name": "RAG"
+      }
+    },
+    {
+      "id": "concept:embeddings and chunking",
+      "kind": "concept",
+      "text": "embeddings and chunking",
+      "date": "2026-10-13",
+      "vector": [
+        0.098,
+        0.7176,
+        -0.8902,
+        -0.4588,
+        -0.5059,
+        -0.2863,
+        -0.8824,
+        -0.9216
+      ],
+      "meta": {
+        "name": "embeddings and chunking"
+      }
+    }
+  ]
+}

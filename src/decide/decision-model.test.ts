@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { fakeClient } from '../testing/fake-client.js';
-import type { Item } from '../types.js';
-import { mapDecision } from './decision-model.js';
+import type { DecisionExample, Item } from '../types.js';
+import { DECISION_RULES, itemPrompt, mapDecision } from './decision-model.js';
 import { FakeDecisionModel } from './fake.js';
 import { HAIKU_MODEL, HaikuDecisionModel } from './haiku.js';
 
@@ -51,6 +51,28 @@ describe('HaikuDecisionModel', () => {
       inputTokens: 1000,
       cacheReadTokens: 800,
     });
+  });
+
+  it('v13 criterion 4: "Decisions receive at most `examples` labelled chunks each, ordered by score, and the Haiku prompt contains an `Examples` block with `"<title>" → <label>` lines; with no labelled chunks the block is absent and the prompt is byte-identical to v12." (prompt)', async () => {
+    const examples: DecisionExample[] = [
+      { title: 'Anthropic ships Claude Code hooks', label: 'must_read', score: 0.93 },
+      { title: 'Ten tips for a tidy desk', label: 'skip', score: 0.71 },
+    ];
+    const v12 = 'Source: Simon Willison\nTitle: Claude Code ships hooks\nSummary: release notes';
+    const tool = { type: 'tool_use' as const, id: 't1', name: 'record_decision', input: {} };
+    const client = fakeClient([tool]);
+    await new HaikuDecisionModel(client).decide(item, examples);
+    await new HaikuDecisionModel(client).decide(item, []);
+    await new HaikuDecisionModel(client).decide(item);
+    const prompts = client.requests.map((r) => r.messages[0]?.content);
+    expect(prompts[0]).toBe(
+      `${v12}\nExamples:\n"Anthropic ships Claude Code hooks" → must_read\n"Ten tips for a tidy desk" → skip`,
+    );
+    expect(prompts[1]).toBe(v12);
+    expect(prompts[2]).toBe(v12);
+    expect(itemPrompt(item)).toBe(v12);
+    expect(client.requests[0]?.system).toBe(DECISION_RULES);
+    expect(DECISION_RULES).toContain('prior human labels for similar items');
   });
 
   it('a reply without a tool call becomes skip with an error', async () => {

@@ -9,6 +9,13 @@
   },
   "schedule": { "localTime": "07:00" },
   "decisionModel": "haiku",
+  "memory": {
+    "enabled": true,
+    "seenThreshold": 0.8,
+    "exampleThreshold": 0.6,
+    "examples": 3,
+    "seenDays": 30
+  },
   "feeds": [
     { "name": "Simon Willison", "url": "https://simonwillison.net/atom/everything/" },
     {

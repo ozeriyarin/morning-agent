@@ -79,6 +79,17 @@ describe('JevDecisionModel', () => {
     expect(Object.keys(body.questions.decision.criteria)).toEqual(['must_read', 'mention', 'skip']);
   });
 
+  it('appends the examples block to the instructions only when examples exist', async () => {
+    const { sent, fetchFn } = fakeFetch(json(captured));
+    await jev(fetchFn).decide(item, [{ title: 'Old hooks post', label: 'mention', score: 0.9 }]);
+    await jev(fetchFn).decide(item, []);
+    const [withExamples, without] = sent.map(
+      (s) => JSON.parse(String(s.init.body)).questions.decision.instructions as string,
+    );
+    expect(withExamples).toBe(`${without}\nExamples:\n"Old hooks post" → mention`);
+    expect(without?.endsWith('Classify state.item following state.rules.')).toBe(true);
+  });
+
   it('builds instructions and criteria from the same DECISION_RULES text Haiku gets', async () => {
     const { sent, fetchFn } = fakeFetch(json(captured));
     await jev(fetchFn).decide(item);

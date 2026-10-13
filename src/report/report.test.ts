@@ -9,7 +9,12 @@ import { summarise, toJson, toMarkdown } from './report.js';
 
 const SONNET = 'claude-sonnet-5-5';
 
-const call = (role: 'decision' | 'writer', model: string, costUsd: number, over = {}) => ({
+const call = (
+  role: 'decision' | 'writer' | 'embed',
+  model: string,
+  costUsd: number,
+  over = {},
+) => ({
   role,
   model,
   inputTokens: 900,
@@ -134,7 +139,7 @@ describe('report', () => {
       [SONNET]: 0.01 + 0.02,
       [JEV_MODEL]: 0.0002 + 0.0003,
     });
-    expect(totals.meanLatencyMs).toEqual({ decision: 750, writer: 3900 });
+    expect(totals.meanLatencyMs).toEqual({ decision: 750, writer: 3900, embed: 0 });
   });
 
   it('v5 criterion 3: "Writer cache hit ratio is `cacheReadTokens / inputTokens` over writer calls, 0 when there are no writer calls."', () => {
@@ -235,6 +240,20 @@ describe('report', () => {
     expect(summary.days.map((d) => d.writer)).toEqual(['template', 'sonnet', 'haiku', 'sonnet']);
     expect(summary.totals.briefsByWriter).toEqual({ sonnet: 2, haiku: 1, template: 1 });
     expect(toMarkdown(summary)).toContain('- Briefs by writer: sonnet: 2, haiku: 1, template: 1');
+  });
+
+  it('counts embed calls under their own role and reads records with or without `memory`', () => {
+    const memory = { indexSize: 4, seenBefore: 1, examples: 2, related: 0, chunkIds: ['a'] };
+    const withMemory = raw('2026-10-14', {
+      memory,
+      calls: [call('embed', 'voyage-3.5-lite', 0.00002), call('writer', SONNET, 0.01)],
+    });
+    const summary = summarise([parsed('2026-10-13'), recordSchema.parse(withMemory)]);
+    expect(summary.totals.costByRole).toEqual({ decision: 0.003, writer: 0.02, embed: 0.00002 });
+    expect(summary.days[1]?.calls.embed.calls).toBe(1);
+    expect(toMarkdown(summary)).toContain(
+      '- Cost by role: decision $0.0030, writer $0.0200, embed $0.0000',
+    );
   });
 
   it('reads records with the v8 reminders array, the v9 reminders object, or none', () => {

@@ -12,6 +12,7 @@
     "replay": "tsx src/replay-cli.ts",
     "report": "tsx src/report-cli.ts",
     "eval": "tsx src/eval-cli.ts",
+    "memory": "tsx src/memory-cli.ts",
     "inbox": "tsx src/inbox-cli.ts",
     "icloud:probe": "tsx src/icloud-probe-cli.ts",
     "test": "vitest run",
