@@ -1,0 +1,188 @@
+{
+  "date": "2026-10-14",
+  "generatedAt": "2026-10-14T04:12:02.416Z",
+  "dryRun": false,
+  "fetchedCount": 1318,
+  "items": [
+    {
+      "title": "Redesigning source control at Anthropic",
+      "link": "https://simonwillison.net/2026/Oct/13/redesigning-source-control-at-anthropic/",
+      "published": "2026-10-13T23:00:06.000Z",
+      "summary": "Redesigning source control at Anthropic Interesting piece from Anthropic describing why and how they built their own custom alternative to Git, based on the dramatic increase in rate of changes to their code after the past six months. In May 2026, Anthropic averaged around 2,500 code changes merged ",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "llm-gemini 0.35",
+      "link": "https://simonwillison.net/2026/Oct/13/llm-gemini/",
+      "published": "2026-10-13T22:28:54.000Z",
+      "summary": "Release: llm-gemini 0.35 I added support to llm-gemini for the new Gemini 4 Argon model, made available today via the Gemini API and for customers of their $100/month subscription plan. Here are the low, medium and high pelicans . As expected, they are all excellent: Gemini has a track record of pro",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Quoting Geoffrey Huntley",
+      "link": "https://simonwillison.net/2026/Oct/13/geoffrey-huntley/",
+      "published": "2026-10-13T13:32:00.000Z",
+      "summary": "If the agent isn't using my diagnostics library, I could introspect and update AGENTS.md, but there's still a delta, and it'll drift. Instead, I write a pre-commit hook that checks the git diff for direct calls to observability modules that bypass my diagnostics module. Boom: fail the commit, inject",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Higgsfield takes AI video from 1 minute to over 10",
+      "link": "https://openai.com/index/higgsfield-longer-videos-voice",
+      "published": "2026-10-13T12:00:00.000Z",
+      "summary": "Higgsfield brings creators longer videos with GPT-6 Astra, precise visuals with GPT-Image-2.5, and a path to voice filmmaking with GPT-Live.",
+      "sources": [
+        "OpenAI News"
+      ]
+    }
+  ],
+  "calendar": {
+    "count": 3,
+    "allDay": 0,
+    "timed": 3,
+    "bySource": {
+      "google": 1,
+      "icloud": 2
+    }
+  },
+  "icloud": "ok",
+  "reminders": {
+    "count": 1,
+    "source": "file"
+  },
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "Redesigning source control at Anthropic",
+      "link": "https://simonwillison.net/2026/Oct/13/redesigning-source-control-at-anthropic/",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "llm-gemini 0.35",
+      "link": "https://simonwillison.net/2026/Oct/13/llm-gemini/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Quoting Geoffrey Huntley",
+      "link": "https://simonwillison.net/2026/Oct/13/geoffrey-huntley/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Higgsfield takes AI video from 1 minute to over 10",
+      "link": "https://openai.com/index/higgsfield-longer-videos-voice",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    }
+  ],
+  "calls": [
+    {
+      "role": "embed",
+      "model": "voyage-3.5-lite",
+      "inputTokens": 35,
+      "outputTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 480.26830599999994,
+      "costUsd": 7.000000000000001e-7
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 935,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 677.0073400000001,
+      "costUsd": 0.0011
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 953,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 687.5566589999999,
+      "costUsd": 0.001118
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 937,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 678.550240999999,
+      "costUsd": 0.001102
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 919,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 697.7655990000003,
+      "costUsd": 0.001084
+    },
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 524,
+      "outputTokens": 749,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 2000,
+      "latencyMs": 13485.565421,
+      "costUsd": 0.013538
+    }
+  ],
+  "totalCostUsd": 0.0179427,
+  "writer": "sonnet",
+  "writerAttempts": 1,
+  "missingSections": [],
+  "concept": {
+    "name": "structured outputs",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": "flood-fill",
+    "tipIndex": 6,
+    "marked": true
+  },
+  "memory": {
+    "indexSize": 37,
+    "seenBefore": 0,
+    "examples": 0,
+    "related": 2,
+    "chunkIds": [
+      "concept:embeddings and chunking",
+      "concept:audit logging"
+    ]
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent",
+    "attempts": 1
+  },
+  "briefChars": 1371,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "Hacker News AI",
+      "message": "HTTP 502"
+    }
+  ]
+}

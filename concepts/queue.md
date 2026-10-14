@@ -11,7 +11,7 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-11 audit logging
 - [x] 2026-10-12 RAG
 - [x] 2026-10-13 embeddings and chunking
-- [ ] structured outputs
+- [x] 2026-10-14 structured outputs
 - [ ] spec-driven development
 - [ ] MCP
 - [ ] decision models (Jev)
