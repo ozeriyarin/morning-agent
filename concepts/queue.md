@@ -13,7 +13,7 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-13 embeddings and chunking
 - [x] 2026-10-14 structured outputs
 - [x] 2026-10-15 spec-driven development
-- [ ] MCP
+- [x] 2026-10-16 MCP
 - [ ] decision models (Jev)
 - [ ] evals and LLM-as-judge
 - [ ] multi-agent orchestration
