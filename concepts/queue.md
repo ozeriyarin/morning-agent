@@ -14,6 +14,6 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-14 structured outputs
 - [x] 2026-10-15 spec-driven development
 - [x] 2026-10-16 MCP
-- [ ] decision models (Jev)
+- [x] 2026-10-17 decision models (Jev)
 - [ ] evals and LLM-as-judge
 - [ ] multi-agent orchestration

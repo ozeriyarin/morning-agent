@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-17",
+  "generatedAt": "2026-10-17T04:12:11.633Z",
+  "dryRun": false,
+  "fetchedCount": 1328,
+  "items": [
+    {
+      "title": "Quoting Addy Osmani, Morgan Westlee Lunt, and Qing Wang",
+      "link": "https://simonwillison.net/2026/Oct/16/code-review/",
+      "published": "2026-10-16T22:06:37.000Z",
+      "summary": "We think \"did a human read the code?\" is an imprecise proxy for \"what could go wrong with this change, and which check—automated or human—is the right one to catch it?\" Asking that question also changed when review happens. Before, review was a gate at the end of the road: write the code, open a PR,",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "How Itaú is building generative AI for its entire customer base",
+      "link": "https://openai.com/index/itau-generative-ai",
+      "published": "2026-10-16T19:00:00.000Z",
+      "summary": "With ia.i, a conversational interface, and the IARA governance platform, Itaú is applying its AI First strategy to customers and employees — in one of Brazil’s most regulated sectors.",
+      "sources": [
+        "OpenAI News"
+      ]
+    }
+  ],
+  "calendar": {
+    "count": 1,
+    "allDay": 0,
+    "timed": 1,
+    "bySource": {
+      "google": 0,
+      "icloud": 1
+    }
+  },
+  "icloud": "ok",
+  "reminders": {
+    "count": 0,
+    "source": "icloud"
+  },
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "Quoting Addy Osmani, Morgan Westlee Lunt, and Qing Wang",
+      "link": "https://simonwillison.net/2026/Oct/16/code-review/",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "How Itaú is building generative AI for its entire customer base",
+      "link": "https://openai.com/index/itau-generative-ai",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    }
+  ],
+  "calls": [
+    {
+      "role": "embed",
+      "model": "voyage-3.5-lite",
+      "inputTokens": 33,
+      "outputTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 565.4180539999998,
+      "costUsd": 6.6e-7
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 955,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 898.7970210000003,
+      "costUsd": 0.00112
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 916,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 868.2587080000012,
+      "costUsd": 0.001081
+    },
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 463,
+      "outputTokens": 852,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 2000,
+      "latencyMs": 12632.510210999999,
+      "costUsd": 0.014446
+    }
+  ],
+  "totalCostUsd": 0.01664766,
+  "writer": "sonnet",
+  "writerAttempts": 1,
+  "missingSections": [],
+  "concept": {
+    "name": "decision models (Jev)",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": "kth-largest-element-in-an-array",
+    "tipIndex": 9,
+    "marked": true
+  },
+  "memory": {
+    "indexSize": 59,
+    "seenBefore": 0,
+    "examples": 0,
+    "related": 0,
+    "chunkIds": []
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent",
+    "attempts": 1
+  },
+  "briefChars": 1369,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "Hacker News AI",
+      "message": "HTTP 502"
+    }
+  ]
+}
