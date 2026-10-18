@@ -22,7 +22,8 @@ Each item is one spec in `agent-os/specs/`. Ship in order; each step is usable o
 
 14. **Jev criteria tuning.** After a week of replay data with feedback labels, rewrite the Jev criteria text and re-run the A/B; switch the default only if agreement with feedback beats Haiku.
 15. **Decision batching.** One Haiku call for all items instead of one per item, if quality holds on replay; cuts the decision cost and latency.
-16. **Second recipient.** Per-person config (calendar sources, feeds, language) so a family member can get their own brief.
+16. **Second-vendor writer rung.** The writer chain is Sonnet → Haiku → template, all Anthropic, so an Anthropic outage falls straight to the template. Add a rung from a different vendor (an open model through OpenRouter, behind the same `Writer` interface and schema) between Haiku and the template; the record already says which rung wrote, and the weekly report counts briefs by writer, so the fallback rate is visible.
+17. **Second recipient.** Per-person config (calendar sources, feeds, language) so a family member can get their own brief.
 
 ## Operations
 
