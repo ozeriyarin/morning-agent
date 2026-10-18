@@ -1,0 +1,1067 @@
+{
+  "from": "2026-10-11",
+  "to": "2026-10-18",
+  "dryRun": false,
+  "runs": [
+    "2026-10-11",
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-16",
+    "2026-10-17",
+    "2026-10-18"
+  ],
+  "storedItems": 45,
+  "items": [
+    {
+      "date": "2026-10-11",
+      "title": "500B Tokens Later: Letting AI Agents Decompile a First-Person Shooter",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001106,
+          "latencyMs": 900.846319
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030534,
+          "latencyMs": 564.9905000000001,
+          "confidence": 0.48
+        }
+      }
+    },
+    {
+      "date": "2026-10-11",
+      "title": "Dwarf Fortress uses version control now",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.0011,
+          "latencyMs": 881.755564
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.00002982,
+          "latencyMs": 535.3298560000001,
+          "confidence": 0.66
+        }
+      }
+    },
+    {
+      "date": "2026-10-11",
+      "title": "Anthropic Bans Cruelty to Claude, Still Won't Say What It Protects",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001124,
+          "latencyMs": 846.3918000000001
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030912,
+          "latencyMs": 627.229314,
+          "confidence": 0.37
+        }
+      }
+    },
+    {
+      "date": "2026-10-11",
+      "title": "Python 3.15.0 added to actions/python-versions",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001124,
+          "latencyMs": 864.1555890000001
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030912,
+          "latencyMs": 510.6956520000001,
+          "confidence": 0.86
+        }
+      }
+    },
+    {
+      "date": "2026-10-11",
+      "title": "Nvidia in talks to acquire US 'open' model startup Reflection AI",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001112,
+          "latencyMs": 896.951235
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030996,
+          "latencyMs": 507.19189499999993,
+          "confidence": 0.38
+        }
+      }
+    },
+    {
+      "date": "2026-10-11",
+      "title": "My personal AI agent posted my bank details on company Slack",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001108,
+          "latencyMs": 621.2904270000001
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.00003045,
+          "latencyMs": 171.03967699999998,
+          "confidence": 0.62
+        }
+      }
+    },
+    {
+      "date": "2026-10-11",
+      "title": "Talorys – A self-hosted personal AI agent on Cloudflare's free tier",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001093,
+          "latencyMs": 540.9902240000001
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000029988,
+          "latencyMs": 182.098434,
+          "confidence": 0.91
+        }
+      }
+    },
+    {
+      "date": "2026-10-11",
+      "title": "AI Data Centers Not Paying Their Costs, Will Keep Using NDAs and Seek Tax Breaks",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001151,
+          "latencyMs": 522.8068569999998
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.00003213,
+          "latencyMs": 148.2490439999999,
+          "confidence": 1
+        }
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "title": "AI is a tool and using it well takes skill",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001093,
+          "latencyMs": 603.7749859999999
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000029904,
+          "latencyMs": 91.25672099999997,
+          "confidence": 0.66
+        }
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "title": "Intel D270 GPU AI Accelerator–Up to 480 GB LPDDR5X",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001118,
+          "latencyMs": 641.9528459999999
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030534,
+          "latencyMs": 131.5905439999999,
+          "confidence": 0.95
+        }
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "title": "Epic Games tells employees to use AI to get Disney game done",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.00109,
+          "latencyMs": 587.8278339999997
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000029736,
+          "latencyMs": 104.2053800000001,
+          "confidence": 0.76
+        }
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "title": "AI models may be capable of self-replicating without access to a datacenter",
+      "original": "must_read",
+      "choices": {
+        "haiku": {
+          "decision": "must_read",
+          "costUsd": 0.001105,
+          "latencyMs": 577.6501979999998
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000029904,
+          "latencyMs": 111.95687000000021,
+          "confidence": 0.34
+        }
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "title": "Hello Python 3.15, goodbye 3.10, and now I can use 3.11",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001129,
+          "latencyMs": 495.5467060000001
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031374,
+          "latencyMs": 115.50825099999997,
+          "confidence": 0.74
+        }
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "title": "'AI' Is Not a Tool by Rich Hickey",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001102,
+          "latencyMs": 633.3401859999999
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030408,
+          "latencyMs": 143.62895500000013,
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "title": "AI coding agents generate more code, but not more software",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001107,
+          "latencyMs": 650.034204
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030576,
+          "latencyMs": 168.571956,
+          "confidence": 0.86
+        }
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "title": "web-edit 0.1a0",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001112,
+          "latencyMs": 618.4200380000002
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.00003024,
+          "latencyMs": 99.97357699999998,
+          "confidence": 0.34
+        }
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "title": "Kevin Kelly's 2016 AI Predictions, 10 Years Later",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.00109,
+          "latencyMs": 498.7279199999998
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000029946,
+          "latencyMs": 152.24834799999985,
+          "confidence": 0.91
+        }
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "title": "Why aren't AI companies being charged for hacking?",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001097,
+          "latencyMs": 616.3329509999999
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000029988,
+          "latencyMs": 151.8530209999999,
+          "confidence": 0.38
+        }
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "title": "\"Just Ask Claude\" Is a Rare and Valuable Skill",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001102,
+          "latencyMs": 629.4643839999999
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.00003024,
+          "latencyMs": 132.55017900000007,
+          "confidence": 0.88
+        }
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "title": "AI less regulated than milk, Microsoft president says in warning over safety",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001116,
+          "latencyMs": 616.6592560000004
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030828,
+          "latencyMs": 131.16640000000007,
+          "confidence": 0.52
+        }
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "title": "QGIS enacts moratorium on AI contributions",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001095,
+          "latencyMs": 531.0766759999997
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000029946,
+          "latencyMs": 105.77365400000008,
+          "confidence": 0.73
+        }
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "title": "datasette-ports 0.4",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001099,
+          "latencyMs": 637.4221819999998
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000029862,
+          "latencyMs": 145.73928699999988,
+          "confidence": 0.95
+        }
+      }
+    },
+    {
+      "date": "2026-10-14",
+      "title": "Redesigning source control at Anthropic",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.0011,
+          "latencyMs": 717.1908090000002
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030324,
+          "latencyMs": 104.82899299999985,
+          "confidence": 0.64
+        }
+      }
+    },
+    {
+      "date": "2026-10-14",
+      "title": "llm-gemini 0.35",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001118,
+          "latencyMs": 652.5382880000002
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000030618,
+          "latencyMs": 139.51398900000004,
+          "confidence": 0.79
+        }
+      }
+    },
+    {
+      "date": "2026-10-14",
+      "title": "Quoting Geoffrey Huntley",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001102,
+          "latencyMs": 763.8017389999995
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030156,
+          "latencyMs": 112.40189299999997,
+          "confidence": 0.74
+        }
+      }
+    },
+    {
+      "date": "2026-10-14",
+      "title": "Higgsfield takes AI video from 1 minute to over 10",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001084,
+          "latencyMs": 482.49740399999973
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000029232,
+          "latencyMs": 185.05590200000006,
+          "confidence": 0.73
+        }
+      }
+    },
+    {
+      "date": "2026-10-15",
+      "title": "Tree Appreciator",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001097,
+          "latencyMs": 607.0283129999998
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030198,
+          "latencyMs": 135.29670000000033,
+          "confidence": 0.46
+        }
+      }
+    },
+    {
+      "date": "2026-10-15",
+      "title": "AI is mass decompiling games. That's both awesome and scary.",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001105,
+          "latencyMs": 594.9418139999998
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030282,
+          "latencyMs": 114.8404889999997,
+          "confidence": 0.79
+        }
+      }
+    },
+    {
+      "date": "2026-10-15",
+      "title": "Amp puts AI agents to work beyond code with OpenAI models",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001081,
+          "latencyMs": 616.3482300000005
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.00002898,
+          "latencyMs": 116.69786900000008,
+          "confidence": 0.73
+        }
+      }
+    },
+    {
+      "date": "2026-10-15",
+      "title": "SentinelOne cuts malware analysis from weeks to hours",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001066,
+          "latencyMs": 625.4368509999995
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000028518,
+          "latencyMs": 127.56832399999985,
+          "confidence": 0.53
+        }
+      }
+    },
+    {
+      "date": "2026-10-15",
+      "title": "How Third Moment Research runs 10,000 agents for 36+ hours",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "must_read",
+          "costUsd": 0.001097,
+          "latencyMs": 624.8880760000002
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000029358,
+          "latencyMs": 111.7411589999997,
+          "confidence": 0.92
+        }
+      }
+    },
+    {
+      "date": "2026-10-15",
+      "title": "How Block is building AI-powered security with OpenAI technology",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001063,
+          "latencyMs": 569.3590959999992
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000028476,
+          "latencyMs": 126.38965199999984,
+          "confidence": 0.91
+        }
+      }
+    },
+    {
+      "date": "2026-10-16",
+      "title": "Chirp Pong",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001097,
+          "latencyMs": 505.1288880000002
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000029736,
+          "latencyMs": 122.95380900000009,
+          "confidence": 0.91
+        }
+      }
+    },
+    {
+      "date": "2026-10-16",
+      "title": "Bringing GPT-Rosalind to academic research labs",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001069,
+          "latencyMs": 598.1265409999996
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000028686,
+          "latencyMs": 137.5969170000003,
+          "confidence": 0.52
+        }
+      }
+    },
+    {
+      "date": "2026-10-16",
+      "title": "Why We're Banning AI",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001087,
+          "latencyMs": 490.48113100000046
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000029652,
+          "latencyMs": 199.3803929999999,
+          "confidence": 0.38
+        }
+      }
+    },
+    {
+      "date": "2026-10-16",
+      "title": "Market selloff, rising rates test AI data centre deal boom",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001112,
+          "latencyMs": 626.775815
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030828,
+          "latencyMs": 181.90847500000018,
+          "confidence": 0.49
+        }
+      }
+    },
+    {
+      "date": "2026-10-16",
+      "title": "Simons Foundation launches $15M effort to help mathematicians navigate AI era",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001115,
+          "latencyMs": 606.2130399999996
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031038,
+          "latencyMs": 145.33884100000023,
+          "confidence": 0.82
+        }
+      }
+    },
+    {
+      "date": "2026-10-16",
+      "title": "Using AI to reverse engineer hardware",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001096,
+          "latencyMs": 640.4241140000004
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030198,
+          "latencyMs": 117.99160099999972,
+          "confidence": 0.41
+        }
+      }
+    },
+    {
+      "date": "2026-10-16",
+      "title": "Anthropic tells investors quarterly revenue up nearly 50% to $16.8bn ahead of IPO",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001117,
+          "latencyMs": 627.9084809999995
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.00003087,
+          "latencyMs": 152.65704199999982,
+          "confidence": 0.74
+        }
+      }
+    },
+    {
+      "date": "2026-10-16",
+      "title": "Teaching students to think and learn through questions",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001063,
+          "latencyMs": 626.5996319999995
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000028728,
+          "latencyMs": 139.2962809999999,
+          "confidence": 0.91
+        }
+      }
+    },
+    {
+      "date": "2026-10-16",
+      "title": "AI was great until it was not",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001096,
+          "latencyMs": 599.2261320000007
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000029946,
+          "latencyMs": 105.52159699999993,
+          "confidence": 0.62
+        }
+      }
+    },
+    {
+      "date": "2026-10-17",
+      "title": "Quoting Addy Osmani, Morgan Westlee Lunt, and Qing Wang",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.00112,
+          "latencyMs": 630.6544739999999
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030702,
+          "latencyMs": 129.2554580000001,
+          "confidence": 0.86
+        }
+      }
+    },
+    {
+      "date": "2026-10-17",
+      "title": "How Itaú is building generative AI for its entire customer base",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001081,
+          "latencyMs": 529.6216960000002
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000029232,
+          "latencyMs": 141.44367200000033,
+          "confidence": 0.95
+        }
+      }
+    },
+    {
+      "date": "2026-10-18",
+      "title": "Inline rendering with document​.currentScript",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001104,
+          "latencyMs": 582.4896369999997
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030618,
+          "latencyMs": 172.07207800000015,
+          "confidence": 0.88
+        }
+      }
+    },
+    {
+      "date": "2026-10-18",
+      "title": "web-edit 0.1a2",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001109,
+          "latencyMs": 619.5688289999998
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030282,
+          "latencyMs": 116.52440200000001,
+          "confidence": 0.8
+        }
+      }
+    }
+  ],
+  "models": {
+    "haiku": {
+      "model": "claude-haiku-4-5-20251001",
+      "decisions": 45,
+      "counts": {
+        "must_read": 2,
+        "mention": 8,
+        "skip": 35
+      },
+      "errors": 0,
+      "costUsd": 0.049552,
+      "meanLatencyMs": 630.0148313777776
+    },
+    "jev": {
+      "model": "typesafe/jev-1.13",
+      "decisions": 45,
+      "counts": {
+        "must_read": 6,
+        "mention": 20,
+        "skip": 19
+      },
+      "errors": 0,
+      "costUsd": 0.0013558859999999997,
+      "meanLatencyMs": 181.53606780000004
+    }
+  },
+  "agreement": {
+    "labels": [
+      "original",
+      "haiku",
+      "jev"
+    ],
+    "cells": [
+      [
+        {
+          "agree": 45,
+          "total": 45
+        },
+        {
+          "agree": 41,
+          "total": 45
+        },
+        {
+          "agree": 23,
+          "total": 45
+        }
+      ],
+      [
+        {
+          "agree": 41,
+          "total": 45
+        },
+        {
+          "agree": 45,
+          "total": 45
+        },
+        {
+          "agree": 25,
+          "total": 45
+        }
+      ],
+      [
+        {
+          "agree": 23,
+          "total": 45
+        },
+        {
+          "agree": 25,
+          "total": 45
+        },
+        {
+          "agree": 45,
+          "total": 45
+        }
+      ]
+    ]
+  },
+  "disagreements": [
+    {
+      "title": "Anthropic Bans Cruelty to Claude, Still Won't Say What It Protects",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Nvidia in talks to acquire US 'open' model startup Reflection AI",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Talorys – A self-hosted personal AI agent on Cloudflare's free tier",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "AI is a tool and using it well takes skill",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "AI models may be capable of self-replicating without access to a datacenter",
+      "choices": {
+        "original": "must_read",
+        "haiku": "must_read",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "'AI' Is Not a Tool by Rich Hickey",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "web-edit 0.1a0",
+      "choices": {
+        "original": "mention",
+        "haiku": "skip",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "Kevin Kelly's 2016 AI Predictions, 10 Years Later",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Why aren't AI companies being charged for hacking?",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "\"Just Ask Claude\" Is a Rare and Valuable Skill",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "AI less regulated than milk, Microsoft president says in warning over safety",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "llm-gemini 0.35",
+      "choices": {
+        "original": "skip",
+        "haiku": "mention",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "Higgsfield takes AI video from 1 minute to over 10",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "AI is mass decompiling games. That's both awesome and scary.",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Amp puts AI agents to work beyond code with OpenAI models",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "Bringing GPT-Rosalind to academic research labs",
+      "choices": {
+        "original": "mention",
+        "haiku": "mention",
+        "jev": "skip"
+      }
+    },
+    {
+      "title": "Why We're Banning AI",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Simons Foundation launches $15M effort to help mathematicians navigate AI era",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Using AI to reverse engineer hardware",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "AI was great until it was not",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    }
+  ]
+}
