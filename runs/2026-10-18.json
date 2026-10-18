@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-18",
+  "generatedAt": "2026-10-18T04:03:38.425Z",
+  "dryRun": false,
+  "fetchedCount": 1329,
+  "items": [
+    {
+      "title": "Inline rendering with document​.currentScript",
+      "link": "https://simonwillison.net/2026/Oct/17/document-currentscript/",
+      "published": "2026-10-17T21:11:12.000Z",
+      "summary": "Inline rendering with document​.currentScript Lean Rada describes a neat trick that takes advantage of the document.currentScript property. You can use that to drop in a tiny inline &lt;script&gt; element that replaces itself when the page loads: The year is &lt;script&gt; document.currentScript.rep",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "web-edit 0.1a2",
+      "link": "https://simonwillison.net/2026/Oct/17/web-edit/",
+      "published": "2026-10-17T13:16:49.000Z",
+      "summary": "Release: web-edit 0.1a2 web-edit ( previously ) is my tiny web app for browsing and editing files in a folder. I mainly built it for editing files on different machines via Tailscale. I added a \"copy to clipboard\" option for both text and image data. I needed this because I was running pelican promp",
+      "sources": [
+        "Simon Willison"
+      ]
+    }
+  ],
+  "calendar": {
+    "count": 3,
+    "allDay": 0,
+    "timed": 3,
+    "bySource": {
+      "google": 1,
+      "icloud": 2
+    }
+  },
+  "icloud": "ok",
+  "reminders": {
+    "count": 2,
+    "source": "file"
+  },
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "Inline rendering with document​.currentScript",
+      "link": "https://simonwillison.net/2026/Oct/17/document-currentscript/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "web-edit 0.1a2",
+      "link": "https://simonwillison.net/2026/Oct/17/web-edit/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    }
+  ],
+  "calls": [
+    {
+      "role": "embed",
+      "model": "voyage-3.5-lite",
+      "inputTokens": 21,
+      "outputTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 604.4750020000001,
+      "costUsd": 4.2e-7
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 939,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 826.4231049999999,
+      "costUsd": 0.001104
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 944,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 826.3604789999999,
+      "costUsd": 0.001109
+    },
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 362,
+      "outputTokens": 898,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 2000,
+      "latencyMs": 13161.072970999998,
+      "costUsd": 0.014704
+    }
+  ],
+  "totalCostUsd": 0.01691742,
+  "writer": "sonnet",
+  "writerAttempts": 1,
+  "missingSections": [],
+  "concept": {
+    "name": "evals and LLM-as-judge",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": "course-schedule",
+    "tipIndex": 10,
+    "marked": true
+  },
+  "memory": {
+    "indexSize": 62,
+    "seenBefore": 0,
+    "examples": 0,
+    "related": 0,
+    "chunkIds": []
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent",
+    "attempts": 1
+  },
+  "briefChars": 1754,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "Hacker News AI",
+      "message": "HTTP 502"
+    }
+  ]
+}
