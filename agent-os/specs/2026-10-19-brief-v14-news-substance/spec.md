@@ -1,6 +1,6 @@
 # Spec: brief v14 — news with substance
 
-Status: shaped 2026-10-19 from the run records of 2026-10-16..19 (2 items/day after the 24 h window, 0 must_read, Hacker News feed HTTP 502 for three days, no source for SDD frameworks or Jev releases). Builds on v1/v10/v12/v13. Standards applied: typescript-style, ai-calls, testing.
+Status: shaped 2026-10-19 from the run records of 2026-10-16..19 (2 items/day after the 24 h window, 0 must_read, Hacker News feed HTTP 502 for three days, no source for SDD frameworks or Jev releases). Builds on v1/v10/v12/v13. Standards applied: typescript-style, ai-calls, testing. Shipped 2026-10-19, commit adc559f.
 
 ## Goal
 
