@@ -16,4 +16,4 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-16 MCP
 - [x] 2026-10-17 decision models (Jev)
 - [x] 2026-10-18 evals and LLM-as-judge
-- [ ] multi-agent orchestration
+- [x] 2026-10-19 multi-agent orchestration

@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-19",
+  "generatedAt": "2026-10-19T04:04:25.817Z",
+  "dryRun": false,
+  "fetchedCount": 1329,
+  "items": [
+    {
+      "title": "llm-tools-datasette 0.1.1",
+      "link": "https://simonwillison.net/2026/Oct/18/llm-tools-datasette/",
+      "published": "2026-10-18T23:43:09.000Z",
+      "summary": "Release: llm-tools-datasette 0.1.1 When I switched LLM over to httpx2 in LLM 0.33 I forget that this would break any plugins which used httpx without directly depending on it. llm-tools-datasette was one of those plugins, now fixed. Tags: datasette , llm",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "llm-echo 0.5",
+      "link": "https://simonwillison.net/2026/Oct/18/llm-echo/",
+      "published": "2026-10-18T23:16:16.000Z",
+      "summary": "Release: llm-echo 0.5 I'm working towards a new LLM release, and testing PRs caused me to revisit the llm-echo debug plugin. This plugin provides a \"model\" which doesn't involve an LLM at all - it just repeats back the prompts that have been fed to it. The new release now updates the simulated token",
+      "sources": [
+        "Simon Willison"
+      ]
+    }
+  ],
+  "calendar": {
+    "count": 2,
+    "allDay": 0,
+    "timed": 2,
+    "bySource": {
+      "google": 0,
+      "icloud": 2
+    }
+  },
+  "icloud": "ok",
+  "reminders": {
+    "count": 2,
+    "source": "file"
+  },
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "llm-tools-datasette 0.1.1",
+      "link": "https://simonwillison.net/2026/Oct/18/llm-tools-datasette/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "llm-echo 0.5",
+      "link": "https://simonwillison.net/2026/Oct/18/llm-echo/",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    }
+  ],
+  "calls": [
+    {
+      "role": "embed",
+      "model": "voyage-3.5-lite",
+      "inputTokens": 21,
+      "outputTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 497.5663379999987,
+      "costUsd": 4.2e-7
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 950,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 876.9309429999994,
+      "costUsd": 0.001115
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 948,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 893.8352520000008,
+      "costUsd": 0.001113
+    },
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 488,
+      "outputTokens": 886,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 2000,
+      "latencyMs": 12992.630118,
+      "costUsd": 0.014836
+    }
+  ],
+  "totalCostUsd": 0.01706442,
+  "writer": "sonnet",
+  "writerAttempts": 1,
+  "missingSections": [],
+  "concept": {
+    "name": "multi-agent orchestration",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": "implement-trie-prefix-tree",
+    "tipIndex": 11,
+    "marked": true
+  },
+  "memory": {
+    "indexSize": 65,
+    "seenBefore": 0,
+    "examples": 0,
+    "related": 0,
+    "chunkIds": []
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent",
+    "attempts": 1
+  },
+  "briefChars": 1516,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "Hacker News AI",
+      "message": "HTTP 502"
+    }
+  ]
+}
