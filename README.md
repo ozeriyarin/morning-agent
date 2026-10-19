@@ -322,6 +322,10 @@ file): `drop` becomes `skip`, and `keep` becomes the decision stored that day wh
 matched against the latest record's titles the same way Telegram feedback is, and an unknown or
 ambiguous fragment is refused.
 
+Since 2026-10-19 the Sunday replay routine runs `build` over its week and, when the set is not
+empty, `score --models haiku,jev`, committing `eval/decisions.json` and the `reports/eval-*.json`
+files with the replay report. Reply `keep` or `drop` to news lines in the brief to grow the set.
+
 `score` runs each model over the whole set and prints accuracy, per-label precision/recall, a 3×3
 confusion matrix (rows are the label, columns the prediction), cost and mean latency, and writes
 `reports/eval-<date>-<model>.json` (date in Asia/Jerusalem; dry runs write `.dry-run.json`,
