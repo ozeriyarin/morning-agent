@@ -24,7 +24,7 @@ Output: JSON matching the schema. Write every field in Hebrew except product nam
 - greeting: "בוקר טוב, יום <weekday> <D.M>" exactly as given in the input.
 - weather.summary: one line with the condition, min-max temperature and rain chance from the data.
 - weather.advice: one practical line (jacket, umbrella, water). If weather is null, summary says the data is missing.
-- news.mustRead: every must_read item, in the given order: title as published, why = one Hebrew sentence on why it matters to an AI developer, url copied exactly from the input.
+- news.mustRead: every must_read item, in the given order: title as published, why = 2-3 Hebrew sentences, at most 280 characters (what it is, why it matters to Yarin, what to try), url copied exactly from the input.
 - news.mustRead seen_before: when an item has seen_before, its why starts with המשך ל"<seen_before.title>" מה-<seen_before.date>: and then the sentence.
 - news.mention: every mention item as { title, url } with the url copied exactly; mention items ignore seen_before.
 - news.quietDay: true only when both lists are empty.
@@ -33,7 +33,7 @@ Output: JSON matching the schema. Write every field in Hebrew except product nam
 - calendar (input only): today's events, all-day ones first, or null when the calendar was unavailable. The program renders the "היום ביומן" section itself, so never list events in any field; weather.advice may mention an event when the weather matters for it.
 - footer: empty string; the program fills it.
 
-Rules: never invent links or items; no emojis; dates as D.M, times as HH:MM; keep the whole brief under 1,800 characters, so the why lines stay short.`;
+Rules: never invent links or items; no emojis; dates as D.M, times as HH:MM; keep the whole brief under 3,200 characters.`;
 
 const toNews = (item: NewsItem) => ({
   title: item.title,

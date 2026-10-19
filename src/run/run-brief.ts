@@ -156,6 +156,17 @@ async function weeklySummary(
   }
 }
 
+// Release items skip the model: must_read unless memory has already shown them.
+function releaseAware(model: DecisionModel, recall: Recall | null): DecisionModel {
+  return {
+    model: model.model,
+    decide: async (item, examples) =>
+      item.kind === 'release'
+        ? { decision: recall?.seenBefore.has(item.id) ? 'skip' : 'must_read', reason: 'release' }
+        : model.decide(item, examples),
+  };
+}
+
 // Guardrail: the writer may only link to items that were actually fetched and kept.
 function keepKnownLinks(news: Brief['news'], kept: Item[]): Brief['news'] {
   const known = new Set(kept.map((item) => item.link));
@@ -264,6 +275,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
         message: message(result.reason),
       });
   });
+  const failedFeeds = deps.feeds.filter((_, i) => feedResults[i]?.status === 'rejected');
   if (deps.feeds.length > 0 && feedResults.every((r) => r.status === 'rejected'))
     missing.add('news');
 
@@ -277,8 +289,10 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       errors.push({ stage: 'source', source: 'memory', message: message(error) });
     }
   }
-  const examples = toDecide.map((item) => recall?.examples.get(item.id) ?? []);
-  const results = await decideAll(deps.decisionModel, toDecide, examples);
+  const examples = toDecide.map((item) =>
+    item.kind === 'release' ? [] : (recall?.examples.get(item.id) ?? []),
+  );
+  const results = await decideAll(releaseAware(deps.decisionModel, recall), toDecide, examples);
   const decisions = toDecide.map((item, i) => {
     const r = results[i] ?? { decision: 'skip' as const, error: 'no decision' };
     if (r.error) errors.push({ stage: 'decision', source: item.title, message: r.error });
@@ -286,7 +300,7 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
       title: item.title,
       link: item.link,
       decision: r.decision,
-      model: r.call?.model ?? deps.decisionModel.model,
+      ...(r.reason ? { reason: r.reason } : { model: r.call?.model ?? deps.decisionModel.model }),
       ...(r.confidence !== undefined && { confidence: r.confidence }),
       ...(r.probabilities && { probabilities: r.probabilities }),
       ...(r.error && { error: r.error }),
@@ -332,7 +346,10 @@ export async function runBrief(deps: RunDeps, opts: RunOptions): Promise<RunOutc
     news: keepKnownLinks(written.brief.news, toDecide),
     concept:
       concept === null && !missing.has('concept') ? QUEUE_EMPTY_CONCEPT : written.brief.concept,
-    footer: `נוצר ב-${clockTime(now, deps.timeZone)} · ${items.length} פריטים נבדקו · עלות ~$${total.toFixed(3)}`,
+    footer: [
+      `נוצר ב-${clockTime(now, deps.timeZone)} · ${items.length} פריטים נבדקו · עלות ~$${total.toFixed(3)}`,
+      ...(failedFeeds.length ? [`מקור לא זמין: ${failedFeeds.map((f) => f.name).join(', ')}`] : []),
+    ].join('\n'),
     weekly,
     interviewPick: interview,
     interviewExplained: written.writer !== 'template',

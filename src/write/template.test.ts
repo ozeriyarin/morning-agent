@@ -9,6 +9,7 @@ import {
   visibleLength,
 } from './template.js';
 import { validateBrief } from './writer.js';
+import { WRITER_SYSTEM } from './sonnet.js';
 
 const item = (n: number, title = `Item ${n}`): Item => ({
   id: `https://example.com/${n}`,
@@ -186,7 +187,7 @@ describe('templateBrief + formatBrief', () => {
   });
 
   it('v7 criterion 5: "The brief length target is 1,800 and trimming never removes the interview section."', () => {
-    expect(MAX_BRIEF_CHARS).toBe(1800);
+    expect(MAX_BRIEF_CHARS).toBe(3200);
     const many = Array.from({ length: 40 }, (_, i) =>
       item(i, `A fairly long article title number ${i}`),
     );
@@ -209,5 +210,41 @@ describe('templateBrief + formatBrief', () => {
     expect(html).toContain('A fairly long article title number 0');
     expect(html).toContain('14:00–15:00 ראיון');
     expect(html).toContain('<b>תשובה:</b>');
+  });
+});
+
+describe('v14 brief budget', () => {
+  const withNews = (why: string, mentions: number): Brief => {
+    const brief = explained(templateBrief(input));
+    const mention = Array.from({ length: mentions }, (_, i) => ({
+      title: `Mention ${i}`,
+      url: `https://example.com/m${i}`,
+    }));
+    const mustRead = [1, 2, 3].map((n) => ({
+      title: `Must ${n}`,
+      url: `https://example.com/${n}`,
+      why,
+    }));
+    return { ...brief, news: { mustRead, mention, quietDay: false } };
+  };
+
+  it('v14 criterion 3: "The writer prompt asks for 2–3 sentences in `why` and the brief limit is 3,200; the template trims mentions first and never calendar/concept/interview, and a brief of 3,000 characters is sent untrimmed."', () => {
+    expect(WRITER_SYSTEM).toContain('why = 2-3 Hebrew sentences, at most 280 characters');
+    expect(WRITER_SYSTEM).toContain('keep the whole brief under 3,200 characters');
+    expect(WRITER_SYSTEM).not.toContain('1,800');
+    expect(MAX_BRIEF_CHARS).toBe(3200);
+
+    const pad = 3000 - visibleLength(formatBrief(withNews('', 1)));
+    const full = formatBrief(withNews('א'.repeat(Math.ceil(pad / 3)), 1));
+    expect(visibleLength(full)).toBeGreaterThanOrEqual(3000);
+    expect(full).toContain('Mention 0');
+
+    const over = formatBrief(withNews('מה זה ולמה זה חשוב. '.repeat(10), 200));
+    expect(visibleLength(over)).toBeLessThanOrEqual(MAX_BRIEF_CHARS);
+    for (const n of [1, 2, 3]) expect(over).toContain(`Must ${n}`);
+    expect(over).not.toContain('Mention 199');
+    expect(over).toContain('14:00–15:00 ראיון');
+    expect(over).toContain('<b>תשובה:</b>');
+    expect(over).toContain('<b>מלכודת:</b>');
   });
 });

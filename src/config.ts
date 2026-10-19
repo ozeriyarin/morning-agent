@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { z } from 'zod';
 import type { ICloudCredentials } from './sources/icloud-calendar.js';
+import { FEED_KINDS } from './types.js';
 
 const secret = (name: string) =>
   z.string({ error: `${name} is required` }).min(1, `${name} is required`);
@@ -89,7 +90,16 @@ export const briefConfigSchema = z.object({
     timezone: z.string().min(1),
   }),
   schedule: z.object({ localTime: z.string().regex(/^\d{2}:\d{2}$/) }),
-  feeds: z.array(z.object({ name: z.string().min(1), url: z.url() })).min(1),
+  feeds: z
+    .array(
+      z.object({
+        name: z.string().min(1),
+        url: z.url(),
+        kind: z.enum(FEED_KINDS).default('news'),
+        windowHours: z.number().positive().optional(),
+      }),
+    )
+    .min(1),
   decisionModel: z.enum(['haiku', 'jev']).default('haiku'),
   memory: memoryConfigSchema,
 });

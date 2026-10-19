@@ -9,7 +9,13 @@ export const BriefSchema = z.object({
   greeting: z.string(),
   weather: z.object({ summary: text, advice: text }),
   news: z.object({
-    mustRead: z.array(z.object({ title: text, why: text, url: z.url() })),
+    mustRead: z.array(
+      z.object({
+        title: text,
+        why: text.describe('2-3 Hebrew sentences, at most 280 characters'),
+        url: z.url(),
+      }),
+    ),
     mention: z.array(z.object({ title: text, url: z.url() })),
     quietDay: z.boolean(),
   }),

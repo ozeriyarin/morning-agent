@@ -5,6 +5,9 @@ export const SECTIONS = ['weather', 'calendar', 'news', 'concept'] as const;
 // `interview` is missing only when its queues fail; a bad writer explanation falls back instead.
 export type Section = (typeof SECTIONS)[number] | 'interview';
 
+export const FEED_KINDS = ['news', 'release'] as const;
+export type FeedKind = (typeof FEED_KINDS)[number];
+
 export interface Item {
   id: string;
   title: string;
@@ -12,6 +15,8 @@ export interface Item {
   published: string;
   summary: string;
   sources: string[];
+  kind?: FeedKind;
+  windowHours?: number;
 }
 
 export interface WeatherDay {
@@ -80,6 +85,7 @@ export interface InterviewPick {
 
 export interface DecisionResult {
   decision: Decision;
+  reason?: 'release';
   error?: string;
   call?: CallUsage;
   confidence?: number;
@@ -189,6 +195,7 @@ export interface RunRecord {
     title: string;
     link: string;
     decision: Decision;
+    reason?: 'release';
     model?: string;
     confidence?: number;
     probabilities?: Record<string, number>;

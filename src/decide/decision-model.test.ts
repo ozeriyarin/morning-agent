@@ -90,3 +90,20 @@ describe('FakeDecisionModel', () => {
     );
   });
 });
+
+describe('v14 decision rules', () => {
+  it('v14 criterion 4: "The decision rules name SDD frameworks and Jev/Claude Code releases as must_read and include the thin-day instruction; the eval score on `eval/decisions.json` does not drop."', () => {
+    const mustRead = DECISION_RULES.split('\n').find((l) => l.startsWith('- must_read: '));
+    for (const name of [
+      'spec-driven',
+      'Agent OS',
+      'spec-kit',
+      'BMAD',
+      'Claude Code or Jev release',
+    ])
+      expect(mustRead).toContain(name);
+    expect(DECISION_RULES).toContain(
+      'On a thin day, pick the two or three strongest AI-engineering items as must_read',
+    );
+  });
+});

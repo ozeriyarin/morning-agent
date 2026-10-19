@@ -103,7 +103,7 @@ export function buildDeps(options: WiringOptions): RunDeps {
       fetch: (ctx) => icloudSource.reminders(ctx),
     },
     remindersFile: new RemindersFileSource(root, timeZone, options.remindersPath),
-    feeds: config.feeds.map((feed) => new FeedSource(feed.name, feed.url, fetchFn)),
+    feeds: config.feeds.map((feed) => new FeedSource(feed, fetchFn)),
     concepts: new FileConceptStore(join(root, 'concepts', 'queue.md')),
     interview: new FileInterviewStore(
       join(root, 'interview', 'problems.md'),

@@ -1,5 +1,9 @@
 import { XMLParser } from 'fast-xml-parser';
-import { SourceError, type Item, type Source } from '../types.js';
+import { SourceError, type FeedKind, type Item, type Source } from '../types.js';
+
+export const NEWS_WINDOW_HOURS = 24;
+export const RELEASE_WINDOW_HOURS = 72;
+const BARE_VERSION = /^v?\d+(\.\d+)+\S*$/i;
 
 const parser = new XMLParser({
   ignoreAttributes: false,
@@ -27,7 +31,7 @@ function stripHtml(html: string): string {
     .replace(/<[^>]*>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
-    .slice(0, 300);
+    .slice(0, 600);
 }
 
 function toItem(source: string, title: string, link: string, date: string, summary: string) {
@@ -82,22 +86,45 @@ export function dedupe(items: Item[]): Item[] {
   return [...byTitle.values()];
 }
 
-export function withinWindow(items: Item[], reference: Date, hours = 24): Item[] {
-  const from = reference.getTime() - hours * 3_600_000;
-  return items.filter((item) => Date.parse(item.published) > from);
+// An item's own window (set by its feed) wins over the default.
+export function withinWindow(items: Item[], reference: Date, hours = NEWS_WINDOW_HOURS): Item[] {
+  const now = reference.getTime();
+  return items.filter(
+    (item) => Date.parse(item.published) > now - (item.windowHours ?? hours) * 3_600_000,
+  );
+}
+
+export interface FeedOptions {
+  name: string;
+  url: string;
+  kind?: FeedKind;
+  windowHours?: number;
 }
 
 export class FeedSource implements Source<Item[]> {
+  readonly name: string;
+
   constructor(
-    readonly name: string,
-    private readonly url: string,
+    private readonly feed: FeedOptions,
     private readonly fetchFn: typeof fetch,
     private readonly timeoutMs = 30_000,
-  ) {}
+  ) {
+    this.name = feed.name;
+  }
 
+  // Stamps kind and window on each item; a bare release version gets the feed name prefixed.
   async fetch(): Promise<Item[]> {
-    const res = await this.fetchFn(this.url, { signal: AbortSignal.timeout(this.timeoutMs) });
+    const res = await this.fetchFn(this.feed.url, { signal: AbortSignal.timeout(this.timeoutMs) });
     if (!res.ok) throw new SourceError(this.name, `HTTP ${res.status}`);
-    return parseFeed(await res.text(), this.name);
+    const kind = this.feed.kind ?? 'news';
+    const release = kind === 'release';
+    const windowHours =
+      this.feed.windowHours ?? (release ? RELEASE_WINDOW_HOURS : NEWS_WINDOW_HOURS);
+    return parseFeed(await res.text(), this.name).map((item) => ({
+      ...item,
+      kind,
+      windowHours,
+      ...(release && BARE_VERSION.test(item.title) && { title: `${this.name} ${item.title}` }),
+    }));
   }
 }

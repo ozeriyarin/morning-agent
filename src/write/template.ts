@@ -21,7 +21,7 @@ export const TITLES: Record<Section, string> = {
   interview: 'שאלת ראיון',
 };
 
-export const MAX_BRIEF_CHARS = 1800;
+export const MAX_BRIEF_CHARS = 3200;
 const SEE_LINK = 'ראו את הקישור';
 
 export const QUEUE_EMPTY_CONCEPT: Brief['concept'] = {

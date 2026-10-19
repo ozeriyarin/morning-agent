@@ -18,11 +18,31 @@
   },
   "feeds": [
     { "name": "Simon Willison", "url": "https://simonwillison.net/atom/everything/" },
+    { "name": "Hacker News AI", "url": "https://hnrss.org/newest?q=AI+OR+LLM+OR+Claude" },
+    { "name": "OpenAI News", "url": "https://openai.com/news/rss.xml" },
+    { "name": "Hugging Face", "url": "https://huggingface.co/blog/feed.xml" },
+    { "name": "Google AI", "url": "https://blog.google/technology/ai/rss/" },
+    { "name": "jev", "url": "https://pypi.org/rss/project/jev/releases.xml", "kind": "release" },
     {
-      "name": "Hacker News AI",
-      "url": "https://hnrss.org/newest?q=AI+OR+LLM+OR+Claude&points=50"
+      "name": "Agent OS",
+      "url": "https://github.com/buildermethods/agent-os/releases.atom",
+      "kind": "release"
     },
-    { "name": "OpenAI News", "url": "https://openai.com/news/rss.xml" }
+    {
+      "name": "spec-kit",
+      "url": "https://github.com/github/spec-kit/releases.atom",
+      "kind": "release"
+    },
+    {
+      "name": "BMAD",
+      "url": "https://github.com/bmad-code-org/BMAD-METHOD/releases.atom",
+      "kind": "release"
+    },
+    {
+      "name": "Claude Code",
+      "url": "https://github.com/anthropics/claude-code/releases.atom",
+      "kind": "release"
+    }
   ],
   "todo": "Anthropic news has no RSS feed (https://www.anthropic.com/rss.xml returned 404 on 2026-10-10); add it to feeds when one exists."
 }

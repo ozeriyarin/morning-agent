@@ -17,13 +17,14 @@ Each item is one spec in `agent-os/specs/`. Ship in order; each step is usable o
 11. **Resilience: writer chain and Telegram retry** (`2026-10-11-brief-v10-resilience`). Sonnet → Haiku → template writer chain and one Telegram retry on network errors, 429 and 5xx. The record says which rung wrote the brief and how many send attempts it took.
 12. **Frozen eval set for the decision step** (`2026-10-11-brief-v12-eval-set`). `eval/decisions.json` holds items labelled by Yarin (Telegram feedback or `npm run eval -- label`); `npm run eval -- score` reports accuracy, per-label precision/recall, a confusion matrix, cost and latency per model.
 13. **Memory: retrieval over past runs** (`2026-10-13-brief-v13-memory`). Voyage embeddings in a committed `memory/index.json`; must-reads that follow up a past item say so, decisions get up to 3 labelled similar items as examples, and the concept links to a related past one.
+14. **News with substance** (`2026-10-19-brief-v14-news-substance`). Hacker News feed fixed, Hugging Face and Google AI added; release feeds (jev, Agent OS, spec-kit, BMAD, Claude Code) are `must_read` without a decision call; must-reads get 2-3 Hebrew sentences in a 3,200-character brief; a failed feed shows `מקור לא זמין: <name>` in the footer.
 
 ## Next
 
-14. **Jev criteria tuning.** After a week of replay data with feedback labels, rewrite the Jev criteria text and re-run the A/B; switch the default only if agreement with feedback beats Haiku.
-15. **Decision batching.** One Haiku call for all items instead of one per item, if quality holds on replay; cuts the decision cost and latency.
-16. **Second-vendor writer rung.** The writer chain is Sonnet → Haiku → template, all Anthropic, so an Anthropic outage falls straight to the template. Add a rung from a different vendor (an open model through OpenRouter, behind the same `Writer` interface and schema) between Haiku and the template; the record already says which rung wrote, and the weekly report counts briefs by writer, so the fallback rate is visible.
-17. **Second recipient.** Per-person config (calendar sources, feeds, language) so a family member can get their own brief.
+15. **Jev criteria tuning.** After a week of replay data with feedback labels, rewrite the Jev criteria text and re-run the A/B; switch the default only if agreement with feedback beats Haiku.
+16. **Decision batching.** One Haiku call for all items instead of one per item, if quality holds on replay; cuts the decision cost and latency.
+17. **Second-vendor writer rung.** The writer chain is Sonnet → Haiku → template, all Anthropic, so an Anthropic outage falls straight to the template. Add a rung from a different vendor (an open model through OpenRouter, behind the same `Writer` interface and schema) between Haiku and the template; the record already says which rung wrote, and the weekly report counts briefs by writer, so the fallback rate is visible.
+18. **Second recipient.** Per-person config (calendar sources, feeds, language) so a family member can get their own brief.
 
 ## Operations
 

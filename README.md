@@ -30,7 +30,7 @@ npm run brief [--dry-run] [--date YYYY-MM-DD] [--calendar <path>] [--icloud <pat
             │   ├── sources/icloud-calendar.ts  CalDAV PROPFIND + REPORT (expand) -> parseICalendar()
             │   ├── sources/calendar-merge.ts   mergeCalendars(google, icloud): dedupe, all-day first
             │   ├── sources/reminders-file.ts  input/reminders-<date>.json -> Reminder[] (else iCloud)
-            │   ├── sources/feeds.ts     RSS + Atom -> parseFeed() -> withinWindow(24h) -> dedupe()
+            │   ├── sources/feeds.ts     RSS + Atom -> parseFeed() -> withinWindow(24h, releases 72h) -> dedupe()
             │   ├── sources/concepts.ts  concepts/queue.md -> next unused concept
             │   └── sources/interview.ts interview/problems.md + tips.md -> next problem and tip
             ├── recall (one Voyage call for the day's titles + the concept; failure = no memory)
@@ -434,6 +434,25 @@ Append an entry to `feeds` in `config/brief.json`:
 
 RSS 2.0 and Atom both work; they go through the same parser. Items older than 24 hours before
 the 07:00 send time are dropped, and titles that repeat across feeds are merged into one item.
+An entry may also set `"kind": "release"` (default `"news"`) and `"windowHours"` (default 24, or
+72 for a release feed). Release items skip the decision model: they are `must_read` with
+`reason: "release"` in the record and cost nothing, unless memory has already shown them, in
+which case they are `skip`. A bare version title (`0.3.0`, `v1.2.0`) is prefixed with the feed
+name (`jev 0.3.0`). A feed that fails adds a footer line `מקור לא זמין: <name>` to the brief, so a
+quiet news day caused by a dead feed is visible.
+
+Feeds since v14 (2026-10-19): news from Simon Willison, Hacker News AI
+(`https://hnrss.org/newest?q=AI+OR+LLM+OR+Claude`; the `&points=50` variant returned HTTP 502),
+OpenAI News, Hugging Face (`https://huggingface.co/blog/feed.xml`) and Google AI
+(`https://blog.google/technology/ai/rss/`; the LangChain blog has no feed since it moved to Webflow); releases from jev on PyPI, Agent OS, spec-kit, BMAD and
+Claude Code (GitHub `releases.atom`). Feed summaries keep 600 characters for the decider and the
+writer (the record still keeps 400), each must-read gets 2-3 Hebrew sentences (at most 280
+characters), and the brief targets 3,200 visible characters (Telegram allows 4,096). The decision
+rules add SDD frameworks and Jev / Claude Code releases to `must_read`, plus a thin-day line.
+Eval (`npm run eval -- score`) before and after the prompt change: not run, both times. The live
+score needs `MORNING_ANTHROPIC_API_KEY` (and `OPENROUTER_API_KEY` for Jev), which the build
+machine did not have, and `eval/decisions.json` holds 0 labelled items, so there is no number
+to compare yet; `score --dry-run` uses keyword fakes that ignore the prompt.
 Anthropic has no public RSS feed yet (`https://www.anthropic.com/rss.xml` returned 404 on
 2026-10-10); add it here when one appears.
 
@@ -478,7 +497,7 @@ Two Sum · easy · hash map        (the title links to the problem)
 With the template writer (dry run) or when the writer output fails validation, the three lines
 become `הסבר: ראו את הקישור`. When every problem is used the section says `תור השאלות ריק` and the
 tip still shows; when every tip is used the tips start again from the first one. If a queue file
-cannot be read the section says `חסר: שאלת ראיון`. The brief targets 1,800 visible characters and
+cannot be read the section says `חסר: שאלת ראיון`. The brief targets 3,200 visible characters and
 trimming only drops news, never the calendar, the concept or this section. The record keeps
 `interview: { slug, tipIndex, marked }` (`tipIndex` counts from 0), never the problem text, the
 tip or the explanation. Add a problem or a tip by appending a `- [ ]` line in the same format.
@@ -490,7 +509,9 @@ The brief runs as a Claude Code cloud routine named "Morning brief v2": cron `0 
 `ozeriyarin/morning-agent`, model `claude-sonnet-5-5`, allowed tools Bash, Read, Write, Edit,
 Glob, Grep, `mcp__Google_Calendar__*` and `mcp__Gmail__*`. The secrets are environment variables
 of the routine's cloud environment, whose allow list includes `registry.npmjs.org`, `github.com`,
-`api.telegram.org`, `api.open-meteo.com`, `geocoding-api.open-meteo.com`, the feed hosts,
+`api.telegram.org`, `api.open-meteo.com`, `geocoding-api.open-meteo.com`, the feed hosts
+(`simonwillison.net`, `hnrss.org`, `openai.com`, `huggingface.co`, `blog.google`,
+`pypi.org` and `github.com` for the release feeds),
 `caldav.icloud.com`, `*.icloud.com` and `openrouter.ai`. On Sundays the routine commits the
 `reports/report-<from>-<to>.json` file; it does not edit `README.md`.
 

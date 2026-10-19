@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
+import { briefConfigSchema } from '../config.js';
 import { SourceError, type Item } from '../types.js';
 import { dedupe, FeedSource, normalizeTitle, parseFeed, withinWindow } from './feeds.js';
 
@@ -79,10 +80,68 @@ describe('feeds', () => {
 
   it('a FeedSource throws a SourceError on HTTP 500 and parses a good body', async () => {
     const failing: typeof fetch = async () => new Response('', { status: 500 });
-    await expect(new FeedSource('OpenAI News', 'https://x', failing).fetch()).rejects.toThrow(
-      'HTTP 500',
-    );
+    await expect(
+      new FeedSource({ name: 'OpenAI News', url: 'https://x' }, failing).fetch(),
+    ).rejects.toThrow('HTTP 500');
     const ok: typeof fetch = async () => new Response(rss);
-    expect(await new FeedSource('OpenAI News', 'https://x', ok).fetch()).toHaveLength(4);
+    expect(
+      await new FeedSource({ name: 'OpenAI News', url: 'https://x' }, ok).fetch(),
+    ).toHaveLength(4);
+  });
+});
+
+describe('v14 feeds', () => {
+  const hoursAgo = (h: number) => new Date(reference.getTime() - h * 3_600_000).toISOString();
+  const atomOf = (...entries: [string, number][]) =>
+    `<feed>${entries
+      .map(
+        ([title, h], i) =>
+          `<entry><title>${title}</title><link href="https://x/${i}"/><updated>${hoursAgo(h)}</updated></entry>`,
+      )
+      .join('')}</feed>`;
+  const serve =
+    (xml: string): typeof fetch =>
+    async () =>
+      new Response(xml);
+
+  it('v14 criterion 1: "Feed config accepts `kind` and `windowHours`; `withinWindow` honours a per-item window so a release published 60 hours ago from a 72 h feed is kept while a 30-hour-old news item is dropped."', async () => {
+    const config = JSON.parse(readFileSync('config/brief.json', 'utf8')) as Record<string, unknown>;
+    const feeds = [
+      { name: 'jev', url: 'https://pypi.org/rss/project/jev/releases.xml', kind: 'release' },
+      { name: 'Blog', url: 'https://example.com/feed', windowHours: 48 },
+    ];
+    expect(briefConfigSchema.parse({ ...config, feeds }).feeds).toEqual([
+      { ...feeds[0] },
+      { ...feeds[1], kind: 'news' },
+    ]);
+    const bad = { ...config, feeds: [{ ...feeds[0], kind: 'tweet' }] };
+    expect(briefConfigSchema.safeParse(bad).success).toBe(false);
+
+    const release = new FeedSource(
+      { name: 'jev', url: 'https://x', kind: 'release' },
+      serve(atomOf(['jev ships', 60])),
+    );
+    const news = new FeedSource(
+      { name: 'Blog', url: 'https://x' },
+      serve(atomOf(['old news', 30])),
+    );
+    const items = [...(await release.fetch()), ...(await news.fetch())];
+    expect(items.map((i) => [i.kind, i.windowHours])).toEqual([
+      ['release', 72],
+      ['news', 24],
+    ]);
+    expect(withinWindow(items, reference).map((i) => i.title)).toEqual(['jev ships']);
+  });
+
+  it('v14 criterion 2: "An item from a `release` feed is recorded as `must_read` with `reason: "release"` and without a decision call; a bare version title is prefixed with the feed name." (title prefix)', async () => {
+    const xml = atomOf(['0.3.0', 1], ['v1.2.0-beta.1', 1], ['Spec Kit 2.0 is out', 1]);
+    const release = new FeedSource({ name: 'jev', url: 'https://x', kind: 'release' }, serve(xml));
+    expect((await release.fetch()).map((i) => i.title)).toEqual([
+      'jev 0.3.0',
+      'jev v1.2.0-beta.1',
+      'Spec Kit 2.0 is out',
+    ]);
+    const news = new FeedSource({ name: 'Blog', url: 'https://x' }, serve(xml));
+    expect((await news.fetch())[0]?.title).toBe('0.3.0');
   });
 });

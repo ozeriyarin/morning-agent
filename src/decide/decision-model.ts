@@ -7,9 +7,10 @@ export const DECISION_TOOL_NAME = 'record_decision';
 
 export const DECISION_RULES = `You triage AI news for a full-stack / AI developer in Israel.
 Classify the item by calling the ${DECISION_TOOL_NAME} tool exactly once.
-- must_read: a new model or major feature from Anthropic, OpenAI, Google, Meta or Mistral; agent or coding-tool releases; anything about Claude Code, MCP, Jev or decision models, RAG tooling; Israeli AI companies.
+- must_read: a new model or major feature from Anthropic, OpenAI, Google, Meta or Mistral; agent or coding-tool releases; anything about Claude Code, MCP, Jev or decision models, RAG tooling; Israeli AI companies; SDD / spec-driven development frameworks (Agent OS, spec-kit, BMAD); any Claude Code or Jev release.
 - mention: benchmark posts, funding news, opinion pieces from known engineers.
 - skip: marketing, duplicates of a must_read, crypto, politics, listicles, anything else.
+On a thin day, pick the two or three strongest AI-engineering items as must_read rather than labelling everything skip.
 Examples, when given, are prior human labels for similar items; when the item is a near-duplicate of an example, that label takes precedence over your own judgment.`;
 
 // Empty without examples, so the item prompt stays byte-identical to a run without memory.

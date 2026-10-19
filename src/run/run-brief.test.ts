@@ -187,6 +187,10 @@ describe('runBrief', () => {
       'simonwillison.net': await fixture('simonwillison-atom.xml'),
       'hnrss.org': await fixture('hnrss-rss.xml'),
       'openai.com': await fixture('openai-rss.xml'),
+      'huggingface.co': await fixture('openai-rss.xml'),
+      'blog.google': await fixture('hnrss-rss.xml'),
+      'pypi.org': await fixture('openai-rss.xml'),
+      'github.com': await fixture('simonwillison-atom.xml'),
     };
     await mkdir(join(root, 'input'));
     await writeFile(
@@ -1110,12 +1114,13 @@ describe('runBrief weekly footer', () => {
 
     const sunday = await wiredRun(SUNDAY);
     const lines = sunday.html.split('\n');
-    expect(lines.at(-2)).toMatch(/^נוצר ב-/);
+    expect(lines.at(-3)).toMatch(/^נוצר ב-/);
+    expect(lines.at(-2)).toMatch(/^מקור לא זמין: /);
     expect(lines.at(-1)).toBe('השבוע: 3 ימים, עלות ~$0.034, 9 פריטים נבדקו, 3 שגיאות');
 
     const saturday = await wiredRun(DATE);
     expect(saturday.html).not.toContain('השבוע:');
-    expect(saturday.html.split('\n').at(-1)).toMatch(/^נוצר ב-/);
+    expect(saturday.html.split('\n').at(-2)).toMatch(/^נוצר ב-/);
   });
 
   it('a Sunday with no history says 0 days, and an unreadable history only drops the line', async () => {
@@ -1417,5 +1422,99 @@ describe('runBrief memory', () => {
     expect(record.memory).toMatchObject({ indexSize: 8 });
     expect(record.errors.filter((e) => e.source === 'memory')).toEqual([]);
     expect(record.calls).toEqual([]);
+  });
+});
+
+describe('runBrief v14', () => {
+  const release: Item = {
+    id: 'https://pypi.org/project/jev/0.3.0/',
+    title: 'jev 0.3.0',
+    link: 'https://pypi.org/project/jev/0.3.0/',
+    published: '2026-10-08T12:00:00.000Z',
+    summary: '',
+    sources: ['jev'],
+    kind: 'release',
+    windowHours: 72,
+  };
+
+  class CountingModel extends FakeDecisionModel {
+    seen: string[] = [];
+    override async decide(item: Item) {
+      this.seen.push(item.title);
+      return { ...(await super.decide(item)), call: usage('decision', HAIKU_MODEL, 1) };
+    }
+  }
+
+  const memoryWith = (seen: string[]) =>
+    ({
+      recall: async () => ({
+        indexSize: 1,
+        seenBefore: new Map(
+          seen.map((id) => [id, { title: 'jev 0.2.0', link: '', date: '2026-10-09', score: 0.9 }]),
+        ),
+        examples: new Map(),
+        relatedConcepts: [],
+        chunkIds: [],
+        calls: [],
+      }),
+    }) as unknown as MemorySource;
+
+  it('v14 criterion 2: "An item from a `release` feed is recorded as `must_read` with `reason: "release"` and without a decision call; a bare version title is prefixed with the feed name." (decision)', async () => {
+    const decisionModel = new CountingModel();
+    const feeds = [source('Simon Willison', atomItems), source('jev', [release])];
+    const { record, html } = await runBrief(await deps({ feeds, decisionModel }), {
+      date: DATE,
+      dryRun: false,
+    });
+
+    expect(record.decisions.find((d) => d.title === 'jev 0.3.0')).toEqual({
+      title: 'jev 0.3.0',
+      link: release.link,
+      decision: 'must_read',
+      reason: 'release',
+      examples: 0,
+    });
+    expect(decisionModel.seen).not.toContain('jev 0.3.0');
+    expect(record.calls.filter((c) => c.role === 'decision')).toHaveLength(
+      decisionModel.seen.length,
+    );
+    expect(record.decisions.filter((d) => !d.reason).every((d) => d.model === HAIKU_MODEL)).toBe(
+      true,
+    );
+    expect(html).toContain(`<a href="${release.link}">jev 0.3.0</a>`);
+  });
+
+  it('a release that memory has already shown is skipped, still without a decision call', async () => {
+    const decisionModel = new CountingModel();
+    const { record, html } = await runBrief(
+      await deps({
+        feeds: [source('jev', [release])],
+        decisionModel,
+        memory: memoryWith([release.id]),
+      }),
+      { date: DATE, dryRun: false },
+    );
+    expect(record.decisions).toMatchObject([{ decision: 'skip', reason: 'release' }]);
+    expect(decisionModel.seen).toEqual([]);
+    expect(html).not.toContain('jev 0.3.0');
+  });
+
+  it('v14 criterion 5: "A failed feed appears in the brief as a one-line footer note naming the source."', async () => {
+    const feeds = [
+      source('Simon Willison', atomItems),
+      source<Item[]>('Hacker News AI', new Error('HTTP 502')),
+    ];
+    const failed = await runBrief(await deps({ feeds }), { date: DATE, dryRun: false });
+    const lines = failed.html.split('\n');
+    expect(lines.filter((l) => l.startsWith('מקור לא זמין'))).toEqual([
+      'מקור לא זמין: Hacker News AI',
+    ]);
+    expect(lines.at(-2)).toMatch(/^נוצר ב-/);
+    expect(failed.record.errors).toContainEqual(
+      expect.objectContaining({ stage: 'source', source: 'Hacker News AI' }),
+    );
+
+    const healthy = await runBrief(await deps(), { date: DATE, dryRun: false });
+    expect(healthy.html).not.toContain('מקור לא זמין');
   });
 });
