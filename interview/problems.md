@@ -15,7 +15,7 @@ becomes `- [x] YYYY-MM-DD …`. The order cycles through the patterns, so every 
 - [x] 2026-10-17 kth-largest-element-in-an-array | Kth Largest Element in an Array | medium | heaps | https://leetcode.com/problems/kth-largest-element-in-an-array/
 - [x] 2026-10-18 course-schedule | Course Schedule | medium | graphs | https://leetcode.com/problems/course-schedule/
 - [x] 2026-10-19 implement-trie-prefix-tree | Implement Trie (Prefix Tree) | medium | tries | https://leetcode.com/problems/implement-trie-prefix-tree/
-- [ ] group-anagrams | Group Anagrams | medium | hash map | https://leetcode.com/problems/group-anagrams/
+- [x] 2026-10-20 group-anagrams | Group Anagrams | medium | hash map | https://leetcode.com/problems/group-anagrams/
 - [ ] container-with-most-water | Container With Most Water | medium | two pointers | https://leetcode.com/problems/container-with-most-water/
 - [ ] min-stack | Min Stack | medium | stack | https://leetcode.com/problems/min-stack/
 - [ ] search-in-rotated-sorted-array | Search in Rotated Sorted Array | medium | binary search | https://leetcode.com/problems/search-in-rotated-sorted-array/
