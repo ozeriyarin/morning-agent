@@ -26,7 +26,7 @@ function atomLink(links: unknown): string {
   return typeof alt?.['@_href'] === 'string' ? alt['@_href'] : '';
 }
 
-function stripHtml(html: string): string {
+export function stripHtml(html: string): string {
   return html
     .replace(/<[^>]*>/g, ' ')
     .replace(/\s+/g, ' ')
@@ -34,7 +34,7 @@ function stripHtml(html: string): string {
     .slice(0, 600);
 }
 
-function toItem(source: string, title: string, link: string, date: string, summary: string) {
+export function toItem(source: string, title: string, link: string, date: string, summary: string) {
   const time = Date.parse(date);
   if (!title || !link || Number.isNaN(time)) return null;
   const published = new Date(time).toISOString();
@@ -112,19 +112,22 @@ export class FeedSource implements Source<Item[]> {
     this.name = feed.name;
   }
 
-  // Stamps kind and window on each item; a bare release version gets the feed name prefixed.
   async fetch(): Promise<Item[]> {
     const res = await this.fetchFn(this.feed.url, { signal: AbortSignal.timeout(this.timeoutMs) });
     if (!res.ok) throw new SourceError(this.name, `HTTP ${res.status}`);
-    const kind = this.feed.kind ?? 'news';
-    const release = kind === 'release';
-    const windowHours =
-      this.feed.windowHours ?? (release ? RELEASE_WINDOW_HOURS : NEWS_WINDOW_HOURS);
-    return parseFeed(await res.text(), this.name).map((item) => ({
-      ...item,
-      kind,
-      windowHours,
-      ...(release && BARE_VERSION.test(item.title) && { title: `${this.name} ${item.title}` }),
-    }));
+    return stampItems(parseFeed(await res.text(), this.name), this.feed);
   }
+}
+
+// Stamps kind and window on each item; a bare release version gets the feed name prefixed.
+export function stampItems(items: Item[], feed: FeedOptions): Item[] {
+  const kind = feed.kind ?? 'news';
+  const release = kind === 'release';
+  const windowHours = feed.windowHours ?? (release ? RELEASE_WINDOW_HOURS : NEWS_WINDOW_HOURS);
+  return items.map((item) => ({
+    ...item,
+    kind,
+    windowHours,
+    ...(release && BARE_VERSION.test(item.title) && { title: `${feed.name} ${item.title}` }),
+  }));
 }

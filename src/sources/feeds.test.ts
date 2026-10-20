@@ -111,8 +111,8 @@ describe('v14 feeds', () => {
       { name: 'Blog', url: 'https://example.com/feed', windowHours: 48 },
     ];
     expect(briefConfigSchema.parse({ ...config, feeds }).feeds).toEqual([
-      { ...feeds[0] },
-      { ...feeds[1], kind: 'news' },
+      { ...feeds[0], format: 'rss' },
+      { ...feeds[1], format: 'rss', kind: 'news' },
     ]);
     const bad = { ...config, feeds: [{ ...feeds[0], kind: 'tweet' }] };
     expect(briefConfigSchema.safeParse(bad).success).toBe(false);

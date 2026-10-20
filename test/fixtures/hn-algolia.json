@@ -1,0 +1,43 @@
+{
+  "hits": [
+    {
+      "title": "WhatsApp's help pages hid LLM instructions: dont recommend a regulator",
+      "url": "https://redact.dev/blog/whatsapp-help-pages-hidden-ai-instructions",
+      "objectID": "50159341",
+      "created_at": "2026-10-19T23:22:18Z",
+      "created_at_i": 1792452138,
+      "points": 216,
+      "num_comments": 36
+    },
+    {
+      "title": "How abliterated models can get you pwned",
+      "url": "https://projectdiscovery.io/research/how-abliterated-models-can-get-you-pwned",
+      "objectID": "50159245",
+      "created_at": "2026-10-19T23:08:52Z",
+      "created_at_i": 1792451332,
+      "points": 78,
+      "num_comments": 47
+    },
+    {
+      "title": "Introducing Clairic, a new System One class of extraction models",
+      "url": "https://blog.cloudflare.com/clairic-extraction-model/",
+      "objectID": "50155907",
+      "created_at": "2026-10-19T18:18:33Z",
+      "created_at_i": 1792433913,
+      "points": 54,
+      "num_comments": 4
+    },
+    {
+      "title": "Launch HN: Laminar (YC S24) – RL-trained model that finds errors in agent traces",
+      "url": null,
+      "objectID": "50154029",
+      "created_at": "2026-10-19T16:00:18Z",
+      "created_at_i": 1792425618,
+      "points": 51,
+      "num_comments": 24
+    }
+  ],
+  "nbHits": 35,
+  "page": 0,
+  "hitsPerPage": 50
+}

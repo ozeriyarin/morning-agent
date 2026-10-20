@@ -18,30 +18,35 @@
   },
   "feeds": [
     { "name": "Simon Willison", "url": "https://simonwillison.net/atom/everything/" },
-    { "name": "Hacker News AI", "url": "https://hnrss.org/newest?q=AI+OR+LLM+OR+Claude" },
+    {
+      "name": "Hacker News AI",
+      "format": "hn-algolia",
+      "url": "https://hn.algolia.com/api/v1/search_by_date",
+      "query": "AI LLM Claude agent model"
+    },
     { "name": "OpenAI News", "url": "https://openai.com/news/rss.xml" },
     { "name": "Hugging Face", "url": "https://huggingface.co/blog/feed.xml" },
     { "name": "Google AI", "url": "https://blog.google/technology/ai/rss/" },
     { "name": "jev", "url": "https://pypi.org/rss/project/jev/releases.xml", "kind": "release" },
     {
       "name": "Agent OS",
-      "url": "https://github.com/buildermethods/agent-os/releases.atom",
-      "kind": "release"
+      "format": "github-releases",
+      "url": "https://github.com/buildermethods/agent-os"
     },
     {
       "name": "spec-kit",
-      "url": "https://github.com/github/spec-kit/releases.atom",
-      "kind": "release"
+      "format": "github-releases",
+      "url": "https://github.com/github/spec-kit"
     },
     {
       "name": "BMAD",
-      "url": "https://github.com/bmad-code-org/BMAD-METHOD/releases.atom",
-      "kind": "release"
+      "format": "github-releases",
+      "url": "https://github.com/bmad-code-org/BMAD-METHOD"
     },
     {
       "name": "Claude Code",
-      "url": "https://github.com/anthropics/claude-code/releases.atom",
-      "kind": "release"
+      "format": "github-releases",
+      "url": "https://github.com/anthropics/claude-code"
     }
   ],
   "todo": "Anthropic news has no RSS feed (https://www.anthropic.com/rss.xml returned 404 on 2026-10-10); add it to feeds when one exists."

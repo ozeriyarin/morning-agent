@@ -7,6 +7,7 @@ export type Section = (typeof SECTIONS)[number] | 'interview';
 
 export const FEED_KINDS = ['news', 'release'] as const;
 export type FeedKind = (typeof FEED_KINDS)[number];
+export const FEED_FORMATS = ['rss', 'hn-algolia', 'github-releases'] as const;
 
 export interface Item {
   id: string;

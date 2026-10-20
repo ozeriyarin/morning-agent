@@ -16,6 +16,7 @@ import {
   type ICloudCredentials,
 } from '../sources/icloud-calendar.js';
 import { FeedSource } from '../sources/feeds.js';
+import { GithubReleasesSource, HnAlgoliaSource } from '../sources/json-sources.js';
 import { RemindersFileSource } from '../sources/reminders-file.js';
 import { OpenMeteoSource } from '../sources/weather.js';
 import { FakeEmbedder, VoyageEmbedder } from '../retrieve/embed.js';
@@ -66,6 +67,12 @@ function memorySource(options: WiringOptions): {
   return { memory: new MemorySource(path, embedder, config.memory), warnings: [] };
 }
 
+const FEED_CLASSES = {
+  rss: FeedSource,
+  'hn-algolia': HnAlgoliaSource,
+  'github-releases': GithubReleasesSource,
+};
+
 export function recordPath(root: string, date: string, dryRun: boolean): string {
   return join(root, 'runs', `${date}${dryRun ? '.dry-run' : ''}.json`);
 }
@@ -103,7 +110,7 @@ export function buildDeps(options: WiringOptions): RunDeps {
       fetch: (ctx) => icloudSource.reminders(ctx),
     },
     remindersFile: new RemindersFileSource(root, timeZone, options.remindersPath),
-    feeds: config.feeds.map((feed) => new FeedSource(feed, fetchFn)),
+    feeds: config.feeds.map((feed) => new FEED_CLASSES[feed.format](feed, fetchFn)),
     concepts: new FileConceptStore(join(root, 'concepts', 'queue.md')),
     interview: new FileInterviewStore(
       join(root, 'interview', 'problems.md'),

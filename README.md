@@ -460,6 +460,22 @@ to compare yet; `score --dry-run` uses keyword fakes that ignore the prompt.
 Anthropic has no public RSS feed yet (`https://www.anthropic.com/rss.xml` returned 404 on
 2026-10-10); add it here when one appears.
 
+Since v15 (2026-10-20) an entry may set `"format"`: `"rss"` (default), `"hn-algolia"` or
+`"github-releases"`. The cloud sandbox got HTTP 502 from `hnrss.org` and HTTP 403 from GitHub's
+`releases.atom`, so both now use the official JSON APIs:
+
+| Feed                                  | Format            | Request                                                                                                       |
+| ------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------- |
+| Hacker News AI                        | `hn-algolia`      | `hn.algolia.com/api/v1/search_by_date`, stories with more than 50 points from the last 24 h matching `query`  |
+| Agent OS, spec-kit, BMAD, Claude Code | `github-releases` | `api.github.com/repos/<owner>/<repo>/releases?per_page=10`, from `"url": "https://github.com/<owner>/<repo>"` |
+
+A `hn-algolia` entry needs a `"query"` (or `?query=` in its url); an item without a link points to
+its HN page and its summary is the point count. A `github-releases` entry is always a release
+feed: drafts and prereleases are skipped, the title is the tag with the feed name prefixed
+(`Claude Code v2.1.304`) and the summary is the release notes cut to 600 characters. GitHub allows
+60 unauthenticated calls an hour per IP; the brief makes four a day. A non-2xx or non-JSON reply
+fails the feed like an RSS error does. jev stays on the PyPI RSS feed.
+
 ## Adding a concept
 
 Add a line to `concepts/queue.md`:
@@ -514,8 +530,8 @@ The brief runs as a Claude Code cloud routine named "Morning brief v2": cron `0 
 Glob, Grep, `mcp__Google_Calendar__*` and `mcp__Gmail__*`. The secrets are environment variables
 of the routine's cloud environment, whose allow list includes `registry.npmjs.org`, `github.com`,
 `api.telegram.org`, `api.open-meteo.com`, `geocoding-api.open-meteo.com`, the feed hosts
-(`simonwillison.net`, `hnrss.org`, `openai.com`, `huggingface.co`, `blog.google`,
-`pypi.org` and `github.com` for the release feeds),
+(`simonwillison.net`, `hn.algolia.com`, `openai.com`, `huggingface.co`, `blog.google`,
+`pypi.org` and `api.github.com` for the release feeds),
 `caldav.icloud.com`, `*.icloud.com` and `openrouter.ai`. On Sundays the routine commits the
 `reports/report-<from>-<to>.json` file; it does not edit `README.md`.
 

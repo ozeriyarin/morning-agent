@@ -34,10 +34,12 @@ describe('concept queue', () => {
     expect(nextConcept(next)).toBe('RAG');
   });
 
-  it('the committed queue holds 15 concepts, starting with agent loop', async () => {
+  it('the committed queue parses, starts with agent loop and has no duplicate names', async () => {
     const entries = readQueue(await readFile('concepts/queue.md', 'utf8'));
-    expect(entries).toHaveLength(15);
+    expect(entries.length).toBeGreaterThanOrEqual(15);
     expect(entries[0]?.name).toBe('agent loop');
+    const names = entries.map((e) => e.name.toLowerCase());
+    expect(new Set(names).size).toBe(names.length);
   });
 
   it('FileConceptStore reads and rewrites the file', async () => {

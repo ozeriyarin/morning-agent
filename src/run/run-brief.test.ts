@@ -185,12 +185,12 @@ describe('runBrief', () => {
     const bodies: Record<string, string> = {
       'api.open-meteo.com': await fixture('open-meteo-modiin.json'),
       'simonwillison.net': await fixture('simonwillison-atom.xml'),
-      'hnrss.org': await fixture('hnrss-rss.xml'),
+      'hn.algolia.com': await fixture('hn-algolia.json'),
       'openai.com': await fixture('openai-rss.xml'),
       'huggingface.co': await fixture('openai-rss.xml'),
       'blog.google': await fixture('hnrss-rss.xml'),
       'pypi.org': await fixture('openai-rss.xml'),
-      'github.com': await fixture('simonwillison-atom.xml'),
+      'api.github.com': await fixture('github-releases.json'),
     };
     await mkdir(join(root, 'input'));
     await writeFile(

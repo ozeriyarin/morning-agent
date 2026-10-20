@@ -1,0 +1,47 @@
+[
+  {
+    "tag_name": "v2.1.304",
+    "name": "v2.1.304",
+    "html_url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.304",
+    "published_at": "2026-10-19T21:34:39Z",
+    "draft": false,
+    "prerelease": false,
+    "body": "## What's changed\n\n- Added a transcript line when a plugin that runs first skips one of your mod's hooks, naming the event and the plugin\n- Added `decider: \"person\"` to a mod's `tool.check` answer: only the permission dialog or a host's callback can approve the ask, and it is refused with the mod's reason where nobody can be asked\n- Added `e.isReadOnly` to a mod's `tool.check` event, set when the tool call is read-only\n- Added `/auto-mode-setup`: a guided setup that reads your project and recent sessions to teach auto mode about your environment, now also available on Bedrock, Vertex, Foundry, Claude apps gateway and telemetry-disabled sessions\n- Added `/claude-api managed-agents-secure`, which compares a Managed Agents agent's settings with Anthropic's published security guide, without changing anything\n- Added the names of the tools called earlier to the compaction summary in the trans"
+  },
+  {
+    "tag_name": "v2.1.303",
+    "name": "v2.1.303",
+    "html_url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.303",
+    "published_at": "2026-10-18T22:26:54Z",
+    "draft": false,
+    "prerelease": false,
+    "body": "## What's changed\n\n- Bug fixes and reliability improvements\n"
+  },
+  {
+    "tag_name": "v2.1.302",
+    "name": "v2.1.302",
+    "html_url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.302",
+    "published_at": "2026-10-16T20:53:06Z",
+    "draft": false,
+    "prerelease": false,
+    "body": "## What's changed\n\n- Added `CLAUDE_CODE_AUTO_MODE_MODEL` to choose the model the client-side auto mode classifier uses; it does not change the model for server-side auto mode\n- Added an `Idle compaction` row to `/config` for turning idle compaction off or back on; the notices shown after an idle compaction now say how to turn it off\n- Added a notice to `/design-sync` and `/design-login` that standalone Claude Design (claude.ai/design) closes by December 14, 2026\n- Fixed a \"Prompt is too long\" error when stopping a turn while the conversation was being compacted\n- Fixed requests failing with \"diagnostics: Extra inputs are not permitted\" after switching to Vertex or Bedrock mid-session\n- Fixed the Read tool loading an image file of any size, or a pipe or device named like an image, entirely into memory; image sources over 128 MB are now refused\n- Fixed `/autocompact` and `/effort` saving t"
+  },
+  {
+    "tag_name": "v2.2.0-rc.1",
+    "name": "v2.2.0-rc.1",
+    "html_url": "https://github.com/anthropics/claude-code/releases/tag/v2.2.0-rc.1",
+    "published_at": "2026-10-19T12:00:00Z",
+    "draft": false,
+    "prerelease": true,
+    "body": "Release candidate."
+  },
+  {
+    "tag_name": "v2.2.0",
+    "name": "v2.2.0",
+    "html_url": "https://github.com/anthropics/claude-code/releases/tag/v2.2.0",
+    "published_at": null,
+    "draft": true,
+    "prerelease": false,
+    "body": "Draft notes."
+  }
+]
