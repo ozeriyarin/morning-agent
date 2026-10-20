@@ -17,3 +17,43 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-17 decision models (Jev)
 - [x] 2026-10-18 evals and LLM-as-judge
 - [x] 2026-10-19 multi-agent orchestration
+- [ ] context window and token budgeting
+- [ ] prompt injection and the instruction boundary
+- [ ] function calling vs structured outputs
+- [ ] agent memory: short-term, long-term, episodic
+- [ ] vector databases and ANN indexes (HNSW)
+- [ ] hybrid search: BM25 + vectors + RRF
+- [ ] rerankers and cross-encoders
+- [ ] chunking strategies and overlap
+- [ ] citations and grounding
+- [ ] hallucination detection and verification loops
+- [ ] temperature, top-p and sampling
+- [ ] fine-tuning vs RAG vs prompting
+- [ ] LoRA and parameter-efficient fine-tuning
+- [ ] distillation and small models
+- [ ] quantization (int8, int4, GGUF)
+- [ ] inference serving: vLLM, batching, KV cache
+- [ ] latency vs cost trade-offs and model routing
+- [ ] fallback chains and graceful degradation
+- [ ] idempotency and retries in agent tools
+- [ ] observability and tracing for LLM apps
+- [ ] human-in-the-loop and approval gates
+- [ ] sandboxing and least privilege for agents
+- [ ] streaming responses and SSE
+- [ ] conversation state and condensation
+- [ ] intent classification and routing
+- [ ] few-shot vs zero-shot prompting
+- [ ] chain-of-thought and reasoning budgets
+- [ ] self-consistency and majority voting
+- [ ] tokenization and why Hebrew costs more
+- [ ] multimodal inputs: images and documents
+- [ ] semantic caching
+- [ ] A/B testing and offline replay of model changes
+- [ ] data privacy: PII redaction and record minimisation
+- [ ] rate limits, budgets and hard spending caps
+- [ ] webhooks vs polling for bots
+- [ ] workflow engines vs free agents (LangGraph)
+- [ ] system prompts vs developer messages vs user turns
+- [ ] eval metrics: hit@k, precision, recall, MRR
+- [ ] LLM security: jailbreaks and red teaming
+- [ ] agent protocols: MCP vs A2A
