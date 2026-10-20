@@ -18,7 +18,7 @@ Each item is one spec in `agent-os/specs/`. Ship in order; each step is usable o
 12. **Frozen eval set for the decision step** (`2026-10-11-brief-v12-eval-set`). `eval/decisions.json` holds items labelled by Yarin (Telegram feedback or `npm run eval -- label`); `npm run eval -- score` reports accuracy, per-label precision/recall, a confusion matrix, cost and latency per model.
 13. **Memory: retrieval over past runs** (`2026-10-13-brief-v13-memory`). Voyage embeddings in a committed `memory/index.json`; must-reads that follow up a past item say so, decisions get up to 3 labelled similar items as examples, and the concept links to a related past one.
 14. **News with substance** (`2026-10-19-brief-v14-news-substance`, commit adc559f). Hacker News feed fixed, Hugging Face and Google AI added; release feeds (jev, Agent OS, spec-kit, BMAD, Claude Code) are `must_read` without a decision call; must-reads get 2-3 Hebrew sentences in a 3,200-character brief; a failed feed shows `מקור לא זמין: <name>` in the footer.
-15. **JSON sources for Hacker News and GitHub releases** (`2026-10-20-brief-v15-json-sources`). `hnrss.org` (HTTP 502) and GitHub `releases.atom` (HTTP 403 from the cloud sandbox) replaced by the Algolia HN API and the GitHub releases API behind the same `Source<Item[]>`; feed entries gain `format`.
+15. **JSON sources for Hacker News and GitHub releases** (`2026-10-20-brief-v15-json-sources`, commit 5de76d4). `hnrss.org` (HTTP 502) and GitHub `releases.atom` (HTTP 403 from the cloud sandbox) replaced by the Algolia HN API and the GitHub releases API behind the same `Source<Item[]>`; feed entries gain `format`.
 
 ## Next
 

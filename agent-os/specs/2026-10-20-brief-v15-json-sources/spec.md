@@ -1,6 +1,6 @@
 # Spec: brief v15 — JSON sources for Hacker News and GitHub releases
 
-Status: shaped 2026-10-20 from the 2026-10-20 run record: `hnrss.org` HTTP 502 (fourth day), all four GitHub `releases.atom` feeds HTTP 403 from the cloud sandbox although they fetch fine from a laptop. Builds on v14. Standards applied: typescript-style, testing.
+Status: shaped 2026-10-20 from the 2026-10-20 run record: `hnrss.org` HTTP 502 (fourth day), all four GitHub `releases.atom` feeds HTTP 403 from the cloud sandbox although they fetch fine from a laptop. Builds on v14. Standards applied: typescript-style, testing. Shipped 2026-10-20, commit 5de76d4.
 
 ## Goal
 
