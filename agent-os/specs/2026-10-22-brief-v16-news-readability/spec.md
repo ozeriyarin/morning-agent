@@ -1,6 +1,6 @@
 # Spec: brief v16 — readable news layout on a phone
 
-Status: shaped 2026-10-22 from the owner's report that the "AI היום" section is unreadable. Builds on v14. Standards applied: typescript-style, testing.
+Status: shaped 2026-10-22 from the owner's report that the "AI היום" section is unreadable. Builds on v14. Standards applied: typescript-style, testing. Shipped 2026-10-22, commit 0fd7a88.
 
 ## Goal
 
