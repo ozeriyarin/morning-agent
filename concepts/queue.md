@@ -18,7 +18,7 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-18 evals and LLM-as-judge
 - [x] 2026-10-19 multi-agent orchestration
 - [x] 2026-10-21 context window and token budgeting
-- [ ] prompt injection and the instruction boundary
+- [x] 2026-10-22 prompt injection and the instruction boundary
 - [ ] function calling vs structured outputs
 - [ ] agent memory: short-term, long-term, episodic
 - [ ] vector databases and ANN indexes (HNSW)
