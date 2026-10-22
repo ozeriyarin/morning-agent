@@ -89,13 +89,26 @@ export class TemplateWriter implements Writer {
   }
 }
 
+const RLM = '‏';
+
+// Telegram lays a line out by its first strong character; the mark keeps non-Hebrew starts RTL.
+export const rtl = (line: string) => (/^(<[^>]*>)*[֐-׿]/.test(line) ? line : RLM + line);
+
 function newsLines(news: Brief['news']): string[] {
   if (news.quietDay || news.mustRead.length + news.mention.length === 0) {
     return ['יום שקט: אין היום חדשות AI שדורשות תשומת לב.'];
   }
-  const lines = news.mustRead.map((n) => `• ${link(n.url, n.title)} - ${escapeHtml(n.why)}`);
+  const lines = news.mustRead.flatMap((n, i) => [
+    ...(i ? [''] : []),
+    rtl(`<b>${i + 1}.</b> ${escapeHtml(n.why)}`),
+    rtl(`קישור: ${link(n.url, n.title)}`),
+  ]);
   if (news.mention.length)
-    lines.push(`עוד: ${news.mention.map((n) => link(n.url, n.title)).join(' · ')}`);
+    lines.push(
+      '',
+      '<b>עוד לקריאה:</b>',
+      ...news.mention.map((n) => rtl(`• ${link(n.url, n.title)}`)),
+    );
   return lines;
 }
 
@@ -171,7 +184,10 @@ function render(brief: Brief, missing: Section[]): string {
 }
 
 export function visibleLength(html: string): number {
-  return html.replace(/<[^>]*>/g, '').replace(/&(amp|lt|gt|quot);/g, '_').length;
+  return html
+    .replace(/<[^>]*>/g, '')
+    .replace(/&(amp|lt|gt|quot);/g, '_')
+    .replace(/‏/g, '').length;
 }
 
 // Telegram HTML; drops mentions, then extra must-reads, never calendar/concept/interview, to fit.

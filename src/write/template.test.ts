@@ -3,6 +3,7 @@ import type { Brief, Item, WriterInput } from '../types.js';
 import {
   escapeHtml,
   formatBrief,
+  rtl,
   MAX_BRIEF_CHARS,
   QUEUE_EMPTY_CONCEPT,
   templateBrief,
@@ -135,7 +136,7 @@ describe('templateBrief + formatBrief', () => {
     const brief = templateBrief({ ...input, mustRead: [{ ...item(1), seenBefore }], mention });
     expect(brief.news.mustRead[0]?.why).toBe('המשך ל"Claude Code hooks" מה-3.10: (Simon Willison)');
     expect(formatBrief(brief)).toContain(
-      '</a> - המשך ל&quot;Claude Code hooks&quot; מה-3.10: (Simon Willison)',
+      '<b>1.</b> המשך ל&quot;Claude Code hooks&quot; מה-3.10: (Simon Willison)',
     );
     expect(brief.news.mention).toEqual([{ title: 'Item 2', url: item(2).link }]);
     expect(templateBrief(input).news.mustRead[0]?.why).toBe('(Simon Willison)');
@@ -246,5 +247,49 @@ describe('v14 brief budget', () => {
     expect(over).toContain('14:00–15:00 ראיון');
     expect(over).toContain('<b>תשובה:</b>');
     expect(over).toContain('<b>מלכודת:</b>');
+  });
+});
+
+describe('v16 news readability', () => {
+  const href = (n: number) => escapeHtml(item(n).link);
+  const news = (mustRead: number[], mention: number[]) =>
+    formatBrief(
+      templateBrief({
+        ...input,
+        mustRead: mustRead.map((n) => item(n, `Title ${n}`)),
+        mention: mention.map((n) => item(n, `Title ${n}`)),
+      }),
+    );
+
+  it('v16 criterion 1: "A must-read renders as two lines, the Hebrew `why` with a numbered marker first and `קישור: <a href>title</a>` second, with a blank line between consecutive must-reads."', () => {
+    const html = news([1, 2], []);
+    expect(html).toContain(
+      `‏<b>1.</b> (Simon Willison)
+קישור: <a href="${href(1)}">Title 1</a>
+
+‏<b>2.</b> (Simon Willison)
+קישור: <a href="${href(2)}">Title 2</a>`,
+    );
+    expect(html).not.toContain('Title 1</a> -');
+  });
+
+  it('v16 criterion 2: "Mentions render under a `עוד לקריאה:` header, one `• <a>title</a>` line each, never joined on one line."', () => {
+    const html = news([1], [2, 3]);
+    expect(html).toContain(
+      `
+
+<b>עוד לקריאה:</b>
+‏• <a href="${href(2)}">Title 2</a>
+‏• <a href="${href(3)}">Title 3</a>`,
+    );
+    expect(html).not.toContain('</a> · <a');
+  });
+
+  it('v16 criterion 3: "Every news line whose first visible character is not Hebrew starts with U+200F, and `visibleLength` ignores the mark."', () => {
+    expect(rtl('<b>1.</b> שלום')).toBe('‏<b>1.</b> שלום');
+    expect(rtl('• <a href="x">Title</a>')).toBe('‏• <a href="x">Title</a>');
+    expect(rtl('קישור: <a href="x">Title</a>')).toBe('קישור: <a href="x">Title</a>');
+    expect(rtl('<b>עוד לקריאה:</b>')).toBe('<b>עוד לקריאה:</b>');
+    expect(visibleLength('‏• <a href="x">ab</a>')).toBe(4);
   });
 });
