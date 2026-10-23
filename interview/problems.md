@@ -18,7 +18,7 @@ becomes `- [x] YYYY-MM-DD …`. The order cycles through the patterns, so every 
 - [x] 2026-10-20 group-anagrams | Group Anagrams | medium | hash map | https://leetcode.com/problems/group-anagrams/
 - [x] 2026-10-21 container-with-most-water | Container With Most Water | medium | two pointers | https://leetcode.com/problems/container-with-most-water/
 - [x] 2026-10-22 min-stack | Min Stack | medium | stack | https://leetcode.com/problems/min-stack/
-- [ ] search-in-rotated-sorted-array | Search in Rotated Sorted Array | medium | binary search | https://leetcode.com/problems/search-in-rotated-sorted-array/
+- [x] 2026-10-23 search-in-rotated-sorted-array | Search in Rotated Sorted Array | medium | binary search | https://leetcode.com/problems/search-in-rotated-sorted-array/
 - [ ] longest-substring-without-repeating-characters | Longest Substring Without Repeating Characters | medium | sliding window | https://leetcode.com/problems/longest-substring-without-repeating-characters/
 - [ ] invert-binary-tree | Invert Binary Tree | easy | trees | https://leetcode.com/problems/invert-binary-tree/
 - [ ] number-of-islands | Number of Islands | medium | BFS/DFS | https://leetcode.com/problems/number-of-islands/
