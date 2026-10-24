@@ -19,7 +19,7 @@ becomes `- [x] YYYY-MM-DD …`. The order cycles through the patterns, so every 
 - [x] 2026-10-21 container-with-most-water | Container With Most Water | medium | two pointers | https://leetcode.com/problems/container-with-most-water/
 - [x] 2026-10-22 min-stack | Min Stack | medium | stack | https://leetcode.com/problems/min-stack/
 - [x] 2026-10-23 search-in-rotated-sorted-array | Search in Rotated Sorted Array | medium | binary search | https://leetcode.com/problems/search-in-rotated-sorted-array/
-- [ ] longest-substring-without-repeating-characters | Longest Substring Without Repeating Characters | medium | sliding window | https://leetcode.com/problems/longest-substring-without-repeating-characters/
+- [x] 2026-10-24 longest-substring-without-repeating-characters | Longest Substring Without Repeating Characters | medium | sliding window | https://leetcode.com/problems/longest-substring-without-repeating-characters/
 - [ ] invert-binary-tree | Invert Binary Tree | easy | trees | https://leetcode.com/problems/invert-binary-tree/
 - [ ] number-of-islands | Number of Islands | medium | BFS/DFS | https://leetcode.com/problems/number-of-islands/
 - [ ] house-robber | House Robber | medium | dynamic programming | https://leetcode.com/problems/house-robber/

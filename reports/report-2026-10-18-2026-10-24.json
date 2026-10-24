@@ -1,0 +1,442 @@
+{
+  "days": [
+    {
+      "date": "2026-10-18",
+      "delivery": "sent",
+      "items": {
+        "fetched": 1329,
+        "inWindow": 2,
+        "decided": 2
+      },
+      "decisions": {
+        "must_read": 0,
+        "mention": 0,
+        "skip": 2
+      },
+      "calls": {
+        "decision": {
+          "calls": 2,
+          "inputTokens": 1883,
+          "outputTokens": 66,
+          "cacheReadTokens": 0,
+          "costUsd": 0.0022129999999999997,
+          "meanLatencyMs": 826.3917919999999
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 362,
+          "outputTokens": 898,
+          "cacheReadTokens": 0,
+          "costUsd": 0.014704,
+          "meanLatencyMs": 13161.072970999998
+        },
+        "embed": {
+          "calls": 1,
+          "inputTokens": 21,
+          "outputTokens": 0,
+          "cacheReadTokens": 0,
+          "costUsd": 4.2e-7,
+          "meanLatencyMs": 604.4750020000001
+        }
+      },
+      "costUsd": 0.01691742,
+      "errors": [
+        {
+          "source": "Hacker News AI"
+        }
+      ],
+      "calendarEvents": 3,
+      "icloud": "ok",
+      "concept": "evals and LLM-as-judge",
+      "writer": "sonnet"
+    },
+    {
+      "date": "2026-10-19",
+      "delivery": "sent",
+      "items": {
+        "fetched": 1329,
+        "inWindow": 2,
+        "decided": 2
+      },
+      "decisions": {
+        "must_read": 0,
+        "mention": 1,
+        "skip": 1
+      },
+      "calls": {
+        "decision": {
+          "calls": 2,
+          "inputTokens": 1898,
+          "outputTokens": 66,
+          "cacheReadTokens": 0,
+          "costUsd": 0.002228,
+          "meanLatencyMs": 885.3830975000001
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 488,
+          "outputTokens": 886,
+          "cacheReadTokens": 0,
+          "costUsd": 0.014836,
+          "meanLatencyMs": 12992.630118
+        },
+        "embed": {
+          "calls": 1,
+          "inputTokens": 21,
+          "outputTokens": 0,
+          "cacheReadTokens": 0,
+          "costUsd": 4.2e-7,
+          "meanLatencyMs": 497.5663379999987
+        }
+      },
+      "costUsd": 0.01706442,
+      "errors": [
+        {
+          "source": "Hacker News AI"
+        }
+      ],
+      "calendarEvents": 2,
+      "icloud": "ok",
+      "concept": "multi-agent orchestration",
+      "writer": "sonnet"
+    },
+    {
+      "date": "2026-10-20",
+      "delivery": "sent",
+      "items": {
+        "fetched": 2235,
+        "inWindow": 2,
+        "decided": 2
+      },
+      "decisions": {
+        "must_read": 0,
+        "mention": 2,
+        "skip": 0
+      },
+      "calls": {
+        "decision": {
+          "calls": 2,
+          "inputTokens": 2011,
+          "outputTokens": 66,
+          "cacheReadTokens": 0,
+          "costUsd": 0.002341,
+          "meanLatencyMs": 926.1561340000003
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 643,
+          "outputTokens": 712,
+          "cacheReadTokens": 0,
+          "costUsd": 0.013431,
+          "meanLatencyMs": 10314.228168000001
+        },
+        "embed": {
+          "calls": 1,
+          "inputTokens": 13,
+          "outputTokens": 0,
+          "cacheReadTokens": 0,
+          "costUsd": 2.6e-7,
+          "meanLatencyMs": 2467.405681
+        }
+      },
+      "costUsd": 0.01577226,
+      "errors": [
+        {
+          "source": "Hacker News AI"
+        },
+        {
+          "source": "Agent OS"
+        },
+        {
+          "source": "spec-kit"
+        },
+        {
+          "source": "BMAD"
+        },
+        {
+          "source": "Claude Code"
+        }
+      ],
+      "calendarEvents": 2,
+      "icloud": "ok",
+      "concept": null,
+      "writer": "sonnet"
+    },
+    {
+      "date": "2026-10-21",
+      "delivery": "sent",
+      "items": {
+        "fetched": 2252,
+        "inWindow": 18,
+        "decided": 18
+      },
+      "decisions": {
+        "must_read": 1,
+        "mention": 1,
+        "skip": 16
+      },
+      "calls": {
+        "decision": {
+          "calls": 18,
+          "inputTokens": 17260,
+          "outputTokens": 596,
+          "cacheReadTokens": 0,
+          "costUsd": 0.02024,
+          "meanLatencyMs": 729.7752643888889
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 461,
+          "outputTokens": 961,
+          "cacheReadTokens": 0,
+          "costUsd": 0.015557,
+          "meanLatencyMs": 14061.398404000001
+        },
+        "embed": {
+          "calls": 1,
+          "inputTokens": 242,
+          "outputTokens": 0,
+          "cacheReadTokens": 0,
+          "costUsd": 0.00000484,
+          "meanLatencyMs": 693.6764570000005
+        }
+      },
+      "costUsd": 0.03580184,
+      "errors": [
+        {
+          "source": "Agent OS"
+        },
+        {
+          "source": "spec-kit"
+        },
+        {
+          "source": "BMAD"
+        },
+        {
+          "source": "Claude Code"
+        }
+      ],
+      "calendarEvents": 2,
+      "icloud": "ok",
+      "concept": "context window and token budgeting",
+      "writer": "sonnet"
+    },
+    {
+      "date": "2026-10-22",
+      "delivery": "sent",
+      "items": {
+        "fetched": 2265,
+        "inWindow": 22,
+        "decided": 22
+      },
+      "decisions": {
+        "must_read": 3,
+        "mention": 3,
+        "skip": 16
+      },
+      "calls": {
+        "decision": {
+          "calls": 22,
+          "inputTokens": 21063,
+          "outputTokens": 732,
+          "cacheReadTokens": 0,
+          "costUsd": 0.024723000000000002,
+          "meanLatencyMs": 698.565815181818
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 724,
+          "outputTokens": 1378,
+          "cacheReadTokens": 0,
+          "costUsd": 0.020253,
+          "meanLatencyMs": 16129.410767000001
+        },
+        "embed": {
+          "calls": 1,
+          "inputTokens": 268,
+          "outputTokens": 0,
+          "cacheReadTokens": 0,
+          "costUsd": 0.00000536,
+          "meanLatencyMs": 697.7616330000001
+        }
+      },
+      "costUsd": 0.04498136,
+      "errors": [
+        {
+          "source": "Agent OS"
+        },
+        {
+          "source": "spec-kit"
+        },
+        {
+          "source": "BMAD"
+        },
+        {
+          "source": "Claude Code"
+        }
+      ],
+      "calendarEvents": 2,
+      "icloud": "ok",
+      "concept": "prompt injection and the instruction boundary",
+      "writer": "sonnet"
+    },
+    {
+      "date": "2026-10-23",
+      "delivery": "sent",
+      "items": {
+        "fetched": 2267,
+        "inWindow": 18,
+        "decided": 18
+      },
+      "decisions": {
+        "must_read": 2,
+        "mention": 2,
+        "skip": 14
+      },
+      "calls": {
+        "decision": {
+          "calls": 18,
+          "inputTokens": 17148,
+          "outputTokens": 598,
+          "cacheReadTokens": 0,
+          "costUsd": 0.020138,
+          "meanLatencyMs": 649.6778258888888
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 816,
+          "outputTokens": 1127,
+          "cacheReadTokens": 0,
+          "costUsd": 0.017927,
+          "meanLatencyMs": 13982.211247
+        },
+        "embed": {
+          "calls": 1,
+          "inputTokens": 208,
+          "outputTokens": 0,
+          "cacheReadTokens": 0,
+          "costUsd": 0.00000416,
+          "meanLatencyMs": 1575.2974270000004
+        }
+      },
+      "costUsd": 0.03806916,
+      "errors": [
+        {
+          "source": "Agent OS"
+        },
+        {
+          "source": "spec-kit"
+        },
+        {
+          "source": "BMAD"
+        },
+        {
+          "source": "Claude Code"
+        }
+      ],
+      "calendarEvents": 3,
+      "icloud": "ok",
+      "concept": "function calling vs structured outputs",
+      "writer": "sonnet"
+    },
+    {
+      "date": "2026-10-24",
+      "delivery": "sent",
+      "items": {
+        "fetched": 2272,
+        "inWindow": 15,
+        "decided": 15
+      },
+      "decisions": {
+        "must_read": 1,
+        "mention": 4,
+        "skip": 10
+      },
+      "calls": {
+        "decision": {
+          "calls": 15,
+          "inputTokens": 14383,
+          "outputTokens": 497,
+          "cacheReadTokens": 0,
+          "costUsd": 0.016868,
+          "meanLatencyMs": 648.4916477333335
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 776,
+          "outputTokens": 1248,
+          "cacheReadTokens": 0,
+          "costUsd": 0.019057,
+          "meanLatencyMs": 14571.746143
+        },
+        "embed": {
+          "calls": 1,
+          "inputTokens": 193,
+          "outputTokens": 0,
+          "cacheReadTokens": 0,
+          "costUsd": 0.0000038599999999999995,
+          "meanLatencyMs": 614.4251380000005
+        }
+      },
+      "costUsd": 0.03592886000000001,
+      "errors": [
+        {
+          "source": "Agent OS"
+        },
+        {
+          "source": "spec-kit"
+        },
+        {
+          "source": "BMAD"
+        },
+        {
+          "source": "Claude Code"
+        }
+      ],
+      "calendarEvents": 1,
+      "icloud": "ok",
+      "concept": "agent memory: short-term, long-term, episodic",
+      "writer": "sonnet"
+    }
+  ],
+  "totals": {
+    "daysRun": 7,
+    "daysDelivered": 7,
+    "items": {
+      "fetched": 13949,
+      "inWindow": 79,
+      "decided": 79
+    },
+    "costUsd": 0.20453531999999985,
+    "costByRole": {
+      "decision": 0.08875100000000001,
+      "writer": 0.115765,
+      "embed": 0.00001932
+    },
+    "costByModel": {
+      "voyage-3.5-lite": 0.00001932,
+      "claude-haiku-4-5-20251001": 0.08875100000000001,
+      "claude-sonnet-5-5": 0.115765
+    },
+    "meanCostPerDay": 0.02921933142857141,
+    "meanLatencyMs": {
+      "decision": 698.7574724303796,
+      "writer": 13601.813973999999,
+      "embed": 1021.5153822857144
+    },
+    "errors": 23,
+    "errorsBySource": {
+      "Hacker News AI": 3,
+      "Agent OS": 5,
+      "spec-kit": 5,
+      "BMAD": 5,
+      "Claude Code": 5
+    },
+    "writerCacheHitRatio": 0,
+    "briefsByWriter": {
+      "sonnet": 7,
+      "haiku": 0,
+      "template": 0
+    }
+  }
+}
