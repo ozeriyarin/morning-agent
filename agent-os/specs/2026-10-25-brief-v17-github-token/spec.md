@@ -1,6 +1,6 @@
 # Spec: brief v17 — authenticated GitHub release feeds
 
-Status: shaped 2026-10-25 from the run records of 2026-10-21..25: all four `github-releases` feeds (Agent OS, spec-kit, BMAD, Claude Code) failed with `HTTP 403` every day, 6 times each in the weekly report, although `api.github.com` is on the sandbox allow list and the same requests succeed from a laptop. Builds on v15. Standards applied: typescript-style, testing.
+Status: shaped 2026-10-25 from the run records of 2026-10-21..25: all four `github-releases` feeds (Agent OS, spec-kit, BMAD, Claude Code) failed with `HTTP 403` every day, 6 times each in the weekly report, although `api.github.com` is on the sandbox allow list and the same requests succeed from a laptop. Builds on v15. Standards applied: typescript-style, testing. Shipped 2026-10-25, commit 63f10ca.
 
 ## Goal
 
