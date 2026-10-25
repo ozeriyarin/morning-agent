@@ -473,8 +473,12 @@ A `hn-algolia` entry needs a `"query"` (or `?query=` in its url); an item withou
 its HN page and its summary is the point count. A `github-releases` entry is always a release
 feed: drafts and prereleases are skipped, the title is the tag with the feed name prefixed
 (`Claude Code v2.1.304`) and the summary is the release notes cut to 600 characters. GitHub allows
-60 unauthenticated calls an hour per IP; the brief makes four a day. A non-2xx or non-JSON reply
-fails the feed like an RSS error does. jev stays on the PyPI RSS feed.
+60 unauthenticated calls an hour per IP, and the cloud sandbox shares its egress IP, so from
+2026-10-21 all four feeds got HTTP 403 daily. Since v17 (2026-10-25) a `GITHUB_TOKEN` (or
+`MORNING_GITHUB_TOKEN`; a fine-grained token with no permissions is enough) in the environment is
+sent as a Bearer header, which gives 5,000 calls an hour. A non-2xx or non-JSON reply fails the
+feed like an RSS error does; a JSON error body's `message` is quoted after the status, and a 401
+or 403 without a token adds a hint naming the variable. jev stays on the PyPI RSS feed.
 
 ## Adding a concept
 
@@ -524,11 +528,13 @@ tip or the explanation. Add a problem or a tip by appending a `- [ ]` line in th
 
 ## The routine
 
-The brief runs as a Claude Code cloud routine named "Morning brief v2": cron `0 4 * * *` UTC
-(07:00 Israel summer time; change to `0 5 * * *` after DST ends on 2026-10-25), repo
+The brief runs as a Claude Code cloud routine named "Morning brief v2": cron `0 5 * * *` UTC
+(07:00 Israel winter time, set on 2026-10-25 when DST ended; `0 4 * * *` while DST is in force,
+next from 2027-03-26), repo
 `ozeriyarin/morning-agent`, model `claude-sonnet-5-5`, allowed tools Bash, Read, Write, Edit,
 Glob, Grep, `mcp__Google_Calendar__*` and `mcp__Gmail__*`. The secrets are environment variables
-of the routine's cloud environment, whose allow list includes `registry.npmjs.org`, `github.com`,
+of the routine's cloud environment (since v17 also the optional `GITHUB_TOKEN` for the release
+feeds), whose allow list includes `registry.npmjs.org`, `github.com`,
 `api.telegram.org`, `api.open-meteo.com`, `geocoding-api.open-meteo.com`, the feed hosts
 (`simonwillison.net`, `hn.algolia.com`, `openai.com`, `huggingface.co`, `blog.google`,
 `pypi.org` and `api.github.com` for the release feeds),
@@ -585,8 +591,8 @@ With nothing new it calls only `getUpdates` and changes no file.
 npm run inbox      # needs TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID only
 ```
 
-The "Inbox" routine: cron `0 4-20 * * *` UTC (07:00–23:00 Israel summer time; `0 5-21 * * *`
-after DST ends), same repo, model and environment as the brief, with `api.telegram.org`,
+The "Inbox" routine: cron `0 5-21 * * *` UTC (07:00–23:00 Israel winter time; `0 4-20 * * *`
+while DST is in force), same repo, model and environment as the brief, with `api.telegram.org`,
 `api.open-meteo.com` and `geocoding-api.open-meteo.com` on the allow list. Routine prompt:
 
 ```text

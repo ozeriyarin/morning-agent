@@ -39,6 +39,7 @@ export interface WiringOptions {
   decider?: Decider;
   openRouterKey?: string | null;
   voyageKey?: string | null;
+  githubToken?: string | null;
   memoryPath?: string;
   print?: (text: string) => void;
 }
@@ -110,7 +111,11 @@ export function buildDeps(options: WiringOptions): RunDeps {
       fetch: (ctx) => icloudSource.reminders(ctx),
     },
     remindersFile: new RemindersFileSource(root, timeZone, options.remindersPath),
-    feeds: config.feeds.map((feed) => new FEED_CLASSES[feed.format](feed, fetchFn)),
+    feeds: config.feeds.map((feed) =>
+      feed.format === 'github-releases'
+        ? new GithubReleasesSource(feed, fetchFn, options.githubToken ?? null)
+        : new FEED_CLASSES[feed.format](feed, fetchFn),
+    ),
     concepts: new FileConceptStore(join(root, 'concepts', 'queue.md')),
     interview: new FileInterviewStore(
       join(root, 'interview', 'problems.md'),

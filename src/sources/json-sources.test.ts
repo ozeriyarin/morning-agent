@@ -1,10 +1,15 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { briefConfigSchema } from '../config.js';
+import { briefConfigSchema, loadGithubToken } from '../config.js';
 import { buildDeps } from '../run/wiring.js';
 import { SourceError } from '../types.js';
 import { FeedSource } from './feeds.js';
-import { GithubReleasesSource, HnAlgoliaSource, USER_AGENT } from './json-sources.js';
+import {
+  GITHUB_TOKEN_HINT,
+  GithubReleasesSource,
+  HnAlgoliaSource,
+  USER_AGENT,
+} from './json-sources.js';
 
 const hnBody = readFileSync('test/fixtures/hn-algolia.json', 'utf8');
 const githubBody = readFileSync('test/fixtures/github-releases.json', 'utf8');
@@ -94,7 +99,7 @@ describe('v15 json sources', () => {
     'v15 criterion 3: "A non-2xx or non-JSON response from either source throws `SourceError` carrying the source name and HTTP status." (%s)',
     async (_, make) => {
       for (const [body, status, message] of [
-        ['{"message":"rate limited"}', 403, 'HTTP 403'],
+        ['{"message":"rate limited"}', 403, 'HTTP 403: rate limited'],
         ['<html>bad gateway</html>', 200, 'HTTP 200: body is not JSON'],
         ['{"unexpected":true}', 200, 'HTTP 200: unexpected JSON shape'],
       ] as const) {
@@ -102,7 +107,8 @@ describe('v15 json sources', () => {
           .fetch(ctx)
           .catch((e: unknown) => e);
         expect(error).toBeInstanceOf(SourceError);
-        expect(error).toMatchObject({ source: make(fetch).name, message });
+        expect(error).toMatchObject({ source: make(fetch).name });
+        expect((error as Error).message.startsWith(message)).toBe(true); // v17 may append a hint
       }
     },
   );
@@ -141,5 +147,83 @@ describe('v15 json sources', () => {
       HnAlgoliaSource,
       GithubReleasesSource,
     ]);
+  });
+});
+
+describe('v17 github token', () => {
+  const token = 'github_pat_test_only';
+
+  it('v17 criterion 1: "`GithubReleasesSource` sends `Authorization: Bearer <token>` when given a token and no Authorization header otherwise; the other headers are unchanged."', async () => {
+    const withToken = recorder(githubBody);
+    await new GithubReleasesSource(GITHUB, withToken.fetchFn, token).fetch();
+    expect(withToken.calls[0]?.init?.headers).toEqual({
+      Accept: 'application/vnd.github+json',
+      'User-Agent': USER_AGENT,
+      Authorization: `Bearer ${token}`,
+    });
+
+    const without = recorder(githubBody);
+    await new GithubReleasesSource(GITHUB, without.fetchFn).fetch();
+    expect(without.calls[0]?.init?.headers).toEqual({
+      Accept: 'application/vnd.github+json',
+      'User-Agent': USER_AGENT,
+    });
+  });
+
+  it('v17 criterion 2: "A non-2xx JSON reply with a `message` reports it after the status, on one line and cut to 120 characters; a body without one keeps the bare `HTTP <status>`."', async () => {
+    const long = 'API rate limit exceeded for 1.2.3.4. ' + 'x'.repeat(200);
+    const cases: [string, string][] = [
+      [
+        JSON.stringify({ message: 'API rate limit exceeded for 1.2.3.4.\n (But here)' }),
+        'HTTP 403: API rate limit exceeded for 1.2.3.4. (But here)',
+      ],
+      [JSON.stringify({ message: long }), `HTTP 403: ${long.slice(0, 119)}…`],
+      ['{"error":"nope"}', 'HTTP 403'],
+      ['', 'HTTP 403'],
+    ];
+    for (const [body, message] of cases) {
+      const error = await new GithubReleasesSource(GITHUB, recorder(body, 403).fetchFn, token)
+        .fetch()
+        .catch((e: unknown) => e);
+      expect(error).toMatchObject({ source: GITHUB.name, message });
+    }
+  });
+
+  it('v17 criterion 3: "A 401 or 403 from GitHub without a token appends the GITHUB_TOKEN hint to the error; with a token, or on other statuses, the message is left alone."', async () => {
+    const fail = (status: number, t: string | null) =>
+      new GithubReleasesSource(GITHUB, recorder('{"message":"blocked"}', status).fetchFn, t)
+        .fetch()
+        .catch((e: unknown) => (e as Error).message);
+    expect(await fail(403, null)).toBe(`HTTP 403: blocked (${GITHUB_TOKEN_HINT})`);
+    expect(await fail(401, null)).toBe(`HTTP 401: blocked (${GITHUB_TOKEN_HINT})`);
+    expect(await fail(403, token)).toBe('HTTP 403: blocked');
+    expect(await fail(500, null)).toBe('HTTP 500: blocked');
+  });
+
+  it('v17 criterion 4: "`loadGithubToken` prefers `MORNING_GITHUB_TOKEN` over `GITHUB_TOKEN`, trims, and returns null when neither is set; the wiring hands the token to `github-releases` sources only."', async () => {
+    expect(loadGithubToken({ MORNING_GITHUB_TOKEN: ' a ', GITHUB_TOKEN: 'b' })).toBe('a');
+    expect(loadGithubToken({ GITHUB_TOKEN: 'b' })).toBe('b');
+    expect(loadGithubToken({ GITHUB_TOKEN: '  ' })).toBeNull();
+    expect(loadGithubToken({})).toBeNull();
+
+    const { calls, fetchFn } = recorder(githubBody);
+    const parsed = briefConfigSchema.parse({
+      ...config,
+      feeds: [
+        { ...GITHUB, format: 'github-releases' },
+        { name: 'Blog', url: 'https://example.com/feed' },
+      ],
+    });
+    const deps = buildDeps({
+      env: { dryRun: true },
+      config: parsed,
+      prices: { asOf: '', models: {} },
+      root: '.',
+      fetchFn,
+      githubToken: token,
+    });
+    await deps.feeds[0]?.fetch(ctx);
+    expect(calls[0]?.init?.headers).toMatchObject({ Authorization: `Bearer ${token}` });
+    expect(deps.feeds[1]).toBeInstanceOf(FeedSource);
   });
 });

@@ -28,7 +28,11 @@ const githubSchema = z.array(
   }),
 );
 
-// Non-2xx, a non-JSON body and an unexpected shape all throw with the HTTP status.
+const ERROR_MESSAGE_CHARS = 120;
+
+// Non-2xx, a non-JSON body and an unexpected shape all throw with the HTTP status. A JSON
+// error body with a `message` (GitHub: "API rate limit exceeded for 1.2.3.4. ...") is quoted
+// after the status, cut to 120 characters, so the run record says why and not only that.
 async function fetchJson<T>(
   name: string,
   url: string,
@@ -37,7 +41,10 @@ async function fetchJson<T>(
   headers: Record<string, string> = {},
 ): Promise<T> {
   const res = await fetchFn(url, { headers, signal: AbortSignal.timeout(30_000) });
-  if (!res.ok) throw new SourceError(name, `HTTP ${res.status}`);
+  if (!res.ok) {
+    const reason = await errorMessage(res);
+    throw new SourceError(name, reason ? `HTTP ${res.status}: ${reason}` : `HTTP ${res.status}`);
+  }
   let body: unknown;
   try {
     body = JSON.parse(await res.text());
@@ -48,6 +55,24 @@ async function fetchJson<T>(
   if (!parsed.success) throw new SourceError(name, `HTTP ${res.status}: unexpected JSON shape`);
   return parsed.data;
 }
+
+async function errorMessage(res: Response): Promise<string | null> {
+  try {
+    const body: unknown = JSON.parse(await res.text());
+    const message =
+      typeof body === 'object' && body !== null && 'message' in body ? body.message : null;
+    if (typeof message !== 'string' || !message.trim()) return null;
+    const oneLine = message.replace(/\s+/g, ' ').trim();
+    return oneLine.length > ERROR_MESSAGE_CHARS
+      ? `${oneLine.slice(0, ERROR_MESSAGE_CHARS - 1)}…`
+      : oneLine;
+  } catch {
+    return null;
+  }
+}
+
+export const GITHUB_TOKEN_HINT =
+  'set GITHUB_TOKEN: unauthenticated api.github.com calls share one 60/hour limit per IP';
 
 export class HnAlgoliaSource implements Source<Item[]> {
   readonly name: string;
@@ -100,11 +125,22 @@ export class HnAlgoliaSource implements Source<Item[]> {
 export class GithubReleasesSource implements Source<Item[]> {
   readonly name: string;
 
+  // `token` (v17) authenticates the API: 5,000 calls an hour per token instead of 60 per IP.
   constructor(
     private readonly feed: FeedOptions,
     private readonly fetchFn: typeof fetch,
+    private readonly token: string | null = null,
   ) {
     this.name = feed.name;
+  }
+
+  private headers(): Record<string, string> {
+    const headers: Record<string, string> = {
+      Accept: 'application/vnd.github+json',
+      'User-Agent': USER_AGENT,
+    };
+    if (this.token) headers.Authorization = `Bearer ${this.token}`;
+    return headers;
   }
 
   private requestUrl(): string {
@@ -114,9 +150,17 @@ export class GithubReleasesSource implements Source<Item[]> {
   }
 
   async fetch(): Promise<Item[]> {
-    const releases = await fetchJson(this.name, this.requestUrl(), githubSchema, this.fetchFn, {
-      Accept: 'application/vnd.github+json',
-      'User-Agent': USER_AGENT,
+    const releases = await fetchJson(
+      this.name,
+      this.requestUrl(),
+      githubSchema,
+      this.fetchFn,
+      this.headers(),
+    ).catch((error: unknown) => {
+      // 401/403 without a token is the per-IP limit or a blocked IP; say what fixes it.
+      if (error instanceof SourceError && !this.token && /^HTTP 40[13]\b/.test(error.message))
+        throw new SourceError(this.name, `${error.message} (${GITHUB_TOKEN_HINT})`, error.reason);
+      throw error;
     });
     const items = releases
       .filter((r) => !r.draft && !r.prerelease)

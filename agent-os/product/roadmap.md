@@ -20,6 +20,7 @@ Each item is one spec in `agent-os/specs/`. Ship in order; each step is usable o
 14. **News with substance** (`2026-10-19-brief-v14-news-substance`, commit adc559f). Hacker News feed fixed, Hugging Face and Google AI added; release feeds (jev, Agent OS, spec-kit, BMAD, Claude Code) are `must_read` without a decision call; must-reads get 2-3 Hebrew sentences in a 3,200-character brief; a failed feed shows `מקור לא זמין: <name>` in the footer.
 15. **JSON sources for Hacker News and GitHub releases** (`2026-10-20-brief-v15-json-sources`, commit 5de76d4). `hnrss.org` (HTTP 502) and GitHub `releases.atom` (HTTP 403 from the cloud sandbox) replaced by the Algolia HN API and the GitHub releases API behind the same `Source<Item[]>`; feed entries gain `format`.
 16. **Readable news layout** (`2026-10-22-brief-v16-news-readability`, commit 0fd7a88). Each must-read is a Hebrew paragraph with its link on the next line, mentions one per line, and a right-to-left mark on every line that starts with Latin text so Telegram keeps the section RTL.
+17. **Authenticated GitHub release feeds** (`2026-10-25-brief-v17-github-token`). The four release feeds had failed with HTTP 403 daily since 2026-10-21: the sandbox shares its egress IP, so GitHub's 60-calls-an-hour unauthenticated limit was already spent. An optional `GITHUB_TOKEN` is sent as a Bearer header; JSON error bodies are quoted in the record (`HTTP 403: API rate limit exceeded ...`), and a 401/403 without a token names the variable.
 
 ## Next
 
@@ -30,4 +31,5 @@ Each item is one spec in `agent-os/specs/`. Ship in order; each step is usable o
 
 ## Operations
 
-- DST ends 2026-10-25: move all three routines one hour later in UTC (brief 04→05, replay 05→06, inbox 4–20→5–21).
+- DST ended 2026-10-25: all three routines moved one hour later in UTC that day (brief 04→05, replay 05→06, inbox 4–20→5–21). Reverse when DST starts again (2027-03-26).
+- v17 needs `GITHUB_TOKEN` in the routine's cloud environment; check the next run record for the four release feeds.

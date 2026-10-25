@@ -68,6 +68,13 @@ export function loadVoyageKey(source: Record<string, string | undefined>): strin
   return source.VOYAGE_API_KEY?.trim() || null;
 }
 
+// Optional: authenticates the GitHub releases API (v17). Unauthenticated calls share one
+// 60/hour limit per IP, which the cloud sandbox's shared egress exhausts (HTTP 403 every day
+// since 2026-10-21). A project-specific name comes first, as for the Anthropic key.
+export function loadGithubToken(source: Record<string, string | undefined>): string | null {
+  return source.MORNING_GITHUB_TOKEN?.trim() || source.GITHUB_TOKEN?.trim() || null;
+}
+
 const memoryConfigSchema = z
   .object({
     enabled: z.boolean().default(true),
