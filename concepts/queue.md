@@ -22,7 +22,7 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-23 function calling vs structured outputs
 - [x] 2026-10-24 agent memory: short-term, long-term, episodic
 - [x] 2026-10-25 vector databases and ANN indexes (HNSW)
-- [ ] hybrid search: BM25 + vectors + RRF
+- [x] 2026-10-26 hybrid search: BM25 + vectors + RRF
 - [ ] rerankers and cross-encoders
 - [ ] chunking strategies and overlap
 - [ ] citations and grounding
