@@ -1,0 +1,565 @@
+{
+  "date": "2026-10-27",
+  "generatedAt": "2026-10-27T05:04:03.847Z",
+  "dryRun": false,
+  "fetchedCount": 2277,
+  "items": [
+    {
+      "title": "GPT-6.1 Terra",
+      "link": "https://simonwillison.net/2026/Oct/26/gpt-61-terra/",
+      "published": "2026-10-26T23:53:07.000Z",
+      "summary": "GPT-6.1 Terra It's always interesting to note which aspects of a new model are emphasized in the release announcement. In the case of GPT-6.1 Terra, OpenAI went with visual reasoning and computer use: We’re introducing GPT-6.1 Terra , a fast, efficient model that combines detailed visual reasoning and precise computer use alongside clearer, more natural writing. A significant step up from GPT‑5.6 ",
+      "sources": [
+        "Simon Willison",
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Cross-request KV cache exposure in the GLM-5.3 Workers AI model (155 responses)",
+      "link": "https://blog.cloudflare.com/kv-cache-exposure-remediation/",
+      "published": "2026-10-26T22:41:48.000Z",
+      "summary": "101 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Greptile takes bug detection beyond code review with GPT-6 Astra",
+      "link": "https://openai.com/index/greptile-code-review-codex-astra",
+      "published": "2026-10-26T22:00:00.000Z",
+      "summary": "How Greptile uses GPT-6 Astra to test user workflows, Daybreak to strengthen security, and Codex to reduce rework.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "Proton to 'Re-Interview' Staff About AI to See Who Gets to Keep Their Job",
+      "link": "https://www.404media.co/proton-to-re-interview-staff-about-ai-to-see-who-gets-to-keep-their-job/",
+      "published": "2026-10-26T21:13:59.000Z",
+      "summary": "57 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Quoting Jason Koebler",
+      "link": "https://simonwillison.net/2026/Oct/26/jason-koebler/",
+      "published": "2026-10-26T19:00:25.000Z",
+      "summary": "Because big tech platforms essentially do not have customer support and make it impossible for their users to contact a human, many people experiencing run-of-the-mill tech problems have turned to ChatGPT. And, increasingly, ChatGPT is telling people that have normal tech support problems that they have discovered something journalistically notable and that 404 Media, specifically, can help them. ",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "The Git Forge for Agent-Human Collaboration",
+      "link": "https://entire.com/blog/the-git-forge-for-agent-human-collaboration",
+      "published": "2026-10-26T17:23:11.000Z",
+      "summary": "54 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Concerning behavior from a popular open-weight AI model",
+      "link": "https://cohere.com/blog/concerning-behaviour-popular-open-weight-ai-model",
+      "published": "2026-10-26T16:35:44.000Z",
+      "summary": "280 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "webframe: evaluated as a scraper and a sandbox",
+      "link": "https://simonwillison.net/2026/Oct/26/webframe-evaluation/",
+      "published": "2026-10-26T16:15:00.000Z",
+      "summary": "Research: webframe: evaluated as a scraper and a sandbox webframe is a neat little project from Jeff Lindsay which lets you \"run a web page like a program\" - you point it at a URL or file and it executes it in a hidden headless web view and outputs console.log() to standard output and any exceptions to standard error. It's written in Go on top of the glaze library, which provides access to a syste",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Show HN: Hob - Open-source, on device alternative to Claude Cowork and ChatGPT",
+      "link": "https://github.com/FrigadeHQ/hob",
+      "published": "2026-10-26T16:12:29.000Z",
+      "summary": "133 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Our newest AI Quest: Mapping the human brain",
+      "link": "https://blog.google/products-and-platforms/products/education/ai-quests-polar-peaks/",
+      "published": "2026-10-26T16:00:00.000Z",
+      "summary": "Learn AI literacy via Google’s latest AI Quests lesson on neuroscience, “Polar Peaks.”",
+      "sources": [
+        "Google AI"
+      ]
+    },
+    {
+      "title": "Sebastian Raschka's from-scratch video course on building reasoning models",
+      "link": "https://magazine.sebastianraschka.com/p/building-reasoning-models",
+      "published": "2026-10-26T15:11:59.000Z",
+      "summary": "621 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Working with academic communities to build scientific understanding",
+      "link": "https://openai.com/index/building-scientific-understanding-with-academic-communities",
+      "published": "2026-10-26T14:30:00.000Z",
+      "summary": "OpenAI shares model results on the Kakeya conjecture, Exponential Time Hypothesis, and quantum chromodynamics—and how researchers can verify and build on them.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "GPT-6.1 Sol helps CodeRabbit strengthen security across complex codebases",
+      "link": "https://openai.com/index/gpt-6-1-sol-coderabbit-code-security",
+      "published": "2026-10-26T13:45:00.000Z",
+      "summary": "CodeRabbit uses GPT-6.1 Sol to investigate security risks across complex codebases. Its security agent helps developers review findings and proposed fixes.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "Fixing Tool-Call Accuracy in vLLM",
+      "link": "https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm",
+      "published": "2026-10-26T12:59:48.000Z",
+      "summary": "157 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Brown student maps the hidden global labor powering AI",
+      "link": "https://www.brown.edu/news/2026-10-26/ai-data-workers",
+      "published": "2026-10-26T12:58:27.000Z",
+      "summary": "177 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "ChatGPT’s expanding world of work",
+      "link": "https://openai.com/index/chatgpt-expanding-world-of-work",
+      "published": "2026-10-26T10:00:00.000Z",
+      "summary": "Explore OpenAI Signals data on 165 work activities across nearly 100 countries, revealing how people use ChatGPT for work and how usage changes over time.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "How Fanatics and OpenAI streamline the fan experience",
+      "link": "https://openai.com/index/fanatics-streamline-fan-experience",
+      "published": "2026-10-26T07:00:00.000Z",
+      "summary": "Fanatics uses OpenAI to help fans complete their game-day outfits with Shop the Look. Testing across roughly 30,000 MLB products showed 10% higher engagement.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "How Ultrafast cut incident investigation from hours to minutes at OpenAI",
+      "link": "https://openai.com/index/openai-cut-incident-investigation",
+      "published": "2026-10-26T07:00:00.000Z",
+      "summary": "See how OpenAI engineers use Codex Ultrafast to investigate incidents in minutes. Explore faster security analysis, code refactoring, and daily workflows.",
+      "sources": [
+        "OpenAI News"
+      ]
+    }
+  ],
+  "calendar": {
+    "count": 2,
+    "allDay": 0,
+    "timed": 2,
+    "bySource": {
+      "google": 0,
+      "icloud": 2
+    }
+  },
+  "icloud": "ok",
+  "reminders": {
+    "count": 1,
+    "source": "file"
+  },
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "GPT-6.1 Terra",
+      "link": "https://simonwillison.net/2026/Oct/26/gpt-61-terra/",
+      "decision": "must_read",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Cross-request KV cache exposure in the GLM-5.3 Workers AI model (155 responses)",
+      "link": "https://blog.cloudflare.com/kv-cache-exposure-remediation/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Greptile takes bug detection beyond code review with GPT-6 Astra",
+      "link": "https://openai.com/index/greptile-code-review-codex-astra",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Proton to 'Re-Interview' Staff About AI to See Who Gets to Keep Their Job",
+      "link": "https://www.404media.co/proton-to-re-interview-staff-about-ai-to-see-who-gets-to-keep-their-job/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Quoting Jason Koebler",
+      "link": "https://simonwillison.net/2026/Oct/26/jason-koebler/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "The Git Forge for Agent-Human Collaboration",
+      "link": "https://entire.com/blog/the-git-forge-for-agent-human-collaboration",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Concerning behavior from a popular open-weight AI model",
+      "link": "https://cohere.com/blog/concerning-behaviour-popular-open-weight-ai-model",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "webframe: evaluated as a scraper and a sandbox",
+      "link": "https://simonwillison.net/2026/Oct/26/webframe-evaluation/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Show HN: Hob - Open-source, on device alternative to Claude Cowork and ChatGPT",
+      "link": "https://github.com/FrigadeHQ/hob",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Our newest AI Quest: Mapping the human brain",
+      "link": "https://blog.google/products-and-platforms/products/education/ai-quests-polar-peaks/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Sebastian Raschka's from-scratch video course on building reasoning models",
+      "link": "https://magazine.sebastianraschka.com/p/building-reasoning-models",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Working with academic communities to build scientific understanding",
+      "link": "https://openai.com/index/building-scientific-understanding-with-academic-communities",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "GPT-6.1 Sol helps CodeRabbit strengthen security across complex codebases",
+      "link": "https://openai.com/index/gpt-6-1-sol-coderabbit-code-security",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Fixing Tool-Call Accuracy in vLLM",
+      "link": "https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Brown student maps the hidden global labor powering AI",
+      "link": "https://www.brown.edu/news/2026-10-26/ai-data-workers",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "ChatGPT’s expanding world of work",
+      "link": "https://openai.com/index/chatgpt-expanding-world-of-work",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "How Fanatics and OpenAI streamline the fan experience",
+      "link": "https://openai.com/index/fanatics-streamline-fan-experience",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "How Ultrafast cut incident investigation from hours to minutes at OpenAI",
+      "link": "https://openai.com/index/openai-cut-incident-investigation",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    }
+  ],
+  "calls": [
+    {
+      "role": "embed",
+      "model": "voyage-3.5-lite",
+      "inputTokens": 205,
+      "outputTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 629.9372760000001,
+      "costUsd": 0.0000041
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1066,
+      "outputTokens": 35,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 783.6673879999998,
+      "costUsd": 0.001241
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 949,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 784.0830959999994,
+      "costUsd": 0.001114
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 969,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 758.9805159999996,
+      "costUsd": 0.001134
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 946,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 768.6930069999999,
+      "costUsd": 0.001111
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1068,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 920.7611269999998,
+      "costUsd": 0.001233
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 935,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 575.3664819999995,
+      "costUsd": 0.0011
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 936,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 575.4501330000003,
+      "costUsd": 0.001101
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1074,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 599.5296350000008,
+      "costUsd": 0.001239
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 950,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 570.3379960000002,
+      "costUsd": 0.001115
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 946,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 578.7282230000001,
+      "costUsd": 0.001111
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 940,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 609.9818190000005,
+      "costUsd": 0.001105
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 961,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 647.2758570000005,
+      "costUsd": 0.001126
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 969,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 555.8247449999999,
+      "costUsd": 0.001134
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 937,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 587.4426450000001,
+      "costUsd": 0.001102
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 935,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 487.2885610000003,
+      "costUsd": 0.0011
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 962,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 605.8700939999999,
+      "costUsd": 0.001127
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 968,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 583.8567459999995,
+      "costUsd": 0.001133
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 964,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 597.6897900000004,
+      "costUsd": 0.001129
+    },
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 849,
+      "outputTokens": 1175,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 2010,
+      "latencyMs": 15810.810349000001,
+      "costUsd": 0.018473
+    }
+  ],
+  "totalCostUsd": 0.0389321,
+  "writer": "sonnet",
+  "writerAttempts": 1,
+  "missingSections": [],
+  "concept": {
+    "name": "rerankers and cross-encoders",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": "house-robber",
+    "tipIndex": 19,
+    "marked": true
+  },
+  "memory": {
+    "indexSize": 165,
+    "seenBefore": 0,
+    "examples": 0,
+    "related": 0,
+    "chunkIds": []
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent",
+    "attempts": 1
+  },
+  "briefChars": 1899,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "Agent OS",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "spec-kit",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "BMAD",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "Claude Code",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    }
+  ]
+}
