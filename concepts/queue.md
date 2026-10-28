@@ -24,7 +24,7 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-25 vector databases and ANN indexes (HNSW)
 - [x] 2026-10-26 hybrid search: BM25 + vectors + RRF
 - [x] 2026-10-27 rerankers and cross-encoders
-- [ ] chunking strategies and overlap
+- [x] 2026-10-28 chunking strategies and overlap
 - [ ] citations and grounding
 - [ ] hallucination detection and verification loops
 - [ ] temperature, top-p and sampling

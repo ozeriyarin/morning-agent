@@ -23,7 +23,7 @@ becomes `- [x] YYYY-MM-DD …`. The order cycles through the patterns, so every 
 - [x] 2026-10-25 invert-binary-tree | Invert Binary Tree | easy | trees | https://leetcode.com/problems/invert-binary-tree/
 - [x] 2026-10-26 number-of-islands | Number of Islands | medium | BFS/DFS | https://leetcode.com/problems/number-of-islands/
 - [x] 2026-10-27 house-robber | House Robber | medium | dynamic programming | https://leetcode.com/problems/house-robber/
-- [ ] insert-interval | Insert Interval | medium | intervals | https://leetcode.com/problems/insert-interval/
+- [x] 2026-10-28 insert-interval | Insert Interval | medium | intervals | https://leetcode.com/problems/insert-interval/
 - [ ] top-k-frequent-elements | Top K Frequent Elements | medium | heaps | https://leetcode.com/problems/top-k-frequent-elements/
 - [ ] clone-graph | Clone Graph | medium | graphs | https://leetcode.com/problems/clone-graph/
 - [ ] design-add-and-search-words-data-structure | Design Add and Search Words Data Structure | medium | tries | https://leetcode.com/problems/design-add-and-search-words-data-structure/
