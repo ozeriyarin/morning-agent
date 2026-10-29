@@ -1,0 +1,564 @@
+{
+  "date": "2026-10-29",
+  "generatedAt": "2026-10-29T05:04:23.832Z",
+  "dryRun": false,
+  "fetchedCount": 2288,
+  "items": [
+    {
+      "title": "Claude Code burns ~15–20% of your tokens on a 3-word status line",
+      "link": "https://gist.github.com/flamerix-ai/c3905705cc4205e5de3011fa2e74efce",
+      "published": "2026-10-29T03:33:42.000Z",
+      "summary": "132 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Quoting Ted Sanders",
+      "link": "https://simonwillison.net/2026/Oct/28/ted-sanders/",
+      "published": "2026-10-28T23:23:21.000Z",
+      "summary": "In general, LLM performance is incredibly multidimensional. There's no guarantee of a fixed ordering where the model that is best at math is also the model that's best at jokes. Despite that complexity, much of the variation in performance is explained by just a single variable: model size. In general, models that are bigger will (a) be more performant / reliable, (b) cost more per token, and (c) ",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Leak Exposes 41,000 Homeland Security Workers–Including Undercover ICE Agents",
+      "link": "https://www.wired.com/story/massive-leak-exposes-41000-homeland-security-workers-including-undercover-ice-agents/",
+      "published": "2026-10-28T21:03:24.000Z",
+      "summary": "307 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Google AI gets cagey when asked who won the 2020 elections",
+      "link": "https://arstechnica.com/ai/2026/10/google-ai-gets-cagey-when-asked-who-won-the-2020-elections/",
+      "published": "2026-10-28T20:10:16.000Z",
+      "summary": "138 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Gemini 4 Carbon",
+      "link": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+      "published": "2026-10-28T17:01:23.000Z",
+      "summary": "854 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "GitHub Octoverse 2026",
+      "link": "https://simonwillison.net/2026/Oct/28/github-octoverse-2026/",
+      "published": "2026-10-28T16:45:23.000Z",
+      "summary": "GitHub Octoverse 2026 I'm at GitHub Universe today (GitHub gave me a free ticket through their \"GitHub Stars\" program). EVP Jay Parikh just announced this year's Octoverse report, and highlighted these numbers in particular: This is a pretty stark representation of the impact of agentic engineering on GitHub. In 2026, merged pull requests tripled in less than a year to 220 million per month. Commi",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Dayjob: Tax – evaluating AI agents on 50 professional tax assignments",
+      "link": "https://surgehq.ai/blog/dayjob-tax",
+      "published": "2026-10-28T15:46:30.000Z",
+      "summary": "218 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "NVIDIA Nemotron 3.5 Transcribe and Granary v2: Intelligent Multilingual Transcription You Can Prompt and Adapt",
+      "link": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary",
+      "published": "2026-10-28T14:58:17.000Z",
+      "summary": "",
+      "sources": [
+        "Hugging Face"
+      ]
+    },
+    {
+      "title": "The Agent SDK",
+      "link": "https://cursor.com/blog/agent-sdk",
+      "published": "2026-10-28T14:02:20.000Z",
+      "summary": "110 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Harvey raised 500M for legal AI, I built the same and open sourced it",
+      "link": "https://github.com/thomasunise/casecite",
+      "published": "2026-10-28T13:56:21.000Z",
+      "summary": "69 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "The October inflection point for vibe game development",
+      "link": "https://simonwillison.net/2026/Oct/28/vibe-game-development/",
+      "published": "2026-10-28T13:55:15.000Z",
+      "summary": "I've written before about how November 2025 was an inflection point for coding agents - the point where Opus 4.5 and GPT-5.1 crossed a tipping point that meant their respective coding agents became reliable daily drivers for software engineers. I think we've reached a new inflection point in October 2026, and this time it's for vibe coding computer games . Tree Appreciator Emberwick Battle Drones ",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Kentucky man becomes the first humanist granted religious exemption from AI",
+      "link": "https://religionnews.com/2026/10/26/in-a-first-a-humanist-granted-a-religious-exemption-from-using-ai/",
+      "published": "2026-10-28T13:41:30.000Z",
+      "summary": "446 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Valve Responds to Developers Fearing AI Slop and Clones",
+      "link": "https://www.invenglobal.com/articles/27761/valve-responds-to-developers-fearing-ai-slop-and-clones",
+      "published": "2026-10-28T13:27:24.000Z",
+      "summary": "65 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "OpenAI and ServiceNow expand partnership across enterprise workflows",
+      "link": "https://openai.com/index/openai-servicenow-partnership-expansion",
+      "published": "2026-10-28T13:15:00.000Z",
+      "summary": "OpenAI and ServiceNow expand their partnership to bring OpenAI models and agents into ServiceNow and ServiceNow workflows into ChatGPT and Codex.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "Microsoft and Epic Games Suddenly Agree That AI Is Theft",
+      "link": "https://kotaku.com/now-that-the-shoe-is-on-the-other-foot-microsoft-and-epic-games-suddenly-agree-that-ai-is-theft-2000749316",
+      "published": "2026-10-28T10:10:58.000Z",
+      "summary": "69 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Quoting Terk Terkowitz",
+      "link": "https://simonwillison.net/2026/Oct/28/terk-terkowitz/",
+      "published": "2026-10-28T10:09:07.000Z",
+      "summary": "If your work does not benefit from current AI tooling, that is a finding, not a failing. Document why, share it with your community of peers, bring it to your manager, and work to find solutions. An engineer who can explain where AI does not yet help their work is demonstrating the judgement we are asking for. &mdash; Terk Terkowitz , An update from Amazon engineering leadership on the role of the",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "The future of the firm",
+      "link": "https://openai.com/index/the-future-of-the-firm",
+      "published": "2026-10-28T10:00:00.000Z",
+      "summary": "How AI might enter the org chart—beneath, beside, and between us.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "Legora is building the agentic operating system for legal work",
+      "link": "https://openai.com/index/legora",
+      "published": "2026-10-28T09:30:00.000Z",
+      "summary": "See how Legora uses OpenAI models, ChatGPT, and Codex to accelerate legal workflows, expand contract analysis, and free lawyers to focus on higher-value work.",
+      "sources": [
+        "OpenAI News"
+      ]
+    }
+  ],
+  "calendar": {
+    "count": 3,
+    "allDay": 1,
+    "timed": 2,
+    "bySource": {
+      "google": 0,
+      "icloud": 3
+    }
+  },
+  "icloud": "ok",
+  "reminders": {
+    "count": 1,
+    "source": "file"
+  },
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "Claude Code burns ~15–20% of your tokens on a 3-word status line",
+      "link": "https://gist.github.com/flamerix-ai/c3905705cc4205e5de3011fa2e74efce",
+      "decision": "must_read",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Quoting Ted Sanders",
+      "link": "https://simonwillison.net/2026/Oct/28/ted-sanders/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Leak Exposes 41,000 Homeland Security Workers–Including Undercover ICE Agents",
+      "link": "https://www.wired.com/story/massive-leak-exposes-41000-homeland-security-workers-including-undercover-ice-agents/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Google AI gets cagey when asked who won the 2020 elections",
+      "link": "https://arstechnica.com/ai/2026/10/google-ai-gets-cagey-when-asked-who-won-the-2020-elections/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Gemini 4 Carbon",
+      "link": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "GitHub Octoverse 2026",
+      "link": "https://simonwillison.net/2026/Oct/28/github-octoverse-2026/",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Dayjob: Tax – evaluating AI agents on 50 professional tax assignments",
+      "link": "https://surgehq.ai/blog/dayjob-tax",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "NVIDIA Nemotron 3.5 Transcribe and Granary v2: Intelligent Multilingual Transcription You Can Prompt and Adapt",
+      "link": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "The Agent SDK",
+      "link": "https://cursor.com/blog/agent-sdk",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Harvey raised 500M for legal AI, I built the same and open sourced it",
+      "link": "https://github.com/thomasunise/casecite",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "The October inflection point for vibe game development",
+      "link": "https://simonwillison.net/2026/Oct/28/vibe-game-development/",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Kentucky man becomes the first humanist granted religious exemption from AI",
+      "link": "https://religionnews.com/2026/10/26/in-a-first-a-humanist-granted-a-religious-exemption-from-using-ai/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Valve Responds to Developers Fearing AI Slop and Clones",
+      "link": "https://www.invenglobal.com/articles/27761/valve-responds-to-developers-fearing-ai-slop-and-clones",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "OpenAI and ServiceNow expand partnership across enterprise workflows",
+      "link": "https://openai.com/index/openai-servicenow-partnership-expansion",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Microsoft and Epic Games Suddenly Agree That AI Is Theft",
+      "link": "https://kotaku.com/now-that-the-shoe-is-on-the-other-foot-microsoft-and-epic-games-suddenly-agree-that-ai-is-theft-2000749316",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Quoting Terk Terkowitz",
+      "link": "https://simonwillison.net/2026/Oct/28/terk-terkowitz/",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "The future of the firm",
+      "link": "https://openai.com/index/the-future-of-the-firm",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Legora is building the agentic operating system for legal work",
+      "link": "https://openai.com/index/legora",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    }
+  ],
+  "calls": [
+    {
+      "role": "embed",
+      "model": "voyage-3.5-lite",
+      "inputTokens": 196,
+      "outputTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 789.6174780000001,
+      "costUsd": 0.00000392
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 944,
+      "outputTokens": 35,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 740.6504550000009,
+      "costUsd": 0.001119
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1066,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 751.2823410000001,
+      "costUsd": 0.001231
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 948,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 801.9401770000004,
+      "costUsd": 0.001113
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 941,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 743.5300479999987,
+      "costUsd": 0.001106
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 932,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 747.9745800000001,
+      "costUsd": 0.001097
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1068,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 608.7426560000004,
+      "costUsd": 0.001233
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 943,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 599.2506959999992,
+      "costUsd": 0.001108
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 952,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 599.4727789999997,
+      "costUsd": 0.001117
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 928,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 624.4630390000002,
+      "costUsd": 0.001093
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 943,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 598.5412899999992,
+      "costUsd": 0.001108
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1069,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 614.114144000001,
+      "costUsd": 0.001234
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 938,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 599.1301309999999,
+      "costUsd": 0.001103
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 943,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 528.4579250000006,
+      "costUsd": 0.001108
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 964,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 627.2240460000012,
+      "costUsd": 0.001129
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 938,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 516.7537739999989,
+      "costUsd": 0.001103
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1041,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 595.9563119999984,
+      "costUsd": 0.001206
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 936,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 583.5184699999991,
+      "costUsd": 0.001101
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 970,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 504.5117280000013,
+      "costUsd": 0.001135
+    },
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 1478,
+      "outputTokens": 1237,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 2010,
+      "latencyMs": 14553.475505,
+      "costUsd": 0.020351
+    }
+  ],
+  "totalCostUsd": 0.04079892,
+  "writer": "sonnet",
+  "writerAttempts": 1,
+  "missingSections": [],
+  "concept": {
+    "name": "citations and grounding",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": "top-k-frequent-elements",
+    "tipIndex": 21,
+    "marked": true
+  },
+  "memory": {
+    "indexSize": 205,
+    "seenBefore": 0,
+    "examples": 0,
+    "related": 0,
+    "chunkIds": []
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent",
+    "attempts": 1
+  },
+  "briefChars": 1893,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "Agent OS",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "spec-kit",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "BMAD",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "Claude Code",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    }
+  ]
+}
