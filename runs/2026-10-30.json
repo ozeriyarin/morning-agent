@@ -1,0 +1,564 @@
+{
+  "date": "2026-10-30",
+  "generatedAt": "2026-10-30T05:04:10.696Z",
+  "dryRun": false,
+  "fetchedCount": 2295,
+  "items": [
+    {
+      "title": "API credits benefit for eligible ChatGPT subscriptions",
+      "link": "https://simonwillison.net/2026/Oct/29/api-credits/",
+      "published": "2026-10-29T22:48:29.000Z",
+      "summary": "API credits benefit for eligible ChatGPT subscriptions Earlier this month Anthropic announced a generous new benefit for their Max and Team subscriptions: $100, $200, and $500 per month subscribers would get the equivalent quantity of (expiring) credits to use with the Anthropic API. OpenAI have now launched pretty much exactly the same deal: if you have a $100, $200, or $500 subscription plan wit",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Proton goes all in on using AI",
+      "link": "https://convo.casa/@b/117525936178835007",
+      "published": "2026-10-29T21:49:28.000Z",
+      "summary": "85 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "We ran AI agent swarms in Minecraft and Mindustry",
+      "link": "https://labs.ycombinator.com/projects/games/index.html",
+      "published": "2026-10-29T21:40:28.000Z",
+      "summary": "225 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "A tiny world model running games on a Raspberry Pi Pico 2 W",
+      "link": "https://github.com/SheepSeb/tinyworldformer",
+      "published": "2026-10-29T20:32:28.000Z",
+      "summary": "166 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Claude Duet is the first personal-assistant-type harness that feels useful",
+      "link": "https://fig.blue/posts/duet-is-the-future/",
+      "published": "2026-10-29T17:24:25.000Z",
+      "summary": "113 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Building a multiplayer game world with autonomous Fable-class models",
+      "link": "https://simonwillison.net/2026/Oct/29/how-i-built-the-most-ai-pilled-company-in-the-world/",
+      "published": "2026-10-29T17:00:26.000Z",
+      "summary": "How I Built the Most AI-Pilled Company in the World Don't be put off by the clickbait headline, this piece by Jacob Sansbury describing how they are building Spawn is a fascinating exploration of the bleeding edge of what's possible with agentic engineering against frontier models. Spawn is a massively multiplayer gaming environment where players can use prompts (to the in-game agent, Savi) to mod",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "An updated Model Spec for more capable and beneficial AI",
+      "link": "https://openai.com/index/updated-model-spec",
+      "published": "2026-10-29T17:00:00.000Z",
+      "summary": "OpenAI’s updated Model Spec outlines five core values to guide more capable AI toward sound judgment, human agency, and faithfulness to human intent.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "Launch HN: Simantic (YC F26) – Firmware Simulation for AI Agents",
+      "link": "https://news.ycombinator.com/item?id=50291116",
+      "published": "2026-10-29T15:56:32.000Z",
+      "summary": "58 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Grace Blackwell needs a new scheduler: 27% more usable GPUs from the same racks",
+      "link": "https://skypilot.ai/blog/grace-blackwell-needs-a-new-scheduler",
+      "published": "2026-10-29T15:45:05.000Z",
+      "summary": "133 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Zombie stats: Where the numbers AI quotes come from",
+      "link": "https://trakkr.ai/trakkr-research/zombie-stats",
+      "published": "2026-10-29T15:06:17.000Z",
+      "summary": "154 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "LLM Voice",
+      "link": "https://martinfowler.com/bliki/LLM-Voice.html",
+      "published": "2026-10-29T14:57:55.000Z",
+      "summary": "389 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Manifestos, Fear, and 'Loser Thinking': Inside Proton's AI Reckoning",
+      "link": "https://www.404media.co/manifestos-fear-and-loser-thinking-inside-protons-ai-reckoning/",
+      "published": "2026-10-29T14:29:06.000Z",
+      "summary": "147 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "We're releasing the weights of Mistral Large 4",
+      "link": "https://mistral.ai/news/mistral-large-4-oss/",
+      "published": "2026-10-29T14:13:21.000Z",
+      "summary": "1281 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Quoting Ben Hylak",
+      "link": "https://simonwillison.net/2026/Oct/29/ben-hylak/",
+      "published": "2026-10-29T14:06:27.000Z",
+      "summary": "every product i use should just be a headless mcp, that feeds into an agent, where i never have to think about anything underneath. except for our product, of course. in our product, customers love the ui and love us very much. we're special that way. &mdash; Ben Hylak Tags: model-context-protocol , ai",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Granite Switch 4.1.1 — Update models like you update software",
+      "link": "https://huggingface.co/blog/ibm-granite/granite-switch-4-1-1",
+      "published": "2026-10-29T13:37:07.000Z",
+      "summary": "",
+      "sources": [
+        "Hugging Face"
+      ]
+    },
+    {
+      "title": "Gemini 4 Carbon is the new #1 on the Artificial Analysis Intelligence Index v5",
+      "link": "https://artificialanalysis.ai/articles/gemini-4-carbon-new-number-1",
+      "published": "2026-10-29T12:41:56.000Z",
+      "summary": "329 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "How we detect frontier model misalignment",
+      "link": "https://openai.com/index/how-we-detect-frontier-model-misalignment",
+      "published": "2026-10-29T09:00:00.000Z",
+      "summary": "OpenAI uses layered monitoring to detect frontier model misalignment and unauthorized agent behavior so responders can intervene before incidents escalate.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "How Ropes & Gray is developing AI for transactional diligence",
+      "link": "https://openai.com/index/ropes-gray-ai-diligence",
+      "published": "2026-10-29T07:00:00.000Z",
+      "summary": "Ropes & Gray is developing AI for transactional diligence with OpenAI. Lawyers review grouped documents, summaries, and reports before advising clients.",
+      "sources": [
+        "OpenAI News"
+      ]
+    }
+  ],
+  "calendar": {
+    "count": 3,
+    "allDay": 0,
+    "timed": 3,
+    "bySource": {
+      "google": 0,
+      "icloud": 3
+    }
+  },
+  "icloud": "ok",
+  "reminders": {
+    "count": 1,
+    "source": "file"
+  },
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "API credits benefit for eligible ChatGPT subscriptions",
+      "link": "https://simonwillison.net/2026/Oct/29/api-credits/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Proton goes all in on using AI",
+      "link": "https://convo.casa/@b/117525936178835007",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "We ran AI agent swarms in Minecraft and Mindustry",
+      "link": "https://labs.ycombinator.com/projects/games/index.html",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "A tiny world model running games on a Raspberry Pi Pico 2 W",
+      "link": "https://github.com/SheepSeb/tinyworldformer",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Claude Duet is the first personal-assistant-type harness that feels useful",
+      "link": "https://fig.blue/posts/duet-is-the-future/",
+      "decision": "must_read",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Building a multiplayer game world with autonomous Fable-class models",
+      "link": "https://simonwillison.net/2026/Oct/29/how-i-built-the-most-ai-pilled-company-in-the-world/",
+      "decision": "must_read",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "An updated Model Spec for more capable and beneficial AI",
+      "link": "https://openai.com/index/updated-model-spec",
+      "decision": "must_read",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Launch HN: Simantic (YC F26) – Firmware Simulation for AI Agents",
+      "link": "https://news.ycombinator.com/item?id=50291116",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Grace Blackwell needs a new scheduler: 27% more usable GPUs from the same racks",
+      "link": "https://skypilot.ai/blog/grace-blackwell-needs-a-new-scheduler",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Zombie stats: Where the numbers AI quotes come from",
+      "link": "https://trakkr.ai/trakkr-research/zombie-stats",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "LLM Voice",
+      "link": "https://martinfowler.com/bliki/LLM-Voice.html",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Manifestos, Fear, and 'Loser Thinking': Inside Proton's AI Reckoning",
+      "link": "https://www.404media.co/manifestos-fear-and-loser-thinking-inside-protons-ai-reckoning/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "We're releasing the weights of Mistral Large 4",
+      "link": "https://mistral.ai/news/mistral-large-4-oss/",
+      "decision": "must_read",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Quoting Ben Hylak",
+      "link": "https://simonwillison.net/2026/Oct/29/ben-hylak/",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Granite Switch 4.1.1 — Update models like you update software",
+      "link": "https://huggingface.co/blog/ibm-granite/granite-switch-4-1-1",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Gemini 4 Carbon is the new #1 on the Artificial Analysis Intelligence Index v5",
+      "link": "https://artificialanalysis.ai/articles/gemini-4-carbon-new-number-1",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "How we detect frontier model misalignment",
+      "link": "https://openai.com/index/how-we-detect-frontier-model-misalignment",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "How Ropes & Gray is developing AI for transactional diligence",
+      "link": "https://openai.com/index/ropes-gray-ai-diligence",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    }
+  ],
+  "calls": [
+    {
+      "role": "embed",
+      "model": "voyage-3.5-lite",
+      "inputTokens": 202,
+      "outputTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 577.3728320000009,
+      "costUsd": 0.00000404
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1062,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 810.4976779999997,
+      "costUsd": 0.001227
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 934,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 793.1647049999992,
+      "costUsd": 0.001099
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 939,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 665.3677719999996,
+      "costUsd": 0.001104
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 943,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 811.5664130000005,
+      "costUsd": 0.001108
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 942,
+      "outputTokens": 35,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 791.3789820000002,
+      "costUsd": 0.001117
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1066,
+      "outputTokens": 35,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 640.7459130000007,
+      "costUsd": 0.001241
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 958,
+      "outputTokens": 35,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 504.1630179999993,
+      "costUsd": 0.001133
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 947,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 596.0994030000002,
+      "costUsd": 0.001112
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 947,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 609.8708349999997,
+      "costUsd": 0.001112
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 936,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 588.6736419999997,
+      "costUsd": 0.001101
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 929,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 627.7379870000004,
+      "costUsd": 0.001094
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 950,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 603.2838900000006,
+      "costUsd": 0.001115
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 938,
+      "outputTokens": 35,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 594.2864499999996,
+      "costUsd": 0.001113
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 998,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 590.7969460000004,
+      "costUsd": 0.001163
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 933,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 603.9491999999991,
+      "costUsd": 0.001098
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 947,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 594.0516200000002,
+      "costUsd": 0.001112
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 952,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 585.5508170000012,
+      "costUsd": 0.001117
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 967,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 588.4840890000014,
+      "costUsd": 0.001132
+    },
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 1335,
+      "outputTokens": 1674,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 2010,
+      "latencyMs": 17781.538299,
+      "costUsd": 0.024435
+    }
+  ],
+  "totalCostUsd": 0.04473703999999999,
+  "writer": "sonnet",
+  "writerAttempts": 1,
+  "missingSections": [],
+  "concept": {
+    "name": "hallucination detection and verification loops",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": "clone-graph",
+    "tipIndex": 22,
+    "marked": true
+  },
+  "memory": {
+    "indexSize": 224,
+    "seenBefore": 0,
+    "examples": 0,
+    "related": 0,
+    "chunkIds": []
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent",
+    "attempts": 1
+  },
+  "briefChars": 2579,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "Agent OS",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "spec-kit",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "BMAD",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "Claude Code",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    }
+  ]
+}

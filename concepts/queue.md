@@ -26,7 +26,7 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-27 rerankers and cross-encoders
 - [x] 2026-10-28 chunking strategies and overlap
 - [x] 2026-10-29 citations and grounding
-- [ ] hallucination detection and verification loops
+- [x] 2026-10-30 hallucination detection and verification loops
 - [ ] temperature, top-p and sampling
 - [ ] fine-tuning vs RAG vs prompting
 - [ ] LoRA and parameter-efficient fine-tuning
