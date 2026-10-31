@@ -1,0 +1,512 @@
+{
+  "date": "2026-10-31",
+  "generatedAt": "2026-10-31T05:04:15.888Z",
+  "dryRun": false,
+  "fetchedCount": 2300,
+  "items": [
+    {
+      "title": "OpenAI raises less than half of $30B target",
+      "link": "https://www.wsj.com/tech/ai/openai-raises-less-than-half-of-30-billion-target-in-latest-round-91aecdc5",
+      "published": "2026-10-31T03:22:44.000Z",
+      "summary": "54 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "dbreunig/nesformer",
+      "link": "https://simonwillison.net/2026/Oct/30/nesformer/",
+      "published": "2026-10-30T21:59:22.000Z",
+      "summary": "dbreunig/nesformer Inspired by qwenputer by Divyansh Agrawal, Drew Breunig baked a working emulator for a Nintendo Entertainment System 6502 CPU into the weights of Qwen3.5-4B. You can now play NES ROMs such as Super Mario Bros (very slowly) running inside Qwen! In a comment on Hacker News Drew reveals the Opus 5.5 prompts he used to build this system: Read this article and any relevant source cod",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Product Managers aren't safe either",
+      "link": "https://lucaskostka.com/posts/ai-challenges-more-than-devs",
+      "published": "2026-10-30T20:14:39.000Z",
+      "summary": "55 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "nemotron-halloween",
+      "link": "https://huggingface.co/blog/nvidia/nemotron-halloween",
+      "published": "2026-10-30T17:57:24.000Z",
+      "summary": "",
+      "sources": [
+        "Hugging Face"
+      ]
+    },
+    {
+      "title": "Proton's CEO Cancels AI 'Re-Interviews'",
+      "link": "https://www.404media.co/protons-ceo-cancels-ai-re-interviews/",
+      "published": "2026-10-30T17:24:45.000Z",
+      "summary": "266 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "US tech stocks see sharp falls over AI cost fears",
+      "link": "https://www.bbc.co.uk/news/articles/cvwy72e0n72yo",
+      "published": "2026-10-30T16:13:02.000Z",
+      "summary": "245 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "AI isn't replacing SREs, it's deskilling them",
+      "link": "https://newsletter.signoz.io/p/ai-isnt-replacing-sres-its-deskilling",
+      "published": "2026-10-30T15:52:18.000Z",
+      "summary": "542 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Neal Stephenson on AI and What Comes Next [video]",
+      "link": "https://www.youtube.com/watch?v=Ii-aeW5pHPQ",
+      "published": "2026-10-30T14:18:34.000Z",
+      "summary": "52 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Cisco gives engineer unlimited AI tokens to rewrite legacy code",
+      "link": "https://fortune.com/2026/10/30/cisco-president-jeetu-patel-gen-z-27-year-old-unlimited-ai-tokens-rewrite-legacy-code-entry-level-jobs/",
+      "published": "2026-10-30T14:08:20.000Z",
+      "summary": "139 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Backdoors in official Claude Code extensions",
+      "link": "https://cyberplace.social/@GossiTheDog/117528831681803563",
+      "published": "2026-10-30T11:05:53.000Z",
+      "summary": "655 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Claude Code VS Code extension with backdoor released on Cursor marketplace",
+      "link": "https://doublepulsar.com/anthropic-hacked-to-deliver-remote-access-trojan-to-claude-developer-laptops-worldwide-1148a92baae2",
+      "published": "2026-10-30T10:22:51.000Z",
+      "summary": "399 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Making it easier for websites to express AI training preferences",
+      "link": "https://openai.com/index/helping-websites-express-ai-training-preferences",
+      "published": "2026-10-30T09:30:00.000Z",
+      "summary": "OpenAI will honor a shared robots.txt signal to help website operators communicate their AI training preferences to participating providers.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "Ask HN: Are you tired too in this AI era?",
+      "link": "https://news.ycombinator.com/item?id=50301479",
+      "published": "2026-10-30T09:17:43.000Z",
+      "summary": "144 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Community safety report and new protections for teens",
+      "link": "https://openai.com/index/community-safety-report-and-new-protections-for-teens",
+      "published": "2026-10-30T09:00:00.000Z",
+      "summary": "OpenAI is strengthening violence prevention in ChatGPT with expanded safeguards, earlier interventions, and a new commitment to public safety reporting.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "Backdoor in Claude Code for VS Code extension on the Cursor Marketplace",
+      "link": "https://phorion.io/blog/offical-claude-code-vsx-compromise/",
+      "published": "2026-10-30T07:09:12.000Z",
+      "summary": "845 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Show HN: Arsaze – Cursor for video editing (Tab-complete and agent edits)",
+      "link": "https://www.arsaze.com",
+      "published": "2026-10-30T06:55:33.000Z",
+      "summary": "60 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    }
+  ],
+  "calendar": {
+    "count": 1,
+    "allDay": 0,
+    "timed": 1,
+    "bySource": {
+      "google": 0,
+      "icloud": 1
+    }
+  },
+  "icloud": "ok",
+  "reminders": {
+    "count": 0,
+    "source": "icloud"
+  },
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "OpenAI raises less than half of $30B target",
+      "link": "https://www.wsj.com/tech/ai/openai-raises-less-than-half-of-30-billion-target-in-latest-round-91aecdc5",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "dbreunig/nesformer",
+      "link": "https://simonwillison.net/2026/Oct/30/nesformer/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Product Managers aren't safe either",
+      "link": "https://lucaskostka.com/posts/ai-challenges-more-than-devs",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "nemotron-halloween",
+      "link": "https://huggingface.co/blog/nvidia/nemotron-halloween",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Proton's CEO Cancels AI 'Re-Interviews'",
+      "link": "https://www.404media.co/protons-ceo-cancels-ai-re-interviews/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "US tech stocks see sharp falls over AI cost fears",
+      "link": "https://www.bbc.co.uk/news/articles/cvwy72e0n72yo",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "AI isn't replacing SREs, it's deskilling them",
+      "link": "https://newsletter.signoz.io/p/ai-isnt-replacing-sres-its-deskilling",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Neal Stephenson on AI and What Comes Next [video]",
+      "link": "https://www.youtube.com/watch?v=Ii-aeW5pHPQ",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Cisco gives engineer unlimited AI tokens to rewrite legacy code",
+      "link": "https://fortune.com/2026/10/30/cisco-president-jeetu-patel-gen-z-27-year-old-unlimited-ai-tokens-rewrite-legacy-code-entry-level-jobs/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Backdoors in official Claude Code extensions",
+      "link": "https://cyberplace.social/@GossiTheDog/117528831681803563",
+      "decision": "must_read",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Claude Code VS Code extension with backdoor released on Cursor marketplace",
+      "link": "https://doublepulsar.com/anthropic-hacked-to-deliver-remote-access-trojan-to-claude-developer-laptops-worldwide-1148a92baae2",
+      "decision": "must_read",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Making it easier for websites to express AI training preferences",
+      "link": "https://openai.com/index/helping-websites-express-ai-training-preferences",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Ask HN: Are you tired too in this AI era?",
+      "link": "https://news.ycombinator.com/item?id=50301479",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Community safety report and new protections for teens",
+      "link": "https://openai.com/index/community-safety-report-and-new-protections-for-teens",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Backdoor in Claude Code for VS Code extension on the Cursor Marketplace",
+      "link": "https://phorion.io/blog/offical-claude-code-vsx-compromise/",
+      "decision": "must_read",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Show HN: Arsaze – Cursor for video editing (Tab-complete and agent edits)",
+      "link": "https://www.arsaze.com",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    }
+  ],
+  "calls": [
+    {
+      "role": "embed",
+      "model": "voyage-3.5-lite",
+      "inputTokens": 157,
+      "outputTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 2214.9191919999994,
+      "costUsd": 0.00000314
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 937,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 733.7438389999988,
+      "costUsd": 0.001102
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1099,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 605.9722929999989,
+      "costUsd": 0.001264
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 932,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 732.8725200000008,
+      "costUsd": 0.001097
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 921,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 717.9300089999997,
+      "costUsd": 0.001086
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 941,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 713.8406160000013,
+      "costUsd": 0.001106
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 935,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 584.6762579999995,
+      "costUsd": 0.0011
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 939,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 588.2849480000004,
+      "costUsd": 0.001104
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 939,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 452.700499999999,
+      "costUsd": 0.001104
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 937,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 578.9130150000001,
+      "costUsd": 0.001102
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 933,
+      "outputTokens": 35,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 586.272434999999,
+      "costUsd": 0.001108
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 938,
+      "outputTokens": 35,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 563.0776809999988,
+      "costUsd": 0.001113
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 949,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 588.9765490000009,
+      "costUsd": 0.001114
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 938,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 563.0996419999992,
+      "costUsd": 0.001103
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 956,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 447.37582199999997,
+      "costUsd": 0.001121
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 941,
+      "outputTokens": 35,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 469.8970909999989,
+      "costUsd": 0.001116
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 947,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 571.0050790000005,
+      "costUsd": 0.001112
+    },
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 653,
+      "outputTokens": 1502,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 2010,
+      "latencyMs": 17810.382462999998,
+      "costUsd": 0.021351
+    }
+  ],
+  "totalCostUsd": 0.03920614,
+  "writer": "sonnet",
+  "writerAttempts": 1,
+  "missingSections": [],
+  "concept": {
+    "name": "temperature, top-p and sampling",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": "design-add-and-search-words-data-structure",
+    "tipIndex": 23,
+    "marked": true
+  },
+  "memory": {
+    "indexSize": 243,
+    "seenBefore": 0,
+    "examples": 0,
+    "related": 0,
+    "chunkIds": []
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent",
+    "attempts": 1
+  },
+  "briefChars": 2301,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "Agent OS",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "spec-kit",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "BMAD",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "Claude Code",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    }
+  ]
+}

@@ -27,7 +27,7 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-28 chunking strategies and overlap
 - [x] 2026-10-29 citations and grounding
 - [x] 2026-10-30 hallucination detection and verification loops
-- [ ] temperature, top-p and sampling
+- [x] 2026-10-31 temperature, top-p and sampling
 - [ ] fine-tuning vs RAG vs prompting
 - [ ] LoRA and parameter-efficient fine-tuning
 - [ ] distillation and small models
