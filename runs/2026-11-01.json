@@ -1,0 +1,434 @@
+{
+  "date": "2026-11-01",
+  "generatedAt": "2026-11-01T05:04:39.419Z",
+  "dryRun": false,
+  "fetchedCount": 2299,
+  "items": [
+    {
+      "title": "How We Took Over ChatGPT Accounts",
+      "link": "https://simonwillison.net/2026/Oct/31/how-we-took-over-chatgpt-accounts/",
+      "published": "2026-10-31T23:15:22.000Z",
+      "summary": "How We Took Over ChatGPT Accounts Parameter Labs describe an exploit they found against ChatGPT's implementation of the artifacts pattern (OpenAI used to call this \"Canvas\" but it looks like the latest revision is called HTML previews ), where interactive custom HTML apps are displayed in a sandboxed iframe. It's important that HTML in these stays tightly sandboxed to avoid untrusted code interact",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Memdoor: A team of 5 Qwen3.8-27B models beats Fable 5 on LiveCodeBench Hard",
+      "link": "https://github.com/guregodevo/memdoor/tree/main/examples/workflows/team-solve",
+      "published": "2026-10-31T22:46:12.000Z",
+      "summary": "144 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "datasette-llm 0.1a9",
+      "link": "https://simonwillison.net/2026/Oct/31/datasette-llm/",
+      "published": "2026-10-31T22:10:01.000Z",
+      "summary": "Release: datasette-llm 0.1a9 I have some big upgrades to Datasette Agent in the pipeline, but in the meantime here's a tiny user experience improvement to the underlying datasette-llm plugin. It now picks up the default model used by LLM , which means you can start using Datasette Agent without needing to explicitly configure a default model: uvx --with datasette-agent datasette content.db --inter",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Anthropic takes steps to block Claude from reverse-engineering video games",
+      "link": "https://mashable.com/tech/anthropic-takes-steps-to-block-video-game-cloning-and-reverse-engineering",
+      "published": "2026-10-31T21:07:58.000Z",
+      "summary": "122 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Anthropic blocks users for anything touching training larger models",
+      "link": "https://twitter.com/jiahaoshao1/status/2116475922190922088",
+      "published": "2026-10-31T19:39:19.000Z",
+      "summary": "275 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "GPT-5.6 Sol can beat Factorio on peaceful mode",
+      "link": "https://ryanmadden.net/gpt-56-beats-factorio/",
+      "published": "2026-10-31T18:50:34.000Z",
+      "summary": "162 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "The Impact of Generative AI on Critical Thinking: Self-Reported (2025)",
+      "link": "https://dl.acm.org/doi/full/10.1145/3706598.3713778",
+      "published": "2026-10-31T18:02:29.000Z",
+      "summary": "75 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Show HN: A USB-C LTE modem that gives my computer a phone line",
+      "link": "https://github.com/Koppar-AI/koppar-lte-modem",
+      "published": "2026-10-31T15:56:41.000Z",
+      "summary": "52 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Malware uses LLMs to rank victims by how much they're worth",
+      "link": "https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/",
+      "published": "2026-10-31T14:29:03.000Z",
+      "summary": "238 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "AI startup hacks Anthropic, gains access to employee details, internal messages",
+      "link": "https://www.indiatoday.in/technology/news/story/ai-startup-hacks-anthropic-in-12-hours-gains-access-to-employee-details-and-internal-messages-3025452-2026-10-26",
+      "published": "2026-10-31T13:25:10.000Z",
+      "summary": "74 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Anthropic's Claude AI blocks video game cloning and reverse-engineering",
+      "link": "https://www.tomshardware.com/tech-industry/artificial-intelligence/anthropics-ai-model-is-now-blocking-attempts-at-video-game-recreation-and-cloning-users-also-claim-non-malicious-generic-reverse-engineering-tasks-are-blocked",
+      "published": "2026-10-31T13:25:00.000Z",
+      "summary": "68 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Show HN: A language model that lives in a boot sector",
+      "link": "https://github.com/kerlenton/bootgpt",
+      "published": "2026-10-31T12:58:29.000Z",
+      "summary": "69 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Do the math: How we took over ChatGPT accounts",
+      "link": "https://www.parameter.ai/labs/we-found-a-gap-at-openai",
+      "published": "2026-10-31T10:30:11.000Z",
+      "summary": "312 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    }
+  ],
+  "calendar": {
+    "count": 2,
+    "allDay": 0,
+    "timed": 2,
+    "bySource": {
+      "google": 0,
+      "icloud": 2
+    }
+  },
+  "icloud": "ok",
+  "reminders": {
+    "count": 4,
+    "source": "file"
+  },
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "How We Took Over ChatGPT Accounts",
+      "link": "https://simonwillison.net/2026/Oct/31/how-we-took-over-chatgpt-accounts/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Memdoor: A team of 5 Qwen3.8-27B models beats Fable 5 on LiveCodeBench Hard",
+      "link": "https://github.com/guregodevo/memdoor/tree/main/examples/workflows/team-solve",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "datasette-llm 0.1a9",
+      "link": "https://simonwillison.net/2026/Oct/31/datasette-llm/",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Anthropic takes steps to block Claude from reverse-engineering video games",
+      "link": "https://mashable.com/tech/anthropic-takes-steps-to-block-video-game-cloning-and-reverse-engineering",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Anthropic blocks users for anything touching training larger models",
+      "link": "https://twitter.com/jiahaoshao1/status/2116475922190922088",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "GPT-5.6 Sol can beat Factorio on peaceful mode",
+      "link": "https://ryanmadden.net/gpt-56-beats-factorio/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "The Impact of Generative AI on Critical Thinking: Self-Reported (2025)",
+      "link": "https://dl.acm.org/doi/full/10.1145/3706598.3713778",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Show HN: A USB-C LTE modem that gives my computer a phone line",
+      "link": "https://github.com/Koppar-AI/koppar-lte-modem",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Malware uses LLMs to rank victims by how much they're worth",
+      "link": "https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "AI startup hacks Anthropic, gains access to employee details, internal messages",
+      "link": "https://www.indiatoday.in/technology/news/story/ai-startup-hacks-anthropic-in-12-hours-gains-access-to-employee-details-and-internal-messages-3025452-2026-10-26",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Anthropic's Claude AI blocks video game cloning and reverse-engineering",
+      "link": "https://www.tomshardware.com/tech-industry/artificial-intelligence/anthropics-ai-model-is-now-blocking-attempts-at-video-game-recreation-and-cloning-users-also-claim-non-malicious-generic-reverse-engineering-tasks-are-blocked",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Show HN: A language model that lives in a boot sector",
+      "link": "https://github.com/kerlenton/bootgpt",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Do the math: How we took over ChatGPT accounts",
+      "link": "https://www.parameter.ai/labs/we-found-a-gap-at-openai",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    }
+  ],
+  "calls": [
+    {
+      "role": "embed",
+      "model": "voyage-3.5-lite",
+      "inputTokens": 182,
+      "outputTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 1225.3697909999992,
+      "costUsd": 0.0000036400000000000003
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1056,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 746.0027649999993,
+      "costUsd": 0.001221
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 959,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 722.5461939999986,
+      "costUsd": 0.001124
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1070,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 721.3951589999997,
+      "costUsd": 0.001235
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 939,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 739.9374419999986,
+      "costUsd": 0.001104
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 936,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 729.8036680000005,
+      "costUsd": 0.001101
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 941,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 594.4214909999992,
+      "costUsd": 0.001106
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 945,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 603.1814829999985,
+      "costUsd": 0.00111
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 944,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 573.2641179999991,
+      "costUsd": 0.001109
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 941,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 573.455050999999,
+      "costUsd": 0.001106
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 941,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 562.3119979999992,
+      "costUsd": 0.001106
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 940,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 612.7726979999989,
+      "costUsd": 0.001105
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 938,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 592.9385569999995,
+      "costUsd": 0.001103
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 938,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 593.0438840000006,
+      "costUsd": 0.001103
+    },
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 670,
+      "outputTokens": 945,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 2010,
+      "latencyMs": 12176.510577,
+      "costUsd": 0.015815
+    }
+  ],
+  "totalCostUsd": 0.03045164,
+  "writer": "sonnet",
+  "writerAttempts": 1,
+  "missingSections": [],
+  "concept": {
+    "name": "fine-tuning vs RAG vs prompting",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": "contains-duplicate",
+    "tipIndex": 24,
+    "marked": true
+  },
+  "memory": {
+    "indexSize": 260,
+    "seenBefore": 0,
+    "examples": 0,
+    "related": 0,
+    "chunkIds": []
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent",
+    "attempts": 1
+  },
+  "briefChars": 1702,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "Agent OS",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "spec-kit",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "BMAD",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "Claude Code",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    }
+  ]
+}

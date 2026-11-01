@@ -27,7 +27,7 @@ becomes `- [x] YYYY-MM-DD …`. The order cycles through the patterns, so every 
 - [x] 2026-10-29 top-k-frequent-elements | Top K Frequent Elements | medium | heaps | https://leetcode.com/problems/top-k-frequent-elements/
 - [x] 2026-10-30 clone-graph | Clone Graph | medium | graphs | https://leetcode.com/problems/clone-graph/
 - [x] 2026-10-31 design-add-and-search-words-data-structure | Design Add and Search Words Data Structure | medium | tries | https://leetcode.com/problems/design-add-and-search-words-data-structure/
-- [ ] contains-duplicate | Contains Duplicate | easy | hash map | https://leetcode.com/problems/contains-duplicate/
+- [x] 2026-11-01 contains-duplicate | Contains Duplicate | easy | hash map | https://leetcode.com/problems/contains-duplicate/
 - [ ] 3sum | 3Sum | medium | two pointers | https://leetcode.com/problems/3sum/
 - [ ] daily-temperatures | Daily Temperatures | medium | stack | https://leetcode.com/problems/daily-temperatures/
 - [ ] find-minimum-in-rotated-sorted-array | Find Minimum in Rotated Sorted Array | medium | binary search | https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
