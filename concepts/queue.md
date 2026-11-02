@@ -29,7 +29,7 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-30 hallucination detection and verification loops
 - [x] 2026-10-31 temperature, top-p and sampling
 - [x] 2026-11-01 fine-tuning vs RAG vs prompting
-- [ ] LoRA and parameter-efficient fine-tuning
+- [x] 2026-11-02 LoRA and parameter-efficient fine-tuning
 - [ ] distillation and small models
 - [ ] quantization (int8, int4, GGUF)
 - [ ] inference serving: vLLM, batching, KV cache

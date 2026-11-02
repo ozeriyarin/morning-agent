@@ -1,0 +1,330 @@
+{
+  "date": "2026-11-02",
+  "generatedAt": "2026-11-02T05:04:41.039Z",
+  "dryRun": false,
+  "fetchedCount": 2295,
+  "items": [
+    {
+      "title": "If in doubt, delete the uv.lock file",
+      "link": "https://simonwillison.net/2026/Nov/1/delete-uv-lock-first/",
+      "published": "2026-11-01T23:24:22.000Z",
+      "summary": "I've been getting the occasional confusing Python dependency error since switching over to Python 3.15 and the rule I'm having to remember is: If in doubt, delete the uv.lock file Most of my projects are libraries which don't include a uv.lock file, since it's rude for a library dependency to lock versions for anything else that uses it. Running uv run pytest etc tends to leave uv.lock files lying",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "AI delivers 'zero financial payoff' to most companies, Apollo economist says",
+      "link": "https://techcrunch.com/2026/10/25/ai-delivers-zero-financial-payoff-to-most-companies-according-to-apollo-economist/",
+      "published": "2026-11-01T22:10:45.000Z",
+      "summary": "211 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "So I guess everyone uses LLMs to think now",
+      "link": "https://eva.ac/blog/llms/",
+      "published": "2026-11-01T21:49:04.000Z",
+      "summary": "66 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "It wasn't AI that flipped Proton's charge",
+      "link": "https://blog.raed.dev/posts/proton-loser-thinking/",
+      "published": "2026-11-01T18:53:55.000Z",
+      "summary": "147 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Quoting Kyle Kingsbury",
+      "link": "https://simonwillison.net/2026/Nov/1/kyle-kingsbury/",
+      "published": "2026-11-01T16:49:04.000Z",
+      "summary": "More broadly, the use of LLMs erodes trust in documentation, in software, and in the organizations which produce them. Perhaps engineers will begin to treat any new software project with suspicion—the signals we used to rely on as markers of a mature system are now easier to counterfeit. [...] In the age of LLMs, what can maintainers do to ensure correct software and accurate documentation? Having",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Show HN: HackerBooks – HackerTube, but for books mentioned on HN",
+      "link": "https://hackerbooks.org",
+      "published": "2026-11-01T15:58:28.000Z",
+      "summary": "1116 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "AI agent swarms in Minecraft fail to build civilization, drown in bureaucracy",
+      "link": "https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-agent-swarms-unleashed-in-minecraft-to-build-a-thriving-civilization-50-agent-teams-fail-after-falling-into-paralyzing-bureaucracy",
+      "published": "2026-11-01T13:47:24.000Z",
+      "summary": "161 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Show HN: OmniDiff – Opensource, super fast, content aware Git difftool, in Rust",
+      "link": "https://github.com/ivankovic/omnidiff",
+      "published": "2026-11-01T13:02:30.000Z",
+      "summary": "193 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "The AI cost of JavaScript frameworks",
+      "link": "https://nolanlawson.com/2026/10/28/the-ai-cost-of-javascript-frameworks/",
+      "published": "2026-11-01T06:06:19.000Z",
+      "summary": "333 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    }
+  ],
+  "calendar": {
+    "count": 2,
+    "allDay": 0,
+    "timed": 2,
+    "bySource": {
+      "google": 0,
+      "icloud": 2
+    }
+  },
+  "icloud": "ok",
+  "reminders": {
+    "count": 0,
+    "source": "icloud"
+  },
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "If in doubt, delete the uv.lock file",
+      "link": "https://simonwillison.net/2026/Nov/1/delete-uv-lock-first/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "AI delivers 'zero financial payoff' to most companies, Apollo economist says",
+      "link": "https://techcrunch.com/2026/10/25/ai-delivers-zero-financial-payoff-to-most-companies-according-to-apollo-economist/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "So I guess everyone uses LLMs to think now",
+      "link": "https://eva.ac/blog/llms/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "It wasn't AI that flipped Proton's charge",
+      "link": "https://blog.raed.dev/posts/proton-loser-thinking/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Quoting Kyle Kingsbury",
+      "link": "https://simonwillison.net/2026/Nov/1/kyle-kingsbury/",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Show HN: HackerBooks – HackerTube, but for books mentioned on HN",
+      "link": "https://hackerbooks.org",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "AI agent swarms in Minecraft fail to build civilization, drown in bureaucracy",
+      "link": "https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-agent-swarms-unleashed-in-minecraft-to-build-a-thriving-civilization-50-agent-teams-fail-after-falling-into-paralyzing-bureaucracy",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Show HN: OmniDiff – Opensource, super fast, content aware Git difftool, in Rust",
+      "link": "https://github.com/ivankovic/omnidiff",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "The AI cost of JavaScript frameworks",
+      "link": "https://nolanlawson.com/2026/10/28/the-ai-cost-of-javascript-frameworks/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    }
+  ],
+  "calls": [
+    {
+      "role": "embed",
+      "model": "voyage-3.5-lite",
+      "inputTokens": 106,
+      "outputTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 584.361562,
+      "costUsd": 0.00000212
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1070,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 782.5063339999997,
+      "costUsd": 0.001235
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 941,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 773.4072130000004,
+      "costUsd": 0.001106
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 936,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 779.9436099999984,
+      "costUsd": 0.001101
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 937,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 754.3892610000003,
+      "costUsd": 0.001102
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1068,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 773.1322789999995,
+      "costUsd": 0.001233
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 948,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 608.4266489999991,
+      "costUsd": 0.001113
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 942,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 595.2377450000004,
+      "costUsd": 0.001107
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 951,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 623.6346099999992,
+      "costUsd": 0.001116
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 931,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 570.1720939999996,
+      "costUsd": 0.001096
+    },
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 580,
+      "outputTokens": 947,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 2010,
+      "latencyMs": 13352.369487999998,
+      "costUsd": 0.015655
+    }
+  ],
+  "totalCostUsd": 0.02586612,
+  "writer": "sonnet",
+  "writerAttempts": 1,
+  "missingSections": [],
+  "concept": {
+    "name": "LoRA and parameter-efficient fine-tuning",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": "3sum",
+    "tipIndex": 25,
+    "marked": true
+  },
+  "memory": {
+    "indexSize": 274,
+    "seenBefore": 0,
+    "examples": 0,
+    "related": 0,
+    "chunkIds": []
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent",
+    "attempts": 1
+  },
+  "briefChars": 1568,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "Agent OS",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "spec-kit",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "BMAD",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "Claude Code",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    }
+  ]
+}
