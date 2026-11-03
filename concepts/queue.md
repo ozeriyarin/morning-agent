@@ -30,7 +30,7 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-10-31 temperature, top-p and sampling
 - [x] 2026-11-01 fine-tuning vs RAG vs prompting
 - [x] 2026-11-02 LoRA and parameter-efficient fine-tuning
-- [ ] distillation and small models
+- [x] 2026-11-03 distillation and small models
 - [ ] quantization (int8, int4, GGUF)
 - [ ] inference serving: vLLM, batching, KV cache
 - [ ] latency vs cost trade-offs and model routing
