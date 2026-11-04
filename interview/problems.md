@@ -30,6 +30,6 @@ becomes `- [x] YYYY-MM-DD …`. The order cycles through the patterns, so every 
 - [x] 2026-11-01 contains-duplicate | Contains Duplicate | easy | hash map | https://leetcode.com/problems/contains-duplicate/
 - [x] 2026-11-02 3sum | 3Sum | medium | two pointers | https://leetcode.com/problems/3sum/
 - [x] 2026-11-03 daily-temperatures | Daily Temperatures | medium | stack | https://leetcode.com/problems/daily-temperatures/
-- [ ] find-minimum-in-rotated-sorted-array | Find Minimum in Rotated Sorted Array | medium | binary search | https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
+- [x] 2026-11-04 find-minimum-in-rotated-sorted-array | Find Minimum in Rotated Sorted Array | medium | binary search | https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
 - [ ] permutation-in-string | Permutation in String | medium | sliding window | https://leetcode.com/problems/permutation-in-string/
 - [ ] validate-binary-search-tree | Validate Binary Search Tree | medium | trees | https://leetcode.com/problems/validate-binary-search-tree/
