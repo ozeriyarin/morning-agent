@@ -32,4 +32,4 @@ becomes `- [x] YYYY-MM-DD …`. The order cycles through the patterns, so every 
 - [x] 2026-11-03 daily-temperatures | Daily Temperatures | medium | stack | https://leetcode.com/problems/daily-temperatures/
 - [x] 2026-11-04 find-minimum-in-rotated-sorted-array | Find Minimum in Rotated Sorted Array | medium | binary search | https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
 - [x] 2026-11-05 permutation-in-string | Permutation in String | medium | sliding window | https://leetcode.com/problems/permutation-in-string/
-- [ ] validate-binary-search-tree | Validate Binary Search Tree | medium | trees | https://leetcode.com/problems/validate-binary-search-tree/
+- [x] 2026-11-06 validate-binary-search-tree | Validate Binary Search Tree | medium | trees | https://leetcode.com/problems/validate-binary-search-tree/
