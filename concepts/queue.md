@@ -34,7 +34,7 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-11-04 quantization (int8, int4, GGUF)
 - [x] 2026-11-05 inference serving: vLLM, batching, KV cache
 - [x] 2026-11-06 latency vs cost trade-offs and model routing
-- [ ] fallback chains and graceful degradation
+- [x] 2026-11-07 fallback chains and graceful degradation
 - [ ] idempotency and retries in agent tools
 - [ ] observability and tracing for LLM apps
 - [ ] human-in-the-loop and approval gates
