@@ -1,0 +1,460 @@
+{
+  "days": [
+    {
+      "date": "2026-11-02",
+      "delivery": "sent",
+      "items": {
+        "fetched": 2295,
+        "inWindow": 9,
+        "decided": 9
+      },
+      "decisions": {
+        "must_read": 0,
+        "mention": 1,
+        "skip": 8
+      },
+      "calls": {
+        "decision": {
+          "calls": 9,
+          "inputTokens": 8724,
+          "outputTokens": 297,
+          "cacheReadTokens": 0,
+          "costUsd": 0.010209000000000001,
+          "meanLatencyMs": 695.6499772222219
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 580,
+          "outputTokens": 947,
+          "cacheReadTokens": 0,
+          "costUsd": 0.015655,
+          "meanLatencyMs": 13352.369487999998
+        },
+        "embed": {
+          "calls": 1,
+          "inputTokens": 106,
+          "outputTokens": 0,
+          "cacheReadTokens": 0,
+          "costUsd": 0.00000212,
+          "meanLatencyMs": 584.361562
+        }
+      },
+      "costUsd": 0.02586612,
+      "errors": [
+        {
+          "source": "Agent OS"
+        },
+        {
+          "source": "spec-kit"
+        },
+        {
+          "source": "BMAD"
+        },
+        {
+          "source": "Claude Code"
+        }
+      ],
+      "calendarEvents": 2,
+      "icloud": "ok",
+      "concept": "LoRA and parameter-efficient fine-tuning",
+      "writer": "sonnet"
+    },
+    {
+      "date": "2026-11-03",
+      "delivery": "sent",
+      "items": {
+        "fetched": 2308,
+        "inWindow": 21,
+        "decided": 21
+      },
+      "decisions": {
+        "must_read": 1,
+        "mention": 5,
+        "skip": 15
+      },
+      "calls": {
+        "decision": {
+          "calls": 21,
+          "inputTokens": 20053,
+          "outputTokens": 695,
+          "cacheReadTokens": 0,
+          "costUsd": 0.023528000000000004,
+          "meanLatencyMs": 608.0347930000001
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 942,
+          "outputTokens": 1234,
+          "cacheReadTokens": 0,
+          "costUsd": 0.019249,
+          "meanLatencyMs": 16146.289246999999
+        },
+        "embed": {
+          "calls": 1,
+          "inputTokens": 234,
+          "outputTokens": 0,
+          "cacheReadTokens": 0,
+          "costUsd": 0.00000468,
+          "meanLatencyMs": 2210.743809
+        }
+      },
+      "costUsd": 0.04278168,
+      "errors": [
+        {
+          "source": "Agent OS"
+        },
+        {
+          "source": "spec-kit"
+        },
+        {
+          "source": "BMAD"
+        },
+        {
+          "source": "Claude Code"
+        }
+      ],
+      "calendarEvents": 1,
+      "icloud": "ok",
+      "concept": "distillation and small models",
+      "writer": "sonnet"
+    },
+    {
+      "date": "2026-11-04",
+      "delivery": "sent",
+      "items": {
+        "fetched": 2322,
+        "inWindow": 26,
+        "decided": 26
+      },
+      "decisions": {
+        "must_read": 0,
+        "mention": 4,
+        "skip": 22
+      },
+      "calls": {
+        "decision": {
+          "calls": 26,
+          "inputTokens": 24632,
+          "outputTokens": 858,
+          "cacheReadTokens": 0,
+          "costUsd": 0.028922,
+          "meanLatencyMs": 614.4702677692308
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 612,
+          "outputTokens": 1026,
+          "cacheReadTokens": 0,
+          "costUsd": 0.016509,
+          "meanLatencyMs": 11738.902428
+        },
+        "embed": {
+          "calls": 1,
+          "inputTokens": 291,
+          "outputTokens": 0,
+          "cacheReadTokens": 0,
+          "costUsd": 0.00000582,
+          "meanLatencyMs": 634.2076390000002
+        }
+      },
+      "costUsd": 0.04543682,
+      "errors": [
+        {
+          "source": "Agent OS"
+        },
+        {
+          "source": "spec-kit"
+        },
+        {
+          "source": "BMAD"
+        },
+        {
+          "source": "Claude Code"
+        }
+      ],
+      "calendarEvents": 1,
+      "icloud": "ok",
+      "concept": "quantization (int8, int4, GGUF)",
+      "writer": "sonnet"
+    },
+    {
+      "date": "2026-11-05",
+      "delivery": "sent",
+      "items": {
+        "fetched": 2324,
+        "inWindow": 20,
+        "decided": 20
+      },
+      "decisions": {
+        "must_read": 2,
+        "mention": 1,
+        "skip": 17
+      },
+      "calls": {
+        "decision": {
+          "calls": 20,
+          "inputTokens": 18900,
+          "outputTokens": 664,
+          "cacheReadTokens": 0,
+          "costUsd": 0.02222,
+          "meanLatencyMs": 596.7741284000001
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 561,
+          "outputTokens": 1196,
+          "cacheReadTokens": 0,
+          "costUsd": 0.018107,
+          "meanLatencyMs": 13128.215201000003
+        },
+        "embed": {
+          "calls": 1,
+          "inputTokens": 265,
+          "outputTokens": 0,
+          "cacheReadTokens": 0,
+          "costUsd": 0.0000053,
+          "meanLatencyMs": 618.9038470000005
+        }
+      },
+      "costUsd": 0.0403323,
+      "errors": [
+        {
+          "source": "Agent OS"
+        },
+        {
+          "source": "spec-kit"
+        },
+        {
+          "source": "BMAD"
+        },
+        {
+          "source": "Claude Code"
+        }
+      ],
+      "calendarEvents": 1,
+      "icloud": "ok",
+      "concept": "inference serving: vLLM, batching, KV cache",
+      "writer": "sonnet"
+    },
+    {
+      "date": "2026-11-06",
+      "delivery": "sent",
+      "items": {
+        "fetched": 2330,
+        "inWindow": 20,
+        "decided": 20
+      },
+      "decisions": {
+        "must_read": 3,
+        "mention": 2,
+        "skip": 15
+      },
+      "calls": {
+        "decision": {
+          "calls": 20,
+          "inputTokens": 18935,
+          "outputTokens": 666,
+          "cacheReadTokens": 0,
+          "costUsd": 0.022265,
+          "meanLatencyMs": 597.15805625
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 830,
+          "outputTokens": 1584,
+          "cacheReadTokens": 0,
+          "costUsd": 0.022525,
+          "meanLatencyMs": 16844.838942000002
+        },
+        "embed": {
+          "calls": 1,
+          "inputTokens": 226,
+          "outputTokens": 0,
+          "cacheReadTokens": 0,
+          "costUsd": 0.000004520000000000001,
+          "meanLatencyMs": 562.0974659999997
+        }
+      },
+      "costUsd": 0.044794520000000004,
+      "errors": [
+        {
+          "source": "Agent OS"
+        },
+        {
+          "source": "spec-kit"
+        },
+        {
+          "source": "BMAD"
+        },
+        {
+          "source": "Claude Code"
+        }
+      ],
+      "calendarEvents": 4,
+      "icloud": "ok",
+      "concept": "latency vs cost trade-offs and model routing",
+      "writer": "sonnet"
+    },
+    {
+      "date": "2026-11-07",
+      "delivery": "sent",
+      "items": {
+        "fetched": 2333,
+        "inWindow": 16,
+        "decided": 16
+      },
+      "decisions": {
+        "must_read": 2,
+        "mention": 1,
+        "skip": 13
+      },
+      "calls": {
+        "decision": {
+          "calls": 16,
+          "inputTokens": 15153,
+          "outputTokens": 532,
+          "cacheReadTokens": 0,
+          "costUsd": 0.017812999999999996,
+          "meanLatencyMs": 568.3170447500002
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 414,
+          "outputTokens": 1221,
+          "cacheReadTokens": 0,
+          "costUsd": 0.018063,
+          "meanLatencyMs": 15180.940863
+        },
+        "embed": {
+          "calls": 1,
+          "inputTokens": 168,
+          "outputTokens": 0,
+          "cacheReadTokens": 0,
+          "costUsd": 0.00000336,
+          "meanLatencyMs": 567.7168649999985
+        }
+      },
+      "costUsd": 0.03587936,
+      "errors": [
+        {
+          "source": "weather"
+        },
+        {
+          "source": "Agent OS"
+        },
+        {
+          "source": "spec-kit"
+        },
+        {
+          "source": "BMAD"
+        },
+        {
+          "source": "Claude Code"
+        }
+      ],
+      "calendarEvents": 1,
+      "icloud": "ok",
+      "concept": "fallback chains and graceful degradation",
+      "writer": "sonnet"
+    },
+    {
+      "date": "2026-11-08",
+      "delivery": "sent",
+      "items": {
+        "fetched": 2328,
+        "inWindow": 9,
+        "decided": 9
+      },
+      "decisions": {
+        "must_read": 1,
+        "mention": 3,
+        "skip": 5
+      },
+      "calls": {
+        "decision": {
+          "calls": 9,
+          "inputTokens": 8618,
+          "outputTokens": 299,
+          "cacheReadTokens": 0,
+          "costUsd": 0.010112999999999999,
+          "meanLatencyMs": 634.7625472222221
+        },
+        "writer": {
+          "calls": 1,
+          "inputTokens": 545,
+          "outputTokens": 1145,
+          "cacheReadTokens": 0,
+          "costUsd": 0.017565,
+          "meanLatencyMs": 12240.250046999998
+        },
+        "embed": {
+          "calls": 1,
+          "inputTokens": 140,
+          "outputTokens": 0,
+          "cacheReadTokens": 0,
+          "costUsd": 0.0000028000000000000003,
+          "meanLatencyMs": 561.182941
+        }
+      },
+      "costUsd": 0.0276808,
+      "errors": [
+        {
+          "source": "Agent OS"
+        },
+        {
+          "source": "spec-kit"
+        },
+        {
+          "source": "BMAD"
+        },
+        {
+          "source": "Claude Code"
+        }
+      ],
+      "calendarEvents": 1,
+      "icloud": "ok",
+      "concept": "idempotency and retries in agent tools",
+      "writer": "sonnet"
+    }
+  ],
+  "totals": {
+    "daysRun": 7,
+    "daysDelivered": 7,
+    "items": {
+      "fetched": 16240,
+      "inWindow": 121,
+      "decided": 121
+    },
+    "costUsd": 0.2627715999999999,
+    "costByRole": {
+      "decision": 0.13507,
+      "writer": 0.127673,
+      "embed": 0.000028600000000000004
+    },
+    "costByModel": {
+      "voyage-3.5-lite": 0.000028600000000000004,
+      "claude-haiku-4-5-20251001": 0.13507,
+      "claude-sonnet-5-5": 0.127673
+    },
+    "meanCostPerDay": 0.03753879999999998,
+    "meanLatencyMs": {
+      "decision": 609.0114606942151,
+      "writer": 14090.258030857143,
+      "embed": 819.8877327142856
+    },
+    "errors": 29,
+    "errorsBySource": {
+      "Agent OS": 7,
+      "spec-kit": 7,
+      "BMAD": 7,
+      "Claude Code": 7,
+      "weather": 1
+    },
+    "writerCacheHitRatio": 0,
+    "briefsByWriter": {
+      "sonnet": 7,
+      "haiku": 0,
+      "template": 0
+    }
+  }
+}
