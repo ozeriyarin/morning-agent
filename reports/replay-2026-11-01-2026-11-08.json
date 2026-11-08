@@ -1,0 +1,2893 @@
+{
+  "from": "2026-11-01",
+  "to": "2026-11-08",
+  "dryRun": false,
+  "runs": [
+    "2026-11-01",
+    "2026-11-02",
+    "2026-11-03",
+    "2026-11-04",
+    "2026-11-05",
+    "2026-11-06",
+    "2026-11-07",
+    "2026-11-08"
+  ],
+  "storedItems": 134,
+  "items": [
+    {
+      "date": "2026-11-01",
+      "title": "How We Took Over ChatGPT Accounts",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001178,
+          "latencyMs": 768.045603
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.00003381,
+          "latencyMs": 461.353833,
+          "confidence": 0.34
+        }
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "title": "Memdoor: A team of 5 Qwen3.8-27B models beats Fable 5 on LiveCodeBench Hard",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001124,
+          "latencyMs": 739.307712
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031836,
+          "latencyMs": 457.004631,
+          "confidence": 0.96
+        }
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "title": "datasette-llm 0.1a9",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.00119,
+          "latencyMs": 739.114656
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.00003444,
+          "latencyMs": 542.2715810000001,
+          "confidence": 0.5
+        }
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "title": "Anthropic takes steps to block Claude from reverse-engineering video games",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001104,
+          "latencyMs": 752.840259
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031206,
+          "latencyMs": 475.0521990000001,
+          "confidence": 0.16
+        }
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "title": "Anthropic blocks users for anything touching training larger models",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001101,
+          "latencyMs": 738.442852
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031038,
+          "latencyMs": 451.8679430000001,
+          "confidence": 0.2
+        }
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "title": "GPT-5.6 Sol can beat Factorio on peaceful mode",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001106,
+          "latencyMs": 556.864411
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031164,
+          "latencyMs": 145.07137000000012,
+          "confidence": 0.73
+        }
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "title": "The Impact of Generative AI on Critical Thinking: Self-Reported (2025)",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.00111,
+          "latencyMs": 543.5643889999999
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031374,
+          "latencyMs": 143.44193799999994,
+          "confidence": 0.8
+        }
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "title": "Show HN: A USB-C LTE modem that gives my computer a phone line",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001109,
+          "latencyMs": 574.76818
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031206,
+          "latencyMs": 88.42957499999989,
+          "confidence": 1
+        }
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "title": "Malware uses LLMs to rank victims by how much they're worth",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001106,
+          "latencyMs": 557.2313740000002
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031206,
+          "latencyMs": 204.6202720000001,
+          "confidence": 0.72
+        }
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "title": "AI startup hacks Anthropic, gains access to employee details, internal messages",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001106,
+          "latencyMs": 557.0151720000001
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031164,
+          "latencyMs": 116.53557899999987,
+          "confidence": 0.85
+        }
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "title": "Anthropic's Claude AI blocks video game cloning and reverse-engineering",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001105,
+          "latencyMs": 573.4547939999998
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031164,
+          "latencyMs": 164.44665799999984,
+          "confidence": 0.1
+        }
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "title": "Show HN: A language model that lives in a boot sector",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001103,
+          "latencyMs": 525.0879869999999
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.00003108,
+          "latencyMs": 97.19471899999985,
+          "confidence": 0.62
+        }
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "title": "Do the math: How we took over ChatGPT accounts",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001103,
+          "latencyMs": 540.4271829999998
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031038,
+          "latencyMs": 95.78145800000016,
+          "confidence": 0.53
+        }
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "title": "If in doubt, delete the uv.lock file",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001184,
+          "latencyMs": 544.6992269999996
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000034104,
+          "latencyMs": 91.05092599999989,
+          "confidence": 0.31
+        }
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "title": "AI delivers 'zero financial payoff' to most companies, Apollo economist says",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001106,
+          "latencyMs": 547.9505389999999
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031164,
+          "latencyMs": 114.91678000000002,
+          "confidence": 0.79
+        }
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "title": "So I guess everyone uses LLMs to think now",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001101,
+          "latencyMs": 535.9305010000003
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030996,
+          "latencyMs": 122.39300000000003,
+          "confidence": 0.68
+        }
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "title": "It wasn't AI that flipped Proton's charge",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001102,
+          "latencyMs": 550.7062799999999
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030996,
+          "latencyMs": 234.37059,
+          "confidence": 0.26
+        }
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "title": "Quoting Kyle Kingsbury",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001173,
+          "latencyMs": 533.2000499999999
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000033768,
+          "latencyMs": 120.77865100000008,
+          "confidence": 0.97
+        }
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "title": "Show HN: HackerBooks – HackerTube, but for books mentioned on HN",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001113,
+          "latencyMs": 545.5272169999998
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031584,
+          "latencyMs": 297.27289199999996,
+          "confidence": 0.96
+        }
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "title": "AI agent swarms in Minecraft fail to build civilization, drown in bureaucracy",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001107,
+          "latencyMs": 550.794363
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031164,
+          "latencyMs": 97.658142,
+          "confidence": 0.52
+        }
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "title": "Show HN: OmniDiff – Opensource, super fast, content aware Git difftool, in Rust",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001116,
+          "latencyMs": 572.7124680000002
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031668,
+          "latencyMs": 123.36768499999971,
+          "confidence": 0.85
+        }
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "title": "The AI cost of JavaScript frameworks",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001096,
+          "latencyMs": 545.7994580000004
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030996,
+          "latencyMs": 124.90612099999998,
+          "confidence": 0.52
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "llm 0.37",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001188,
+          "latencyMs": 565.5217799999996
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000034692,
+          "latencyMs": 87.61772500000006,
+          "confidence": 0.2
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "WorkOS reports security breach",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001095,
+          "latencyMs": 596.612048
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030786,
+          "latencyMs": 122.5653440000001,
+          "confidence": 0.92
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Anthropic reveals $900B AI spending commitments ahead of IPO",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001105,
+          "latencyMs": 531.1524410000002
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031164,
+          "latencyMs": 248.18032500000027,
+          "confidence": 0.89
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Oracle files to sell $20B in new stock, bonds to finance AI buildout",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001107,
+          "latencyMs": 562.8163679999998
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031374,
+          "latencyMs": 117.0139180000001,
+          "confidence": 0.66
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Egoless Mathematics in the AI Era",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001099,
+          "latencyMs": 558.8363320000003
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030912,
+          "latencyMs": 83.97706900000003,
+          "confidence": 0.7
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Rewarding defenders with bigger bug bounties",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001117,
+          "latencyMs": 539.1568459999999
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031752,
+          "latencyMs": 136.29474600000003,
+          "confidence": 0.88
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Preparing our next security sprint to harden OpenAI",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001115,
+          "latencyMs": 540.7516919999998
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031626,
+          "latencyMs": 92.16050799999994,
+          "confidence": 0.72
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "The latest AI news we announced in October 2026",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001101,
+          "latencyMs": 535.0225390000005
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.00003129,
+          "latencyMs": 106.1348810000004,
+          "confidence": 0.55
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Show HN: Subvocal – Talk to your computer without making noise",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001107,
+          "latencyMs": 528.1109299999998
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031206,
+          "latencyMs": 156.34442799999988,
+          "confidence": 0.82
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Launch HN: Momentic (YC W24) – Agents that catch bugs by using your app",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001113,
+          "latencyMs": 545.3153310000007
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.0000315,
+          "latencyMs": 130.70459699999992,
+          "confidence": 0.76
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Anthropic's internal AI use, at retail prices, now exceeds its employee pay",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001108,
+          "latencyMs": 543.1329639999994
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.00003129,
+          "latencyMs": 133.79140000000007,
+          "confidence": 0.56
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Claude Opus 5.5 Can Draw Permit-Level Architectural Drawings",
+      "original": "must_read",
+      "choices": {
+        "haiku": {
+          "decision": "must_read",
+          "costUsd": 0.001118,
+          "latencyMs": 547.4071050000002
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.00003129,
+          "latencyMs": 111.74998199999982,
+          "confidence": 0.62
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Scaling Git at OpenAI",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001114,
+          "latencyMs": 550.618152
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.0000315,
+          "latencyMs": 87.85022099999969,
+          "confidence": 0.37
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "LongCat-2.5: Native Multimodality for Agentic Tasks",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.00111,
+          "latencyMs": 548.8756300000005
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000031206,
+          "latencyMs": 141.23613799999976,
+          "confidence": 0.43
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Introducing the Grid Protectors Program",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001116,
+          "latencyMs": 548.261176
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031752,
+          "latencyMs": 128.5926999999997,
+          "confidence": 0.89
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Jobless tech workers are being left out of San Francisco's AI boom",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001105,
+          "latencyMs": 539.6815130000005
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031164,
+          "latencyMs": 116.88617699999986,
+          "confidence": 0.43
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "The U.S. Census Bureau and “Super Intelligence”",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001182,
+          "latencyMs": 592.4043149999998
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000034272,
+          "latencyMs": 112.3260049999999,
+          "confidence": 0.7
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Last night an AI agent performed brain surgery on a mouse",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001101,
+          "latencyMs": 530.5511429999997
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031038,
+          "latencyMs": 96.53649499999983,
+          "confidence": 0.85
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "LifeVal",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001115,
+          "latencyMs": 572.1523740000002
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031584,
+          "latencyMs": 197.16185600000017,
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "China's First Frontier AI Export Controls: Mofcom Announcement No. 48",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001109,
+          "latencyMs": 545.9769450000003
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.00003129,
+          "latencyMs": 129.41544000000022,
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Show HN: HackerHack – HackerBooks but for Posts Posted on HN",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001111,
+          "latencyMs": 545.206424
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.0000315,
+          "latencyMs": 121.8965659999999,
+          "confidence": 0.85
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "The Little Book of Generative AI Foundations: An Intuitive Mathematical Primer",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001108,
+          "latencyMs": 525.8362870000001
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031206,
+          "latencyMs": 140.76228500000025,
+          "confidence": 0.42
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Safari introduces Adaptive Dark Mode in 27.3",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001101,
+          "latencyMs": 543.8096139999998
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.00003108,
+          "latencyMs": 127.90955000000031,
+          "confidence": 1
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "US tech giants' hidden AI debt swells 90% to $3.2T in 6 months",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001113,
+          "latencyMs": 548.1358049999999
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031542,
+          "latencyMs": 159.57936299999983,
+          "confidence": 0.28
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "The AI Boom May Be Sowing Seeds of Another Financial Crisis",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001104,
+          "latencyMs": 544.7150070000007
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031038,
+          "latencyMs": 128.011532,
+          "confidence": 0.7
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Show HN: Kairos – Open-source risk and fraud decisioning platform",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001107,
+          "latencyMs": 619.8960229999993
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031248,
+          "latencyMs": 97.25725999999986,
+          "confidence": 0.38
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "How I use AI (Oct 2026)",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.0011,
+          "latencyMs": 547.9906520000004
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.00003108,
+          "latencyMs": 127.58455800000002,
+          "confidence": 0.8
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Google researchers demand freedom to tell the world what they know about AI",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001103,
+          "latencyMs": 551.9448160000002
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.00003108,
+          "latencyMs": 115.97578000000021,
+          "confidence": 0.89
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Qwen 3.8 27B on my laptop can interpret model weights, too",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001114,
+          "latencyMs": 544.1678220000003
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031542,
+          "latencyMs": 101.84671399999979,
+          "confidence": 0.76
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Postman silently auto-installs AI plugins and attempts to share all API data",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001109,
+          "latencyMs": 546.0049449999997
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031248,
+          "latencyMs": 106.0705240000002,
+          "confidence": 0.8
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "StateBench: Testing how language models track state changes over long documents",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001095,
+          "latencyMs": 567.3076360000005
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030828,
+          "latencyMs": 102.30597200000011,
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Gitbook Breached",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001096,
+          "latencyMs": 521.9813389999999
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030744,
+          "latencyMs": 131.24790399999983,
+          "confidence": 0.92
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Palette: teaching a small model to build decks in your design language",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001096,
+          "latencyMs": 561.7198510000007
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030786,
+          "latencyMs": 96.80167299999994,
+          "confidence": 0.55
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Quili AI",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001094,
+          "latencyMs": 549.0352140000005
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.00003066,
+          "latencyMs": 104.99358299999994,
+          "confidence": 0.26
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "AI is destroying my CS degree",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001096,
+          "latencyMs": 537.8522899999998
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030828,
+          "latencyMs": 111.96055299999989,
+          "confidence": 0.82
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Google will turn off search for schools that reject AI",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.0011,
+          "latencyMs": 550.1134689999999
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030996,
+          "latencyMs": 193.40555200000017,
+          "confidence": 0.48
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Octomind – open-source AI harness that saves your tokens, static rust",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001108,
+          "latencyMs": 550.9670230000002
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000031164,
+          "latencyMs": 116.4298060000001,
+          "confidence": 0.33
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "OpenAI seems to be silently re-enabling model training on Codex chats",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001109,
+          "latencyMs": 560.8030790000003
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.00003129,
+          "latencyMs": 80.98832099999981,
+          "confidence": 0.62
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "The AI Bubble Monitor",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001095,
+          "latencyMs": 565.5622839999996
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030702,
+          "latencyMs": 79.58828900000026,
+          "confidence": 0.58
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Just a little AI resistance, as a treat",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001099,
+          "latencyMs": 547.3420319999996
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030954,
+          "latencyMs": 146.5717199999999,
+          "confidence": 0.48
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Accelerating engineering for the physical world",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001121,
+          "latencyMs": 547.4454530000003
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031668,
+          "latencyMs": 164.42442399999982,
+          "confidence": 0.46
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Revolut moves to self-hosted GLM",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.0011,
+          "latencyMs": 596.0520909999996
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031038,
+          "latencyMs": 145.26862900000015,
+          "confidence": 0.33
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "How Cisco defends at machine speed with OpenAI",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001117,
+          "latencyMs": 546.705978
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031668,
+          "latencyMs": 99.4255820000003,
+          "confidence": 0.97
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Heimstaden is changing residential real estate management with AI",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001128,
+          "latencyMs": 514.2404009999991
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000032046,
+          "latencyMs": 160.73003800000015,
+          "confidence": 0.92
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Could a modern chess engine on a Pentium have defeated Kasparov in 1996?",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001111,
+          "latencyMs": 541.4503069999992
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031458,
+          "latencyMs": 124.28246399999989,
+          "confidence": 0.42
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "I discovered a sound that leaks your exact location (and it's everywhere) - YouTube",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001188,
+          "latencyMs": 530.4484990000001
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000034608,
+          "latencyMs": 153.772426,
+          "confidence": 0.92
+        }
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "title": "October sponsors-only newsletter",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001171,
+          "latencyMs": 555.5699879999993
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000033768,
+          "latencyMs": 161.14396799999986,
+          "confidence": 0.66
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Everything is an AI scam now",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001097,
+          "latencyMs": 536.1504410000016
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030828,
+          "latencyMs": 116.26096800000005,
+          "confidence": 0.42
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Qualcomm Cloud AI 100 Ultra – 150W AI Accelerator Card with 128GB at 548GB/s",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001119,
+          "latencyMs": 545.7349130000002
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000032004,
+          "latencyMs": 124.67185699999982,
+          "confidence": 0.68
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Dharma Field Extractor: Any Document In, Structured Fields in JSON Out",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001099,
+          "latencyMs": 563.1149970000006
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030996,
+          "latencyMs": 113.65922899999987,
+          "confidence": 0.6
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Launch HN: Kino AI (YC S23) – AI media manager and video editor",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001111,
+          "latencyMs": 540.1187369999989
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031332,
+          "latencyMs": 108.28551000000016,
+          "confidence": 0.86
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Progress on provable inference for large language models",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001099,
+          "latencyMs": 546.6099290000002
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030954,
+          "latencyMs": 97.76973499999986,
+          "confidence": 0.73
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "AI data centers comprehensively defeated at US midterm elections",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001102,
+          "latencyMs": 552.674434999999
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.00003108,
+          "latencyMs": 136.20672100000002,
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Kimi K3.1 Pro model weights are out",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001103,
+          "latencyMs": 559.5156079999997
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031038,
+          "latencyMs": 86.21709899999996,
+          "confidence": 0.18
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "YC's Garry Tan uses AI agents so much, he spends up to $200K a year on tokens",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001116,
+          "latencyMs": 540.9004400000013
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031542,
+          "latencyMs": 109.41666600000008,
+          "confidence": 0.8
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "datasette-llm 0.1a10",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001148,
+          "latencyMs": 600.8930889999992
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.00003297,
+          "latencyMs": 85.44661899999983,
+          "confidence": 0.53
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Show HN: I built a tool that prices a pre-built PC part by part",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001108,
+          "latencyMs": 540.7963199999995
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031248,
+          "latencyMs": 128.0500949999996,
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Ask HN: What's your current AI agentic setup?",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001104,
+          "latencyMs": 561.3027919999986
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031122,
+          "latencyMs": 99.89074800000026,
+          "confidence": 0.38
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "OpenAI to acquire Pierre Computer Company, Inc.",
+      "original": "must_read",
+      "choices": {
+        "haiku": {
+          "decision": "must_read",
+          "costUsd": 0.001125,
+          "latencyMs": 538.3447479999995
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000031668,
+          "latencyMs": 115.15478799999937,
+          "confidence": 0.8
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Tencent Hy4",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001098,
+          "latencyMs": 551.118864
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030786,
+          "latencyMs": 124.1030469999996,
+          "confidence": 0.25
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "AI is forcing us to pay off 40 years of technical debt",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001105,
+          "latencyMs": 538.1168539999999
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031206,
+          "latencyMs": 844.7524810000004,
+          "confidence": 0.88
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Geoffrey Hinton: it might turn out we were better off without AI",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001105,
+          "latencyMs": 543.4398700000002
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031248,
+          "latencyMs": 82.67078200000014,
+          "confidence": 1
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Tell HN: Gemini trains on chat history, even for subscribers (personal accounts)",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001109,
+          "latencyMs": 551.1857240000008
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.00003129,
+          "latencyMs": 87.99004700000023,
+          "confidence": 0.49
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Nvidia RTX Spark encrypted firmware slows inference speed to 35% on Linux",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001108,
+          "latencyMs": 537.4026209999993
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.00003129,
+          "latencyMs": 85.47601100000065,
+          "confidence": 0.48
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "A thousand fewer paths to root",
+      "original": "must_read",
+      "choices": {
+        "haiku": {
+          "decision": "must_read",
+          "costUsd": 0.001127,
+          "latencyMs": 560.7150529999999
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000031794,
+          "latencyMs": 87.77579399999922,
+          "confidence": 0.77
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "AI stocks slide as Texas governor result raises data center risks",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001101,
+          "latencyMs": 550.097307
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030996,
+          "latencyMs": 98.52604599999995,
+          "confidence": 0.94
+        }
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Daybreak Red is now available in AWS GovCloud (US-East)",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001136,
+          "latencyMs": 528.6891950000008
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000032256,
+          "latencyMs": 122.0458039999994,
+          "confidence": 0.5
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Inkling 2 Small",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001097,
+          "latencyMs": 549.1426699999993
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030786,
+          "latencyMs": 98.19211399999949,
+          "confidence": 0.18
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Cuban: Facebook knowingly runs AI deepfake scam ads; docs say $16B fraud revenue",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001111,
+          "latencyMs": 547.3778620000012
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031458,
+          "latencyMs": 124.3592749999998,
+          "confidence": 0.73
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Claude Code sends your email address to websites",
+      "original": "must_read",
+      "choices": {
+        "haiku": {
+          "decision": "must_read",
+          "costUsd": 0.001108,
+          "latencyMs": 566.5517019999988
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000030912,
+          "latencyMs": 103.82631000000038,
+          "confidence": 0.68
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Tencent launches Hy4",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001099,
+          "latencyMs": 542.1021220000002
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030786,
+          "latencyMs": 123.488609,
+          "confidence": 0.48
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Cult.fit builds operational muscle with Codex",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001118,
+          "latencyMs": 556.151890000001
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031668,
+          "latencyMs": 93.24691699999948,
+          "confidence": 0.79
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "New NVIDIA Cosmos 3 Open Models for Interactive World Simulation",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001096,
+          "latencyMs": 585.643603999999
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030702,
+          "latencyMs": 94.57817900000009,
+          "confidence": 0.34
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Hungary: Communist-era files released, up to 60k former agents revealed",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001106,
+          "latencyMs": 536.3095819999999
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031332,
+          "latencyMs": 145.85066899999947,
+          "confidence": 1
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "The Hackintosh Reborn",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001098,
+          "latencyMs": 552.449743000001
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.00003087,
+          "latencyMs": 94.64199800000006,
+          "confidence": 0.64
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Nasdaq Sinks 5% as Investors Retreat from AI Trade After Election",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001108,
+          "latencyMs": 542.3375830000004
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031206,
+          "latencyMs": 100.12850899999921,
+          "confidence": 0.94
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Quoting Paul Ford",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001138,
+          "latencyMs": 556.8026129999998
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000032508,
+          "latencyMs": 142.53572299999996,
+          "confidence": 0.53
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Launch HN: Rivet (YC W23) – Scale and Orchestrate Agents on S3",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001114,
+          "latencyMs": 543.9946780000009
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000031458,
+          "latencyMs": 102.23575400000027,
+          "confidence": 0.58
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Australian universities are creating AI-native graduates",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001115,
+          "latencyMs": 586.6911209999998
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031542,
+          "latencyMs": 158.29699600000004,
+          "confidence": 0.96
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Gemini Omni 1.2 Flash: Fast and cost-effective with longer clips",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "must_read",
+          "costUsd": 0.001142,
+          "latencyMs": 548.5796030000001
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000032088,
+          "latencyMs": 90.91605200000049,
+          "confidence": 0.97
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "My psychophysics as a bilateral cochlear implant user",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001102,
+          "latencyMs": 617.6394670000009
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031122,
+          "latencyMs": 105.96432300000015,
+          "confidence": 0.64
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "The Stacks Project, Formalized in Lean",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001102,
+          "latencyMs": 554.6147359999995
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030954,
+          "latencyMs": 85.82328700000016,
+          "confidence": 0.83
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Show HN: Stroq – a local audit of what your coding agent did and why",
+      "original": "must_read",
+      "choices": {
+        "haiku": {
+          "decision": "must_read",
+          "costUsd": 0.001119,
+          "latencyMs": 534.6038399999998
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.00003129,
+          "latencyMs": 89.49960700000065,
+          "confidence": 0.89
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Building a Multi-Agent System from Scratch: Architecture Patterns",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001103,
+          "latencyMs": 539.2705139999998
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030954,
+          "latencyMs": 122.86646099999962,
+          "confidence": 0.31
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Show HN: Firenook – Firebase emulators in Rust: 40× faster writes, 10× less RAM",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001118,
+          "latencyMs": 531.9125590000003
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.00003171,
+          "latencyMs": 124.14122800000041,
+          "confidence": 0.37
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "GPT‑6 Cyber: Advancing the frontier of aligned cybersecurity agents",
+      "original": "must_read",
+      "choices": {
+        "haiku": {
+          "decision": "must_read",
+          "costUsd": 0.001145,
+          "latencyMs": 531.6340999999993
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.00003213,
+          "latencyMs": 122.38296200000059,
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Merge builds product and business tools with OpenAI technology",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001136,
+          "latencyMs": 583.602551
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000032172,
+          "latencyMs": 95.57581199999913,
+          "confidence": 0.86
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "AI is dramatically accelerating AI research",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001097,
+          "latencyMs": 531.4166870000008
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030828,
+          "latencyMs": 114.20776399999977,
+          "confidence": 0.83
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "Google has acquired Crusoe's data center site in southeast Wyoming",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001103,
+          "latencyMs": 533.2160339999991
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.00003108,
+          "latencyMs": 88.51195400000051,
+          "confidence": 0.6
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "A Jev that can ask Opus for help gives Opus accuracy at 4x lower cost",
+      "original": "must_read",
+      "choices": {
+        "haiku": {
+          "decision": "must_read",
+          "costUsd": 0.001121,
+          "latencyMs": 553.9885240000003
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000031416,
+          "latencyMs": 146.8577209999994,
+          "confidence": 0.83
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "Firecracker VM Escape: PwnEscape Part 2",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001105,
+          "latencyMs": 529.5004779999999
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031164,
+          "latencyMs": 119.59411,
+          "confidence": 0.62
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "Microsoft is winding down Oracle deal to rent AI cloud capacity",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001102,
+          "latencyMs": 539.0511780000015
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030996,
+          "latencyMs": 107.42737099999977,
+          "confidence": 0.66
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "Memorilla: Latent Semantic Memory for LLMs",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001104,
+          "latencyMs": 548.6802900000002
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031038,
+          "latencyMs": 91.61435699999947,
+          "confidence": 0.18
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "Perplexity launches AI agents for work",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.0011,
+          "latencyMs": 533.9015600000002
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.00003087,
+          "latencyMs": 109.2959380000002,
+          "confidence": 0.86
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "Quoting Nilay Patel",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001182,
+          "latencyMs": 566.358909999999
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000034188,
+          "latencyMs": 86.5539660000004,
+          "confidence": 0.91
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "Anthropic IPO buyers see valuation as low as $1.1T",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001107,
+          "latencyMs": 562.6889920000012
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031206,
+          "latencyMs": 451.70188099999996,
+          "confidence": 0.91
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "University libraries are being swarmed by AI bots, putting public access at risk",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001107,
+          "latencyMs": 556.6730729999999
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031248,
+          "latencyMs": 187.74198400000023,
+          "confidence": 0.38
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "ToyBlocks: A controlled world for robot learning and evaluation",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001094,
+          "latencyMs": 559.9348490000011
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000030702,
+          "latencyMs": 91.46049399999993,
+          "confidence": 0.44
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "Gemini Omni 1.2 Flash",
+      "original": "must_read",
+      "choices": {
+        "haiku": {
+          "decision": "must_read",
+          "costUsd": 0.001112,
+          "latencyMs": 555.5612579999997
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.000030912,
+          "latencyMs": 95.74618499999997,
+          "confidence": 0.83
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "AI for scientific discovery: How researchers use Claude",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001099,
+          "latencyMs": 548.3026630000004
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030912,
+          "latencyMs": 119.33447400000023,
+          "confidence": 0.61
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "Partnering with Hacktron to find vulnerabilities in OpenAI’s systems",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.00113,
+          "latencyMs": 529.4777610000001
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000032046,
+          "latencyMs": 108.94142399999964,
+          "confidence": 0.79
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "App Store 2026 in numbers: AI, pricing, abandoned apps",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001105,
+          "latencyMs": 566.3548800000008
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031206,
+          "latencyMs": 102.74550100000033,
+          "confidence": 0.92
+        }
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "title": "I struggle to believe that AI R&D is ingenious",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001102,
+          "latencyMs": 543.6032909999994
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030996,
+          "latencyMs": 94.81887199999983,
+          "confidence": 0.85
+        }
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "title": "datasette #3046: Don't serve link: rel=next HTTP headers to Firefox for HTML pages",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001197,
+          "latencyMs": 553.5397030000004
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000035196,
+          "latencyMs": 104.1700209999999,
+          "confidence": 0.94
+        }
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "title": "Claude Code's \"Don't Ask Again\" exposes passwords in 1,122 public GitHub files",
+      "original": "must_read",
+      "choices": {
+        "haiku": {
+          "decision": "must_read",
+          "costUsd": 0.001121,
+          "latencyMs": 560.2985610000014
+        },
+        "jev": {
+          "decision": "must_read",
+          "costUsd": 0.0000315,
+          "latencyMs": 97.5947299999998,
+          "confidence": 0.89
+        }
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "title": "The End of AI Frontiers",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001097,
+          "latencyMs": 553.6472040000008
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030828,
+          "latencyMs": 120.17565600000034,
+          "confidence": 0.74
+        }
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "title": "The end of Microsoft Research's AI Frontiers group",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001101,
+          "latencyMs": 564.007176000001
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031038,
+          "latencyMs": 82.024136,
+          "confidence": 0.55
+        }
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "title": "MaxxBench – \"Nice DeepSWE score. But is it true?\"",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001109,
+          "latencyMs": 544.9790830000002
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000031332,
+          "latencyMs": 92.29003300000022,
+          "confidence": 1
+        }
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "title": "Show HN: We compressed a 31B video+audio diffusion model to 14B, 6 steps, INT8",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001118,
+          "latencyMs": 582.7280740000006
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.00003171,
+          "latencyMs": 126.51448100000016,
+          "confidence": 0.58
+        }
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "title": "Ask HN: How did you convince family and friends to join your XMPP/Matrix server?",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001112,
+          "latencyMs": 551.605474
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031374,
+          "latencyMs": 89.4987029999993,
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "title": "Every Mac comes with an (undocumented) family member classifier",
+      "original": "skip",
+      "choices": {
+        "haiku": {
+          "decision": "skip",
+          "costUsd": 0.001104,
+          "latencyMs": 540.6249329999991
+        },
+        "jev": {
+          "decision": "skip",
+          "costUsd": 0.000031164,
+          "latencyMs": 101.4982630000004,
+          "confidence": 0.44
+        }
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "title": "The Components of Agent Memory",
+      "original": "mention",
+      "choices": {
+        "haiku": {
+          "decision": "mention",
+          "costUsd": 0.001095,
+          "latencyMs": 535.921459000001
+        },
+        "jev": {
+          "decision": "mention",
+          "costUsd": 0.000030786,
+          "latencyMs": 136.6393109999999,
+          "confidence": 0.37
+        }
+      }
+    }
+  ],
+  "models": {
+    "haiku": {
+      "model": "claude-haiku-4-5-20251001",
+      "decisions": 134,
+      "counts": {
+        "must_read": 10,
+        "mention": 19,
+        "skip": 105
+      },
+      "errors": 0,
+      "costUsd": 0.14928099999999994,
+      "meanLatencyMs": 558.3473373134328
+    },
+    "jev": {
+      "model": "typesafe/jev-1.13",
+      "decisions": 134,
+      "counts": {
+        "must_read": 22,
+        "mention": 47,
+        "skip": 65
+      },
+      "errors": 0,
+      "costUsd": 0.004219656000000003,
+      "meanLatencyMs": 140.64508728358206
+    }
+  },
+  "agreement": {
+    "labels": [
+      "original",
+      "haiku",
+      "jev"
+    ],
+    "cells": [
+      [
+        {
+          "agree": 134,
+          "total": 134
+        },
+        {
+          "agree": 124,
+          "total": 134
+        },
+        {
+          "agree": 85,
+          "total": 134
+        }
+      ],
+      [
+        {
+          "agree": 124,
+          "total": 134
+        },
+        {
+          "agree": 134,
+          "total": 134
+        },
+        {
+          "agree": 86,
+          "total": 134
+        }
+      ],
+      [
+        {
+          "agree": 85,
+          "total": 134
+        },
+        {
+          "agree": 86,
+          "total": 134
+        },
+        {
+          "agree": 134,
+          "total": 134
+        }
+      ]
+    ]
+  },
+  "disagreements": [
+    {
+      "title": "Memdoor: A team of 5 Qwen3.8-27B models beats Fable 5 on LiveCodeBench Hard",
+      "choices": {
+        "original": "mention",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "datasette-llm 0.1a9",
+      "choices": {
+        "original": "mention",
+        "haiku": "mention",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "Anthropic blocks users for anything touching training larger models",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "GPT-5.6 Sol can beat Factorio on peaceful mode",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "The Impact of Generative AI on Critical Thinking: Self-Reported (2025)",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "AI delivers 'zero financial payoff' to most companies, Apollo economist says",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "So I guess everyone uses LLMs to think now",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "It wasn't AI that flipped Proton's charge",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "AI agent swarms in Minecraft fail to build civilization, drown in bureaucracy",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "The AI cost of JavaScript frameworks",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "llm 0.37",
+      "choices": {
+        "original": "mention",
+        "haiku": "mention",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "Oracle files to sell $20B in new stock, bonds to finance AI buildout",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Egoless Mathematics in the AI Era",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "The latest AI news we announced in October 2026",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "Launch HN: Momentic (YC W24) – Agents that catch bugs by using your app",
+      "choices": {
+        "original": "skip",
+        "haiku": "mention",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "Anthropic's internal AI use, at retail prices, now exceeds its employee pay",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Scaling Git at OpenAI",
+      "choices": {
+        "original": "mention",
+        "haiku": "mention",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "LongCat-2.5: Native Multimodality for Agentic Tasks",
+      "choices": {
+        "original": "mention",
+        "haiku": "skip",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "The U.S. Census Bureau and “Super Intelligence”",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "The AI Boom May Be Sowing Seeds of Another Financial Crisis",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "How I use AI (Oct 2026)",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Google researchers demand freedom to tell the world what they know about AI",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Qwen 3.8 27B on my laptop can interpret model weights, too",
+      "choices": {
+        "original": "mention",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "AI is destroying my CS degree",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Octomind – open-source AI harness that saves your tokens, static rust",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "OpenAI seems to be silently re-enabling model training on Codex chats",
+      "choices": {
+        "original": "mention",
+        "haiku": "skip",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "The AI Bubble Monitor",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Just a little AI resistance, as a treat",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Accelerating engineering for the physical world",
+      "choices": {
+        "original": "mention",
+        "haiku": "mention",
+        "jev": "skip"
+      }
+    },
+    {
+      "title": "Could a modern chess engine on a Pentium have defeated Kasparov in 1996?",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Everything is an AI scam now",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "YC's Garry Tan uses AI agents so much, he spends up to $200K a year on tokens",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Ask HN: What's your current AI agentic setup?",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Geoffrey Hinton: it might turn out we were better off without AI",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Tell HN: Gemini trains on chat history, even for subscribers (personal accounts)",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "Nvidia RTX Spark encrypted firmware slows inference speed to 35% on Linux",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Daybreak Red is now available in AWS GovCloud (US-East)",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "Quoting Paul Ford",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Launch HN: Rivet (YC W23) – Scale and Orchestrate Agents on S3",
+      "choices": {
+        "original": "skip",
+        "haiku": "mention",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "Show HN: Firenook – Firebase emulators in Rust: 40× faster writes, 10× less RAM",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "AI is dramatically accelerating AI research",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Memorilla: Latent Semantic Memory for LLMs",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Perplexity launches AI agents for work",
+      "choices": {
+        "original": "skip",
+        "haiku": "mention",
+        "jev": "must_read"
+      }
+    },
+    {
+      "title": "Quoting Nilay Patel",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "Anthropic IPO buyers see valuation as low as $1.1T",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "I struggle to believe that AI R&D is ingenious",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "The End of AI Frontiers",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    },
+    {
+      "title": "The end of Microsoft Research's AI Frontiers group",
+      "choices": {
+        "original": "skip",
+        "haiku": "skip",
+        "jev": "mention"
+      }
+    }
+  ]
+}
