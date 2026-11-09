@@ -1,0 +1,356 @@
+{
+  "date": "2026-11-09",
+  "generatedAt": "2026-11-09T05:04:15.101Z",
+  "dryRun": false,
+  "fetchedCount": 2327,
+  "items": [
+    {
+      "title": "The Web Is More Than Enough, by Paul Ford",
+      "link": "https://simonwillison.net/2026/Nov/9/hn-50421091/",
+      "published": "2026-11-09T04:32:33.000Z",
+      "summary": "My comment on The Web Is More Than Enough, by Paul Ford &mdash; Hacker News. OK, this comment convinced me to give that a shot. Here's a thing I made in Three.js this morning - a Nudibranch themed Faberge Egg: https://static.simonwillison.net/static/2026/Hidden-Reef-Egg... (77KB) I just asked Claude (Opus 5.5 Medium running in regular Claude Chat) to port that to Vanilla JS, in the same thread whe",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Hide your slop PR descriptions behind <details><summary>",
+      "link": "https://simonwillison.net/2026/Nov/9/details-summary/",
+      "published": "2026-11-09T04:25:05.000Z",
+      "summary": "Most of the changes I make to my projects these days come in the form of PRs opened for me by Claude Code or Codex. The PR is my unit of work - I use them to bundle commits together, iterating on them until a feature is complete, document decisions and then merge the finished result. Today's coding agents are great at writing PR descriptions. They're too good at describing the work The problem is ",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "I'm not convinced the AI bubble exists",
+      "link": "https://matteoraso.github.io/im-not-convinced-the-ai-bubble-exists.html#im-not-convinced-the-ai-bubble-exists",
+      "published": "2026-11-08T23:44:36.000Z",
+      "summary": "103 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "parse_number() as a SQLite extension: C vs Rust",
+      "link": "https://simonwillison.net/2026/Nov/8/sqlite-parse-number-c-vs-rust/",
+      "published": "2026-11-08T22:26:00.000Z",
+      "summary": "Research: parse_number() as a SQLite extension: C vs Rust I was out walking the dog when I got curious about how easy/difficult it would be to write a SQLite C extension that adds a parse_number() function for turning strings like -$1,234.56 or '12.5%' into numeric values that could be summed and sorted. I fired up regular Claude chat (Opus 5.5) and prompted : I'm thinking about a SQLite custom fu",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "How I Fight AI Brain Fry",
+      "link": "https://sergeykuhne.com/blog/fighting-ai-brain-fry",
+      "published": "2026-11-08T19:37:42.000Z",
+      "summary": "191 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Silicon Valley Promises AI Will Cure Disease. Drugmaker CEOs Aren't Buying It",
+      "link": "https://www.wsj.com/tech/ai/silicon-valley-promises-ai-will-cure-disease-drugmaker-ceos-arent-buying-it-5218511c",
+      "published": "2026-11-08T18:43:07.000Z",
+      "summary": "94 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Goldman Sachs is pulling Claude Code from its bankers and traders",
+      "link": "https://www.thestateofai.com/news/goldman-sachs-claude-code-traders-bankers",
+      "published": "2026-11-08T18:16:07.000Z",
+      "summary": "675 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "I'm not a fan of Deno's security model (2024)",
+      "link": "https://goldstein.lol/posts/deno-security/",
+      "published": "2026-11-08T14:42:38.000Z",
+      "summary": "94 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Why I will not be using LLMs in my coding",
+      "link": "https://www.polso.info/why-i-will-not-be-using-llms-coding",
+      "published": "2026-11-08T12:14:10.000Z",
+      "summary": "109 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Agent memory needs its OpenTelemetry moment",
+      "link": "https://www.lorekit.io/blog/open-agent-memory-format",
+      "published": "2026-11-08T08:40:23.000Z",
+      "summary": "177 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    }
+  ],
+  "calendar": {
+    "count": 2,
+    "allDay": 0,
+    "timed": 2,
+    "bySource": {
+      "google": 1,
+      "icloud": 1
+    }
+  },
+  "icloud": "ok",
+  "reminders": {
+    "count": 2,
+    "source": "file"
+  },
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "The Web Is More Than Enough, by Paul Ford",
+      "link": "https://simonwillison.net/2026/Nov/9/hn-50421091/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Hide your slop PR descriptions behind <details><summary>",
+      "link": "https://simonwillison.net/2026/Nov/9/details-summary/",
+      "decision": "must_read",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "I'm not convinced the AI bubble exists",
+      "link": "https://matteoraso.github.io/im-not-convinced-the-ai-bubble-exists.html#im-not-convinced-the-ai-bubble-exists",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "parse_number() as a SQLite extension: C vs Rust",
+      "link": "https://simonwillison.net/2026/Nov/8/sqlite-parse-number-c-vs-rust/",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "How I Fight AI Brain Fry",
+      "link": "https://sergeykuhne.com/blog/fighting-ai-brain-fry",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Silicon Valley Promises AI Will Cure Disease. Drugmaker CEOs Aren't Buying It",
+      "link": "https://www.wsj.com/tech/ai/silicon-valley-promises-ai-will-cure-disease-drugmaker-ceos-arent-buying-it-5218511c",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Goldman Sachs is pulling Claude Code from its bankers and traders",
+      "link": "https://www.thestateofai.com/news/goldman-sachs-claude-code-traders-bankers",
+      "decision": "must_read",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "I'm not a fan of Deno's security model (2024)",
+      "link": "https://goldstein.lol/posts/deno-security/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Why I will not be using LLMs in my coding",
+      "link": "https://www.polso.info/why-i-will-not-be-using-llms-coding",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    },
+    {
+      "title": "Agent memory needs its OpenTelemetry moment",
+      "link": "https://www.lorekit.io/blog/open-agent-memory-format",
+      "decision": "mention",
+      "model": "claude-haiku-4-5-20251001",
+      "examples": 0
+    }
+  ],
+  "calls": [
+    {
+      "role": "embed",
+      "model": "voyage-3.5-lite",
+      "inputTokens": 108,
+      "outputTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 664.9032460000003,
+      "costUsd": 0.00000216
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1108,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 708.5139650000001,
+      "costUsd": 0.001273
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1054,
+      "outputTokens": 35,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 716.5969330000007,
+      "costUsd": 0.001229
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 933,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 716.3288310000007,
+      "costUsd": 0.001098
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 1084,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 716.3873620000004,
+      "costUsd": 0.001249
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 933,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 702.4700080000002,
+      "costUsd": 0.001098
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 946,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 578.3193890000002,
+      "costUsd": 0.001111
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 939,
+      "outputTokens": 35,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 561.8279299999995,
+      "costUsd": 0.001114
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 941,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 544.9813279999998,
+      "costUsd": 0.001106
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 937,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 438.20052099999975,
+      "costUsd": 0.001102
+    },
+    {
+      "role": "decision",
+      "model": "claude-haiku-4-5-20251001",
+      "inputTokens": 935,
+      "outputTokens": 33,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 551.1713359999994,
+      "costUsd": 0.0011
+    },
+    {
+      "role": "writer",
+      "model": "claude-sonnet-5-5",
+      "inputTokens": 963,
+      "outputTokens": 1272,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 2010,
+      "latencyMs": 14617.83989,
+      "costUsd": 0.019671
+    }
+  ],
+  "totalCostUsd": 0.03115316,
+  "writer": "sonnet",
+  "writerAttempts": 1,
+  "missingSections": [],
+  "concept": {
+    "name": "observability and tracing for LLM apps",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": null,
+    "tipIndex": 2,
+    "marked": true
+  },
+  "memory": {
+    "indexSize": 402,
+    "seenBefore": 0,
+    "examples": 0,
+    "related": 0,
+    "chunkIds": []
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent",
+    "attempts": 1
+  },
+  "briefChars": 1947,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "Agent OS",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "spec-kit",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "BMAD",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "Claude Code",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    }
+  ]
+}
