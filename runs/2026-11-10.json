@@ -1,0 +1,556 @@
+{
+  "date": "2026-11-10",
+  "generatedAt": "2026-11-10T05:04:08.661Z",
+  "dryRun": false,
+  "fetchedCount": 2339,
+  "items": [
+    {
+      "title": "CoreWeave bond yield tops 16% as AI credit stress rises",
+      "link": "https://www.cnbc.com/2026/11/06/coreweave-bond-yield-tops-16percent-as-ai-credit-stress-rises.html",
+      "published": "2026-11-10T03:20:06.000Z",
+      "summary": "55 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "llm-anthropic 0.31",
+      "link": "https://simonwillison.net/2026/Nov/9/llm-anthropic/",
+      "published": "2026-11-09T23:58:46.000Z",
+      "summary": "Release: llm-anthropic 0.31 Anthropic released Fable 5.2 and Mythos 5.2 today. I've added them to llm-anthropic , so you can now run prompts through Fable 5.2 like this: uv tool install llm llm install llm-anthropic llm keys set anthropic # paste key here llm -m claude-fable-5.2 \"Generate an SVG of a pelican riding a bicycle\" I ran pelicans at all five reasoning levels - low , medium , high , xhig",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "Locating the source of a mysterious beep with Claude",
+      "link": "https://simonwillison.net/2026/Nov/9/mysterious-beeps/",
+      "published": "2026-11-09T23:57:21.000Z",
+      "summary": "Our house has a box room, full of boxes that we still haven't unpacked from our last move. A couple of weeks ago something in that room started intermittently beeping . The beeps were far enough apart that standing in the room and trying to determine the source of the noise was frustrating, and I really didn't want to dig through every one of those boxes. So I had Claude Code build Beep Locator , ",
+      "sources": [
+        "Simon Willison"
+      ]
+    },
+    {
+      "title": "A year after the 100% AI mandate nobody understands our code",
+      "link": "https://www.reddit.com/r/ClaudeCode/comments/1xq2n3t/a_year_after_the_100_ai_mandate_nobody/",
+      "published": "2026-11-09T22:19:12.000Z",
+      "summary": "118 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "TPU 8tx and TPU 8i Max",
+      "link": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/global-network/tpu-8i-max-and-8tx/",
+      "published": "2026-11-09T21:56:57.000Z",
+      "summary": "232 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Claude Fable 5.2 scores 65 on Artificial Analysis, highest so far",
+      "link": "https://artificialanalysis.ai/models/claude-fable-5-2",
+      "published": "2026-11-09T20:04:55.000Z",
+      "summary": "317 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "ChatGPT Enterprise now available in AWS Marketplace",
+      "link": "https://openai.com/index/chatgpt-enterprise-aws-marketplace",
+      "published": "2026-11-09T19:00:00.000Z",
+      "summary": "ChatGPT Enterprise is now available through AWS Marketplace, helping organizations simplify procurement through existing AWS purchasing and billing relationships.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "Claude Fable 5.2 and Mythos 5.2",
+      "link": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+      "published": "2026-11-09T18:56:29.000Z",
+      "summary": "968 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Show HN: MeowDisplay Is iPhone Mirroring, but in Reverse",
+      "link": "https://meowdisplay.app/",
+      "published": "2026-11-09T18:39:22.000Z",
+      "summary": "82 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Show HN: STE80 Humanizer – de-AI text by writing 80% of the way to ASD-STE100",
+      "link": "https://github.com/Dodaios/ste80-humanizer",
+      "published": "2026-11-09T18:05:44.000Z",
+      "summary": "70 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Muse Ember: Our smallest, most efficient model",
+      "link": "https://research.meta.ai/blog/muse-ember",
+      "published": "2026-11-09T17:58:46.000Z",
+      "summary": "270 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Show HN: DBDelve – Open-Source DB Client Made with Rust and GPUI",
+      "link": "https://news.ycombinator.com/item?id=50427934",
+      "published": "2026-11-09T16:36:38.000Z",
+      "summary": "97 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Nemotron-Personas-Finance-Japan: A Synthetic Dataset Capturing Japan's Demographics and Financial Context",
+      "link": "https://huggingface.co/blog/nvidia/nemotron-personas-finance-japan",
+      "published": "2026-11-09T15:05:57.000Z",
+      "summary": "",
+      "sources": [
+        "Hugging Face"
+      ]
+    },
+    {
+      "title": "Control Room: A central system to track and stop model workloads across our research infrastructure",
+      "link": "https://openai.com/index/control-room",
+      "published": "2026-11-09T13:00:00.000Z",
+      "summary": "Learn how OpenAI’s Control Room tracks model workloads across our research infrastructure and can rapidly stop them when safety or security concerns arise.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "Your Experts Have Partners. There's HOPE for Keeping Them Together",
+      "link": "https://huggingface.co/blog/amazon/higher-order-pruning-experts",
+      "published": "2026-11-09T12:34:29.000Z",
+      "summary": "",
+      "sources": [
+        "Hugging Face"
+      ]
+    },
+    {
+      "title": "6 Hours of YouTube and 85 handtyped pages of notes on LLM Inference – Start here",
+      "link": "https://github.com/samir-sarwar/samir-vllm",
+      "published": "2026-11-09T11:36:55.000Z",
+      "summary": "77 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "ChatGPT Desktop forwards your SSH agent to remote machines",
+      "link": "https://news.ycombinator.com/item?id=50422628",
+      "published": "2026-11-09T08:17:49.000Z",
+      "summary": "207 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "CodeRabbit scales agentic software development and ships 20x more",
+      "link": "https://openai.com/index/coderabbit-codex-daybreak",
+      "published": "2026-11-09T08:00:00.000Z",
+      "summary": "CodeRabbit uses OpenAI models to govern and trust AI-generated code and Codex to ship 20 times more software with the same engineering team.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "Kuken Industries searches 70 years of drawings in minutes",
+      "link": "https://openai.com/index/kuken",
+      "published": "2026-11-09T08:00:00.000Z",
+      "summary": "Kuken Industries uses the OpenAI API to search 70 years of cooling tower drawings. Engineers can find the drawing for a repair in 4.5 minutes, down from nearly an hour.",
+      "sources": [
+        "OpenAI News"
+      ]
+    },
+    {
+      "title": "Next-Concept Modeling: Fast, Parallel Coarse-to-Fine Text Generation",
+      "link": "https://arxiv.org/abs/2610.14162",
+      "published": "2026-11-09T07:20:37.000Z",
+      "summary": "176 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    },
+    {
+      "title": "Apple capped engineers at a $200 daily AI budget",
+      "link": "https://www.stork.ai/newsletter/2026-11-08-apple-capped-engineers-at-a-200-daily-ai-budget",
+      "published": "2026-11-09T05:30:11.000Z",
+      "summary": "113 points on Hacker News",
+      "sources": [
+        "Hacker News AI"
+      ]
+    }
+  ],
+  "calendar": {
+    "count": 2,
+    "allDay": 0,
+    "timed": 2,
+    "bySource": {
+      "google": 0,
+      "icloud": 2
+    }
+  },
+  "icloud": "ok",
+  "reminders": {
+    "count": 4,
+    "source": "file"
+  },
+  "skippedUnseen": 0,
+  "decisions": [
+    {
+      "title": "CoreWeave bond yield tops 16% as AI credit stress rises",
+      "link": "https://www.cnbc.com/2026/11/06/coreweave-bond-yield-tops-16percent-as-ai-credit-stress-rises.html",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvU4hs7U5H5RY1any\"}",
+      "examples": 0
+    },
+    {
+      "title": "llm-anthropic 0.31",
+      "link": "https://simonwillison.net/2026/Nov/9/llm-anthropic/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvUoRNqy4X4Q6ugs6\"}",
+      "examples": 0
+    },
+    {
+      "title": "Locating the source of a mysterious beep with Claude",
+      "link": "https://simonwillison.net/2026/Nov/9/mysterious-beeps/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvUo36FHZMdVtdnBG\"}",
+      "examples": 0
+    },
+    {
+      "title": "A year after the 100% AI mandate nobody understands our code",
+      "link": "https://www.reddit.com/r/ClaudeCode/comments/1xq2n3t/a_year_after_the_100_ai_mandate_nobody/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvV4D9fnMYEsdQ9zB\"}",
+      "examples": 0
+    },
+    {
+      "title": "TPU 8tx and TPU 8i Max",
+      "link": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/global-network/tpu-8i-max-and-8tx/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvTodhGo45dNrNBDG\"}",
+      "examples": 0
+    },
+    {
+      "title": "Claude Fable 5.2 scores 65 on Artificial Analysis, highest so far",
+      "link": "https://artificialanalysis.ai/models/claude-fable-5-2",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvdyVm7k9SynJHeJ1\"}",
+      "examples": 0
+    },
+    {
+      "title": "ChatGPT Enterprise now available in AWS Marketplace",
+      "link": "https://openai.com/index/chatgpt-enterprise-aws-marketplace",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvdyKFKZx1haGR74w\"}",
+      "examples": 0
+    },
+    {
+      "title": "Claude Fable 5.2 and Mythos 5.2",
+      "link": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvdyUfakPpEq8ATf9\"}",
+      "examples": 0
+    },
+    {
+      "title": "Show HN: MeowDisplay Is iPhone Mirroring, but in Reverse",
+      "link": "https://meowdisplay.app/",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRveDpJEwCxwS8XKWR\"}",
+      "examples": 0
+    },
+    {
+      "title": "Show HN: STE80 Humanizer – de-AI text by writing 80% of the way to ASD-STE100",
+      "link": "https://github.com/Dodaios/ste80-humanizer",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvfDo9AvRpKytnqxq\"}",
+      "examples": 0
+    },
+    {
+      "title": "Muse Ember: Our smallest, most efficient model",
+      "link": "https://research.meta.ai/blog/muse-ember",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvo9bZPZz6u51cuas\"}",
+      "examples": 0
+    },
+    {
+      "title": "Show HN: DBDelve – Open-Source DB Client Made with Rust and GPUI",
+      "link": "https://news.ycombinator.com/item?id=50427934",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvnQobvGna117Mcfo\"}",
+      "examples": 0
+    },
+    {
+      "title": "Nemotron-Personas-Finance-Japan: A Synthetic Dataset Capturing Japan's Demographics and Financial Context",
+      "link": "https://huggingface.co/blog/nvidia/nemotron-personas-finance-japan",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvn9tiR5b2beEkkFQ\"}",
+      "examples": 0
+    },
+    {
+      "title": "Control Room: A central system to track and stop model workloads across our research infrastructure",
+      "link": "https://openai.com/index/control-room",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvnQAtqoy5KRQff9z\"}",
+      "examples": 0
+    },
+    {
+      "title": "Your Experts Have Partners. There's HOPE for Keeping Them Together",
+      "link": "https://huggingface.co/blog/amazon/higher-order-pruning-experts",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvnA34gvnp8Qf6dUy\"}",
+      "examples": 0
+    },
+    {
+      "title": "6 Hours of YouTube and 85 handtyped pages of notes on LLM Inference – Start here",
+      "link": "https://github.com/samir-sarwar/samir-vllm",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvxZt2PW6EydSC1Wj\"}",
+      "examples": 0
+    },
+    {
+      "title": "ChatGPT Desktop forwards your SSH agent to remote machines",
+      "link": "https://news.ycombinator.com/item?id=50422628",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvxL7o8kdjr63RM9A\"}",
+      "examples": 0
+    },
+    {
+      "title": "CodeRabbit scales agentic software development and ships 20x more",
+      "link": "https://openai.com/index/coderabbit-codex-daybreak",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvx5EvCP2zz27rDrg\"}",
+      "examples": 0
+    },
+    {
+      "title": "Kuken Industries searches 70 years of drawings in minutes",
+      "link": "https://openai.com/index/kuken",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvxKgDu1UnvWapis6\"}",
+      "examples": 0
+    },
+    {
+      "title": "Next-Concept Modeling: Fast, Parallel Coarse-to-Fine Text Generation",
+      "link": "https://arxiv.org/abs/2610.14162",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvy5UhBTLqB8jcfFA\"}",
+      "examples": 0
+    },
+    {
+      "title": "Apple capped engineers at a $200 daily AI budget",
+      "link": "https://www.stork.ai/newsletter/2026-11-08-apple-capped-engineers-at-a-200-daily-ai-budget",
+      "decision": "skip",
+      "model": "claude-haiku-4-5-20251001",
+      "error": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRw61QZDnEqbfY83iR\"}",
+      "examples": 0
+    }
+  ],
+  "calls": [
+    {
+      "role": "embed",
+      "model": "voyage-3.5-lite",
+      "inputTokens": 300,
+      "outputTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "latencyMs": 2698.9426639999997,
+      "costUsd": 0.000006
+    }
+  ],
+  "totalCostUsd": 0.000006,
+  "writer": "template",
+  "writerAttempts": 3,
+  "missingSections": [],
+  "concept": {
+    "name": "human-in-the-loop and approval gates",
+    "queueEmpty": false,
+    "marked": true
+  },
+  "interview": {
+    "slug": null,
+    "tipIndex": 3,
+    "marked": true
+  },
+  "memory": {
+    "indexSize": 413,
+    "seenBefore": 0,
+    "examples": 0,
+    "related": 0,
+    "chunkIds": []
+  },
+  "delivery": {
+    "sender": "telegram",
+    "status": "sent",
+    "attempts": 1
+  },
+  "briefChars": 861,
+  "errors": [
+    {
+      "stage": "source",
+      "source": "Agent OS",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "spec-kit",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "BMAD",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "source",
+      "source": "Claude Code",
+      "message": "HTTP 403: GitHub access to this repository is not enabled for this session. Use add_repo to request access. If add_repo answers t…"
+    },
+    {
+      "stage": "decision",
+      "source": "CoreWeave bond yield tops 16% as AI credit stress rises",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvU4hs7U5H5RY1any\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "llm-anthropic 0.31",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvUoRNqy4X4Q6ugs6\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "Locating the source of a mysterious beep with Claude",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvUo36FHZMdVtdnBG\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "A year after the 100% AI mandate nobody understands our code",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvV4D9fnMYEsdQ9zB\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "TPU 8tx and TPU 8i Max",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvTodhGo45dNrNBDG\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "Claude Fable 5.2 scores 65 on Artificial Analysis, highest so far",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvdyVm7k9SynJHeJ1\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "ChatGPT Enterprise now available in AWS Marketplace",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvdyKFKZx1haGR74w\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "Claude Fable 5.2 and Mythos 5.2",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvdyUfakPpEq8ATf9\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "Show HN: MeowDisplay Is iPhone Mirroring, but in Reverse",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRveDpJEwCxwS8XKWR\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "Show HN: STE80 Humanizer – de-AI text by writing 80% of the way to ASD-STE100",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvfDo9AvRpKytnqxq\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "Muse Ember: Our smallest, most efficient model",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvo9bZPZz6u51cuas\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "Show HN: DBDelve – Open-Source DB Client Made with Rust and GPUI",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvnQobvGna117Mcfo\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "Nemotron-Personas-Finance-Japan: A Synthetic Dataset Capturing Japan's Demographics and Financial Context",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvn9tiR5b2beEkkFQ\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "Control Room: A central system to track and stop model workloads across our research infrastructure",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvnQAtqoy5KRQff9z\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "Your Experts Have Partners. There's HOPE for Keeping Them Together",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvnA34gvnp8Qf6dUy\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "6 Hours of YouTube and 85 handtyped pages of notes on LLM Inference – Start here",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvxZt2PW6EydSC1Wj\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "ChatGPT Desktop forwards your SSH agent to remote machines",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvxL7o8kdjr63RM9A\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "CodeRabbit scales agentic software development and ships 20x more",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvx5EvCP2zz27rDrg\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "Kuken Industries searches 70 years of drawings in minutes",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvxKgDu1UnvWapis6\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "Next-Concept Modeling: Fast, Parallel Coarse-to-Fine Text Generation",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRvy5UhBTLqB8jcfFA\"}"
+    },
+    {
+      "stage": "decision",
+      "source": "Apple capped engineers at a $200 daily AI budget",
+      "message": "decision call failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRw61QZDnEqbfY83iR\"}"
+    },
+    {
+      "stage": "writer",
+      "message": "writer claude-sonnet-5-5 failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRwDhWaL6HPgEHw6qJ\"}"
+    },
+    {
+      "stage": "writer",
+      "message": "writer claude-haiku-4-5-20251001 failed: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CgtfRwM8imBWiM7s7ye9Y\"}"
+    }
+  ]
+}

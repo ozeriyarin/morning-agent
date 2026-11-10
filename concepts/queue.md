@@ -37,7 +37,7 @@ One concept per line. `- [ ]` is unused; a used line becomes `- [x] YYYY-MM-DD <
 - [x] 2026-11-07 fallback chains and graceful degradation
 - [x] 2026-11-08 idempotency and retries in agent tools
 - [x] 2026-11-09 observability and tracing for LLM apps
-- [ ] human-in-the-loop and approval gates
+- [x] 2026-11-10 human-in-the-loop and approval gates
 - [ ] sandboxing and least privilege for agents
 - [ ] streaming responses and SSE
 - [ ] conversation state and condensation
